@@ -1,21 +1,21 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 const PORT = 8000;
 
-app.set('view engine', 'ejs');
-app.set('/view', 'views');
-app.set('/static', 'static');
+app.set("view engine", "ejs");
+app.set("/view", "views");
+app.set("/static", "static");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const userRouter = require('./routes/user');
-app.use('/', userRouter);
+const userRouter = require("./routes/user");
+app.use("/", userRouter);
 
-app.get('*', (req, res) => {
-    res.render('404');
+app.get("*", (req, res) => {
+  res.render("404");
 });
 
 // localhost:PORT로 express 앱이 실행
 app.listen(PORT, () => {
-    console.log(`${PORT} start `);
+  console.log(`${PORT} start `);
 });
