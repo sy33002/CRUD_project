@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>회원가입</title>
+    </head>
+    <body>
+        <h1>회원가입</h1>
+        <!-- 아이디, 비번, 이름, 주소, 메일, 관심분야 -->
+        <form name="form_register">
+            <label for="userid">ID</label>
+            <input id="userid" type="text" name="userid" required /><br />
+            <label for="password">Password</label>
+            <input
+                id="password"
+                type="password"
+                name="password"
+                required
+            /><br />
+            <label for="name">이름</label>
+            <input id="name" type="text" name="name" required /><br />
+
+            <!-- 주소 input 자료 찾아보기 -->
+            <label for="addr">주소</label>
+            <input id="addr" type="text" name="addr" required /><br />
+
+            <!-- 이메일 input 자료 찾기... 부트스트랩에 있나 -->
+            <label for="email">이메일</label>
+            <input id="email" type="text" name="email" /><br />
+
+            <!-- 관심 분야 선택지 고민해야함. 그리고 셀렉트를 쓸 것인지. 다중 선택이 되야함. -->
+            <label for="category">관심 분야</label>
+            <input id="category" type="text" name="category" /><br />
+
+            <button type="button" onclick="register()">회원 가입</button>
+        </form>
+
+        <a href="/signin">Register</a>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        <script>
+            function register() {
+                const form = document.forms['form_register'];
+
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+
+                axios({
+                    method: 'POST',
+                    url: '/signup',
+                    data: {
+                        userid: form.userid.value,
+                        password: form.password.value,
+                        name: form.name.value,
+                    },
+                })
+                    .then((res) => {
+                        console.log(res);
+                        return res.data;
+                    })
+                    .then(() => {
+                        alert('CRUD에 합류하신 것을 환영합니다.');
+                        document.location.href = '/signin'; // ->/login으로?
+                    });
+            }
+        </script>
+    </body>
+</html>
