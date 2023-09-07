@@ -11,6 +11,9 @@ app.use(express.json());
 const userRouter = require("./routes/user");
 app.use("/", userRouter);
 
+const conferenceRouter = require("./routes/conference");
+app.use("/conference", conferenceRouter);
+
 app.get("*", (req, res) => {
   res.render("404");
 });
