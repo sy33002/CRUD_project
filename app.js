@@ -8,8 +8,8 @@ app.set("/static", "static");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const userRouter = require("./routes/user");
-app.use("/", userRouter);
+const mainRouter = require('./routes/main');
+app.use('/', mainRouter);
 
 const conferenceRouter = require("./routes/conference");
 app.use("/conference", conferenceRouter);
