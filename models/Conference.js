@@ -1,4 +1,6 @@
-const Conference = (Sequelize, DataTypes) => {
+const { DataTypes } = require('sequelize');
+
+const Conference = (Sequelize, sequelize) => {
   const model = Sequelize.define(
     "conference_info",
     {
@@ -16,22 +18,22 @@ const Conference = (Sequelize, DataTypes) => {
       },
       //     con_start_date datetime not null,
       con_start_date: {
-        type: DataTypes.date,
+        type: DataTypes.DATE,
         allowNull: false,
       },
       //     con_end_date datetime not null,
       con_end_date: {
-        type: DataTypes.date,
+        type: DataTypes.DATE,
         allowNull: false,
       },
       //     sub_start_date datetime not null,
       sub_start_date: {
-        type: DataTypes.date,
+        type: DataTypes.DATE,
         allowNull: false,
       },
       //     sub_end_date datetime not null,
       sub_end_date: {
-        type: DataTypes.date,
+        type: DataTypes.DATE,
         allowNull: false,
       },
       //     is_onoff boolean not null,
