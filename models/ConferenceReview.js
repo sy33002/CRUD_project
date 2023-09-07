@@ -43,4 +43,5 @@ const ConferenceReview = (Sequelize, sequelize) => {
     );
     return model;
 };
+
 module.exports = ConferenceReview;
