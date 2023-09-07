@@ -1,10 +1,13 @@
+const { DataTypes } = require('sequelize');
+
 const User = (Sequelize, sequelize) => {
     const model = Sequelize.define('user', {
         id: {
-            type: DataTypes.autoIncrement,
+            type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
-        },
+            autoIncrement: true,
+          },
         user_id: {
             type: DataTypes.STRING(30),
             allowNull: false,
