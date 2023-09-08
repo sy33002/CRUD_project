@@ -1,42 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>회원가입</title>
+        <%- include('../common/head.ejs', {title: '메인 페이지'}) %>
     </head>
     <body>
-        <h1>회원가입</h1>
-        <!-- 아이디, 비번, 이름, 주소, 메일, 관심분야 -->
-        <form name="form_register">
-            <label for="userid">ID</label>
-            <input id="userid" type="text" name="userid" required /><br />
-            <label for="password">Password</label>
-            <input
-                id="password"
-                type="password"
-                name="password"
-                required
-            /><br />
-            <label for="name">이름</label>
-            <input id="name" type="text" name="name" required /><br />
+        <%- include('../common/header.ejs') %>
+        <main>
+            <h1>회원가입</h1>
+            <!-- 아이디, 비번, 이름, 주소, 메일, 관심분야 -->
+            <form name="form_register">
+                <label for="userid">ID</label>
+                <input id="userid" type="text" name="userid" required /><br />
+                <label for="password">Password</label>
+                <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    required
+                /><br />
+                <label for="name">이름</label>
+                <input id="name" type="text" name="name" required /><br />
 
-            <!-- 주소 input 자료 찾아보기 -->
-            <label for="addr">주소</label>
-            <input id="addr" type="text" name="addr" required /><br />
+                <!-- 주소 input 자료 찾아보기 -->
+                <label for="addr">주소</label>
+                <input id="addr" type="text" name="addr" required /><br />
+                <!-- 부트스트랩 보통 주소가 하나의 input으로 받지 않음... -->
+                <div class="col-12">
+                    <label for="addr" class="form-label">Address</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="addr"
+                        placeholder="1234 Main St"
+                    />
+                </div>
+                <div class="col-12">
+                    <label for="inputAddress2" class="form-label"
+                        >Address 2</label
+                    >
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="inputAddress2"
+                        placeholder="Apartment, studio, or floor"
+                    />
+                </div>
+                <div class="col-md-6">
+                    <label for="inputCity" class="form-label">City</label>
+                    <input type="text" class="form-control" id="inputCity" />
+                </div>
+                <div class="col-md-4">
+                    <label for="inputState" class="form-label">State</label>
+                    <select id="inputState" class="form-select">
+                        <option selected>Choose...</option>
+                        <option>...</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="inputZip" class="form-label">Zip</label>
+                    <input type="text" class="form-control" id="inputZip" />
+                </div>
 
-            <!-- 이메일 input 자료 찾기... 부트스트랩에 있나 -->
-            <label for="email">이메일</label>
-            <input id="email" type="text" name="email" /><br />
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input
+                        type="email"
+                        class="form-control"
+                        id="email"
+                        name="email"
+                        placeholder="email@example.com"
+                    />
+                </div>
 
-            <!-- 관심 분야 선택지 고민해야함. 그리고 셀렉트를 쓸 것인지. 다중 선택이 되야함. -->
-            <label for="category">관심 분야</label>
-            <input id="category" type="text" name="category" /><br />
+                <select
+                    class="form-select"
+                    aria-label="Default select example"
+                    name="category"
+                >
+                    <option selected>관심분야를 선택해주세요.</option>
+                    <option value="ai">AI</option>
+                    <option value="web">웹 개발</option>
+                    <option value="git">git</option>
+                </select>
 
-            <button type="button" onclick="register()">회원 가입</button>
-        </form>
+                <button type="button" onclick="register()">회원 가입</button>
+            </form>
 
-        <a href="/signin">Register</a>
+            <a href="/signin">Register</a>
+        </main>
+        <%- include('../common/footer.ejs') %>
+
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
         <script>
