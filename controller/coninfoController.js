@@ -10,6 +10,10 @@ exports.getConferenceList = (req, res) => {
 exports.getConferenceWrite = (req, res) => {
     res.render('event/write');
 };
-exports.getConferenceDetail = (req, res) => {
-    res.render('event/detail');
+exports.getConferenceDetail = async (req, res) => {
+    const { con_id } = req.params;
+    const result = await Visitor.findOne({
+        where: { con_id },
+    });
+    res.render('event/detail', { data: result });
 };
