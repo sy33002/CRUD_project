@@ -27,9 +27,9 @@ app.get('*', (req, res) => {
     res.render('404');
 });
 
-// localhost:PORT로 express 앱이 실행
 sequelize.sync({ force: false }).then(
     app.listen(PORT, () => {
-        console.log(`${PORT} start `);
+    console.log(`http://localhost:${PORT} start `);
     })
 );
+
