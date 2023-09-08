@@ -17,13 +17,16 @@ const User = require('./User')(sequelize, Sequelize);
 const ConferenceReview = require('./ConferenceReview')(sequelize, Sequelize);
 
 // Conference와 리뷰 외래키
-ConferenceReview.hasOne(Conference, {
+Conference.hasOne(ConferenceReview, {
     foreignKey: 'con_id',
     sourceKey: 'con_id',
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
 });
-Conference.belongsTo(ConferenceReview);
+ConferenceReview.belongsTo(Conference, {
+    foreignKey: 'con_id',
+    targetKey: 'con_id',
+});
 // 모델 db 객체에 저장
 db.Conference = Conference;
 db.User = User;

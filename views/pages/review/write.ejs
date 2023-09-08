@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <%- include('../../common/head.ejs', {title: '리뷰 작성' }) %>
+        <link rel="stylesheet" href="/static/css/review.css" />
+        <script defer src="/static/js/review.js"></script>
+    </head>
+
+    <body>
+        <%- include('../../common/header.ejs') %>
+        <main>
+            <form action="/review" method="post">
+                <div class="mb-3 pb-3 border-bottom">
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="subject"
+                        name="subject"
+                        placeholder="제목을 입력하세요."
+                    />
+                </div>
+                <div class="mb-3">
+                    <textarea
+                        class="form-control"
+                        id="content"
+                        name="content"
+                    ></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">전송</button>
+            </form>
+        </main>
+        <%- include('../../common/footer.ejs') %>
+    </body>
+</html>
