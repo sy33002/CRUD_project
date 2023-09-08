@@ -13,8 +13,14 @@ app.use('/static', express.static(__dirname + '/public'));
 const mainRouter = require('./routes/main');
 app.use('/', mainRouter);
 
+const userRouter = require('./routes/user');
+app.use('/user', userRouter);
+
 const conferenceRouter = require('./routes/conference');
 app.use('/conference', conferenceRouter);
+
+const reviewRouter = require('./routes/review');
+app.use('/review', reviewRouter);
 
 app.get('*', (req, res) => {
     res.render('404');
