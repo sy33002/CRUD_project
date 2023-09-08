@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const PORT = 8000;
+const { sequelize } = require('./models');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname + '/views/pages'));
@@ -27,6 +28,8 @@ app.get('*', (req, res) => {
 });
 
 // localhost:PORT로 express 앱이 실행
-app.listen(PORT, () => {
-    console.log(`${PORT} start `);
-});
+sequelize.sync({ force: false }).then(
+    app.listen(PORT, () => {
+        console.log(`${PORT} start `);
+    })
+);
