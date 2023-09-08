@@ -6,7 +6,7 @@ const Conference = (Sequelize, sequelize) => {
         {
             // 	con_id int not null primary key auto_increment,
             con_id: {
-                type: DataTypes.STRING(100),
+                type: DataTypes.INTEGER,
                 allowNull: false,
                 primaryKey: true,
                 autoIncrement: true,
