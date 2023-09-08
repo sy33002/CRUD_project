@@ -29,7 +29,6 @@ app.get('*', (req, res) => {
 
 sequelize.sync({ force: false }).then(
     app.listen(PORT, () => {
-    console.log(`http://localhost:${PORT} start `);
+        console.log(`http://localhost:${PORT} start `);
     })
 );
-
