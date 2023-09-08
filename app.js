@@ -28,5 +28,5 @@ app.get('*', (req, res) => {
 
 // localhost:PORT로 express 앱이 실행
 app.listen(PORT, () => {
-    console.log(`${PORT} start `);
+    console.log(`http://localhost:${PORT} start `);
 });
