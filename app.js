@@ -15,13 +15,13 @@ const mainRouter = require('./routes/main');
 app.use('/', mainRouter);
 
 const userRouter = require('./routes/user');
-app.use('/user', userRouter);
+app.use('/', userRouter);
 
 const conferenceRouter = require('./routes/conference');
-app.use('/conference', conferenceRouter);
+app.use('/event', conferenceRouter);
 
 const reviewRouter = require('./routes/review');
-app.use('/review', reviewRouter);
+app.use('/', reviewRouter);
 
 app.get('*', (req, res) => {
     res.render('404');
