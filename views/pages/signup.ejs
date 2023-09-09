@@ -119,6 +119,15 @@
                         document.location.href = '/signin'; // ->/login으로?
                     });
             }
+            // 지형: 아이디 중복 체크는 'id'변수로 받겠습니다. (라우터에서 /:id로 넘기기 때문)
+            // 이미 아이디가 있는 경우: { result: true, message: '이미 존재하는 아이디 입니다!'}
+            // 아이디가 DB에 없는 경우: {result: false, message: '사용 가능한 아이디입니다!'}
+
+            // 회원가입 완료 버튼을 눌렀을 경우:
+            // 회원가입 변수명 : userId, userPw, userName, userAddr, userEmail, userCategory
+            // 회원가입 후 성공 시: {result, message: '회원가입 성공!'} 
+            // result에는 회원가입 내역들(userId,userPw,userName 등)이 들어있습니다.
+            // 회원가입 DB 미성공 시: { result: false, message: '오류가 발생했습니다.' }
         </script>
     </body>
 </html>
