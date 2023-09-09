@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const path = require('path');
 const app = express();
 const PORT = 8000;
@@ -10,6 +11,20 @@ app.set('views', path.join(__dirname + '/views/pages'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/static', express.static(__dirname + '/public'));
+
+// 임시 키
+const MySessionSecretKey = '1234';
+// 세션 옵션 객체
+app.use(session({
+    secret: 'MySessionSecretKey',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000, // 24시간
+    },
+  })
+);
 
 const mainRouter = require('./routes/main');
 app.use('/', mainRouter);
