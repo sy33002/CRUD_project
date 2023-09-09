@@ -1,0 +1,23 @@
+/* 에디터 태그 스타일 */
+
+.my-editor strong {
+    font-weight: bold;
+}
+
+.my-editor h2 {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.my-editor h3 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.my-editor em {
+    font-style: italic;
+}
+
+.my-editor img.ProseMirror-selectednode {
+    outline: 3px solid #68cef8;
+}
