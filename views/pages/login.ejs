@@ -6,7 +6,70 @@
 
     <body>
         <%- include('../common/header.ejs') %>
-        <main>로그인 페이지</main>
+        <main>
+            로그인 페이지
+            <form name="formLogin">
+                <label for="userId">ID</label>
+                <input id="userId" type="text" name="userId" required /><br />
+                <label for="userPw">Password</label>
+                <input
+                    id="userPw"
+                    type="password"
+                    name="userPw"
+                    required
+                /><br />
+                <button type="button" onclick="login()">LOGIN</button>
+            </form>
+        </main>
+
         <%- include('../common/footer.ejs') %>
+        <script>
+            function login() {
+                const form = document.forms['formLogin'];
+
+                // if(!form.checkValidity()){
+                //     form.reportValidity();
+                //     return;
+                // }
+                axios({
+                    method: 'POST',
+                    url: '/login',
+                    data: {
+                        userId: formLogin.userId.value,
+                        userPw: formLogin.userPw.value,
+                    },
+                }).then((res) => {
+                    return res.data;
+                }).then((result, data)=>{
+                    if(result){
+                        alert('로그인 성공!!')
+                        const loginInfo = document.forms[]
+                    } else{
+                        alert('로그인 실패!!');
+                        // 제윤: 추후에 아이디 오류, 비번 오류, 서버 오류 추가 예정
+                        formLogin.reset();
+                    }
+                })
+            }
+        </script>
     </body>
 </html>
+
+<!-- 지형: 유저가 입력한 정보는 userId, userPw 변수로 넘겨주시면 됩니다! -->
+
+<!-- 유저가 로그인에 성공한다면, {result: true, data: 로그인 세션} 전달 -->
+<!-- 로그인 세션 전달 변수 참고
+        data = {
+        id,
+        userName,
+        userId,
+        userPw,
+        userAddr,
+        userEmail,
+        userCategory,
+      }
+ -->
+
+<!-- 유저가 아이디는 맞고, 비밀번호가 틀렸다면 {result:false, message: '비밀번호가 틀렸습니다.'} 전달 -->
+<!-- 유저가 아이디가 틀렸다면 {result:false, message: '존재하는 사용자가 없습니다.'} 전달 -->
+<!-- 만약 DB문제로 전혀 동작하지 못했다면 { result: false, message: '서버 오류가 발생했습니다.' } 전달 -->
