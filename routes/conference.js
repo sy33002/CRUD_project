@@ -1,9 +1,13 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
+
 const router = express.Router();
 const controller = require('../controller/coninfoController');
 
-router.get('/', controller.index); //기본 홈 화면 라우트
-router.get('/event', controller.getConferenceList);
-router.get('/event/write', controller.getConferenceWrite);
-router.get('/event/:id', controller.getConferenceDetail);
+router.get('/', controller.getConferenceList);
+router.get('/write', controller.getConferenceWrite);
+router.get('/:id', controller.getConferenceDetail);
+router.post('/write', controller.postConference);
+router.put('/:id', controller.updateConferenceCnt); //컨퍼런스 조회수 증가
+
 module.exports = router;

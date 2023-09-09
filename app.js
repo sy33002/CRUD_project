@@ -1,5 +1,7 @@
 const express = require('express');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
+
 const path = require('path');
 const app = express();
 const PORT = 8000;
@@ -8,6 +10,7 @@ const { sequelize } = require('./models');
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname + '/views/pages'));
 
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/static', express.static(__dirname + '/public'));
