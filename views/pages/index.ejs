@@ -1,12 +1,182 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
-        <%- include('../common/head.ejs', {title: '메인 페이지'}) %>
+        <%- include('../common/head.ejs', {title: '메인 페이지' }) %>
+        <link rel="stylesheet" href="/static/css/pages/main.css" />
     </head>
+
     <body>
         <%- include('../common/header.ejs') %>
         <main>
-            <h1>메인 페이지</h1>
+            <section class="section">
+                <div class="wrap">
+                    <h1>C.R.U.D</h1>
+                </div>
+            </section>
+            <section class="section2">
+                <div class="wrap">
+                    <p class="title">9월 행사</p>
+                    <ul class="con_list">
+                        <% for(let i=0; i < 6; i++){ %>
+                        <li class="con_item">
+                            <a href="#">
+                                <div class="img">
+                                    <img
+                                        src="https://framerusercontent.com/images/kllDEHvDbsM7ymtUify2z8gco.png"
+                                        alt="행사"
+                                    />
+                                </div>
+                                <h2>kakao tech meet</h2>
+                                <p>
+                                    Use positioning to fix topbars, sidebars,
+                                    and backgrounds.
+                                </p>
+                            </a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </section>
+            <section class="section3">
+                <div class="wrap"></div>
+            </section>
+            <section class="section4">
+                <div class="wrap">
+                    <div class="review_list">
+                        <% for(let i=1; i <=3; i++) { %>
+                        <ul class="list list<%= i %>">
+                            <li class="item">
+                                <p>
+                                    I've built pretty handy sites powered by
+                                    Craft or WordPress in the past, but seeing
+                                    @framer tackle CMS stuff so effortlessly is
+                                    mind-boggling
+                                </p>
+                            </li>
+                            <li class="item">
+                                <p>
+                                    I discovered website creation using @Framer!
+                                    My objective was mastering fundamental
+                                    features in approximately 20 minutes daily
+                                    during the past week. No extravagance. No
+                                    unique designs. Merely assorted components
+                                    that are adaptive. If I managed it, you can
+                                    too!
+                                </p>
+                            </li>
+                            <li class="item">
+                                <p>
+                                    Honestly the @framer publish time is
+                                    insanely fast. Just published 2 weeks of
+                                    changes in 5 seconds – like it’s almost too
+                                    fast for such a big moment.
+                                </p>
+                            </li>
+                        </ul>
+                        <% } %>
+                    </div>
+                </div>
+            </section>
+            <section class="section5">
+                <div class="wrap">
+                    <h2>FAQ</h2>
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <button
+                                    class="accordion-button collapsed"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne"
+                                    aria-expanded="true"
+                                    aria-controls="collapseOne"
+                                >
+                                    What is Framer?
+                                </button>
+                            </h3>
+                            <div
+                                id="collapseOne"
+                                class="accordion-collapse collapse"
+                                data-bs-parent="#accordionExample"
+                            >
+                                <div class="accordion-body">
+                                    <p>
+                                        Framer is a web builder for creative
+                                        pros. Be sure to check out framer.com to
+                                        learn more.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <button
+                                    class="accordion-button collapsed"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo"
+                                    aria-expanded="false"
+                                    aria-controls="collapseTwo"
+                                >
+                                    Is it easy to learn?
+                                </button>
+                            </h3>
+                            <div
+                                id="collapseTwo"
+                                class="accordion-collapse collapse"
+                                data-bs-parent="#accordionExample"
+                            >
+                                <div class="accordion-body">
+                                    <p>
+                                        Framer is the fastest tool to build
+                                        sites with, because you can ship your
+                                        design immediately, instead of having to
+                                        rebuild your design in code or a second
+                                        tool.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <button
+                                    class="accordion-button collapsed"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapseThree"
+                                    aria-expanded="false"
+                                    aria-controls="collapseThree"
+                                >
+                                    Do I need to code?
+                                </button>
+                            </h3>
+                            <div
+                                id="collapseThree"
+                                class="accordion-collapse collapse"
+                                data-bs-parent="#accordionExample"
+                            >
+                                <div class="accordion-body">
+                                    <p>
+                                        Framer is an end to end tool that lets
+                                        everyone design and ship web sites. You
+                                        don’t need a frontend team or web
+                                        programming course. Just basic canvas
+                                        skills.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="section6">
+                <div class="wrap">
+                    <h2>Sign up today.</h2>
+                    <div class="buttons">
+                        <a href="/signup">Get Started</a>
+                    </div>
+                </div>
+            </section>
         </main>
         <%- include('../common/footer.ejs') %>
     </body>
