@@ -15,15 +15,16 @@ app.use('/static', express.static(__dirname + '/public'));
 // 임시 키
 const MySessionSecretKey = '1234';
 // 세션 옵션 객체
-app.use(session({
-    secret: 'MySessionSecretKey',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        httpOnly: true,
-        maxAge: 24 * 60 * 60 * 1000, // 24시간
-    },
-  })
+app.use(
+    session({
+        secret: 'MySessionSecretKey',
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000, // 24시간
+        },
+    })
 );
 
 const mainRouter = require('./routes/main');

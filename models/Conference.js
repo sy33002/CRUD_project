@@ -86,6 +86,8 @@ const Conference = (Sequelize, sequelize) => {
             tableName: 'conference_info',
             freezeTableName: true,
             timestamps: true,
+            charset: 'utf8mb4',
+            collate: 'utf8mb4_general_ci',
         }
     );
     return model;
