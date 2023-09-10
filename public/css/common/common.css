@@ -27,6 +27,16 @@ main {
     flex: 1;
 }
 
+footer {
+    background-color: var(--color-black);
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
 .wrap {
     width: 1000px;
     margin: 0 auto;

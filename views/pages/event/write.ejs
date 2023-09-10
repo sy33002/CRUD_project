@@ -8,7 +8,136 @@
 
     <body>
         <%- include('../../common/header.ejs') %>
-        <main>행사 글쓰기 페이지</main>
+        <main >
+            <div>
+                
+                    <form >
+                        <h1>행사 기본 정보</h1><br>
+                        <div class="row mb-3">
+                          <label for="conTitle" class="col-sm-2 col-form-label">행사 이름</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="conTitle">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="conCompany" class="col-sm-2 col-form-label">행사 주최</label>
+                          <div class="col-sm-10">
+                            <input type="text" class="form-control" id="conCompany">
+                          </div>
+                        </div>
+                        <fieldset class="row mb-3">
+                            <legend class="col-form-label col-sm-2 pt-0">행사 카테고리</legend>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>카테고리를 선택해주세요.</option>
+                                <option value="AI">AI</option>
+                                <option value="web">웹 개발</option>
+                                <option value="git">git</option>
+                              </select>
+                          </fieldset>
+                        <hr>
+                        <div>
+                            <h1>행사 시간</h1><br>
+                            <div class="row mb-3">
+                                <label for="conStartDate" class="col-sm-2 col-form-label">행사 시작일</label>
+                                <div class="col-sm-10">
+                                  <input type="date" class="form-control" id="conStartDate">
+                                </div>
+                              </div>
+                              <div class="row mb-3">
+                                <label for="conEndDate" class="col-sm-2 col-form-label">행사 종료일</label>
+                                <div class="col-sm-10">
+                                  <input type="date" class="form-control" id="conEndDate">
+                                </div>
+                              </div>
+                              <div class="row mb-3">
+                                <label for="subStartDate" class="col-sm-2 col-form-label">모집 시작일
+                                </label>
+                                <div class="col-sm-10">
+                                  <input type="date" class="form-control" id="subStartDate">
+                                </div>
+                              </div>
+                              <div class="row mb-3">
+                                <label for="subEndDate" class="col-sm-2 col-form-label">모집 종료일
+                                </label>
+                                <div class="col-sm-10">
+                                  <input type="date" class="form-control" id="subEndDate">
+                                </div>
+                              </div>
+                        </div><hr>
+                       <div>
+                        <h1>행사 장소</h1><br>
+                        <fieldset class="row mb-3">
+                            <legend class="col-form-label col-sm-2 pt-0"></legend>
+                            <div class="col-sm-5">
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="isOnoff" id="isOnoff" value="true" checked>
+                                <label class="form-check-label" for="isOnoff">
+                                  오프라인
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="isOnoff" id="isOnoff" value="false">
+                                <label class="form-check-label" for="isOnoff">
+                                  온라인
+                                </label>
+                              </div>
+                              <div class="row mb-3">
+                                <label for="conLocation" class="col-sm-2 col-form-label">주소</label>
+                                <div class="col-sm-10">
+                                  <input type="text" class="form-control" id="conLocation" name="conLocation">
+                                </div>
+                              </div>
+                              
+                            </div>
+                          </fieldset>
+                       </div><hr>
+                        
+                     <h1>행사 가격 및 규모</h1> <br>
+
+                        <div class="row mb-3">
+                            <label for="conPrice" class="col-sm-2 col-form-label">참여 가격</label>
+                            <div class="col-sm-10">
+                              <input type="text" class="form-control" id="conPrice">
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <label for="conPeople" class="col-sm-2 col-form-label">규모</label>
+                            <div class="col-sm-10">
+                              <input type="number" class="form-control" id="conPeople">
+                            </div>
+                          </div>
+                          
+                          
+                          <button type="submit" class="btn btn-primary">행사 등록</button>
+
+                      </form>
+                
+                     </div>
+                      <br>
+                  <div>
+                    
+                
+            </div>
+            <br>
+        </main>
         <%- include('../../common/footer.ejs') %>
+        <script>
+            $(document).ready(function(){
+ 
+          // 라디오버튼 클릭시 이벤트 발생
+        $("input:radio[name=isOnoff]").click(function(){
+
+         if($("input[name=isOnoff]:checked").val() == "true"){
+         $("input:text[name=conLocation]").attr("disabled",false);
+         // radio 버튼의 value 값이 1이라면 활성화
+
+         }else if($("input[name=isOnoff]:checked").val() == "false"){
+               $("input:text[name=conLocation]").attr("disabled",true);
+         // radio 버튼의 value 값이 0이라면 비활성화
+        }
+ });
+});
+
+        </script>
     </body>
 </html>
