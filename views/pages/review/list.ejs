@@ -8,7 +8,64 @@
 
     <body>
         <%- include('../../common/header.ejs') %>
-        <main>리뷰 목록 페이지</main>
+        <main>
+            <div class="wrap">
+                <table class="table table-hover">
+                    <colgroup>
+                        <col width="60px" />
+                        <col />
+                        <col width="110px" />
+                        <col width="60px" />
+                    </colgroup>
+                    <thead>
+                        <tr class="border-bottom">
+                            <th scope="col"></th>
+                            <th scope="col" class="text-center">제목</th>
+                            <th scope="col" class="text-center">작성일</th>
+                            <th scope="col" class="text-center">조회</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if(result){ %> <%
+                        result.slice().reverse().forEach((val, i) => { %>
+                        <tr class="border-bottom">
+                            <th scope="row" class="text-center">
+                                <%= val.re_id %>
+                            </th>
+                            <td><%= val.re_title %></td>
+                            <td class="text-center">
+                                <% const originalDate = new Date(val.re_date);
+                                %> <% const currentDate = new Date(); %> <%
+                                const year =
+                                originalDate.getFullYear().toString().slice(-2);
+                                %> <% const month = (originalDate.getMonth() +
+                                1).toString().padStart(2, '0'); %> <% const day
+                                = originalDate.getDate().toString().padStart(2,
+                                '0'); %> <% const hours =
+                                originalDate.getHours().toString().padStart(2,
+                                '0'); %> <% const minutes =
+                                originalDate.getMinutes().toString().padStart(2,
+                                '0'); %> <% if( originalDate.getDate() ===
+                                currentDate.getDate() && originalDate.getMonth()
+                                === currentDate.getMonth() &&
+                                originalDate.getFullYear() ===
+                                currentDate.getFullYear()) { %> <%=
+                                `${hours}:${minutes}` %> <% }else{ %> <%=
+                                `${year}.${month}.${day}` %> <% } %>
+                            </td>
+                            <td class="text-center">
+                                <%= val.re_count ? re_count : 0 %>
+                            </td>
+                        </tr>
+                        <% }) %> <% }else{ %>
+                        <tr>
+                            <td>현재 등록된 리뷰가 없습니다.</td>
+                        </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </main>
         <%- include('../../common/footer.ejs') %>
     </body>
 </html>
