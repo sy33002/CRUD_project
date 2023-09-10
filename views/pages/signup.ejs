@@ -9,43 +9,51 @@
             <h1>회원가입</h1>
             <!-- 아이디, 비번, 이름, 주소, 메일, 관심분야 -->
             <form name="form_register">
-                <label for="userid">ID</label>
-                <input id="userid" type="text" name="userid" required /><br />
-                <label for="password">Password</label>
+                <label for="userId">ID</label>
+                <input id="userId" type="text" name="userId" required /><br />
+                <label for="userPw">Password</label>
                 <input
-                    id="password"
+                    id="userPw"
                     type="password"
-                    name="password"
+                    name="userPw"
                     required
                 /><br />
-                <label for="name">이름</label>
-                <input id="name" type="text" name="name" required /><br />
+                <label for="userName">이름</label>
+                <input
+                    id="userName"
+                    type="text"
+                    name="userName"
+                    required
+                /><br />
 
                 <!-- 주소 input 자료 찾아보기 -->
-                <label for="addr">주소</label>
-                <input id="addr" type="text" name="addr" required /><br />
+                <label for="userAddr">주소</label>
+                <input
+                    id="userAddr"
+                    type="text"
+                    name="userAddr"
+                    required
+                /><br />
                 <!-- 부트스트랩 보통 주소가 하나의 input으로 받지 않음... -->
                 <div class="col-12">
-                    <label for="addr" class="form-label">Address</label>
+                    <label for="userAddr" class="form-label">주소2</label>
                     <input
                         type="text"
                         class="form-control"
-                        id="addr"
+                        id="userAddr"
                         placeholder="1234 Main St"
                     />
                 </div>
                 <div class="col-12">
-                    <label for="inputAddress2" class="form-label"
-                        >Address 2</label
-                    >
+                    <label for="userPost" class="form-label">userPost</label>
                     <input
                         type="text"
                         class="form-control"
-                        id="inputAddress2"
+                        id="userPost"
                         placeholder="Apartment, studio, or floor"
                     />
                 </div>
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <label for="inputCity" class="form-label">City</label>
                     <input type="text" class="form-control" id="inputCity" />
                 </div>
@@ -59,15 +67,17 @@
                 <div class="col-md-2">
                     <label for="inputZip" class="form-label">Zip</label>
                     <input type="text" class="form-control" id="inputZip" />
-                </div>
+                </div> -->
 
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
+                    <label for="userEmail" class="form-label"
+                        >Email address</label
+                    >
                     <input
                         type="email"
                         class="form-control"
-                        id="email"
-                        name="email"
+                        id="userEmail"
+                        name="userEmail"
                         placeholder="email@example.com"
                     />
                 </div>
@@ -75,7 +85,7 @@
                 <select
                     class="form-select"
                     aria-label="Default select example"
-                    name="category"
+                    name="userCategory"
                 >
                     <option selected>관심분야를 선택해주세요.</option>
                     <option value="ai">AI</option>
@@ -95,29 +105,33 @@
         <script>
             function register() {
                 const form = document.forms['form_register'];
-
-                if (!form.checkValidity()) {
-                    form.reportValidity();
-                    return;
-                }
-
+                //if (!form.checkValidity()) {
+                //    form.reportValidity();
+                //    return;
+                //}
                 axios({
                     method: 'POST',
                     url: '/signup',
                     data: {
-                        userid: form.userid.value,
-                        password: form.password.value,
-                        name: form.name.value,
+                        userId: form.userId.value,
+                        userPw: form.userPw.value,
+                        userName: form.userName.value,
+                        userAddr: form.userAddr.value,
+                        userPost: form.userPost.value,
+                        userEmail: form.userEmail.value,
+                        userCategory: form.userCategory.value,
                     },
-                })
-                    .then((res) => {
-                        console.log(res);
-                        return res.data;
-                    })
-                    .then(() => {
-                        alert('CRUD에 합류하신 것을 환영합니다.');
-                        document.location.href = '/signin'; // ->/login으로?
-                    });
+                }).then((res) => {
+                    console.log(res);
+                    if (res) {
+                        alert(
+                            `${res.user_id}님! CRUD에 합류하신 것을 환영합니다.`
+                        );
+                    }
+                });
+                //.then(() => {
+                //   document.location.href = '/signin'; // ->/login으로?
+                //});
             }
             // 지형: 아이디 중복 체크는 'id'변수로 받겠습니다. (라우터에서 /:id로 넘기기 때문)
             // 이미 아이디가 있는 경우: { result: true, message: '이미 존재하는 아이디 입니다!'}
@@ -125,7 +139,7 @@
 
             // 회원가입 완료 버튼을 눌렀을 경우:
             // 회원가입 변수명 : userId, userPw, userName, userAddr, userEmail, userCategory
-            // 회원가입 후 성공 시: {result, message: '회원가입 성공!'} 
+            // 회원가입 후 성공 시: {result, message: '회원가입 성공!'}
             // result에는 회원가입 내역들(userId,userPw,userName 등)이 들어있습니다.
             // 회원가입 DB 미성공 시: { result: false, message: '오류가 발생했습니다.' }
         </script>
