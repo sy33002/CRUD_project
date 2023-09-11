@@ -11,6 +11,7 @@
             <form name="form_register">
                 <label for="userId">ID</label>
                 <input id="userId" type="text" name="userId" required /><br />
+                <button type="button" onclick="idCheck()">중복 아이디 체크</button><br/>
                 <label for="userPw">Password</label>
                 <input
                     id="userPw"
@@ -35,15 +36,15 @@
                     required
                 /><br />
                 <!-- 부트스트랩 보통 주소가 하나의 input으로 받지 않음... -->
-                <div class="col-12">
-                    <label for="userAddr" class="form-label">주소2</label>
+                <!-- <div class="col-12">
+                    <label for="userAddr2" class="form-label">주소2</label>
                     <input
                         type="text"
                         class="form-control"
-                        id="userAddr"
+                        id="userAddr2"
                         placeholder="1234 Main St"
                     />
-                </div>
+                </div> -->
                 <div class="col-12">
                     <label for="userPost" class="form-label">userPost</label>
                     <input
@@ -124,9 +125,25 @@
                 }).then((res) => {
                     console.log(res);
                     if (res) {
-                        alert(
-                            `${res.user_id}님! CRUD에 합류하신 것을 환영합니다.`
-                        );
+                        alert(`${res.data.message}`);
+                    }
+                });
+                //.then(() => {
+                //   document.location.href = '/signin'; // ->/login으로?
+                //});
+            }
+            function idCheck() {
+                const form = document.forms['form_register'];
+                axios({
+                    method: 'GET',
+                    url: '/exits/:id',
+                    data: {
+                        userId: form.userId.value,
+                    },
+                }).then((res) => {
+                    console.log(res);
+                    if (res) {
+                        alert(`${res.data.message}`);
                     }
                 });
                 //.then(() => {

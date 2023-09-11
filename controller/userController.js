@@ -61,7 +61,7 @@ exports.postLogout = async (req, res) => {
 //회원가입 id 중복체크
 exports.checkId = async (req, res) => {
     const { id } = req.params;
-    const reuslt = await User.findOne({
+    const result = await User.findOne({
         where: { user_id: id },
     });
     if (result != null) {
@@ -85,7 +85,8 @@ exports.postSignup = async (req, res) => {
             user_email: userEmail,
             user_category: userCategory,
         });
-        res.send({ result, message: '회원가입 성공!' });
+        console.log('result = ', result);
+        res.send({ result, message: `${result.dataValues.user_id}님! CRUD에 오신 것을 환영합니다.` });
     } catch (error) {
         console.error('회원가입 시 오류:', error);
         res.status(500).send({
