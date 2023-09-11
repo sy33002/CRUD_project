@@ -1,13 +1,22 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const uploadDetail = require('../utils');
 
 const router = express.Router();
 const controller = require('../controller/coninfoController');
 
-router.get('/', controller.getConferenceList);
-router.get('/write', controller.getConferenceWrite);
-router.get('/:id', controller.getConferenceDetail);
-router.post('/write', controller.postConference);
-router.put('/:id', controller.updateConferenceCnt); //컨퍼런스 조회수 증가
+router.get('/event', controller.getConferenceList);
+router.get('/event/write', controller.getConferenceWrite);
+router.get('/event/:id', controller.getConferenceDetail);
+router.post('/event/write', controller.postConference);
+router.put('/event/:id', controller.updateConferenceCnt); //컨퍼런스 조회수 증가
+
+router.post(
+    '/upload/:path',
+    uploadDetail.single('conferenceFile'),
+    (req, res) => {
+        res.send({ result: true });
+    }
+);
 
 module.exports = router;

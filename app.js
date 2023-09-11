@@ -37,7 +37,7 @@ const userRouter = require('./routes/user');
 app.use('/', userRouter);
 
 const conferenceRouter = require('./routes/conference');
-app.use('/event', conferenceRouter);
+app.use('/', conferenceRouter);
 
 const reviewRouter = require('./routes/review');
 app.use('/', reviewRouter);
