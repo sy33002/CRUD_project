@@ -1,3 +1,4 @@
 exports.index = (req, res) => {
-    res.render('index');
+    const data = req.session.userInfo;
+    res.render('index', { data });
 };
