@@ -39,24 +39,35 @@ exports.postConference = async (req, res) => {
         conPeople,
         conCompanyUrl,
         conCount,
+        conImagePath,
+        conDetail,
     } = req.body;
-    const result = await Conference.create({
-        con_title: conTitle,
-        con_start_date: conStartDate,
-        con_end_date: conEndDate,
-        sub_start_date: subStartDate,
-        sub_end_date: subEndDate,
-        is_onoff: isOnoff,
-        con_location: conLocation,
-        con_category: conCategory,
-        con_company: conCompany,
-        con_isfree: conIsfree,
-        con_price: conPrice,
-        con_people: conPeople,
-        con_company_url: conCompanyUrl,
-        con_count: conCount,
-    });
-    res.send(result);
+
+    try {
+        const result = await Conference.create({
+            con_title: conTitle,
+            con_start_date: conStartDate,
+            con_end_date: conEndDate,
+            sub_start_date: subStartDate,
+            sub_end_date: subEndDate,
+            is_onoff: isOnoff,
+            con_location: conLocation,
+            con_category: conCategory,
+            con_company: conCompany,
+            con_isfree: conIsfree,
+            con_price: conPrice,
+            con_people: conPeople,
+            con_company_url: conCompanyUrl,
+            con_count: conCount,
+            con_detail: conDetail,
+            con_image: conImagePath,
+        });
+        res.send({ result: true });
+    } catch (err) {
+        console.error(err);
+        res.send({ result: false });
+    }
+
     //관리자 페이지 안만들면 /event경로로 갑니다..
     // res.redirect('/');
     //관리자 페이지가 있을 경우
