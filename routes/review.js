@@ -11,13 +11,9 @@ router.get('/review/delete', controller.deleteReview); // 리뷰 삭제 요청
 
 router.get('/review/write', controller.getReviewWrite); // 리뷰 작성 페이지
 router.get('/review/write', controller.getReviewWrite); // 리뷰 사진 업로드
-router.post('/upload', uploadDetail.single('userFile'), (req, res) => {
-    console.log("req.body", req.body);    
-    // const allowedPaths = ['review']; // 허용되는 경로 값
-    // if (!allowedPaths.includes(req.body.path)) {
-    //     return res.status(400).json({ error: '잘못된 경로 값' });
-    // }
-    req.body = req.body
+
+router.post('/upload/:path', uploadDetail.single('userFile'), (req, res) => {
+    res.send({result: true});
 });
 
 module.exports = router;
