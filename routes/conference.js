@@ -15,8 +15,9 @@ router.post(
     '/upload/:path',
     uploadDetail.single('conferenceFile'),
     (req, res) => {
-        res.send({ result: true });
+        res.send({ result: true, file: req.file });
     }
 );
 
 module.exports = router;
+// 재민님 일단 제가 DB에 컬럼 만들게요~
