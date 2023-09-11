@@ -56,8 +56,9 @@ exports.postConference = async (req, res) => {
         con_company_url: conCompanyUrl,
         con_count: conCount,
     });
+    res.send(result);
     //관리자 페이지 안만들면 /event경로로 갑니다..
-    res.redirect('/');
+    // res.redirect('/');
     //관리자 페이지가 있을 경우
     //res.render('관리자페이지',{result})
 };
