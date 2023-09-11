@@ -10,10 +10,11 @@ router.post('/review', controller.postReview); // 리뷰 작성 요청
 router.get('/review/delete', controller.deleteReview); // 리뷰 삭제 요청
 
 router.get('/review/write', controller.getReviewWrite); // 리뷰 작성 페이지
-router.get('/review/write', controller.getReviewWrite); // 리뷰 사진 업로드
+
+router.get('/review/:id', controller.getReviewDetail); // 리뷰 상세 페이지
 
 router.post('/upload/:path', uploadDetail.single('userFile'), (req, res) => {
-    res.send({result: true});
+    res.send({ result: true, file: req.file });
 });
 
 module.exports = router;
