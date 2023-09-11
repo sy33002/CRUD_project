@@ -5,7 +5,9 @@ exports.getReview = async (req, res) => {
     // res.render('review/list');
     try {
         const reviews = await ConferenceReview.findAll();
-        res.send(reviews);
+        res.render('review/list', {
+            result: reviews,
+        });
     } catch (err) {
         console.log(err);
         res.send('Server Error');
