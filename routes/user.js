@@ -10,7 +10,8 @@ router.get('/signup', controller.getSignup); // 회원가입 render
 router.get('/exists/:userId', controller.checkId); // 회원가입 id 중복체크
 router.post('/signup', controller.postSignup); // 회원가입 성공
 
-// router.patch('/myPage', controller.patchProfile);
+router.get('/myPage', controller.getProfile); // 마이페이지 render
+router.post('/updateProfile', controller.updateProfile); // 마이페이지 render
 // router.delete('/destroy', controller.deleteUser);
 
 module.exports = router;
