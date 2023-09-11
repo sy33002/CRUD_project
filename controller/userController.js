@@ -4,13 +4,27 @@ const bcrypt = require('bcrypt');
 
 // login 페이지 렌더
 exports.getLogin = (req, res) => {
-    const data = req.session.userInfo;
     res.render('login');
 };
 
 // signup 페이지 렌더
 exports.getSignup = (req, res) => {
     res.render('signup');
+};
+
+// MyPage 렌더
+exports.getProfile = async (req, res) => {
+    const data = req.session.userInfo;
+    console.log('data: ',data);
+    if (data) {
+        const userData = await User.findOne({
+            where: { user_id: data.userId },
+        });
+        console.log('userData: ', userData);
+        res.render('myPage/profile', {data: userData});
+    } else {
+        res.render('404');
+    }
 };
 
 // 로그인
@@ -60,13 +74,10 @@ exports.postLogout = async (req, res) => {
 
 //회원가입 id 중복체크
 exports.checkId = async (req, res) => {
-    console.log('req.params:', req.params);
     const { userId } = req.params;
-    console.log('userId:', userId);
     const result = await User.findOne({
         where: { user_id: userId },
     });
-    console.log('result:', result);
     if (result != null) {
         res.send({ result: true });
     } else {
@@ -93,7 +104,6 @@ exports.postSignup = async (req, res) => {
             user_email: userEmail,
             user_category: userCategory,
         });
-        console.log('result = ', result);
         res.send({ result, message: `${result.dataValues.user_id}님! CRUD에 오신 것을 환영합니다.` });
     } catch (error) {
         console.error('회원가입 시 오류:', error);
@@ -102,6 +112,22 @@ exports.postSignup = async (req, res) => {
             message: '오류가 발생했습니다.',
         });
     }
+};
+
+// profile update
+exports.updateProfile = async (req, res) => {
+    const pw = bcryptPassword(req.body.userPw);
+    const result = await User.update({
+        user_pw : pw, 
+        user_name : req.body.userName, 
+        user_addr : req.body.userAddr, 
+        user_email : req.body.userEmail, 
+        user_category : req.body.userCategory,
+      }, {
+        where: {user_id: req.body.userId}
+      });
+      console.log('result = ', result);
+      res.send({result: true})
 };
 
 // 비밀번호 암호화 함수
@@ -113,21 +139,6 @@ function bcryptPassword(password) {
 function compareFunc(password, hashedPassword) {
     return bcrypt.compareSync(password, hashedPassword);
 }
-
-// 회원 탈퇴
-// exports.patchProfile = async (req, res) => {
-//   const result = await User.update({
-//     user_id: req.body.user_id,
-//     user_pw: req.body.user_pw,
-//     user_name: req.body.user_name,
-//     user_addr: req.body.user_addr,
-//     user_email: req.body.user_email,
-//     user_category: req.body.user_category,
-//   }, {
-//     where: {user_id: req.body.user_id}
-//   });
-//   res.send({result: true})
-// };
 
 // exports.deleteUser = async (req, res) => {
 //   const result = await User.destroy({
