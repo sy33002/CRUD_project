@@ -3,172 +3,356 @@
     <head>
         <%- include('../../common/head.ejs', {title: '행사 글 작성' }) %>
         <link rel="stylesheet" href="/static/css/review.css" />
-        <script defer src="/static/js/review.js"></script>
+        <!-- <script defer src="/static/js/review.js"></script> -->
     </head>
 
     <body>
         <%- include('../../common/header.ejs') %>
-        <main >
+        <main>
             <div>
-                
-                    <form NAME="register-conference">
-                        <h1>행사 기본 정보</h1><br>
+                <form NAME="register-conference">
+                    <h2>Single file upload</h2>
+                    <p>하나의 인풋에 하나의 파일을 업로드</p>
+                    <form
+                        action="/upload/event"
+                        method="post"
+                        enctype="multipart/form-data"
+                    >
+                        <input type="file" name="userFile" /><br />
+                        <input type="text" name="title" /><br /><br />
+                        <button type="submit">업로드</button>
+                    </form>
+
+                    <h1>행사 기본 정보</h1>
+                    <br />
+                    <div class="row mb-3">
+                        <label for="conTitle" class="col-sm-2 col-form-label"
+                            >행사 이름</label
+                        >
+                        <div class="col-sm-10">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="conTitle"
+                                name="conTitle"
+                            />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="conCompany" class="col-sm-2 col-form-label"
+                            >행사 주최</label
+                        >
+                        <div class="col-sm-10">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="conCompany"
+                                name="conCompany"
+                            />
+                        </div>
+                    </div>
+                    <fieldset class="row mb-3">
+                        <legend class="col-form-label col-sm-2 pt-0">
+                            행사 카테고리
+                        </legend>
+                        <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            id="conCategory"
+                            name="conCategory"
+                        >
+                            <option selected name="conCategory">
+                                카테고리를 선택해주세요.
+                            </option>
+                            <option value="AI">AI</option>
+                            <option value="web">웹 개발</option>
+                            <option value="git">git</option>
+                        </select>
+                    </fieldset>
+                    <hr />
+                    <div>
+                        <h1>행사 시간</h1>
+                        <br />
                         <div class="row mb-3">
-                          <label for="conTitle" class="col-sm-2 col-form-label" >행사 이름</label>
-                          <div class="col-sm-10">
-                            <input type="text" class="form-control" id="conTitle" name="conTitle">
-                          </div>
+                            <label
+                                for="conStartDate"
+                                class="col-sm-2 col-form-label"
+                                >행사 시작일</label
+                            >
+                            <div class="col-sm-10">
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    id="conStartDate"
+                                    name="conStartDate"
+                                />
+                            </div>
                         </div>
                         <div class="row mb-3">
-                          <label for="conCompany" class="col-sm-2 col-form-label" >행사 주최</label>
-                          <div class="col-sm-10">
-                            <input type="text" class="form-control" id="conCompany"name="conCompany">
-                          </div>
+                            <label
+                                for="conEndDate"
+                                class="col-sm-2 col-form-label"
+                                >행사 종료일</label
+                            >
+                            <div class="col-sm-10">
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    id="conEndDate"
+                                    name="conEndDate"
+                                />
+                            </div>
                         </div>
+                        <div class="row mb-3">
+                            <label
+                                for="subStartDate"
+                                class="col-sm-2 col-form-label"
+                                >모집 시작일
+                            </label>
+                            <div class="col-sm-10">
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    id="subStartDate"
+                                    name="subStartDate"
+                                />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label
+                                for="subEndDate"
+                                class="col-sm-2 col-form-label"
+                                >모집 종료일
+                            </label>
+                            <div class="col-sm-10">
+                                <input
+                                    type="date"
+                                    class="form-control"
+                                    id="subEndDate"
+                                    name="subEndDate"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div>
+                        <h1>행사 장소</h1>
+                        <br />
                         <fieldset class="row mb-3">
-                            <legend class="col-form-label col-sm-2 pt-0">행사 카테고리</legend>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected name="conCategory">카테고리를 선택해주세요.</option>
-                                <option value="AI">AI</option>
-                                <option value="web">웹 개발</option>
-                                <option value="git">git</option>
-                              </select>
-                          </fieldset>
-                        <hr>
-                        <div>
-                            <h1>행사 시간</h1><br>
-                            <div class="row mb-3">
-                                <label for="conStartDate" class="col-sm-2 col-form-label">행사 시작일</label>
-                                <div class="col-sm-10">
-                                  <input type="date" class="form-control" id="conStartDate" name="conStartDate">
-                                </div>
-                              </div>
-                              <div class="row mb-3">
-                                <label for="conEndDate" class="col-sm-2 col-form-label">행사 종료일</label>
-                                <div class="col-sm-10">
-                                  <input type="date" class="form-control" id="conEndDate" name="conEndDate">
-                                </div>
-                              </div>
-                              <div class="row mb-3">
-                                <label for="subStartDate" class="col-sm-2 col-form-label">모집 시작일
-                                </label>
-                                <div class="col-sm-10">
-                                  <input type="date" class="form-control" id="subStartDate" name="subStartDate">
-                                </div>
-                              </div>
-                              <div class="row mb-3">
-                                <label for="subEndDate" class="col-sm-2 col-form-label">모집 종료일
-                                </label>
-                                <div class="col-sm-10">
-                                  <input type="date" class="form-control" id="subEndDate" name="subEndDate">
-                                </div>
-                              </div>
-                        </div><hr>
-                       <div>
-                        <h1>행사 장소</h1><br>
-                        <fieldset class="row mb-3">
-                            <legend class="col-form-label col-sm-2 pt-0"></legend>
+                            <legend
+                                class="col-form-label col-sm-2 pt-0"
+                            ></legend>
                             <div class="col-sm-5">
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" name="isOnoff" id="isOnoff" value="true" checked >
-                                <label class="form-check-label" for="isOnoff" >
-                                  오프라인
-                                </label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" name="isOnoff" id="isOnoff" value="false">
-                                <label class="form-check-label" for="isOnoff">
-                                  온라인
-                                </label>
-                              </div>
-                              <div class="row mb-3">
-                                <label for="conLocation" class="col-sm-2 col-form-label">주소</label>
-                                <div class="col-sm-10">
-                                  <input type="text" class="form-control" id="conLocation" name="conLocation">
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="isOnoff"
+                                        id="offline"
+                                        value="true"
+                                        checked
+                                    />
+                                    <label
+                                        class="form-check-label"
+                                        for="offline"
+                                    >
+                                        오프라인
+                                    </label>
                                 </div>
-                              </div>
-                              
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="isOnoff"
+                                        id="online"
+                                        value="false"
+                                    />
+                                    <label
+                                        class="form-check-label"
+                                        for="online"
+                                    >
+                                        온라인
+                                    </label>
+                                </div>
+                                <div class="row mb-3">
+                                    <label
+                                        for="conLocation"
+                                        class="col-sm-2 col-form-label"
+                                        >주소</label
+                                    >
+                                    <div class="col-sm-10">
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="conLocation"
+                                            name="conLocation"
+                                        />
+                                    </div>
+                                </div>
                             </div>
-                          </fieldset>
-                       </div><hr>
-                        
-                     <h1>행사 가격 및 규모</h1> <br>
+                        </fieldset>
+                    </div>
+                    <hr />
 
-                        <div class="row mb-3">
-                            <label for="conPrice" class="col-sm-2 col-form-label">참여 가격</label>
-                            <div class="col-sm-10">
-                              <input type="text" class="form-control" id="conPrice" name="conPrice">
-                            </div>
-                          </div>
-                          <div class="row mb-3">
-                            <label for="conPeople" class="col-sm-2 col-form-label">규모</label>
-                            <div class="col-sm-10">
-                              <input type="number" class="form-control" id="conPeople" name="conPeople">
-                            </div>
-                          </div>
-                          
-                          
-                          <button type="submit" class="btn btn-primary" onclick="registerConference()">행사 등록</button>
+                    <h1>행사 가격 및 규모</h1>
+                    <br />
 
-                      </form>
-                
-                     </div>
-                      <br>
-                  <div>
-                    
-                
+                    <div class="row mb-3">
+                        <!-- 제윤: 무료일 때 isFree: true, 유료일 때 isFree: false -->
+                        <fieldset class="row mb-3">
+                            <legend
+                                class="col-form-label col-sm-2 pt-0"
+                            ></legend>
+                            <div class="col-sm-5">
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="conIsfreeOption"
+                                        id="paidRadio"
+                                        value="false"
+                                    />
+                                    <label
+                                        class="form-check-label"
+                                        for="paidRadio"
+                                    >
+                                        유료
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input
+                                        class="form-check-input"
+                                        type="radio"
+                                        name="conIsfreeOption"
+                                        id="freeRadio"
+                                        value="true"
+                                        checked
+                                    />
+                                    <label
+                                        class="form-check-label"
+                                        for="freeRadio"
+                                    >
+                                        무료
+                                    </label>
+                                </div>
+                                <div class="row mb-3">
+                                    <label
+                                        for="conIsfree"
+                                        class="col-sm-2 col-form-label"
+                                        >가격</label
+                                    >
+                                    <div class="col-sm-10">
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="conIsfree"
+                                            name="conIsfree"
+                                            disabled
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="conPeople" class="col-sm-2 col-form-label"
+                            >규모</label
+                        >
+                        <div class="col-sm-10">
+                            <input
+                                type="number"
+                                class="form-control"
+                                id="conPeople"
+                                name="conPeople"
+                            />
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        onclick="registerConference()"
+                    >
+                        행사 등록
+                    </button>
+                </form>
             </div>
-            <br>
+            <br />
+            <div></div>
+            <br />
         </main>
         <%- include('../../common/footer.ejs') %>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-            $(document).ready(function(){
- 
-          // 라디오버튼 클릭시 이벤트 발생
-        $("input:radio[name=isOnoff]").click(function(){
+            $(document).ready(function () {
+                // 라디오 버튼의 변경 이벤트를 감지
+                $('input[type="radio"][name="isOnoff"]').change(function () {
+                    // 선택한 라디오 버튼의 값을 가져옴
+                    var selectedValue = $(this).val();
 
-         if($("input[name=isOnoff]:checked").val() == "true"){
-         $("input:text[name=conLocation]").attr("disabled",false);
-         // radio 버튼의 value 값이 1이라면 활성화
+                    // 만약 "오프라인"을 선택했을 때
+                    if (selectedValue === 'true') {
+                        // 주소 입력 필드를 활성화
+                        $('#conLocation').prop('disabled', false);
+                    } else if (selectedValue === 'false') {
+                        // "온라인"을 선택했을 때
+                        // 주소 입력 필드를 비활성화하고 값을 지움
+                        $('#conLocation').prop('disabled', true).val('');
+                    }
+                });
+            });
 
-         }else if($("input[name=isOnoff]:checked").val() == "false"){
-               $("input:text[name=conLocation]").attr("disabled",true);
-         // radio 버튼의 value 값이 0이라면 비활성화
-        }
-        function registerConference(){
-          const form=document.forms['register-conference']
-          axios({
+            $(document).ready(function () {
+                // 라디오 버튼의 변경 이벤트를 감지
+                $('input[type="radio"][name="conIsfreeOption"]').change(
+                    function () {
+                        // 선택한 라디오 버튼의 값을 가져옴
+                        let selectedValue = $(this).val();
+
+                        let isFree = selectedValue === 'true';
+
+                        // 만약 "유료"를 선택했을 때
+                        if (selectedValue === 'false') {
+                            // 가격 입력 필드를 활성화
+                            $('#conIsfree').prop('disabled', false);
+                        } else if (selectedValue === 'true') {
+                            // "무료"를 선택했을 때
+                            // 가격 입력 필드를 비활성화하고 값을 지움
+                            $('#conIsfree').prop('disabled', true).val('');
+                        }
+                        console.log('isFree 값: ', isFree);
+                    }
+                );
+            });
+        </script>
+        <script>
+            function registerConference() {
+                const form = document.forms['register-conference'];
+                axios({
                     method: 'POST',
                     url: '/write',
                     data: {
                         conTitle: form.conTitle.value,
                         conCompany: form.conCompany.value,
-                        conStartDate: form. conStartDate.value,
+                        conStartDate: form.conStartDate.value,
                         conEndDate: form.conEndDate.value,
                         subStartDate: form.subStartDate.value,
                         subEndDate: form.subEndDate.value,
                         isOnoff: form.isOnoff.value,
-                        conLocation:form.conLocation.value,
-                        conCategory:form.conCategory.value,
-                        conIsfree:form.conIsfree.value,
-                        conPrice:form.conPrice.value,
-                        conPeople:form.conPeople.value,
-                        conCompanyUrl:form.conCompanyUrl.value,
-
+                        conLocation: form.conLocation.value,
+                        conCategory: form.conCategory.value,
+                        conIsfree: form.conIsfree.value,
+                        conPrice: form.conPrice.value,
+                        conPeople: form.conPeople.value,
+                        conCompanyUrl: form.conCompanyUrl.value,
                     },
                 }).then((res) => {
                     console.log(res.data);
                     if (res) {
-                        alert(
-                           '행사등록이 완료되었습니다!'
-                        );
+                        alert('행사등록이 완료되었습니다!');
                     }
                 });
-
-        }
- });
-});
-
+            }
         </script>
     </body>
 </html>
