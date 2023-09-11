@@ -21,9 +21,6 @@ exports.postLogin = async (req, res) => {
             where: { user_id: userId },
         });
         if (result != null) {
-            console.log('userPw =', userPw);
-            console.log('result.dataValues.user_pw =', result.dataValues.user_pw);
-            console.log('compareFumc res =', compareFunc(userPw, result.dataValues.user_pw));
             if (compareFunc(userPw, result.dataValues.user_pw) === true) {
                 req.session.userInfo = {
                     id: result.dataValues.id,

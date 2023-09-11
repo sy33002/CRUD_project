@@ -38,7 +38,6 @@
                         userPw: formLogin.userPw.value,
                     },
                 }).then((res) => {
-                    console.log('res: ', res);
                     if(res.data.result === false){
                         if (res.data.idCheck === true && res.data.pwCheck === false) {
                             alert('비밀번호가 틀렸습니다.');
