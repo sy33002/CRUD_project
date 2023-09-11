@@ -202,9 +202,11 @@
                         }
                     );
                 });
+                
 
                 function registerConference() {
                     const form = document.forms['register-conference'];
+                    
                     axios({
                         method: 'POST',
                         url: '/event/write',
@@ -219,7 +221,7 @@
                             conLocation: form.conLocation.value,
                             conCategory: form.conCategory.value,
                             conIsfree: form.conIsfree.value,
-                            conPrice: form.conPrice.value,
+                            conPrice: form.conPrice.value==''?0:form.conPrice.value,
                             conPeople: form.conPeople.value,
                             conCompanyUrl: form.conCompanyUrl.value,
                         },

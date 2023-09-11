@@ -82,6 +82,14 @@ const Conference = (Sequelize, sequelize) => {
                 type: DataTypes.INTEGER,
                 allowNull: true,
             },
+            con_detail: {
+                type: DataTypes.TEXT('medium'),
+                allowNull: false,
+            },
+            con_image: {
+                type: DataTypes.STRING(100),
+                allowNull: false,
+            },
         },
         {
             tableName: 'conference_info',
