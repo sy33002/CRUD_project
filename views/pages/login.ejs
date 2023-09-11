@@ -26,7 +26,6 @@
         <script>
             function login() {
                 const form = document.forms['formLogin'];
-
                 // if(!form.checkValidity()){
                 //     form.reportValidity();
                 //     return;
@@ -39,15 +38,17 @@
                         userPw: formLogin.userPw.value,
                     },
                 }).then((res) => {
-                    return res.data;
-                }).then((result, data)=>{
-                    if(result){
-                        alert('로그인 성공!!')
-                        const loginInfo = document.forms[]
+                    console.log('res: ', res);
+                    if(res.data.result === false){
+                        if (res.data.idCheck === true && res.data.pwCheck === false) {
+                            alert('비밀번호가 틀렸습니다.');
+                        } else if (res.data.idCheck === false){
+                            alert('존재하는 사용자가 아닙니다.')
+                        }
                     } else{
-                        alert('로그인 실패!!');
+                        alert('로그인 성공!');
                         // 제윤: 추후에 아이디 오류, 비번 오류, 서버 오류 추가 예정
-                        formLogin.reset();
+                        document.location.href = '/';
                     }
                 })
             }
@@ -70,6 +71,6 @@
       }
  -->
 
-<!-- 유저가 아이디는 맞고, 비밀번호가 틀렸다면 {result:false, message: '비밀번호가 틀렸습니다.'} 전달 -->
-<!-- 유저가 아이디가 틀렸다면 {result:false, message: '존재하는 사용자가 없습니다.'} 전달 -->
+<!-- 유저가 아이디는 맞고, 비밀번호가 틀렸다면 {result:false, idCheck: true, pwCheck: false, message: '비밀번호가 틀렸습니다.'} 전달 -->
+<!-- 유저가 아이디가 틀렸다면 {result:false, idCheck: false,  pwCheck: false, message: '존재하는 사용자가 없습니다.'} 전달 -->
 <!-- 만약 DB문제로 전혀 동작하지 못했다면 { result: false, message: '서버 오류가 발생했습니다.' } 전달 -->

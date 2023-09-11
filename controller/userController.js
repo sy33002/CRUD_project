@@ -21,7 +21,10 @@ exports.postLogin = async (req, res) => {
             where: { user_id: userId },
         });
         if (result != null) {
-            if (compareFunc(userPw, result.user_pw) === true) {
+            console.log('userPw =', userPw);
+            console.log('result.dataValues.user_pw =', result.dataValues.user_pw);
+            console.log('compareFumc res =', compareFunc(userPw, result.dataValues.user_pw));
+            if (compareFunc(userPw, result.dataValues.user_pw) === true) {
                 req.session.userInfo = {
                     id: result.dataValues.id,
                     userName: result.dataValues.user_name,
@@ -34,10 +37,10 @@ exports.postLogin = async (req, res) => {
                 const data = req.session.userInfo;
                 res.send({ result: true, data });
             } else {
-                res.send({ result: false, message: '비밀번호가 틀렸습니다.' });
+                res.send({ result: false, idCheck: true, pwCheck: false });
             }
         } else {
-            res.send({ result: false, message: '존재하는 사용자가 없습니다.' });
+            res.send({ result: false, idCheck: false,  pwCheck: false });
         }
     } catch (error) {
         console.error('로그인 시 DB 조회 오류:', error);
@@ -60,26 +63,34 @@ exports.postLogout = async (req, res) => {
 
 //회원가입 id 중복체크
 exports.checkId = async (req, res) => {
-    const { id } = req.params;
+    console.log('req.params:', req.params);
+    const { userId } = req.params;
+    console.log('userId:', userId);
     const result = await User.findOne({
-        where: { user_id: id },
+        where: { user_id: userId },
     });
+    console.log('result:', result);
     if (result != null) {
-        res.send({ result: true, message: '이미 존재하는 아이디 입니다!' });
+        res.send({ result: true });
     } else {
-        res.send({ result: false, message: '사용 가능한 아이디입니다!' });
+        res.send({ result: false });
     }
 };
 
 //회원가입
 exports.postSignup = async (req, res) => {
     try {
-        const { userId, userPw, userName, userAddr, userEmail, userCategory } =
-            req.body;
+        const { 
+            userId, 
+            userPw, 
+            userName, 
+            userAddr, 
+            userEmail, 
+            userCategory } = req.body;
         pw = bcryptPassword(userPw);
         const result = await User.create({
             user_id: userId,
-            user_pw: userPw,
+            user_pw: pw,
             user_name: userName,
             user_addr: userAddr,
             user_email: userEmail,
