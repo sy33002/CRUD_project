@@ -64,6 +64,7 @@ const Conference = (Sequelize, sequelize) => {
             //     con_price int,
             con_price: {
                 type: DataTypes.INTEGER,
+                defaultValue: 0,
                 allowNull: true,
             },
             //     con_people int,
