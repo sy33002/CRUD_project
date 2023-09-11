@@ -13,11 +13,16 @@
     <body>
         <h2>Single file upload</h2>
         <p>하나의 인풋에 하나의 파일을 업로드</p>
-        <form action="/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="userFile" /><br />
-        <input type="text" name="title" /><br /><br />
-        <!-- <input type="hidden" name="path" value="review"> -->
-        <button type="submit">업로드</button>
+        <form action="/upload/review" method="post" enctype="multipart/form-data">
+            <input type="file" name="userFile" /><br />
+            <input type="text" name="title" /><br /><br />
+            <button type="submit">업로드</button>
+        </form>
+        
+        <form action="/test" method="post">
+            <input type="text" name="title" /><br /><br />
+            <button type="submit">전송</button>
+
         </form>
         <%- include('../../common/header.ejs') %>
         <main>
