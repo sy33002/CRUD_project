@@ -33,6 +33,7 @@ const ConferenceReview = (Sequelize, sequelize) => {
                 // int
                 type: DataTypes.INTEGER,
                 allowNull: true,
+                defaultValue: 0,
             },
         },
         {

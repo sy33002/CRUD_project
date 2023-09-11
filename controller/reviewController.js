@@ -35,3 +35,14 @@ exports.deleteReview = async (req, res) => {
 exports.getReviewWrite = (req, res) => {
     res.render('review/write');
 };
+
+exports.getReviewDetail = async (req, res) => {
+    console.log(req.params);
+    const result = await ConferenceReview.findOne({
+        where: { re_id: req.params.id },
+    });
+    res.render('review/detail', {
+        review: result,
+    });
+    console.log(result);
+};
