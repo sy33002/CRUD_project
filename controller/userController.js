@@ -33,7 +33,6 @@ exports.getManager = async (req, res) => {
 // 관리자페이지 버튼
 exports.postManager = async (req, res) => {
     const data = req.session.userInfo;
-    console.log('managerData=', data);
     if (data.userIsManager === 1) {
         res.send(true);
     } else{
