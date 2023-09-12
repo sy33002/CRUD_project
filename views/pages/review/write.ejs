@@ -6,6 +6,8 @@
         <link rel="stylesheet" href="/static/css/pages/review/write.css" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
         <script type="module" src="/static/js/editor.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.js"></script>
 </head>
 
 <body>
@@ -77,12 +79,19 @@
                     <textarea id="post-title-inp" class="textarea_tit" placeholder="제목을 입력하세요"></textarea>
                 </div>
                 <div class="my-editor" data-tiptap-editor></div>
+                <form action="/upload/review" method="post" class="dropzone" id="fileUploadForm"
+                    style="display: none;;">
+                    <div class="fallback">
+                        <input type="file" name="conferenceFile">
+                    </div>
+                </form>
                 <button type="button" class="btn btn-primary submit">
                     전송
                 </button>
             </div>
         </main>
         <%- include('../../common/footer.ejs') %>
+
 </body>
 
 </html>
