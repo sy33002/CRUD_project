@@ -15,17 +15,30 @@ exports.getSignup = (req, res) => {
 // MyPage 렌더
 exports.getProfile = async (req, res) => {
     const data = req.session.userInfo;
-    console.log('data: ',data);
     if (data) {
         const userData = await User.findOne({
             where: { user_id: data.userId },
         });
-        console.log('userData: ', userData);
         res.render('myPage/profile', {data: userData});
     } else {
         res.render('404');
     }
 };
+
+// 관리자 페이지 render
+exports.getManager = async (req, res) => {
+    res.render('myPage/manager');
+}
+
+// 관리자페이지 버튼
+exports.postManager = async (req, res) => {
+    const data = req.session.userInfo;
+    if (data.userIsManager === 1) {
+        res.send(true);
+    } else{
+        res.send(false);
+    }
+}
 
 // 로그인
 exports.postLogin = async (req, res) => {
@@ -44,6 +57,7 @@ exports.postLogin = async (req, res) => {
                     userAddr: result.dataValues.user_addr,
                     userEmail: result.dataValues.user_email,
                     userCategory: result.dataValues.user_category,
+                    userIsManager: result.dataValues.user_isManager,
                 };
                 const data = req.session.userInfo;
                 res.send({ result: true, data });
@@ -103,6 +117,7 @@ exports.postSignup = async (req, res) => {
             user_addr: userAddr,
             user_email: userEmail,
             user_category: userCategory,
+            user_isManager: 0,
         });
         res.send({ result, message: `${result.dataValues.user_id}님! CRUD에 오신 것을 환영합니다.` });
     } catch (error) {
