@@ -7,11 +7,13 @@
 .my-editor h2 {
     font-size: 28px;
     font-weight: bold;
+    margin: 15px 0;
 }
 
 .my-editor h3 {
     font-size: 22px;
     font-weight: bold;
+    margin: 10px 0;
 }
 
 .my-editor em {
@@ -24,4 +26,8 @@
 
 .my-editor img {
     width: 100%;
+}
+
+.my-editor p {
+    line-height: 2;
 }
