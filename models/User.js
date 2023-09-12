@@ -33,6 +33,10 @@ const User = (Sequelize, sequelize) => {
                 type: DataTypes.STRING(20),
                 allowNull: true,
             },
+            user_isManager: {
+                type: Boolean,
+                allowNull: false,
+            }
         },
         {
             tableName: 'user',

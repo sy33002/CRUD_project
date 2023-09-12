@@ -14,4 +14,7 @@ router.get('/myPage', controller.getProfile); // 마이페이지 render
 router.post('/updateProfile', controller.updateProfile); // 마이페이지 render
 // router.delete('/destroy', controller.deleteUser);
 
+router.get('/manager', controller.getManager); // 관리자페이지 render
+router.post('/manager', controller.postManager); // 관리자페이지 render
+
 module.exports = router;
