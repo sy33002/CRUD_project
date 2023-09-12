@@ -26,10 +26,10 @@ import TextAlign from 'https://esm.sh/@tiptap/extension-text-align';
         element: document.querySelector('[data-tiptap-editor]'),
         extensions: [
             StarterKit,
-            Image,
             TextAlign.configure({
                 types: ['heading', 'paragraph'],
             }),
+            Image,
         ],
         content: '',
         onUpdate({ editor }) {
@@ -151,73 +151,48 @@ import TextAlign from 'https://esm.sh/@tiptap/extension-text-align';
         editor.chain().focus().setTextAlign('right').run();
     });
 
-    const file = document.querySelector('#fileInput');
+    const file = document.querySelector('#fileUploadForm');
 
+    Dropzone.autoDiscover = false; // deprecated 된 옵션. false로 해놓는걸 공식문서에서 명시
+
+    // 이미지 등록
+    const myDropzone = new Dropzone('#fileUploadForm', {
+        paramName: 'conferenceFile', // 서버에서 사용할 파일 필드 이름
+        maxFilesize: 5, // 최대 파일 크기 (MB)
+        acceptedFiles: '.jpg, .jpeg, .png, .gif', // 허용하는 파일 확장자
+        addRemoveLinks: true, // 업로드된 파일 삭제 링크 표시
+        maxFiles: 1, // 최대 파일 수를 1로 설정
+        success: function (file, response) {
+            // console.log(file);
+            // console.log(response);
+            const imagePath = response.file.path;
+            const url = '/' + imagePath.replace('public/', 'static/'); // public 경로를 static으로 변경
+            if (url) {
+                editor.chain().focus().setImage({ src: url }).run();
+            }
+        },
+        error: function (file, errorMessage) {
+            alert('파일 업로드 실패: ' + errorMessage);
+        },
+    });
+    // 파일 업로드 제한 해제 (추가 파일 업로드 가능하도록)
+    myDropzone.on('complete', function (file) {
+        this.removeFile(file);
+    });
     buttons.image.addEventListener('click', () => {
         file.click();
-        fileInput.addEventListener('change', async () => {
-            try {
-                const formData = new FormData();
-                console.dir(fileInput.files);
-                formData.append('conferenceFile', fileInput.files[0]);
-                const imageUploadRes = await axios({
-                    method: 'POST',
-                    url: '/upload/review',
-                    data: formData,
-                    headers: {
-                        // 수정: 'header' 대신 'headers'를 사용
-                        'Content-Type': 'multipart/form-data', // enctype="multipart/form-data"
-                    },
-                });
-
-                const imageUploadData = await imageUploadRes.data;
-                if (!imageUploadData.result) {
-                    alert('이미지 등록이 실패 되었습니다.');
-                    return;
-                }
-
-                console.log(imageUploadData.file);
-
-                const imagePath = imageUploadData.file.path;
-                const url = '/' + imagePath.replace('public/', 'static/'); // public 경로를 static으로 변경
-                if (url) {
-                    editor.chain().focus().setImage({ src: url }).run();
-                }
-            } catch (error) {
-                console.error('이미지 업로드 오류:', error);
-                alert('이미지 업로드 중 오류가 발생했습니다.');
-            }
-        });
+        // editor.commands.insertContent('<h1>Example Text</h1>');
     });
-
-    // file.addEventListener('change', async () => {
-    //     const formData = new FormData();
-    //     const file = document.querySelector('#fileInput');
-    //     formData.append('conferenceFile', file.files[0]);
-
-    //     const imageUploadRes = await axios({
-    //         method: 'POST',
-    //         url: '/upload/review',
-    //         data: formData,
-    //         header: {
-    //             'Content-Type': 'multipart/form-data', // enctype="multipart/form-data"
-    //         },
-    //     });
-
-    //     const imageUploadData = await imageUploadRes.data;
-    //     if (!imageUploadData.result)
-    //         return alert('이미지 등록이 실패 되었습니다.');
-    //     const imagePath = imageUploadData.file.path;
-    //     const host = window.location.host;
-    //     const newImagePath =
-    //         host + '/' + imagePath.replace('public/', 'static/'); // public 경로를 static으로 변경
-    // });
 
     const submitBtn = document.querySelector('.submit');
 
     submitBtn.addEventListener('click', () => {
         const title = document.querySelector('#post-title-inp').value;
         const contents = editor.getHTML();
+
+        if (title.trim() === '') return alert('제목을 작성해주세요.');
+        if (contents.trim() === '' || contents.trim() === '<p></p>')
+            return alert('내용을 작성해주세요.');
 
         axios({
             method: 'POST',
@@ -230,6 +205,7 @@ import TextAlign from 'https://esm.sh/@tiptap/extension-text-align';
             .then((res) => {
                 if (res.statusText === 'OK') {
                     document.querySelector('#post-title-inp').value = '';
+                    alert('게시글 등록이 완료되었습니다.');
                     document.location.href = '/review';
                 }
             })
