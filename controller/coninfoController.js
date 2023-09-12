@@ -5,9 +5,15 @@ function getUserIP(req) {
     const addr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     return addr;
 }
-exports.getConferenceList = (req, res) => {
-    const conference = Conference.findAll();
-    res.render('event/list', { conference });
+exports.getConferenceList = async (req, res) => {
+    try {
+        const eventList = await Conference.findAll();
+
+        res.render('event/list', { eventList });
+    } catch (err) {
+        console.log(err);
+        res.send('server error');
+    }
 };
 exports.getConferenceWrite = (req, res) => {
     res.render('event/write');
@@ -88,4 +94,54 @@ exports.updateConferenceCnt = async (req, res) => {
     }
     res.render({ conCount: Conference.con_count });
     //ejs에서 conCount라는 변수를 써서 조회수를 보이게 하면 될 것 같습니다..
+};
+
+exports.postConferenceEdit = async (req, res) => {
+    const {
+        conTitle,
+        conStartDate,
+        conEndDate,
+        subStartDate,
+        subEndDate,
+        isOnoff,
+        conLocation,
+        conCategory,
+        conCompany,
+        conIsfree,
+        conPrice,
+        conPeople,
+        conCompanyUrl,
+        conCount,
+        conImagePath,
+        conDetail,
+    } = req.body;
+
+    try {
+        const result = await Conference.update(
+            {
+                con_title: conTitle,
+                con_start_date: conStartDate,
+                con_end_date: conEndDate,
+                sub_start_date: subStartDate,
+                sub_end_date: subEndDate,
+                is_onoff: isOnoff,
+                con_location: conLocation,
+                con_category: conCategory,
+                con_company: conCompany,
+                con_isfree: conIsfree,
+                con_price: conPrice,
+                con_people: conPeople,
+                con_company_url: conCompanyUrl,
+                con_count: conCount,
+                con_detail: conDetail,
+                con_image: conImagePath,
+            },
+            {
+                where: { con_id: req.body.conId },
+            }
+        );
+        res.send({ result });
+    } catch (err) {
+        console.error(err);
+    }
 };

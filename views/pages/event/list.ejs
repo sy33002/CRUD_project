@@ -8,7 +8,17 @@
 <body>
     <%- include('../../common/header.ejs') %>
         <main>행사 목록 페이지</main>
+        
+        <ul>
+            <% eventList.forEach(event => { %>
+              <li><%= event.con_title %> - <%= event.con_location %></li>
+            <% }); %>
+        </ul>
+        
         <%- include('../../common/footer.ejs') %>
 </body>
-
+<script>
+   
+    console.log(res.eventList)
+</script>
 </html>
