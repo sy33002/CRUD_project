@@ -35,6 +35,10 @@ const ConferenceReview = (Sequelize, sequelize) => {
                 allowNull: true,
                 defaultValue: 0,
             },
+            user_id: {
+                type: DataTypes.STRING(30),
+                allowNull: true,
+            },
         },
         {
             tableName: 'con_review', // 실제 db 테이블명
