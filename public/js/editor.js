@@ -151,12 +151,67 @@ import TextAlign from 'https://esm.sh/@tiptap/extension-text-align';
         editor.chain().focus().setTextAlign('right').run();
     });
 
+    const file = document.querySelector('#fileInput');
+
     buttons.image.addEventListener('click', () => {
-        const url = window.prompt('URL');
-        if (url) {
-            editor.chain().focus().setImage({ src: url }).run();
-        }
+        file.click();
+        fileInput.addEventListener('change', async () => {
+            try {
+                const formData = new FormData();
+                console.dir(fileInput.files);
+                formData.append('conferenceFile', fileInput.files[0]);
+                const imageUploadRes = await axios({
+                    method: 'POST',
+                    url: '/upload/review',
+                    data: formData,
+                    headers: {
+                        // 수정: 'header' 대신 'headers'를 사용
+                        'Content-Type': 'multipart/form-data', // enctype="multipart/form-data"
+                    },
+                });
+
+                const imageUploadData = await imageUploadRes.data;
+                if (!imageUploadData.result) {
+                    alert('이미지 등록이 실패 되었습니다.');
+                    return;
+                }
+
+                console.log(imageUploadData.file);
+
+                const imagePath = imageUploadData.file.path;
+                const url = '/' + imagePath.replace('public/', 'static/'); // public 경로를 static으로 변경
+                if (url) {
+                    editor.chain().focus().setImage({ src: url }).run();
+                }
+            } catch (error) {
+                console.error('이미지 업로드 오류:', error);
+                alert('이미지 업로드 중 오류가 발생했습니다.');
+            }
+        });
     });
+
+    // file.addEventListener('change', async () => {
+    //     const formData = new FormData();
+    //     const file = document.querySelector('#fileInput');
+    //     formData.append('conferenceFile', file.files[0]);
+
+    //     const imageUploadRes = await axios({
+    //         method: 'POST',
+    //         url: '/upload/review',
+    //         data: formData,
+    //         header: {
+    //             'Content-Type': 'multipart/form-data', // enctype="multipart/form-data"
+    //         },
+    //     });
+
+    //     const imageUploadData = await imageUploadRes.data;
+    //     if (!imageUploadData.result)
+    //         return alert('이미지 등록이 실패 되었습니다.');
+    //     const imagePath = imageUploadData.file.path;
+    //     const host = window.location.host;
+    //     const newImagePath =
+    //         host + '/' + imagePath.replace('public/', 'static/'); // public 경로를 static으로 변경
+    // });
 
     const submitBtn = document.querySelector('.submit');
 
