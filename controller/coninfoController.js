@@ -7,9 +7,8 @@ function getUserIP(req) {
 }
 exports.getConferenceList = async (req, res) => {
     try {
-        const eventList = await Conference.findAll();
-
-        res.render('event/list', { eventList });
+        const conference = await Conference.findAll();
+    res.render('event/list', { conference });
     } catch (err) {
         console.log(err);
         res.send('server error');
