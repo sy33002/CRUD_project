@@ -7,15 +7,16 @@ const fs = require('fs');
 const uploadDetail = multer({
     storage: multer.diskStorage({
         destination(req, file, done) {
-            //Directory 존재 여부 체크
-            const directory = fs.existsSync(
-                `./public/images/upload/${req.params.path}`
-            ); //디렉토리 경로 입력
+            const folderPath = `public/images/upload/${req.params.path}`;
 
-            //보통 Directory가 없다면 새로 만들어야 한다면 아래와 같은 코드를 만들어 사용할 수 있다.
-            if (!directory)
-                fs.mkdirSync(`./public/images/upload/${req.params.path}`);
-            done(null, `public/images/upload/${req.params.path}`);
+            fs.readdir(folderPath, (err) => {
+                // uploads 폴더 없으면 생성
+                if (err) {
+                    fs.mkdirSync(folderPath, { recursive: true });
+                }
+
+                done(null, `public/images/upload/${req.params.path}`);
+            });
         },
         filename(req, file, done) {
             const ext = path.extname(file.originalname);
