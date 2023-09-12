@@ -1,3 +1,6 @@
+const Filter = require('badwords-ko'); // npm install badwords-ko --save
+const filter = new Filter();
+
 const { ConferenceReview, Sequelize } = require('../models'); // ../models/index.js
 const { Op } = require('sequelize');
 
@@ -19,8 +22,12 @@ exports.postReview = async (req, res) => {
     const result = await ConferenceReview.create({
         con_id: 1,
         re_title: req.body.subject,
-        re_content: req.body.content,
+        re_content: filter.clean(req.body.content),
         re_date: Date.now(),
+        user_id:
+            req.session && req.session.userInfo
+                ? req.session.userInfo.userId
+                : '익명사용자',
     });
     res.send(result);
 };
@@ -33,6 +40,7 @@ exports.deleteReview = async (req, res) => {
 };
 
 exports.getReviewWrite = (req, res) => {
+    console.log(req.session);
     res.render('review/write');
 };
 
@@ -41,6 +49,9 @@ exports.getReviewDetail = async (req, res) => {
     const result = await ConferenceReview.findOne({
         where: { re_id: req.params.id },
     });
+    if (result) {
+        await result.increment('re_count', { by: 1 });
+    }
     res.render('review/detail', {
         review: result,
     });
