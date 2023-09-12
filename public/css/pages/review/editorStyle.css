@@ -21,3 +21,7 @@
 .my-editor img.ProseMirror-selectednode {
     outline: 3px solid #68cef8;
 }
+
+.my-editor img {
+    width: 100%;
+}
