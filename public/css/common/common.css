@@ -15,12 +15,19 @@ header {
     position: sticky;
     top: 0;
     z-index: 9999;
-    background: var(--color-black);
     border-bottom: 1px solid #222;
 }
 
-header ul li a {
-    color: var(--color-green);
+header .bg-body-tertiary {
+    background: var(--color-black) !important;
+}
+
+header a {
+    color: var(--color-green) !important;
+}
+
+header .navbar-expand-lg .navbar-collapse {
+    justify-content: space-between;
 }
 
 main {
@@ -28,13 +35,36 @@ main {
 }
 
 footer {
-    background-color: var(--color-black);
-    align-content: center;
-    justify-content: flex-start;
-    align-items: center;
+    background-color: rgb(17, 17, 17);
+    padding: 60px 0 30px;
+}
+
+footer .wrap {
+    display: flex;
+    gap: 40px;
+}
+
+footer .wrap .depth1_list {
+    width: 300px;
+}
+
+footer .wrap .depth1_list .depth2_title {
+    margin-bottom: 15px;
+    color: #fff;
+    font-weight: 600;
+}
+
+footer .wrap .depth2_list {
     display: flex;
     flex-direction: column;
-    position: relative;
+    gap: 10px;
+    color: #999;
+}
+
+@media all and (max-width: 810px) {
+    footer .wrap {
+        flex-direction: column;
+    }
 }
 
 .wrap {
