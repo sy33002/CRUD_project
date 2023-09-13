@@ -57,7 +57,7 @@
                             <button
                                 type="button"
                                 class="btn btn-sm"
-                                onclick="searchCon()"
+                                onclick="filterCon()"
                             >
                                 적용
                             </button>
@@ -72,8 +72,9 @@
                                     name="conCategory"
                                     id="web"
                                     checked
+                                    value="web"
                                 />
-                                <label class="form-check-label" for="web">
+                                <label class="form-check-label" for="web" >
                                     웹 개발
                                 </label>
                             </div>
@@ -83,6 +84,7 @@
                                     type="radio"
                                     name="conCategory"
                                     id="AI"
+                                    value="AI"
                                 />
                                 <label class="form-check-label" for="AI">
                                     AI
@@ -94,6 +96,7 @@
                                     type="radio"
                                     name="conCategory"
                                     id="git"
+                                    value="git"
                                 />
                                 <label class="form-check-label" for="git">
                                     git
@@ -106,6 +109,7 @@
                             <select
                                 class="form-select"
                                 aria-label="Default select example"
+                                name="conLocation"
                             >
                                 <option value="서울/경기/인천" selected>
                                     서울/경기/인천
@@ -132,6 +136,7 @@
                                     type="radio"
                                     name="isOnoff"
                                     id="allOnoff"
+                                    value="2"
                                 />
                                 <label class="form-check-label" for="allOnoff">
                                     전체
@@ -143,9 +148,10 @@
                                     type="radio"
                                     name="isOnoff"
                                     id="online"
+                                    value="online"
                                     checked
                                 />
-                                <label class="form-check-label" for="online">
+                                <label class="form-check-label" for="0">
                                     온라인
                                 </label>
                             </div>
@@ -155,6 +161,7 @@
                                     type="radio"
                                     name="isOnoff"
                                     id="offline"
+                                    value="1"
                                     checked
                                 />
                                 <label class="form-check-label" for="offline">
@@ -171,6 +178,7 @@
                                     type="radio"
                                     name="conIsfree"
                                     id="conIsfree"
+                                    value="2"
                                 />
                                 <label class="form-check-label" for="conIsfree">
                                     전체
@@ -183,6 +191,7 @@
                                     name="conIsfree"
                                     id="free"
                                     checked
+                                    value="0"
                                 />
                                 <label class="form-check-label" for="free">
                                     무료
@@ -195,6 +204,7 @@
                                     name="conIsfree"
                                     id="paid"
                                     checked
+                                    value="1"
                                 />
                                 <label class="form-check-label" for="paid">
                                     유료
@@ -236,20 +246,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title">
                                             <ul>
-                                                <% conference.forEach((event) =>
-                                                { %>
-                                                <li>
-                                                    <%= event.con_title %> - <%=
-                                                    event.con_location %>-<%=
-                                                    event.con_price %> - <%=
-                                                    event.is_onoff %> - <%=
-                                                    event.con_isfree%> - <%=
-                                                    event.con_count%>
-                                                </li>
-                                                <% }); %>
-                                            </ul>
-                                        </h5>
-
+                                               
                                         <p class="card-text">
                                             This is a wider card with supporting
                                             text below as a natural lead-in to
@@ -446,31 +443,20 @@
         </main>
         <%- include('../../common/footer.ejs') %>
         <script>
-            async function searchCon() {
+            async function filterCon() {
                 const form = document.forms['searchCon'];
-
                 const formData = new FormData();
                 const conferenceRes = await axios({
                     method: 'POST',
-                    url: '/event/list',
+                    url: '/event',
                     data: {
-                        conTitle: form.conTitle.value,
-                        conStartDate: form.conStartDate.value,
-                        conEndDate: form.conEndDate.value,
-                        subStartDate: form.subStartDate.value,
-                        subEndDate: form.subEndDate.value,
                         isOnoff: form.isOnoff.value,
                         conLocation: form.conLocation.value,
                         conCategory: form.conCategory.value,
                         conIsfree: form.conIsfree.value,
-                        conPrice:
-                            form.conPrice.value === ''
-                                ? 0
-                                : form.conPrice.value, // 빈값 일 때는 0 보내기 (이렇게 안하면 db 충돌남)
-                        conCompanyUrl: form.conCompanyUrl.value,
-                    },
+                       },
                 });
-                const conferenceData = await conferenceRes.data;
+                //const conferenceData = await conferenceRes.data;
             }
 
             $(document).ready(function () {
