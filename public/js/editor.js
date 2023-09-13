@@ -206,7 +206,7 @@ import TextAlign from 'https://esm.sh/@tiptap/extension-text-align';
                 if (res.statusText === 'OK') {
                     document.querySelector('#post-title-inp').value = '';
                     alert('게시글 등록이 완료되었습니다.');
-                    document.location.href = '/review';
+                    document.location.href = '/review?page=1';
                 }
             })
             .catch((err) => console.error(err));
