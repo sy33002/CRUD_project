@@ -21,12 +21,36 @@ main h1 {
     padding: 100px 0;
 }
 
-.section2 .title {
+.section2 .con_top {
+    position: relative;
+    margin-bottom: 80px;
+}
+
+.section2 .con_top .title {
     font-size: 37px;
     font-weight: 600;
     color: var(--color-green);
     text-align: center;
-    margin-bottom: 80px;
+}
+
+.section2 .con_top .more {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+}
+
+.section2 .con_top .more a {
+    display: flex;
+    align-items: center;
+    color: var(--color-green);
+    gap: 5px;
+}
+
+.section2 .con_top .more .more_icon {
+    width: 16px;
 }
 
 .section2 .con_list {
@@ -71,6 +95,26 @@ main h1 {
     color: var(--color-white);
 }
 
+@media all and (max-width: 810px) {
+    .section2 .con_list {
+        grid-template-columns: repeat(1, minmax(200px, 1fr));
+    }
+}
+
+@media all and (max-width: 640px) {
+    .section2 .con_top .title {
+        font-size: 28px;
+        text-align: left;
+    }
+
+    .section2 .con_top .more a {
+        font-size: 14px;
+    }
+
+    .section2 .con_top .more .more_icon {
+        width: 14px;
+    }
+}
 /* best 리뷰 */
 
 .section3 {
@@ -81,6 +125,29 @@ main h1 {
 
 .section4 {
     padding: 100px 0;
+}
+
+.section4 .review_top {
+    position: relative;
+}
+
+.section4 .review_top .more {
+    position: absolute;
+    top: -60px;
+    right: 0;
+    display: flex;
+    align-items: center;
+}
+
+.section4 .review_top .more a {
+    display: flex;
+    align-items: center;
+    color: var(--color-white);
+    gap: 5px;
+}
+
+.section4 .review_top .more .more_icon {
+    width: 16px;
 }
 
 .section4 .review_list {
@@ -100,6 +167,24 @@ main h1 {
     width: 100%;
     border-radius: 20px;
     color: var(--color-white);
+}
+
+.section4 .review_list .item .user_info {
+    margin-bottom: 20px;
+}
+
+.section4 .review_list .item .user_info span {
+    display: block;
+}
+
+.section4 .review_list .item .user_info .user_name {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.section4 .review_list .item .user_info .user_id {
+    font-size: 14px;
+    color: rgb(153, 153, 153);
 }
 
 .section4 .review_list .item p {
@@ -129,6 +214,16 @@ main h1 {
 
 .section4 .list2 .item:nth-child(2) {
     background-color: #ff2079;
+}
+
+@media all and (max-width: 810px) {
+    .section4 .review_list {
+        flex-direction: column;
+    }
+    .section4 .review_list .list {
+        flex: none;
+        width: 100%;
+    }
 }
 
 /* FAQ */
