@@ -1,14 +1,78 @@
-const { Conference, Sequelize } = require('../models'); // ../models/index.js
+const { Conference, Sequelize } = require('../models');
+const { Op } = require('sequelize');
+
+// ../models/index.js
 const cookieParser = require('cookie-parser');
 //ip를 가져오는 함수
 function getUserIP(req) {
     const addr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     return addr;
 }
+async function searchConferenceList(req, res) {
+    const { isOnoff, conLocation, conCategory, conIsfree } = req.query;
+    console.log('req query =====', req.query);
+    if (isOnoff === 2 && conIsfree === 2) {
+        //오프라인 온라인에서 전체를 선택하면
+        const conferenceRes = await Conference.findAll({
+            where: {
+                [Op.and]: [
+                    { con_location: conLocation },
+                    { con_category: conCategory },
+                ],
+            },
+        });
+        return conferenceRes;
+    } else if (isOnoff === 2) {
+        const conferenceRes = await Conference.findAll({
+            where: {
+                [Op.and]: [
+                    { con_location: conLocation },
+                    { con_category: conCategory },
+                    { con_isfree: conIsfree },
+                ],
+            },
+        });
+        return conferenceRes;
+    } else if (conIsfree === 2) {
+        const conferenceRes = await Conference.findAll({
+            where: {
+                [Op.and]: [
+                    { is_onoff: isOnoff },
+                    { con_location: conLocation },
+                    { con_category: conCategory },
+                ],
+            },
+        });
+        return conferenceRes;
+    } else {
+        const conferenceRes = await Conference.findAll({
+            where: {
+                [Op.and]: [
+                    { is_onoff: isOnoff },
+                    { con_location: conLocation },
+                    { con_category: conCategory },
+                    { con_isfree: conIsfree },
+                ],
+            },
+        });
+        return conferenceRes;
+    }
+}
 exports.getConferenceList = async (req, res) => {
     try {
-        const conference = await Conference.findAll();
-    res.render('event/list', { conference });
+        let conference;
+        console.log(req.body);
+        if (!Object.keys(req.query).length) {
+            //req.query가 빈 객체면
+
+            conference = await Conference.findAll();
+            return res.render('event/list', { conference });
+        } else {
+            console.log('ddddddd');
+            conference = await searchConferenceList(req);
+            // console.log('>>>>>>>', conference);
+            return res.send({ conference });
+        }
     } catch (err) {
         console.log(err);
         res.send('server error');
@@ -19,9 +83,10 @@ exports.getConferenceWrite = (req, res) => {
 };
 
 exports.getConferenceDetail = async (req, res) => {
-    const { conId } = req.params;
+    const { id } = req.query;
+    console.log(id);
     const result = await Conference.findOne({
-        where: { con_id: conId },
+        where: { con_id: id },
     });
 
     res.render(`event/detail`, { result });
@@ -144,3 +209,4 @@ exports.postConferenceEdit = async (req, res) => {
         console.error(err);
     }
 };
+//아골 험슗 먼둘어서 exports.getConferenceList여기에 넣어야함..
