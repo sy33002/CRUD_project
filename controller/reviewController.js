@@ -5,12 +5,18 @@ const { ConferenceReview, Sequelize } = require('../models'); // ../models/index
 const { Op } = require('sequelize');
 
 exports.getReview = async (req, res) => {
-    // res.render('review/list');
+    const pageNum = req.query.page; // 페이지 번호
+    const limit = 5; // 보여줄 리뷰 수
+    const offset = 0 + (pageNum - 1) * limit; // 몇 번 부터 보여줄지
     try {
-        const reviews = await ConferenceReview.findAll();
-        res.render('review/list', {
-            result: reviews,
+        const count = await ConferenceReview.count();
+        const result = await ConferenceReview.findAll({
+            offset: offset,
+            limit: limit,
+            order: [['re_id', 'DESC']],
         });
+        res.render('review/list', { result: result, count: count });
+        console.log(count);
     } catch (err) {
         console.log(err);
         res.send('Server Error');

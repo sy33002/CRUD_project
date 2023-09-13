@@ -16,5 +16,6 @@ router.post('/updateProfile', controller.updateProfile); // 마이페이지 rend
 
 router.get('/manager', controller.getManager); // 관리자페이지 render
 router.post('/manager', controller.postManager); // 관리자페이지 render
+router.get('/manager/allUser', controller.getUser); // 관리자페이지 전체 유저 조회
 
 module.exports = router;
