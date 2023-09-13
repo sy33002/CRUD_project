@@ -12,13 +12,22 @@
                 <label for="userId">ID</label>
                 <input id="userId" type="text" name="userId" required /><br />
                 <button type="button" onclick="idCheck()">중복 아이디 체크</button><br/>
-                <label for="userPw">Password</label>
+                <label for="userPw">비밀번호</label>
                 <input
                     id="userPw"
                     type="password"
                     name="userPw"
                     required
                 /><br />
+                <label for="userPwCheck">비밀번호 확인</label>
+                <input
+                    id="userPwCheck"
+                    type="password"
+                    name="userPwCheck"
+                    required
+                /><br />
+                <div id="passwordMatchMessage"></div>
+                <div class="userPwCheckMsg"></div>
                 <label for="userName">이름</label>
                 <input
                     id="userName"
@@ -45,15 +54,15 @@
                         placeholder="1234 Main St"
                     />
                 </div> -->
-                <div class="col-12">
-                    <label for="userPost" class="form-label">userPost</label>
+                <!-- <div class="col-12"> -->
+                    <!-- <label for="userPost" class="form-label">userPost</label>
                     <input
                         type="text"
                         class="form-control"
                         id="userPost"
                         placeholder="Apartment, studio, or floor"
                     />
-                </div>
+                </div> -->
                 <!-- <div class="col-md-6">
                     <label for="inputCity" class="form-label">City</label>
                     <input type="text" class="form-control" id="inputCity" />
@@ -104,6 +113,7 @@
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
         <script>
+            // 회원가입 등록 버튼
             function register() {
                 const form = document.forms['form_register'];
                 //if (!form.checkValidity()) {
@@ -132,6 +142,7 @@
                 //   document.location.href = '/signin'; // ->/login으로?
                 //});
             }
+            // 아이디 중복 체크 버튼
             function idCheck() {
                 const form = document.forms['form_register'];
                 axios({
@@ -143,26 +154,29 @@
                         alert('이미 존재하는 아이디입니다.');
                     } else if (res.data.result === false) {
                         alert('사용 가능한 아이디입니다.');
-                    } 
-                    // else {
-                        // alert('서버 오류가 발생했습니다.');
-                    // }
+                    } else {
+                        alert('서버 오류가 발생했습니다.');
+                    }
                 });
             }
-
-                //.then(() => {
-                //   document.location.href = '/signin'; // ->/login으로?
-                //});
             
-            // 지형: 아이디 중복 체크는 'id'변수로 받겠습니다. (라우터에서 /:id로 넘기기 때문)
-            // 이미 아이디가 있는 경우: { result: true, message: '이미 존재하는 아이디 입니다!'}
-            // 아이디가 DB에 없는 경우: {result: false, message: '사용 가능한 아이디입니다!'}
+            // 비밀번호 일치 동적 폼
+            const passwordInput = document.getElementById('userPw');
+            const passwordCheckInput = document.getElementById('userPwCheck');
+            const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+            function checkPasswordMatch() {
+                const password = passwordInput.value;
+                const confirmPassword = passwordCheckInput.value;
 
-            // 회원가입 완료 버튼을 눌렀을 경우:
-            // 회원가입 변수명 : userId, userPw, userName, userAddr, userEmail, userCategory
-            // 회원가입 후 성공 시: {result, message: '회원가입 성공!'}
-            // result에는 회원가입 내역들(userId,userPw,userName 등)이 들어있습니다.
-            // 회원가입 DB 미성공 시: { result: false, message: '오류가 발생했습니다.' }
+                if (password === confirmPassword) {
+                    passwordMatchMessage.textContent = '비밀번호가 일치합니다.';
+                    passwordMatchMessage.style.color = 'green';
+                } else {
+                    passwordMatchMessage.textContent = '비밀번호가 일치하지 않습니다.';
+                    passwordMatchMessage.style.color = 'red';
+                }
+            }
+            passwordCheckInput.addEventListener('blur', checkPasswordMatch);
         </script>
     </body>
 </html>

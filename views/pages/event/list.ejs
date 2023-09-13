@@ -445,7 +445,6 @@
         <script>
             async function filterCon() {
                 const form = document.forms['searchCon'];
-                const formData = new FormData();
                 const conferenceRes = await axios({
                     method: 'POST',
                     url: '/event',
@@ -454,10 +453,11 @@
                         conLocation: form.conLocation.value,
                         conCategory: form.conCategory.value,
                         conIsfree: form.conIsfree.value,
-                       },
+                    },
                 });
-                //const conferenceData = await conferenceRes.data;
-            }
+                    // 서버 응답 처리 코드 추가
+                    console.log(conferenceRes.data); // 서버 응답 데이터를 콘솔에 출력 또는 필요한 처리 수행
+                }
 
             $(document).ready(function () {
                 $('#calendar').fullCalendar({

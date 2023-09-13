@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../../common/head.ejs', {title: '유저 조회 페이지' }) %>
+    </head>
+    <body>
+        <h1>유저 페이지</h1>
+        <table border="1" cellspacing="0">
+            <thead>
+              <tr>
+                <th>user_id</th>
+                <th>user_name</th>
+                <th>user_email</th>
+                <th>user_addr</th>
+                <th>user_category</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% for (let user of users) { %>
+              <tr id="tr_<%= user.id %>">
+                <td><%= user.user_id %></td>
+                <td><%= user.user_name %></td>
+                <td><%= user.user_email %></td>
+                <td><%= user.user_addr %></td>
+                <td><%= user.user_category %></td>
+                <td><%= user.user_isManager %></td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+    </body>
+</html>

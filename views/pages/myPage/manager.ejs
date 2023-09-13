@@ -5,7 +5,31 @@
     </head>
     <body>
         <h1>관리자 페이지</h1>
-        <button type="button" onclick="">전체 유저 보기</button>
-        <button type="button" onclick="">행사 등록 신청 승인 페이지</button>
+        <button type="button" onclick="getUser()">전체 유저 보기</button>
+        <!-- 전체 유저 불러오는 allUser.ejs로 이동 -->
+        <button type="button" onclick="getConforenceRegister()">행사 등록 신청 승인 페이지</button>
+        <!-- 동적 폼으로 행사 신청 불러오기 -->
     </body>
+    <script>
+        function getUser() {
+                axios({
+                    method: 'GET',
+                    url: '/manager/allUser',
+                }).then((res) => {
+                    if (res.status === 200) {
+                        window.location.href = '/manager/allUser';
+                    }
+                })
+        };
+        function getConforenceRegister() {
+            axios({
+                method: 'GET',
+                url: '/manager/getConforenceRegister',
+            }).then((res) => {
+                if (res.status === 200) {
+                    window.location.href = '/manager/getConforenceRegister';
+                }
+            })
+        };
+    </script>
 </html>
