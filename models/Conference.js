@@ -80,6 +80,7 @@ const Conference = (Sequelize, sequelize) => {
             //     con_count int
             con_count: {
                 type: DataTypes.INTEGER,
+                defaultValue: 0,
                 allowNull: true,
             },
             con_detail: {
@@ -89,6 +90,11 @@ const Conference = (Sequelize, sequelize) => {
             con_image: {
                 type: DataTypes.STRING(100),
                 allowNull: false,
+            },
+            is_agreed: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                allowNull: true,
             },
         },
         {
