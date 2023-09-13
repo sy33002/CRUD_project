@@ -61,6 +61,7 @@
             </select>
 
             <button type="button" onclick="userUpdate()">회원정보 수정</button>
+            <button type="button" onclick="logout()">로그아웃</button>
             <% if (data.user_isManager == 1) {%>
             <button type="button" onclick="managerPage()">관리자 페이지 이동하기</a></button>
             <%}%>
@@ -80,9 +81,11 @@
                         userCategory: form.userCategory.value,
                     },
                 }).then((res) => {
-                    console.log(res);
-                    if (res) {
+                    if (res.data.result === true) {
                         alert('회원정보 수정 성공!');
+                        document.location.href = "/";
+                    } else {
+                        alert('회원정보 수정 실패 ㅠㅠ')
                     }
                 });
             };
@@ -101,15 +104,30 @@
                         userCategory: form.userCategory.value,
                     },
                 }).then((res) => {
-                    console.log(res);
                     if (res.data === true) {
-                        window.location.href = "/manager";
+                        document.location.href = "/manager";
                     } else {
                         alert('관리자가 아닙니다!') 
-                        window.location.href = "/";
+                        document.location.href = "/";
                     }
                 })
-            }
+            };
+            function logout() {
+                const form = document.forms['form_userUpdate'];
+                axios({
+                    method: 'POST',
+                    url: '/logout',
+                    data: {
+                        userId: form.userId.value,
+                        userPw: form.userPw.value,
+                    },
+                }).then((res) => {
+                    if (res) {
+                        alert('로그아웃 성공!');
+                        document.location.href = "/";
+                    }
+                });
+            };
         </script>
     </body>
 </html>

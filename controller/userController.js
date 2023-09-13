@@ -40,6 +40,13 @@ exports.postManager = async (req, res) => {
     }
 }
 
+// 관리자 페이지에서 전체 유저 보기
+exports.getUser = async (req, res) => {
+    const users = await User.findAll();
+    res.render('myPage/allUser', {users});
+}
+
+
 // 로그인
 exports.postLogin = async (req, res) => {
     const { userId, userPw } = req.body;
@@ -131,19 +138,38 @@ exports.postSignup = async (req, res) => {
 
 // profile update
 exports.updateProfile = async (req, res) => {
-    const pw = bcryptPassword(req.body.userPw);
-    const result = await User.update({
-        user_pw : pw, 
-        user_name : req.body.userName, 
-        user_addr : req.body.userAddr, 
-        user_email : req.body.userEmail, 
-        user_category : req.body.userCategory,
-      }, {
-        where: {user_id: req.body.userId}
-      });
-      console.log('result = ', result);
-      res.send({result: true})
+    const data = req.session.userInfo;
+    let result;
+    
+    if (data.userPw === req.body.userPw) { // 프로필 수정에서 비번 변경 안했다면,
+        result = await User.update({
+            user_name : req.body.userName, 
+            user_addr : req.body.userAddr, 
+            user_email : req.body.userEmail, 
+            user_category : req.body.userCategory,
+          }, {
+            where: {user_id: req.body.userId}
+          });
+    } else { // 프로필 수정에서 비번 변경 했다면,
+        const pw = bcryptPassword(req.body.userPw);
+        result = await User.update({
+            user_pw : pw, 
+            user_name : req.body.userName, 
+            user_addr : req.body.userAddr, 
+            user_email : req.body.userEmail, 
+            user_category : req.body.userCategory,
+          }, {
+            where: {user_id: req.body.userId}
+          });
+    }
+    
+    if (result > 0) {
+        res.send({ result: true })
+    } else {
+        res.send({ result: false });
+    }
 };
+
 
 // 비밀번호 암호화 함수
 const saltRounds = 5;
