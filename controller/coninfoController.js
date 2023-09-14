@@ -9,89 +9,120 @@ function getUserIP(req) {
     return addr;
 }
 
-async function searchConferenceList(req, res) {
-    const { isOnoff, conLocation, conCategory, conIsfree } = req.body;
-    console.log('isOnoff>>>>>>>>>>>>>>', isOnoff);
-    if (
-        isOnoff === undefined ||
-        conLocation === undefined ||
-        conCategory === undefined ||
-        conIsfree === undefined
-    ) {
-        console.log('없음');
-    }
-    if (isOnoff === 2 && conIsfree === 2) {
-        //오프라인 온라인에서 전체를 선택하면
-        console.log('전체');
-        const conferenceRes = await Conference.findAll({
-            where: {
-                [Op.and]: [
-                    { con_location: conLocation },
-                    { con_category: conCategory },
-                ],
-            },
-        });
-        return conferenceRes;
-    } else if (isOnoff === 2) {
-        console.log('isOnoff === 2');
-        const conferenceRes = await Conference.findAll({
-            where: {
-                [Op.and]: [
-                    { con_location: conLocation },
-                    { con_category: conCategory },
-                    { con_isfree: conIsfree },
-                ],
-            },
-        });
-        return conferenceRes;
-    } else if (conIsfree === 2) {
-        console.log('conIsfree === 2');
-        const conferenceRes = await Conference.findAll({
-            where: {
-                [Op.and]: [
-                    { is_onoff: isOnoff },
-                    { con_location: conLocation },
-                    { con_category: conCategory },
-                ],
-            },
-        });
-        return conferenceRes;
-    } else {
-        console.log('else');
-        const conferenceRes = await Conference.findAll({
-            where: {
-                [Op.and]: [
-                    { is_onoff: isOnoff },
-                    { con_location: conLocation },
-                    { con_category: conCategory },
-                    { con_isfree: conIsfree },
-                ],
-            },
-        });
-        return conferenceRes;
-    }
-}
+// async function searchConferenceList(req, res) {
+//     const { isOnoff, conLocation, conCategory, conIsfree } = req.body;
+//     console.log('isOnoff>>>>>>>>>>>>>>', isOnoff);
+//     if (
+//         isOnoff === undefined ||
+//         conLocation === undefined ||
+//         conCategory === undefined ||
+//         conIsfree === undefined
+//     ) {
+//         console.log('없음');
+//     }
+//     if (isOnoff === 2 && conIsfree === 2) {
+//         //오프라인 온라인에서 전체를 선택하면
+//         console.log('전체');
+//         const conferenceRes = await Conference.findAll({
+//             where: {
+//                 [Op.and]: [
+//                     { con_location: conLocation },
+//                     { con_category: conCategory },
+//                 ],
+//             },
+//         });
+//         return conferenceRes;
+//     } else if (isOnoff === 2) {
+//         console.log('isOnoff === 2');
+//         const conferenceRes = await Conference.findAll({
+//             where: {
+//                 [Op.and]: [
+//                     { con_location: conLocation },
+//                     { con_category: conCategory },
+//                     { con_isfree: conIsfree },
+//                 ],
+//             },
+//         });
+//         return conferenceRes;
+//     } else if (conIsfree === 2) {
+//         console.log('conIsfree === 2');
+//         const conferenceRes = await Conference.findAll({
+//             where: {
+//                 [Op.and]: [
+//                     { is_onoff: isOnoff },
+//                     { con_location: conLocation },
+//                     { con_category: conCategory },
+//                 ],
+//             },
+//         });
+//         return conferenceRes;
+//     } else {
+//         console.log('else');
+//         const conferenceRes = await Conference.findAll({
+//             where: {
+//                 [Op.and]: [
+//                     { is_onoff: isOnoff },
+//                     { con_location: conLocation },
+//                     { con_category: conCategory },
+//                     { con_isfree: conIsfree },
+//                 ],
+//             },
+//         });
+//         return conferenceRes;
+//     }
+// }
 
+// exports.getConferenceList = async (req, res) => {
+//     try {
+//         let conference;
+//         console.log('req.body22222====', req.body);
+//         if (!Object.keys(req.body).length) {
+//             //req.query가 빈 객체면
+
+//             conference = await Conference.findAll();
+//             return res.render('event/list');
+//         } else {
+//             console.log('ddddddd');
+//             conference = await searchConferenceList(req);
+//             console.log('>>>>>>>', conference);
+//             return res.send({ conference });
+//         }
+//     } catch (err) {
+//         console.log(err);
+//         res.send('server error');
+//     }
+// };
+
+// 순수 렌더 역할만
 exports.getConferenceList = async (req, res) => {
     try {
-        let conference;
-        console.log('req.body22222====', req.body);
-        if (!Object.keys(req.body).length) {
-            //req.query가 빈 객체면
-
-            conference = await Conference.findAll();
-            return res.render('event/list');
-        } else {
-            console.log('ddddddd');
-            conference = await searchConferenceList(req);
-            console.log('>>>>>>>', conference);
-            return res.send({ conference });
-        }
+        return res.render('event/list');
     } catch (err) {
         console.log(err);
         res.send('server error');
     }
 };
+
+// 필터링 역할
+exports.postConferenceList = async (req, res) => {
+    try {
+        const { isOnoff, conLocation, conCategory, conIsfree } = req.body;
+        const whereConditions = {};
+        if (isOnoff !== '') whereConditions.is_onoff = isOnoff;
+        if (conLocation !== '') whereConditions.con_location = conLocation;
+        if (conCategory) whereConditions.con_category = conCategory;
+        if (conIsfree !== '') whereConditions.con_isfree = conIsfree;
+        console.log(whereConditions, 'filter 결과 값');
+        const conferenceRes = await Conference.findAll({
+            where: whereConditions,
+        });
+        res.send({ conferenceRes });
+    } catch (err) {
+        console.log(err);
+        res.send('server error');
+    }
+};
+
 exports.getConferenceWrite = (req, res) => {
     res.render('event/write');
 };

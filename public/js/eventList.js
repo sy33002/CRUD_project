@@ -12,8 +12,6 @@ async function getEventList() {
 async function filterCon() {
     const form = document.forms['searchCon'];
 
-    const formData = new FormData();
-
     const conferenceRes = await axios({
         method: 'POST',
         url: '/event',
@@ -24,6 +22,7 @@ async function filterCon() {
             conIsfree: form.conIsfree.value,
         },
     });
+    console.log(conferenceRes.data);
 }
 
 async function calendarDraw() {
