@@ -91,31 +91,19 @@
                         <fieldset class="row mb-3">
                             <legend class="col-form-label col-sm-2 pt-0"></legend>
                             <div class="col-sm-5">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="isOnoff" id="offline"
-                                        value="true" checked />
-                                    <label class="form-check-label" for="offline">
-                                        오프라인
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="isOnoff" id="online"
-                                        value="false" />
-                                    <label class="form-check-label" for="online">
-                                        온라인
-                                    </label>
-                                </div>
-                                <h2>지역</h2>
-                                <select class="form-select" aria-label="Default select example">
-                                    <%- include('../../common/components/conLocationSelect') %>
-                                </select>
+                                <%- include('../../common/components/conIsOnoffRadio', {checked: true}) %>
+                                    <h2>지역</h2>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <%- include('../../common/components/conLocationSelect', {checked: true}) %>
+                                    </select>
 
-                                <div class="row mb-3">
-                                    <label for="conLocation" class="col-sm-2 col-form-label">주소</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="conLocation" name="conLocation" />
+                                    <div class="row mb-3">
+                                        <label for="conLocation" class="col-sm-2 col-form-label">주소</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="conLocation"
+                                                name="conLocation" />
+                                        </div>
                                     </div>
-                                </div>
                             </div>
                         </fieldset>
                     </div>
@@ -125,31 +113,17 @@
                     <br />
 
                     <div class="row mb-3">
-                        <!-- 제윤: 무료일 때 isFree: true, 유료일 때 isFree: false -->
                         <fieldset class="row mb-3">
                             <legend class="col-form-label col-sm-2 pt-0"></legend>
                             <div class="col-sm-5">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="conIsfree" id="paidRadio"
-                                        value="false" />
-                                    <label class="form-check-label" for="paidRadio">
-                                        유료
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="conIsfree" id="freeRadio"
-                                        value="true" checked />
-                                    <label class="form-check-label" for="freeRadio">
-                                        무료
-                                    </label>
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="conPrice" class="col-sm-2 col-form-label">가격</label>
-                                    <div class="col-sm-10">
-                                        <input type="number" class="form-control" id="conPrice" name="conPrice"
-                                            disabled />
+                                <%- include('../../common/components/conIsFreeRadio', {checked: true}) %>
+                                    <div class="row mb-3">
+                                        <label for="conPrice" class="col-sm-2 col-form-label">가격</label>
+                                        <div class="col-sm-10">
+                                            <input type="number" class="form-control" id="conPrice" name="conPrice"
+                                                disabled />
+                                        </div>
                                     </div>
-                                </div>
                             </div>
                         </fieldset>
                     </div>
