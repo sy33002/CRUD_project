@@ -24,14 +24,24 @@
                 <td><%= user.user_addr %></td>
                 <td><%= user.user_category %></td>
                 <td><%= user.user_isManager %></td>
+                <% if (user.user_isManager === 1) { %>
+                  <td>
+                      <button type="button" onclick="revokeManager(this, '<%= user.id %>')">관리자 권한 회수</button>
+                  </td>
+                  <% } else { %>
+                  <td>
+                      <button type="button" onclick="makeManager(this, '<%= user.id %>')">관리자 권한 부여</button>
+                  </td>
+                  <% } %>
                 <td>
                   <button type="button" onclick="deleteUser(this, '<%= user.id%>')">삭제</button>
                 </td>
               </tr>
-              <% } %>
+              <%}%>
             </tbody>
           </table>
       <script>
+        // 유저 삭제
         function deleteUser(obj, userId) {
           if (!confirm('정말로 삭제하나요?')){
             return ;
@@ -40,15 +50,49 @@
             method: 'delete',
             url: '/manager/deleteUser',
             data: {
-              user_id: userId, // 변수 이름 수정
+              user_id: userId,
             },
           }).then ((res) => {
             console.log(res);
             if (res.data === true) {
               alert('유저 삭제 성공!');
-              obj.parentElement.parentElement.remove(); // 해당 행 삭제
+              obj.parentElement.parentElement.remove();
             } else {
               alert ('유저 삭제 실패');
+            }
+          });
+        };
+        // 관리자 권한 부여
+        function makeManager(obj, userId) {
+          axios ({
+            method: 'POST',
+            url: '/manager/makeManager',
+            data: {
+              user_id: userId,
+            },
+          }).then ((res) => {
+            console.log(res);
+            if (res.data === true) {
+              alert('매니저 권한 부여 성공!');
+            } else {
+              alert ('매니저 권한 부여 실패');
+            }
+          });
+        };
+        // 관리자 권한 회수
+        function revokeManager(obj, userId) {
+          axios ({
+            method: 'POST',
+            url: '/manager/revokeManager',
+            data: {
+              user_id: userId,
+            },
+          }).then ((res) => {
+            console.log(res);
+            if (res.data === true) {
+              alert('매니저 권한 회수 성공!');
+            } else {
+              alert ('매니저 권한 회수 실패');
             }
           });
         }

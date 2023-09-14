@@ -18,10 +18,10 @@ router.get('/manager', controller.getManager); // 관리자페이지 render
 router.post('/manager', controller.postManager); // 관리자페이지 render
 router.get('/manager/allUser', controller.getUser); // 관리자페이지 전체 유저 조회
 router.delete('/manager/deleteUser', controller.deleteUser); /// 관리자 페이지 유저 삭제
+router.post('/manager/makeManager', controller.makeManager); /// 관리자 페이지 매니저 권한 부여
+router.post('/manager/revokeManager', controller.revokeManager); /// 관리자 페이지 매니저 권한 회수
 
-
-// 관리자 페이지 승인할 컨퍼런스 목록들
-router.get('/manager/getConferenceRegister', controller.getConforenceRegister);
+router.get('/manager/getConferenceRegister', controller.getConforenceRegister); // 관리자 페이지 승인할 컨퍼런스 목록들
 router.post('/manager/approveConference', controller.approveConference); // 컨퍼런스 승인
 
 
