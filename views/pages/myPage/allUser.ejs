@@ -5,7 +5,7 @@
     </head>
     <body>
         <h1>유저 페이지</h1>
-        <table border="1" cellspacing="0">
+        <table border="1 solid" cellspacing="0">
             <thead>
               <tr>
                 <th>user_id</th>
@@ -24,9 +24,34 @@
                 <td><%= user.user_addr %></td>
                 <td><%= user.user_category %></td>
                 <td><%= user.user_isManager %></td>
+                <td>
+                  <button type="button" onclick="deleteUser(this, '<%= user.id%>')">삭제</button>
+                </td>
               </tr>
               <% } %>
             </tbody>
           </table>
+      <script>
+        function deleteUser(obj, userId) {
+          if (!confirm('정말로 삭제하나요?')){
+            return ;
+          }
+          axios ({
+            method: 'delete',
+            url: '/manager/deleteUser',
+            data: {
+              user_id: userId, // 변수 이름 수정
+            },
+          }).then ((res) => {
+            console.log(res);
+            if (res.data === true) {
+              alert('유저 삭제 성공!');
+              obj.parentElement.parentElement.remove(); // 해당 행 삭제
+            } else {
+              alert ('유저 삭제 실패');
+            }
+          });
+        }
+      </script>
     </body>
 </html>

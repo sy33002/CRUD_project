@@ -17,9 +17,12 @@ router.post('/updateProfile', controller.updateProfile); // 마이페이지 rend
 router.get('/manager', controller.getManager); // 관리자페이지 render
 router.post('/manager', controller.postManager); // 관리자페이지 render
 router.get('/manager/allUser', controller.getUser); // 관리자페이지 전체 유저 조회
+router.delete('/manager/deleteUser', controller.deleteUser); /// 관리자 페이지 유저 삭제
+
 
 // 관리자 페이지 승인할 컨퍼런스 목록들
 router.get('/manager/getConferenceRegister', controller.getConforenceRegister);
 router.post('/manager/approveConference', controller.approveConference); // 컨퍼런스 승인
+
 
 module.exports = router;

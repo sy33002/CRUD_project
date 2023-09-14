@@ -47,6 +47,21 @@ exports.getUser = async (req, res) => {
     res.render('myPage/allUser', {users});
 }
 
+// 관리자 페이지에서 유저 삭제 하기
+exports.deleteUser = async (req, res) => {
+    console.log('req.body.user_id >>>>', req.body.user_id);
+    const result = await User.destroy({
+      where: { id: req.body.user_id },
+    });
+    console.log(result);
+    if (result === 1) {
+        res.send(true);
+        return ;
+    } else{
+        res.send(false);
+    }
+  };
+
 // 관리자 페이지에서 승인해야할 conference 보기
 exports.getConforenceRegister = async (req, res) => {
     try {
@@ -60,6 +75,7 @@ exports.getConforenceRegister = async (req, res) => {
     }
 };
 
+// 관리자 페이지 conference 승인하기
 exports.approveConference = async (req, res) => {
     try {
         const conferences = await Conference.update({
