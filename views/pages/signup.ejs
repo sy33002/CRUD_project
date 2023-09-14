@@ -2,111 +2,189 @@
 <html lang="en">
     <head>
         <%- include('../common/head.ejs', {title: '회원가입'}) %>
+        <link rel="stylesheet" href="/static/css/pages/signup.css" />
     </head>
     <body>
         <%- include('../common/header.ejs') %>
         <main>
-            <h1>회원가입</h1>
-            <!-- 아이디, 비번, 이름, 주소, 메일, 관심분야 -->
-            <form name="form_register">
-                <label for="userId">ID</label>
-                <input id="userId" type="text" name="userId" required /><br />
-                <button type="button" onclick="idCheck()">중복 아이디 체크</button><br/>
-                <label for="userPw">비밀번호</label>
-                <input
-                    id="userPw"
-                    type="password"
-                    name="userPw"
-                    required
-                /><br />
-                <label for="userPwCheck">비밀번호 확인</label>
-                <input
-                    id="userPwCheck"
-                    type="password"
-                    name="userPwCheck"
-                    required
-                /><br />
-                <div id="passwordMatchMessage"></div>
-                <div class="userPwCheckMsg"></div>
-                <label for="userName">이름</label>
-                <input
-                    id="userName"
-                    type="text"
-                    name="userName"
-                    required
-                /><br />
+            <div class="section">
+                <div class="container">
+                    <div class="row full-height justify-content-center">
+                        <div class="col-12 text-center align-self-center py-5">
+                            <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                                <!-- <h4 class="mb-0 pb-3">Flip it!</h4> -->
+                                <!-- <input
+                                    class="checkbox"
+                                    type="checkbox"
+                                    id="reg-log"
+                                    name="reg-log"
+                                /> -->
+                                <label for="reg-log"></label>
+                                <div class="card-3d-wrap mx-auto">
+                                    <div class="card-3d-wrapper">
+                                        <div class="card-front">
+                                            <div class="center-wrap">
+                                                <div
+                                                    class="section text-center"
+                                                >
+                                                    <h6 class="pb-3">
+                                                        <span>회원 가입</span>
+                                                    </h6>
+                                                    <!-- form 시작 -->
+                                                    <form name="form_register">
+                                                        <!-- id -->
+                                                        <div
+                                                            class="form-group userId-flex"
+                                                        >
+                                                            <div>
+                                                                <label
+                                                                    for="userId"
+                                                                ></label>
+                                                                <input
+                                                                    id="userId"
+                                                                    type="text"
+                                                                    name="userId"
+                                                                    class="form-style"
+                                                                    placeholder="ID"
+                                                                    required
+                                                                />
+                                                            </div>
+                                                            <div
+                                                                class="btn-idCheck"
+                                                            >
+                                                                <button
+                                                                    type="button"
+                                                                    class="btn"
+                                                                    onclick="idCheck()"
+                                                                >
+                                                                    중복 아이디
+                                                                    확인
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <!-- password -->
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="userPw"
+                                                            ></label>
+                                                            <input
+                                                                id="userPw"
+                                                                type="password"
+                                                                name="userPw"
+                                                                class="form-style"
+                                                                placeholder="Password"
+                                                                required
+                                                            /><br />
+                                                            <label
+                                                                for="userPwCheck"
+                                                            ></label>
+                                                            <input
+                                                                id="userPwCheck"
+                                                                type="password"
+                                                                name="userPwCheck"
+                                                                class="form-style"
+                                                                placeholder="Re-enter Password"
+                                                                required
+                                                            /><br />
+                                                            <div
+                                                                id="passwordMatchMessage"
+                                                            ></div>
+                                                            <div
+                                                                class="userPwCheckMsg"
+                                                            ></div>
+                                                        </div>
+                                                        <!-- name -->
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="userName"
+                                                            ></label>
+                                                            <input
+                                                                id="userName"
+                                                                type="text"
+                                                                name="userName"
+                                                                class="form-style"
+                                                                placeholder="Name"
+                                                                required
+                                                            />
+                                                        </div>
+                                                        <!-- address -->
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="userAddr"
+                                                            ></label>
+                                                            <input
+                                                                id="userAddr"
+                                                                type="text"
+                                                                name="userAddr"
+                                                                class="form-style"
+                                                                placeholder="Address"
+                                                                required
+                                                            /><br />
+                                                        </div>
+                                                        <!-- email -->
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="userEmail"
+                                                            ></label>
+                                                            <input
+                                                                type="email"
+                                                                id="userEmail"
+                                                                name="userEmail"
+                                                                class="form-style"
+                                                                placeholder="email@example.com"
+                                                            />
+                                                        </div>
+                                                        <!-- category -->
+                                                        <div
+                                                            class="form-group block-category"
+                                                        >
+                                                            <select
+                                                                class="form-style"
+                                                                aria-label="Default select example"
+                                                                name="userCategory"
+                                                            >
+                                                                <option
+                                                                    selected
+                                                                >
+                                                                    관심분야를
+                                                                    선택해주세요.
+                                                                </option>
+                                                                <option
+                                                                    value="ai"
+                                                                >
+                                                                    AI
+                                                                </option>
+                                                                <option
+                                                                    value="web"
+                                                                >
+                                                                    웹 개발
+                                                                </option>
+                                                                <option
+                                                                    value="git"
+                                                                >
+                                                                    git
+                                                                </option>
+                                                            </select>
+                                                        </div>
 
-                <!-- 주소 input 자료 찾아보기 -->
-                <label for="userAddr">주소</label>
-                <input
-                    id="userAddr"
-                    type="text"
-                    name="userAddr"
-                    required
-                /><br />
-                <!-- 부트스트랩 보통 주소가 하나의 input으로 받지 않음... -->
-                <!-- <div class="col-12">
-                    <label for="userAddr2" class="form-label">주소2</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="userAddr2"
-                        placeholder="1234 Main St"
-                    />
-                </div> -->
-                <!-- <div class="col-12"> -->
-                    <!-- <label for="userPost" class="form-label">userPost</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="userPost"
-                        placeholder="Apartment, studio, or floor"
-                    />
-                </div> -->
-                <!-- <div class="col-md-6">
-                    <label for="inputCity" class="form-label">City</label>
-                    <input type="text" class="form-control" id="inputCity" />
+                                                        <button
+                                                            type="button"
+                                                            class="btn mt-4"
+                                                            onclick="register()"
+                                                        >
+                                                            Register
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <label for="inputState" class="form-label">State</label>
-                    <select id="inputState" class="form-select">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label for="inputZip" class="form-label">Zip</label>
-                    <input type="text" class="form-control" id="inputZip" />
-                </div> -->
-
-                <div class="mb-3">
-                    <label for="userEmail" class="form-label"
-                        >Email address</label
-                    >
-                    <input
-                        type="email"
-                        class="form-control"
-                        id="userEmail"
-                        name="userEmail"
-                        placeholder="email@example.com"
-                    />
-                </div>
-
-                <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    name="userCategory"
-                >
-                    <option selected>관심분야를 선택해주세요.</option>
-                    <option value="ai">AI</option>
-                    <option value="web">웹 개발</option>
-                    <option value="git">git</option>
-                </select>
-
-                <button type="button" onclick="register()">회원 가입</button>
-            </form>
-
-            <a href="/signin">Register</a>
+            </div>
         </main>
         <%- include('../common/footer.ejs') %>
 
@@ -131,38 +209,41 @@
                         userEmail: form.userEmail.value,
                         userCategory: form.userCategory.value,
                     },
-                }).then((res) => {
-                    console.log(res);
-                    if (res) {
-                        alert(`${res.data.message}`);
-                    }
-                });
-                //.then(() => {
-                //   document.location.href = '/signin'; // ->/login으로?
-                //});
+                })
+                    .then((res) => {
+                        console.log(res);
+                        if (res) {
+                            alert(`${res.data.message}`);
+                        }
+                    })
+                    .then(() => {
+                        document.location.href = '/login'; // ->/login으로?
+                    });
             }
             // 아이디 중복 체크 버튼
             function idCheck() {
                 const form = document.forms['form_register'];
+                console.log(form.userId.value);
                 axios({
                     method: 'GET',
                     url: `/exists/${form.userId.value}`,
-                    data: {userId: form.userId.value,},   
+                    data: { userId: form.userId.value },
                 }).then((res) => {
+                    console.log(res);
                     if (res.data.result === true) {
                         alert('이미 존재하는 아이디입니다.');
                     } else if (res.data.result === false) {
                         alert('사용 가능한 아이디입니다.');
-                    } else {
-                        alert('서버 오류가 발생했습니다.');
                     }
                 });
             }
-            
+
             // 비밀번호 일치 동적 폼
             const passwordInput = document.getElementById('userPw');
             const passwordCheckInput = document.getElementById('userPwCheck');
-            const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+            const passwordMatchMessage = document.getElementById(
+                'passwordMatchMessage'
+            );
             function checkPasswordMatch() {
                 const password = passwordInput.value;
                 const confirmPassword = passwordCheckInput.value;
@@ -171,7 +252,8 @@
                     passwordMatchMessage.textContent = '비밀번호가 일치합니다.';
                     passwordMatchMessage.style.color = 'green';
                 } else {
-                    passwordMatchMessage.textContent = '비밀번호가 일치하지 않습니다.';
+                    passwordMatchMessage.textContent =
+                        '비밀번호가 일치하지 않습니다.';
                     passwordMatchMessage.style.color = 'red';
                 }
             }
