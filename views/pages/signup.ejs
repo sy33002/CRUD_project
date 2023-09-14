@@ -2,10 +2,12 @@
 <html lang="en">
     <head>
         <%- include('../common/head.ejs', {title: '회원가입'}) %>
+        <link rel="stylesheet" href="/static/css/pages/signup.css" />
     </head>
     <body>
         <%- include('../common/header.ejs') %>
         <main>
+
             <h1>회원가입</h1>
             <!-- 아이디, 비번, 이름, 주소, 메일, 관심분야 -->
             <form name="form_register">
@@ -116,6 +118,7 @@
             </form>
 
             <a href="/signin">Register</a>
+
         </main>
         <%- include('../common/footer.ejs') %>
 
@@ -175,19 +178,23 @@
                         userEmail: form.userEmail.value,
                         userCategory: form.userCategory.value,
                     },
-                }).then((res) => {
-                    console.log(res);
-                    if (res) {
-                        alert(`${res.data.message}`);
-                    }
-                });}
-                //.then(() => {
-                //   document.location.href = '/signin'; // ->/login으로?
-                //});
+
+                })
+                    .then((res) => {
+                        console.log(res);
+                        if (res) {
+                            alert(`${res.data.message}`);
+                        }
+                    })
+                    .then(() => {
+                        document.location.href = '/login'; // ->/login으로?
+                    });
+
             }
             // 아이디 중복 체크 버튼
             function idCheck() {
                 const form = document.forms['form_register'];
+
                 if(!form.userId.value){
                     alert('아이디를 입력하세요!')
                 }
@@ -195,27 +202,33 @@
                 alert('아이디는 대소문자, 숫자로 구성된 4자 이상의 문자여야 합니다.',form.userId.value)
                 form.userId.value=''
                 }else{
+
                 axios({
                     method: 'GET',
                     url: `/exists/${form.userId.value}`,
-                    data: {userId: form.userId.value,},   
+                    data: { userId: form.userId.value },
                 }).then((res) => {
+                    console.log(res);
                     if (res.data.result === true) {
                         alert('이미 존재하는 아이디입니다.');
                         form.userId.value='';
                     } else if (res.data.result === false) {
                         alert('사용 가능한 아이디입니다.');
 
+
                     } else {
                         alert('서버 오류가 발생했습니다.');
+
                     }
                 });}
             }
-            
+
             // 비밀번호 일치 동적 폼
             const passwordInput = document.getElementById('userPw');
             const passwordCheckInput = document.getElementById('userPwCheck');
-            const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+            const passwordMatchMessage = document.getElementById(
+                'passwordMatchMessage'
+            );
             function checkPasswordMatch() {
                 const password = passwordInput.value;
                 const confirmPassword = passwordCheckInput.value;
@@ -224,7 +237,8 @@
                     passwordMatchMessage.textContent = '비밀번호가 일치합니다.';
                     passwordMatchMessage.style.color = 'green';
                 } else {
-                    passwordMatchMessage.textContent = '비밀번호가 일치하지 않습니다.';
+                    passwordMatchMessage.textContent =
+                        '비밀번호가 일치하지 않습니다.';
                     passwordMatchMessage.style.color = 'red';
                 }
             }
