@@ -30,6 +30,18 @@ app.use(
     })
 );
 
+// 모든 페이지에 session을 넣는 미들웨어
+app.use((req, res, next) => {
+    res.locals.userId = "";
+    res.locals.userName = "";
+    if (req.session.userInfo) {
+        const userInfo = req.session.userInfo;
+        res.locals.userId = userInfo.userId;
+        res.locals.userName = userInfo.userName;
+    }
+    next()
+})
+
 const mainRouter = require('./routes/main');
 app.use('/', mainRouter);
 

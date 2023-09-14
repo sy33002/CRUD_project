@@ -27,8 +27,15 @@
                 url: '/manager/getConforenceRegister',
             }).then((res) => {
                 if (res.status === 200) {
-                    window.location.href = '/manager/getConforenceRegister';
+                    
+                    window.location.href = '/manager';
                 }
+            })
+            axios({
+                method:'POST',
+                url:'/manager/getConferenceRegister',
+            }).then((res)=>{
+
             })
         };
     </script>

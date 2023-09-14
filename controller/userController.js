@@ -21,7 +21,7 @@ exports.getProfile = async (req, res) => {
         });
         res.render('myPage/profile', {data: userData});
     } else {
-        res.render('404');
+        res.render('/');
     }
 };
 

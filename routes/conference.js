@@ -17,5 +17,10 @@ router.post('/event/write', controller.postConference);
 
 router.post('/event/:id', controller.postConferenceEdit);
 
+//관리자페이지에서 행사 등록 요청 보낸 것들
+router.post(
+    '/manager/getConferenceRegister',
+    controller.postDisagreeConferenceList
+);
 module.exports = router;
 // 재민님 일단 제가 DB에 컬럼 만들게요~
