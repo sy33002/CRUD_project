@@ -32,7 +32,6 @@ app.use(
 
 // 모든 페이지에 session을 넣는 미들웨어
 app.use((req, res, next) => {
-    console.log("locals >>>", req.session);
     res.locals.userId = "";
     res.locals.userName = "";
     res.locals.userIsManager = 0;
