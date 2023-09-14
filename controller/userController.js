@@ -1,4 +1,5 @@
 const { User, Sequelize } = require('../models');
+const { Conference } = require('../models');
 const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
 
@@ -21,7 +22,7 @@ exports.getProfile = async (req, res) => {
         });
         res.render('myPage/profile', {data: userData});
     } else {
-        res.render('/');
+        res.render('404');
     }
 };
 
@@ -46,6 +47,32 @@ exports.getUser = async (req, res) => {
     res.render('myPage/allUser', {users});
 }
 
+// 관리자 페이지에서 승인해야할 conference 보기
+exports.getConforenceRegister = async (req, res) => {
+    try {
+        const conferences = await Conference.findAll({
+            where: { is_agreed: false },
+        });
+        res.send({ conferences });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Manager Conference Agree Error');
+    }
+};
+
+exports.approveConference = async (req, res) => {
+    try {
+        const conferences = await Conference.update({
+            is_agreed: true,
+          }, {
+            where: {con_id: req.body.conferenceId}
+          });
+        res.send({ conferences });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error: 'Manager Conference Agree Error', message: error.message });
+    }
+};
 
 // 로그인
 exports.postLogin = async (req, res) => {
