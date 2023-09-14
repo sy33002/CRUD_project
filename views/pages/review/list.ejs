@@ -2,6 +2,7 @@
 <html lang="ko">
     <head>
         <%- include('../../common/head.ejs', {title: '리뷰 리스트' }) %>
+        <link rel="stylesheet" href="/static/css/pages/review/list.css" />
     </head>
 
     <body>
@@ -24,8 +25,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% if(result){ %> <%
-                        result.slice().reverse().forEach((val, i)=> { %>
+                        <% if(result){ %> <% result.forEach((val, i)=> { %>
                         <tr class="border-bottom">
                             <th scope="row" class="text-center">
                                 <%= val.re_id %>
@@ -64,6 +64,35 @@
                         <% } %>
                     </tbody>
                 </table>
+                <% const limit = 5; // 현재 보여줄 리뷰 수 %> <% const
+                totalPages = Math.ceil(count / limit); %>
+                <div class="pagination-bar">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a
+                                    class="page-link"
+                                    href="#"
+                                    aria-label="Previous"
+                                >
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <% for (let i = 1; i <= totalPages; i++) { %>
+                            <li class="page-item">
+                                <a class="page-link" href="?page=<%= i %>"
+                                    ><%= i %></a
+                                >
+                            </li>
+                            <% } %>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </main>
         <%- include('../../common/footer.ejs') %>
