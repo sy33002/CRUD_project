@@ -58,7 +58,10 @@
                             <div class="mb-4">
                                 <span class="fw-bold d-block mb-3">지역</span>
                                 <select class="form-select" aria-label="Default select example" name="conLocation">
-                                    <option value="서울/경기/인천" selected>
+                                    <option value="" selected>
+                                        전체
+                                    </option>
+                                    <option value="서울/경기/인천">
                                         서울/경기/인천
                                     </option>
                                     <option value="부산/울산/경남">
@@ -76,22 +79,21 @@
                             <div class="mb-4">
                                 <span class="fw-bold d-block mb-3">참여 방법</span>
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" name="isOnoff" id="allOnoff"
-                                        value="2" />
+                                    <input class="form-check-input" type="radio" name="isOnoff" id="allOnoff" value=""
+                                        checked />
                                     <label class="form-check-label" for="allOnoff">
                                         전체
                                     </label>
                                 </div>
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" name="isOnoff" id="online" value="true"
-                                        checked />
+                                    <input class="form-check-input" type="radio" name="isOnoff" id="online" value="0" />
                                     <label class="form-check-label" for="online">
                                         온라인
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="isOnoff" id="offline"
-                                        value="false" checked />
+                                        value="1" />
                                     <label class="form-check-label" for="offline">
                                         오프라인
                                     </label>
@@ -101,21 +103,19 @@
                                 <span class="fw-bold d-block mb-3">가격</span>
                                 <div class="form-check mb-2">
                                     <input class="form-check-input" type="radio" name="conIsfree" id="conIsfree"
-                                        value="2" />
+                                        value="" checked />
                                     <label class="form-check-label" for="conIsfree">
                                         전체
                                     </label>
                                 </div>
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" name="conIsfree" id="free" checked
-                                        value="0" />
+                                    <input class="form-check-input" type="radio" name="conIsfree" id="free" value="0" />
                                     <label class="form-check-label" for="free">
                                         무료
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="conIsfree" id="paid" checked
-                                        value="1" />
+                                    <input class="form-check-input" type="radio" name="conIsfree" id="paid" value="1" />
                                     <label class="form-check-label" for="paid">
                                         유료
                                     </label>
@@ -146,12 +146,12 @@
                                     <div class="card h-100">
                                         <img src="..." class="card-img-top" alt="..." />
                                         <div class="card-body">
-                                                    <p class="card-text">
-                                                        This is a wider card with supporting
-                                                        text below as a natural lead-in to
-                                                        additional content. This content is
-                                                        a little bit longer.
-                                                    </p>
+                                            <p class="card-text">
+                                                This is a wider card with supporting
+                                                text below as a natural lead-in to
+                                                additional content. This content is
+                                                a little bit longer.
+                                            </p>
                                         </div>
                                         <div class="card-footer">
                                             <small class="text-body-secondary">Last updated 3 mins ago</small>
@@ -163,12 +163,12 @@
                                         <img src="..." class="card-img-top" alt="..." />
                                         <div class="card-body">
                                             <h5 class="card-title">
-                                                    <p class="card-text">
-                                                        This is a wider card with supporting
-                                                        text below as a natural lead-in to
-                                                        additional content. This content is
-                                                        a little bit longer.
-                                                    </p>
+                                                <p class="card-text">
+                                                    This is a wider card with supporting
+                                                    text below as a natural lead-in to
+                                                    additional content. This content is
+                                                    a little bit longer.
+                                                </p>
                                         </div>
                                         <div class="card-footer">
                                             <small class="text-body-secondary">Last updated 3 mins ago</small>
@@ -180,12 +180,12 @@
                                         <img src="..." class="card-img-top" alt="..." />
                                         <div class="card-body">
                                             <h5 class="card-title">
-                                                    <p class="card-text">
-                                                        This is a wider card with supporting
-                                                        text below as a natural lead-in to
-                                                        additional content. This content is
-                                                        a little bit longer.
-                                                    </p>
+                                                <p class="card-text">
+                                                    This is a wider card with supporting
+                                                    text below as a natural lead-in to
+                                                    additional content. This content is
+                                                    a little bit longer.
+                                                </p>
                                         </div>
                                         <div class="card-footer">
                                             <small class="text-body-secondary">Last updated 3 mins ago</small>
@@ -197,12 +197,12 @@
                                         <img src="..." class="card-img-top" alt="..." />
                                         <div class="card-body">
                                             <h5 class="card-title">
-                                                    <p class="card-text">
-                                                        This is a wider card with supporting
-                                                        text below as a natural lead-in to
-                                                        additional content. This content is
-                                                        a little bit longer.
-                                                    </p>
+                                                <p class="card-text">
+                                                    This is a wider card with supporting
+                                                    text below as a natural lead-in to
+                                                    additional content. This content is
+                                                    a little bit longer.
+                                                </p>
                                         </div>
                                         <div class="card-footer">
                                             <small class="text-body-secondary">Last updated 3 mins ago</small>
@@ -214,12 +214,12 @@
                                         <img src="..." class="card-img-top" alt="..." />
                                         <div class="card-body">
                                             <h5 class="card-title">
-                                                    <p class="card-text">
-                                                        This is a wider card with supporting
-                                                        text below as a natural lead-in to
-                                                        additional content. This content is
-                                                        a little bit longer.
-                                                    </p>
+                                                <p class="card-text">
+                                                    This is a wider card with supporting
+                                                    text below as a natural lead-in to
+                                                    additional content. This content is
+                                                    a little bit longer.
+                                                </p>
                                         </div>
                                         <div class="card-footer">
                                             <small class="text-body-secondary">Last updated 3 mins ago</small>
@@ -234,4 +234,5 @@
         </main>
         <%- include('../../common/footer.ejs') %>
 </body>
+
 </html>
