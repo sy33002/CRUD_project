@@ -20,7 +20,7 @@ exports.getProfile = async (req, res) => {
         const userData = await User.findOne({
             where: { user_id: data.userId },
         });
-        res.render('myPage/profile', {data: userData});
+        res.render('myPage/profile', { data: userData });
     } else {
         res.render('login');
     }
@@ -29,75 +29,81 @@ exports.getProfile = async (req, res) => {
 // 관리자 페이지 render
 exports.getManager = async (req, res) => {
     res.render('myPage/manager');
-}
+};
 
 // 관리자페이지 버튼
 exports.postManager = async (req, res) => {
     const data = req.session.userInfo;
     if (data.userIsManager === 1) {
         res.send(true);
-    } else{
+    } else {
         res.send(false);
     }
-}
+};
 
 // 관리자 페이지에서 전체 유저 보기
 exports.getUser = async (req, res) => {
     const users = await User.findAll();
-    res.render('myPage/allUser', {users});
-}
+    res.render('myPage/allUser', { users });
+};
 
 // 관리자 페이지에서 유저 삭제 하기
 exports.deleteUser = async (req, res) => {
     console.log('req.body.user_id >>>>', req.body.user_id);
     const result = await User.destroy({
-      where: { id: req.body.user_id },
+        where: { id: req.body.user_id },
     });
     console.log(result);
     if (result === 1) {
         res.send(true);
-        return ;
-    } else{
+        return;
+    } else {
         res.send(false);
     }
-  };
+};
 
 // 관리자 페이지에서 유저 매니저 권한 승인
 exports.makeManager = async (req, res) => {
     try {
-        const result = await User.update({
-            user_isManager: 1,
-          }, {
-            where: {id: req.body.user_id}
-          });
-          if (result > 0) {
+        const result = await User.update(
+            {
+                user_isManager: 1,
+            },
+            {
+                where: { id: req.body.user_id },
+            }
+        );
+        if (result > 0) {
             res.send(true);
-          } else {
+        } else {
             res.send(false);
-          }
-        } catch (error) {
-            console.error(error);
-            res.status(500).send(false);
         }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(false);
+    }
 };
 
 // 관리자 페이지에서 유저 매니저 권한 회수
 exports.revokeManager = async (req, res) => {
     try {
-        const result = await User.update({
-            user_isManager: 0,
-          }, {
-            where: {id: req.body.user_id}
-          });
-          if (result > 0) {
+        const result = await User.update(
+            {
+                user_isManager: 0,
+            },
+            {
+                where: { id: req.body.user_id },
+            }
+        );
+        if (result > 0) {
             res.send(true);
-          } else {
+        } else {
             res.send(false);
-          }
-        } catch (error) {
-            console.error(error);
-            res.status(500).send(false);
         }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(false);
+    }
 };
 
 // 관리자 페이지에서 승인해야할 conference 보기
@@ -116,15 +122,21 @@ exports.getConforenceRegister = async (req, res) => {
 // 관리자 페이지 conference 승인하기
 exports.approveConference = async (req, res) => {
     try {
-        const conferences = await Conference.update({
-            is_agreed: true,
-          }, {
-            where: {con_id: req.body.conferenceId}
-          });
+        const conferences = await Conference.update(
+            {
+                is_agreed: true,
+            },
+            {
+                where: { con_id: req.body.conferenceId },
+            }
+        );
         res.send({ conferences });
     } catch (error) {
         console.error(error);
-        res.status(500).send({ error: 'Manager Conference Agree Error', message: error.message });
+        res.status(500).send({
+            error: 'Manager Conference Agree Error',
+            message: error.message,
+        });
     }
 };
 
@@ -153,7 +165,7 @@ exports.postLogin = async (req, res) => {
                 res.send({ result: false, idCheck: true, pwCheck: false });
             }
         } else {
-            res.send({ result: false, idCheck: false,  pwCheck: false });
+            res.send({ result: false, idCheck: false, pwCheck: false });
         }
     } catch (error) {
         console.error('로그인 시 DB 조회 오류:', error);
@@ -190,13 +202,8 @@ exports.checkId = async (req, res) => {
 //회원가입
 exports.postSignup = async (req, res) => {
     try {
-        const { 
-            userId, 
-            userPw, 
-            userName, 
-            userAddr, 
-            userEmail, 
-            userCategory } = req.body;
+        const { userId, userPw, userName, userAddr, userEmail, userCategory } =
+            req.body;
         pw = bcryptPassword(userPw);
         const result = await User.create({
             user_id: userId,
@@ -207,7 +214,10 @@ exports.postSignup = async (req, res) => {
             user_category: userCategory,
             user_isManager: 0,
         });
-        res.send({ result, message: `${result.dataValues.user_id}님! CRUD에 오신 것을 환영합니다.` });
+        res.send({
+            result,
+            message: `${result.dataValues.user_id}님! CRUD에 오신 것을 환영합니다.`,
+        });
     } catch (error) {
         console.error('회원가입 시 오류:', error);
         res.status(500).send({
@@ -221,36 +231,43 @@ exports.postSignup = async (req, res) => {
 exports.updateProfile = async (req, res) => {
     const data = req.session.userInfo;
     let result;
-    
-    if (data.userPw === req.body.userPw) { // 프로필 수정에서 비번 변경 안했다면,
-        result = await User.update({
-            user_name : req.body.userName, 
-            user_addr : req.body.userAddr, 
-            user_email : req.body.userEmail, 
-            user_category : req.body.userCategory,
-          }, {
-            where: {user_id: req.body.userId}
-          });
-    } else { // 프로필 수정에서 비번 변경 했다면,
+
+    if (data.userPw === req.body.userPw) {
+        // 프로필 수정에서 비번 변경 안했다면,
+        result = await User.update(
+            {
+                user_name: req.body.userName,
+                user_addr: req.body.userAddr,
+                user_email: req.body.userEmail,
+                user_category: req.body.userCategory,
+            },
+            {
+                where: { user_id: req.body.userId },
+            }
+        );
+    } else {
+        // 프로필 수정에서 비번 변경 했다면,
         const pw = bcryptPassword(req.body.userPw);
-        result = await User.update({
-            user_pw : pw, 
-            user_name : req.body.userName, 
-            user_addr : req.body.userAddr, 
-            user_email : req.body.userEmail, 
-            user_category : req.body.userCategory,
-          }, {
-            where: {user_id: req.body.userId}
-          });
+        result = await User.update(
+            {
+                user_pw: pw,
+                user_name: req.body.userName,
+                user_addr: req.body.userAddr,
+                user_email: req.body.userEmail,
+                user_category: req.body.userCategory,
+            },
+            {
+                where: { user_id: req.body.userId },
+            }
+        );
     }
-    
+
     if (result > 0) {
-        res.send({ result: true })
+        res.send({ result: true });
     } else {
         res.send({ result: false });
     }
 };
-
 
 // 비밀번호 암호화 함수
 const saltRounds = 5;
