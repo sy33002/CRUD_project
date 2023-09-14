@@ -8,11 +8,29 @@ function getUserIP(req) {
     const addr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     return addr;
 }
+
+
 async function searchConferenceList(req, res) {
-    const { isOnoff, conLocation, conCategory, conIsfree } = req.query;
-    console.log('req query =====', req.query);
+    const { isOnoff, conLocation, conCategory, conIsfree } = req.body;
+    console.log('isOnoff>>>>>>>>>>>>>>', isOnoff);
+    if (
+        isOnoff === undefined ||
+        conLocation === undefined ||
+        conCategory === undefined ||
+        conIsfree === undefined
+    ) {
+        console.log('없음');
+    }
     if (isOnoff === 2 && conIsfree === 2) {
         //오프라인 온라인에서 전체를 선택하면
+        console.log('전체');
+
+async function searchConferenceList(req, res) {
+    const { isOnoff, conLocation, conCategory, conIsfree } = req.query;
+    console.log('req body =====', req.body);
+    if (isOnoff === 2 && conIsfree === 2) {
+        //오프라인 온라인에서 전체를 선택하면
+
         const conferenceRes = await Conference.findAll({
             where: {
                 [Op.and]: [
@@ -34,7 +52,9 @@ async function searchConferenceList(req, res) {
         });
         return conferenceRes;
     } else if (conIsfree === 2) {
+
         const conferenceRes = await Conference.findAll({
+
             where: {
                 [Op.and]: [
                     { is_onoff: isOnoff },
@@ -58,19 +78,23 @@ async function searchConferenceList(req, res) {
         return conferenceRes;
     }
 }
+
+
 exports.getConferenceList = async (req, res) => {
     try {
         let conference;
-        console.log(req.body);
-        if (!Object.keys(req.query).length) {
-            //req.query가 빈 객체면
+        console.log('req.body22222====', req.body);
+        if (!Object.keys(req.body).length) {
+
+            //req.body가 빈 객체면
 
             conference = await Conference.findAll();
             return res.render('event/list', { conference });
         } else {
             console.log('ddddddd');
             conference = await searchConferenceList(req);
-            // console.log('>>>>>>>', conference);
+console.log('>>>>>>>', conference);
+
             return res.send({ conference });
         }
     } catch (err) {
@@ -209,4 +233,4 @@ exports.postConferenceEdit = async (req, res) => {
         console.error(err);
     }
 };
-//아골 험슗 먼둘어서 exports.getConferenceList여기에 넣어야함..
+

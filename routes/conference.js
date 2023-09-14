@@ -6,6 +6,8 @@ const controller = require('../controller/coninfoController');
 
 router.get('/event', controller.getConferenceList);
 
+router.post('/event', controller.getConferenceList);
+
 router.get('/event/write', controller.getConferenceWrite);
 
 router.get('/event/:id', controller.getConferenceDetail);
