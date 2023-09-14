@@ -9,8 +9,6 @@ function getUserIP(req) {
     return addr;
 }
 
-
-
 async function searchConferenceList(req, res) {
     const { isOnoff, conLocation, conCategory, conIsfree } = req.body;
     console.log('isOnoff>>>>>>>>>>>>>>', isOnoff);
@@ -25,8 +23,6 @@ async function searchConferenceList(req, res) {
     if (isOnoff === 2 && conIsfree === 2) {
         //오프라인 온라인에서 전체를 선택하면
         console.log('전체');
-
-
         const conferenceRes = await Conference.findAll({
             where: {
                 [Op.and]: [
@@ -37,7 +33,7 @@ async function searchConferenceList(req, res) {
         });
         return conferenceRes;
     } else if (isOnoff === 2) {
-
+        console.log('isOnoff === 2');
         const conferenceRes = await Conference.findAll({
             where: {
                 [Op.and]: [
@@ -49,9 +45,8 @@ async function searchConferenceList(req, res) {
         });
         return conferenceRes;
     } else if (conIsfree === 2) {
-
+        console.log('conIsfree === 2');
         const conferenceRes = await Conference.findAll({
-
             where: {
                 [Op.and]: [
                     { is_onoff: isOnoff },
@@ -62,13 +57,12 @@ async function searchConferenceList(req, res) {
         });
         return conferenceRes;
     } else {
-
+        console.log('else');
         const conferenceRes = await Conference.findAll({
             where: {
                 [Op.and]: [
                     { is_onoff: isOnoff },
                     { con_location: conLocation },
-
                     { con_category: conCategory },
                     { con_isfree: conIsfree },
                 ],
@@ -78,23 +72,19 @@ async function searchConferenceList(req, res) {
     }
 }
 
-
 exports.getConferenceList = async (req, res) => {
     try {
         let conference;
         console.log('req.body22222====', req.body);
         if (!Object.keys(req.body).length) {
+            //req.query가 빈 객체면
 
             conference = await Conference.findAll();
-            return res.render('event/list', { conference });
+            return res.render('event/list');
         } else {
             console.log('ddddddd');
             conference = await searchConferenceList(req);
-
-
             console.log('>>>>>>>', conference);
-
-
             return res.send({ conference });
         }
     } catch (err) {
@@ -107,9 +97,7 @@ exports.getConferenceWrite = (req, res) => {
 };
 
 exports.getConferenceDetail = async (req, res) => {
-
     const { id } = req.params;
-
 
     console.log(id);
     const result = await Conference.findOne({
@@ -239,4 +227,7 @@ exports.postConferenceEdit = async (req, res) => {
         console.error(err);
     }
 };
-
+exports.getConferenceInfo = async (req, res) => {
+    const eventList = await Conference.findAll();
+    res.send({ eventList });
+};
