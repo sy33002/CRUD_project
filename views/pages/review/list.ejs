@@ -15,6 +15,7 @@
                         <col />
                         <col width="110px" />
                         <col width="60px" />
+                        <col width="120px" />
                     </colgroup>
                     <thead>
                         <tr class="border-bottom">
@@ -22,6 +23,7 @@
                             <th scope="col" class="text-center">제목</th>
                             <th scope="col" class="text-center">작성일</th>
                             <th scope="col" class="text-center">조회</th>
+                            <th scope="col" class="text-center">작성자</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -56,6 +58,7 @@
                                 <%= `${year}.${month}.${day}` %> <% } %>
                             </td>
                             <td class="text-center"><%= val.re_count %></td>
+                            <td class="text-center"><%= val.user_id %></td>
                         </tr>
                         <% }) %> <% }else{ %>
                         <tr>
