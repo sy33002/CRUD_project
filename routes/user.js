@@ -4,7 +4,7 @@ const controller = require('../controller/userController');
 
 router.get('/login', controller.getLogin); // 로그인 render
 router.post('/login', controller.postLogin); // 로그인 성공여부
-router.post('/logout', controller.postLogout); // 로그아웃
+router.get('/logout', controller.getLogout); // 로그아웃
 
 router.get('/signup', controller.getSignup); // 회원가입 render
 router.get('/exists/:userId', controller.checkId); // 회원가입 id 중복체크

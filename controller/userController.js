@@ -165,7 +165,7 @@ exports.postLogin = async (req, res) => {
 };
 
 // 로그 아웃
-exports.postLogout = async (req, res) => {
+exports.getLogout = async (req, res) => {
     req.session.destroy((err) => {
         if (err) {
             return;
