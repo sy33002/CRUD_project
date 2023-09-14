@@ -10,6 +10,7 @@ function getUserIP(req) {
 }
 
 
+
 async function searchConferenceList(req, res) {
     const { isOnoff, conLocation, conCategory, conIsfree } = req.body;
     console.log('isOnoff>>>>>>>>>>>>>>', isOnoff);
@@ -25,11 +26,6 @@ async function searchConferenceList(req, res) {
         //오프라인 온라인에서 전체를 선택하면
         console.log('전체');
 
-async function searchConferenceList(req, res) {
-    const { isOnoff, conLocation, conCategory, conIsfree } = req.query;
-    console.log('req body =====', req.body);
-    if (isOnoff === 2 && conIsfree === 2) {
-        //오프라인 온라인에서 전체를 선택하면
 
         const conferenceRes = await Conference.findAll({
             where: {
@@ -41,6 +37,7 @@ async function searchConferenceList(req, res) {
         });
         return conferenceRes;
     } else if (isOnoff === 2) {
+
         const conferenceRes = await Conference.findAll({
             where: {
                 [Op.and]: [
@@ -65,11 +62,13 @@ async function searchConferenceList(req, res) {
         });
         return conferenceRes;
     } else {
+
         const conferenceRes = await Conference.findAll({
             where: {
                 [Op.and]: [
                     { is_onoff: isOnoff },
                     { con_location: conLocation },
+
                     { con_category: conCategory },
                     { con_isfree: conIsfree },
                 ],
@@ -86,14 +85,15 @@ exports.getConferenceList = async (req, res) => {
         console.log('req.body22222====', req.body);
         if (!Object.keys(req.body).length) {
 
-            //req.body가 빈 객체면
-
             conference = await Conference.findAll();
             return res.render('event/list', { conference });
         } else {
             console.log('ddddddd');
             conference = await searchConferenceList(req);
-console.log('>>>>>>>', conference);
+
+
+            console.log('>>>>>>>', conference);
+
 
             return res.send({ conference });
         }
@@ -107,13 +107,19 @@ exports.getConferenceWrite = (req, res) => {
 };
 
 exports.getConferenceDetail = async (req, res) => {
-    const { id } = req.query;
+
+    const { id } = req.params;
+
+
     console.log(id);
     const result = await Conference.findOne({
         where: { con_id: id },
     });
-
-    res.render(`event/detail`, { result });
+    console.log(result);
+    if (result) {
+        await result.increment('con_count', { by: 1 });
+    }
+    res.render(`event/detail`, { conference: result });
 };
 
 //게시글 등록(DB에 저장까지만~)
@@ -167,22 +173,22 @@ exports.postConference = async (req, res) => {
     //관리자 페이지가 있을 경우
     //res.render('관리자페이지',{result})
 };
-exports.updateConferenceCnt = async (req, res) => {
-    if (req.cookies[conId] == undefined) {
-        // key, value, 옵션을 설정해준다.
-        res.cookie(conCount, getUserIP(req), {
-            // 유효시간 : 일주일
-            maxAge: 60 * 60 * 24 * 7,
-        });
-        // 조회수 증가 쿼리
-        await Conference.updateOne(
-            { con_id: conId },
-            { $inc: { con_count: 1 } }
-        );
-    }
-    res.render({ conCount: Conference.con_count });
-    //ejs에서 conCount라는 변수를 써서 조회수를 보이게 하면 될 것 같습니다..
-};
+// exports.updateConferenceCnt = async (req, res) => {
+//     if (req.cookies[conId] == undefined) {
+//         // key, value, 옵션을 설정해준다.
+//         res.cookie(conCount, getUserIP(req), {
+//             // 유효시간 : 일주일
+//             maxAge: 60 * 60 * 24 * 7,
+//         });
+//         // 조회수 증가 쿼리
+//         await Conference.updateOne(
+//             { con_id: conId },
+//             { $inc: { con_count: 1 } }
+//         );
+//     }
+//     res.render({ conCount: Conference.con_count });
+//     //ejs에서 conCount라는 변수를 써서 조회수를 보이게 하면 될 것 같습니다..
+// };
 
 exports.postConferenceEdit = async (req, res) => {
     const {
