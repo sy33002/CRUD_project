@@ -103,6 +103,12 @@ exports.getConferenceList = async (req, res) => {
     }
 };
 
+// event/list에 모든 행사 리스트 넘겨주는 함수
+exports.getConferenceInfo = async (req, res) => {
+    const eventList = await Conference.findAll();
+    res.send({ eventList });
+};
+
 // 필터링 역할
 exports.postConferenceList = async (req, res) => {
     try {
@@ -110,13 +116,19 @@ exports.postConferenceList = async (req, res) => {
         const whereConditions = {};
         if (isOnoff !== '') whereConditions.is_onoff = isOnoff;
         if (conLocation !== '') whereConditions.con_location = conLocation;
-        if (conCategory) whereConditions.con_category = conCategory;
         if (conIsfree !== '') whereConditions.con_isfree = conIsfree;
+        if (conCategory !== 'all') {
+            // or 조건 추가
+            whereConditions[Op.or] = [
+                { con_category: conCategory },
+                // 다른 OR 조건을 추가할 수도 있습니다.
+            ];
+        }
         console.log(whereConditions, 'filter 결과 값');
-        const conferenceRes = await Conference.findAll({
+        const eventList = await Conference.findAll({
             where: whereConditions,
         });
-        res.send({ conferenceRes });
+        res.send({ eventList });
     } catch (err) {
         console.log(err);
         res.send('server error');
@@ -258,10 +270,7 @@ exports.postConferenceEdit = async (req, res) => {
         console.error(err);
     }
 };
-exports.getConferenceInfo = async (req, res) => {
-    const eventList = await Conference.findAll();
-    res.send({ eventList });
-};
+
 exports.postDisagreeConferenceList = async (req, res) => {
     const eventList = await Conference.findAll({
         where: { is_agreed: false },

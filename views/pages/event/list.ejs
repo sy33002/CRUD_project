@@ -26,7 +26,7 @@
                     <aside class="aside">
                         <form name="searchCon">
                             <div class="filterhead">
-                                <button type="button" class="btn btn-sm" onclick="filterCon()">
+                                <button type="button" class="btn btn-sm" onclick="filterDraw()">
                                     적용
                                 </button>
                                 <div><a href="/event">필터 초기화</a></div>
@@ -34,21 +34,21 @@
                             <div class="mb-4">
                                 <span class="fw-bold d-block mb-3">행사 분야</span>
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" name="conCategory" id="web" checked
-                                        value="web" />
+                                    <input class="form-check-input" type="checkbox" name="conCategory" value="web"
+                                        id="web">
                                     <label class="form-check-label" for="web">
-                                        웹 개발
+                                        web
                                     </label>
                                 </div>
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" name="conCategory" id="AI"
-                                        value="AI" />
+                                    <input class="form-check-input" type="checkbox" name="conCategory" value="AI"
+                                        id="AI">
                                     <label class="form-check-label" for="AI">
                                         AI
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="conCategory" id="git"
+                                    <input class="form-check-input" type="checkbox" name="conCategory" id="git"
                                         value="git" />
                                     <label class="form-check-label" for="git">
                                         git
@@ -61,19 +61,7 @@
                                     <option value="" selected>
                                         전체
                                     </option>
-                                    <option value="서울/경기/인천">
-                                        서울/경기/인천
-                                    </option>
-                                    <option value="부산/울산/경남">
-                                        부산/울산/경남
-                                    </option>
-                                    <option value="대구/경북">대구/경북</option>
-                                    <option value="충청/대전/세종">
-                                        충청/대전/세종
-                                    </option>
-                                    <option value="전라/광주">전라/광주</option>
-                                    <option value="강원도">강원도</option>
-                                    <option value="제주도">제주도</option>
+                                    <%- include('../../common/components/conLocationSelect') %>
                                 </select>
                             </div>
                             <div class="mb-4">

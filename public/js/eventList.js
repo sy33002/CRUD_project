@@ -1,5 +1,3 @@
-let eventList = [];
-
 // 서버에서 모든 행사 리스트를 가져옴
 async function getEventList() {
     const response = await axios({
@@ -9,30 +7,50 @@ async function getEventList() {
     return response.data.eventList;
 }
 
-async function filterCon() {
+async function init() {
+    let eventList = await getEventList();
+    eventList = transformEventList(eventList);
+    calendarDraw(eventList);
+}
+
+init();
+
+// 필터링 값을 가져오는 함수
+async function getFilterCon() {
     const form = document.forms['searchCon'];
 
-    const conferenceRes = await axios({
+    // 체크된 값을 가져옵니다.
+    const checkedValues = $('input[name="conCategory"]:checked')
+        .map(function () {
+            return $(this).val();
+        })
+        .get();
+
+    const response = await axios({
         method: 'POST',
         url: '/event',
         data: {
             isOnoff: form.isOnoff.value,
             conLocation: form.conLocation.value,
-            conCategory: form.conCategory.value,
+            conCategory: checkedValues.length ? checkedValues : 'all', // 빈 값이면 모두 보여주기
             conIsfree: form.conIsfree.value,
         },
     });
-    console.log(conferenceRes.data);
+    return response.data.eventList;
 }
 
-async function calendarDraw() {
-    eventList = await getEventList();
-    eventList = eventList.map((event) => ({
+// 이벤트 객체 변환 작업 수행
+function transformEventList(eventList) {
+    return eventList.map((event) => ({
         title: event.con_title,
         start: new Date(event.con_start_date).toISOString().split('T')[0],
         end: new Date(event.con_end_date).toISOString().split('T')[0],
         url: `/event/${event.con_id}`,
     }));
+}
+
+// eventList 배열을 받아와 달력에 행사 정보를 그려줌
+function calendarDraw(eventList) {
     $('#calendar').fullCalendar({
         header: {
             left: 'prev,next today',
@@ -46,4 +64,12 @@ async function calendarDraw() {
         events: eventList,
     });
 }
-calendarDraw();
+
+// 필터된 값을 그려주는 함수
+async function filterDraw() {
+    $('#calendar').fullCalendar('destroy');
+    let eventList = await getFilterCon();
+    eventList = transformEventList(eventList);
+    console.log(eventList);
+    calendarDraw(eventList);
+}
