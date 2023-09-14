@@ -118,10 +118,15 @@
         <script>
             function login() {
                 const form = document.forms['formLogin'];
-                // if (!form.checkValidity()) {
-                //     form.reportValidity();
-                //     return;
-                // }
+
+                if (form.userId.value === '') {
+                    alert('아이디를 입력 해주세요.');
+                    return form.userId.focus();
+                }
+                if (form.userPw.value === '') {
+                    alert('비밀번호를 입력 해주세요.');
+                    return form.userPw.focus();
+                }
                 axios({
                     method: 'POST',
                     url: '/login',
