@@ -34,6 +34,7 @@ exports.postReview = async (req, res) => {
             req.session && req.session.userInfo
                 ? req.session.userInfo.userId
                 : '익명사용자',
+        content_Text: filter.clean(req.body.content).replace(/<[^>]*>/g, ''),
     });
     res.send(result);
 };
