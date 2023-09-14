@@ -2,31 +2,123 @@
 <html lang="ko">
     <head>
         <%- include('../common/head.ejs', {title: '로그인' }) %>
+        <link rel="stylesheet" href="/static/css/pages/login.css" />
     </head>
 
     <body>
         <%- include('../common/header.ejs') %>
         <main>
-            로그인 페이지
-            <form name="formLogin">
+            <!--예전 로그인 form. 작동 확인 후 삭제 -->
+            <!-- <form name="formLogin">
                 <label for="userId">ID</label>
-                <input id="userId" type="text" name="userId" required /><br />
+                <input
+                    id="userId"
+                    type="text"
+                    name="userId"
+                    class="form-style"
+                    placeholder="Your Id"
+                    required
+                /><br />
                 <label for="userPw">Password</label>
                 <input
                     id="userPw"
                     type="password"
                     name="userPw"
+                    class="form-style"
+                    placeholder="Your Password"
                     required
                 /><br />
-                <button type="button" onclick="login()">LOGIN</button>
-            </form>
+                <button type="button" class="btn mt-4" onclick="login()">
+                    LOGIN
+                </button>
+            </form> -->
+
+            <div class="section">
+                <div class="container">
+                    <div class="row full-height justify-content-center">
+                        <div class="col-12 text-center align-self-center py-5">
+                            <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                                <!-- <h4 class="mb-0 pb-3">Flip it!</h4> -->
+                                <!-- <input
+                                    class="checkbox"
+                                    type="checkbox"
+                                    id="reg-log"
+                                    name="reg-log"
+                                /> -->
+                                <label for="reg-log"></label>
+                                <div class="card-3d-wrap mx-auto">
+                                    <div class="card-3d-wrapper">
+                                        <div class="card-front">
+                                            <div class="center-wrap">
+                                                <div
+                                                    class="section text-center"
+                                                >
+                                                    <h6 class="pb-3">
+                                                        <span>login </span>
+                                                    </h6>
+                                                    <form name="formLogin">
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="userId"
+                                                            ></label>
+                                                            <input
+                                                                id="userId"
+                                                                type="text"
+                                                                name="userId"
+                                                                class="form-style"
+                                                                placeholder="Id"
+                                                                required
+                                                            />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="userPw"
+                                                            ></label>
+                                                            <input
+                                                                id="userPw"
+                                                                type="password"
+                                                                name="userPw"
+                                                                class="form-style"
+                                                                placeholder="Password"
+                                                                required
+                                                            />
+                                                        </div>
+                                                        <button
+                                                            type="button"
+                                                            class="btn mt-4"
+                                                            onclick="login()"
+                                                        >
+                                                            LOGIN
+                                                        </button>
+
+                                                        <!-- <p
+                                                        class="mb-0 mt-4 text-center"
+                                                    >
+                                                        <a
+                                                            href="#0"
+                                                            class="link"
+                                                            >Forgot your
+                                                            password?</a
+                                                        >
+                                                    </p> -->
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <%- include('../common/footer.ejs') %>
         <script>
             function login() {
                 const form = document.forms['formLogin'];
-                // if(!form.checkValidity()){
+                // if (!form.checkValidity()) {
                 //     form.reportValidity();
                 //     return;
                 // }
@@ -38,18 +130,21 @@
                         userPw: formLogin.userPw.value,
                     },
                 }).then((res) => {
-                    if(res.data.result === false){
-                        if (res.data.idCheck === true && res.data.pwCheck === false) {
+                    if (res.data.result === false) {
+                        if (
+                            res.data.idCheck === true &&
+                            res.data.pwCheck === false
+                        ) {
                             alert('비밀번호가 틀렸습니다.');
-                        } else if (res.data.idCheck === false){
-                            alert('존재하는 사용자가 아닙니다.')
+                        } else if (res.data.idCheck === false) {
+                            alert('존재하는 사용자가 아닙니다.');
                         }
-                    } else{
+                    } else {
                         alert('로그인 성공!');
                         // 제윤: 추후에 아이디 오류, 비번 오류, 서버 오류 추가 예정
                         document.location.href = '/';
                     }
-                })
+                });
             }
         </script>
     </body>
