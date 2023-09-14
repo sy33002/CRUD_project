@@ -231,3 +231,10 @@ exports.getConferenceInfo = async (req, res) => {
     const eventList = await Conference.findAll();
     res.send({ eventList });
 };
+exports.postDisagreeConferenceList = async (req, res) => {
+    const eventList = await Conference.findAll({
+        where: { is_agreed: false },
+    });
+    console.log(eventList);
+    res.send({ eventList });
+};

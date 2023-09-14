@@ -262,7 +262,7 @@
                                 </div>
                             </div>
 
-                            <% conference.forEach((event) => { %>
+                            <% eventList.forEach((event) => { %>
                             <div class="col">
                                 <div class="card h-100">
                                     <img
@@ -460,7 +460,7 @@
                     },
                 });
                     // 서버 응답 처리 코드 추가
-                    console.log(conferenceRes.data); // 서버 응답 데이터를 콘솔에 출력 또는 필요한 처리 수행
+                    console.log(conferenceRes.data.conference); // 서버 응답 데이터를 콘솔에 출력 또는 필요한 처리 수행
                 }
 
                 
