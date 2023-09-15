@@ -67,29 +67,54 @@
                         <% } %>
                     </tbody>
                 </table>
-                <% const limit = 5; // 현재 보여줄 리뷰 수 %> <% const
-                totalPages = Math.ceil(count / limit); %>
                 <div class="pagination-bar">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item">
                                 <a
                                     class="page-link"
-                                    href="#"
+                                    href="?page=1"
                                     aria-label="Previous"
                                 >
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <% for (let i = 1; i <= totalPages; i++) { %>
+                            <% if (startPage > 1) { %>
                             <li class="page-item">
+                                <a
+                                    class="page-link"
+                                    href="?page=<%= currentPage - 1 %>"
+                                    aria-label="Previous"
+                                >
+                                    <span aria-hidden="true">&lsaquo;</span>
+                                </a>
+                            </li>
+                            <% } %> <% for (let i = startPage; i <= endPage;
+                            i++) { %>
+                            <li
+                                class="page-item <%= i === currentPage ? 'active' : '' %>"
+                            >
                                 <a class="page-link" href="?page=<%= i %>"
                                     ><%= i %></a
                                 >
                             </li>
+                            <% } %> <% if (endPage < totalPages) { %>
+                            <li class="page-item">
+                                <a
+                                    class="page-link"
+                                    href="?page=<%= endPage + 1 %>"
+                                    aria-label="Next"
+                                >
+                                    <span aria-hidden="true">&rsaquo;</span>
+                                </a>
+                            </li>
                             <% } %>
                             <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
+                                <a
+                                    class="page-link"
+                                    href="?page=<%= totalPages %>"
+                                    aria-label="Next"
+                                >
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
