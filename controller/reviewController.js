@@ -9,13 +9,24 @@ exports.getReview = async (req, res) => {
     const limit = 5; // 보여줄 리뷰 수
     const offset = 0 + (pageNum - 1) * limit; // 몇 번 부터 보여줄지
     try {
+        const itemsPerPage = limit;
+        const startIndex = offset; // offset 변수를 사용하여 startIndex를 계산
+        const endIndex = startIndex + itemsPerPage; // endIndex를 계산
+
         const count = await ConferenceReview.count();
         const result = await ConferenceReview.findAll({
             offset: offset,
             limit: limit,
             order: [['re_id', 'DESC']],
         });
-        res.render('review/list', { result: result, count: count });
+        const totalPages = Math.ceil(count / itemsPerPage);
+
+        res.render('review/list', {
+            result: result,
+            count: count,
+            currentPage: pageNum,
+            totalPages: totalPages,
+        });
         console.log(count);
     } catch (err) {
         console.log(err);
