@@ -96,6 +96,10 @@ const Conference = (Sequelize, sequelize) => {
                 defaultValue: 0,
                 allowNull: true,
             },
+            user_id: {
+                type: DataTypes.STRING(30),
+                allowNull: true,
+            },
         },
         {
             tableName: 'conference_info',
