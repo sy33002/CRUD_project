@@ -12,6 +12,10 @@
         <div id="conferenceList">
             <!-- 행사 리스트를 여기에 동적으로 추가 -->
         </div>
+        <button type="button" onclick="getrejectedConference()">거절한 행사 리스트</button>
+        <div id="rejectedConferenceList">
+            <!-- 거절한 행사 리스트를 여기에 동적으로 추가 -->
+        </div>
     </body>
     <script>
         function getUser() {
@@ -87,6 +91,33 @@
                 }
             })
 
+        };
+        function getrejectedConference(){
+            axios({
+                method: 'GET',
+                url: '/manager/rejectedConferenceList',
+            }).then((res) => {
+                if (res.status === 200) {
+                    const rejectedConferenceList = res.data.conferences;
+                    if (Array.isArray(rejectedConferenceList) && rejectedConferenceList.length > 0) {
+                        const rejectedConferenceListContainer = document.getElementById('rejectedConferenceList');
+                        rejectedConferenceListContainer.innerHTML = ''; // Clear previous content
+
+                        rejectedConferenceList.forEach((conference) => {
+                            const rejectedElement = document.createElement('div');
+                            // 행사를 직접적으로 보이게 하는 부분
+                            rejectedElement.innerHTML = `
+                                <p>행사 이름: ${conference.con_title}</p>
+                            `;
+                            // conference.{DB변수명}으로 접근할 수 있습니다. 등록 신청한 행사가 예쁘게 보여졌으면 좋을 것같아요!
+                            rejectedConferenceListContainer.appendChild(rejectedElement);
+                        });
+                    } else {
+                        const rejectedConferenceListContainer = document.getElementById('rejectedConferenceList');
+                        rejectedConferenceListContainer.innerHTML = '거절한 행사가 없습니다.';
+                    }
+                }
+            });
         };
     </script>
 </html>
