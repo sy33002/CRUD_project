@@ -128,6 +128,7 @@
                                                             <select
                                                                 class="form-style"
                                                                 aria-label="Default select example"
+                                                                name="userAddr"
                                                             >
                                                                 <option
                                                                     value=""
@@ -244,11 +245,11 @@
                     alert('이름을 입력하세요!');
                 } else if (!checkName.test(form.userName.value)) {
                     alert('이름 형식이 올바르지 않습니다!');
-                    form.useName.value = '';
+                    form.userName.value = '';
                 } else if (!form.userAddr.value) {
                     alert('주소를 선택하세요!');
                 } else if (!form.userEmail.value) {
-                    alert('이름을 입력하세요!');
+                    alert('이메일을 입력하세요!');
                 } else if (!checkEmail.test(form.userEmail.value)) {
                     alert('이메일 형식이 올바르지 않습니다');
                     form.userEmail.value = '';
