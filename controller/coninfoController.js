@@ -192,6 +192,7 @@ exports.postConference = async (req, res) => {
             con_count: conCount,
             con_detail: conDetail,
             con_image: conImagePath,
+            user_id: req.session.userInfo.userId,
         });
         res.send({ result: true });
     } catch (err) {
