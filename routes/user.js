@@ -23,5 +23,6 @@ router.post('/manager/revokeManager', controller.revokeManager); /// 관리자 �
 
 router.get('/manager/getConferenceRegister', controller.getConforenceRegister); // 관리자 페이지 승인할 컨퍼런스 목록들
 router.post('/manager/approveConference', controller.approveConference); // 컨퍼런스 승인
+router.post('/manager/rejectConference', controller.rejectConference); // 컨퍼런스 거절
 
 module.exports = router;
