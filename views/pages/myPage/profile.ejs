@@ -61,7 +61,12 @@
             </select>
 
             <button type="button" onclick="userUpdate()">회원정보 수정</button>
-            <button type="button" onclick="deleteUserself(this, '<%= data.user_id%>')">회원탈퇴하기</button>
+            <button type="button" onclick="deleteUserself(this, '<%= data.user_id%>')">회원탈퇴하기</button><br/>
+            <button type="button" onclick="myreviewList(`<%= data.user_id%>`)">내가 쓴 리뷰 보기</button>
+            <div id="myreviewList">
+                <!-- myrivew리스트를 여기에 동적으로 추가 -->
+            </div>
+
         </form>
         <script>
             // 유저 정보 수정
@@ -146,6 +151,40 @@
                 alert ('회원 탈퇴 실패');
                 }
             });
+            };
+            // 내가 쓴 리뷰 보기
+            function myreviewList(userId) {
+                axios({
+                    method: 'GET',
+                    url: '/myPage/myreviewList',
+                    params: {
+                        userId: userId,
+                    },
+                }).then((res) => {
+                    if (res.status === 200) {
+                    const reviewList = res.data.reviews;
+                    if (Array.isArray(reviewList) && reviewList.length > 0) {
+                        const myreviewListContainer = document.getElementById('myreviewList');
+                        myreviewListContainer.innerHTML = ''; 
+
+                        reviewList.forEach((reviews) => {
+                            const reviewElement = document.createElement('div');
+                           reviewElement.innerHTML = `
+                                <p>리뷰제목: ${reviews.re_title}</p>
+                                <p>리뷰 내용: ${reviews.re_content}</p>
+                                <p>리뷰 등록일: ${reviews.re_date}</p>
+                                <p>리뷰 조회수: ${reviews.re_count}</p>
+                                <button>리뷰 삭제</button>
+                            `;
+                                
+                                myreviewListContainer.appendChild(reviewElement);
+                        });
+                    } else {
+                        const myreviewListContainer = document.getElementById('reviewList');
+                        myreviewListContainer.innerHTML = '등록한 리뷰가 없습니다.';
+                    }
+                }
+                })
             };
         </script>
     </body>
