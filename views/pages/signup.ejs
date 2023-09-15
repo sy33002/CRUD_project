@@ -7,220 +7,304 @@
     <body>
         <%- include('../common/header.ejs') %>
         <main>
+            <div class="section">
+                <div class="container">
+                    <div class="row full-height justify-content-center">
+                        <div class="col-12 text-center align-self-center py-5">
+                            <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                                <!-- <h4 class="mb-0 pb-3">Flip it!</h4> -->
+                                <!-- <input
+                                    class="checkbox"
+                                    type="checkbox"
+                                    id="reg-log"
+                                    name="reg-log"
+                                /> -->
+                                <label for="reg-log"></label>
+                                <div class="card-3d-wrap mx-auto">
+                                    <div class="card-3d-wrapper">
+                                        <div class="card-front">
+                                            <div class="center-wrap">
+                                                <div
+                                                    class="section text-center"
+                                                >
+                                                    <h6 class="pb-3">
+                                                        <span>회원 가입</span>
+                                                    </h6>
+                                                    <!-- form 시작 -->
+                                                    <form name="form_register">
+                                                        <!-- name -->
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="userName"
+                                                            ></label>
+                                                            <input
+                                                                id="userName"
+                                                                type="text"
+                                                                name="userName"
+                                                                class="form-style"
+                                                                placeholder="Name"
+                                                                required
+                                                            />
+                                                        </div>
+                                                        <!-- email -->
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="userEmail"
+                                                            ></label>
+                                                            <input
+                                                                type="email"
+                                                                id="userEmail"
+                                                                name="userEmail"
+                                                                class="form-style"
+                                                                placeholder="email@example.com"
+                                                            />
+                                                        </div>
+                                                        <!-- id -->
+                                                        <div
+                                                            class="form-group userId-flex"
+                                                        >
+                                                            <div>
+                                                                <label
+                                                                    for="userId"
+                                                                ></label>
+                                                                <input
+                                                                    id="userId"
+                                                                    type="text"
+                                                                    name="userId"
+                                                                    class="form-style"
+                                                                    placeholder="ID"
+                                                                    required
+                                                                />
+                                                            </div>
+                                                            <div
+                                                                class="btn-idCheck"
+                                                            >
+                                                                <button
+                                                                    type="button"
+                                                                    class="btn btn-sm"
+                                                                    onclick="idCheck()"
+                                                                >
+                                                                    중복 아이디
+                                                                    확인
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <!-- password -->
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="userPw"
+                                                            ></label>
+                                                            <input
+                                                                id="userPw"
+                                                                type="password"
+                                                                name="userPw"
+                                                                class="form-style"
+                                                                placeholder="Password"
+                                                                required
+                                                            /><br />
+                                                            <label
+                                                                for="userPwCheck"
+                                                            ></label>
+                                                            <input
+                                                                id="userPwCheck"
+                                                                type="password"
+                                                                name="userPwCheck"
+                                                                class="form-style"
+                                                                placeholder="Re-enter Password"
+                                                                required
+                                                            /><br />
+                                                            <div
+                                                                id="passwordMatchMessage"
+                                                            ></div>
+                                                            <div
+                                                                class="userPwCheckMsg"
+                                                            ></div>
+                                                        </div>
 
-            <h1>회원가입</h1>
-            <!-- 아이디, 비번, 이름, 주소, 메일, 관심분야 -->
-            <form name="form_register">
-                <label for="userId">ID</label>
-                <input id="userId" type="text" name="userId" 
-                
-                required /><br />
-                <button type="button" onclick="idCheck()">중복 아이디 체크</button><br/>
-                <label for="userPw">비밀번호</label>
-                <input
-                    id="userPw"
-                    type="password"
-                    name="userPw"
-                    
-                    required
-                /><br />
-                <label for="userPwCheck">비밀번호 확인</label>
-                <input
-                    id="userPwCheck"
-                    type="password"
-                    name="userPwCheck"
-                    required
-                /><br />
-                <div id="passwordMatchMessage"></div>
-                <div class="userPwCheckMsg"></div>
-                <label for="userName">이름</label>
-                <input
-                    id="userName"
-                    type="text"
-                    name="userName"
-                    pattern="^([a-zA-Z가-힣]){4,}$"
-                    title="이름은 대소문자 또는 한글로만 구성되어야 합니다."
-                    required
-                /><br />
+                                                        <!-- address -->
+                                                        <div
+                                                            class="form-group block-select"
+                                                        >
+                                                            <select
+                                                                class="form-style"
+                                                                aria-label="Default select example"
+                                                            >
+                                                                <option
+                                                                    value=""
+                                                                    disabled
+                                                                    selected
+                                                                >
+                                                                    Address
+                                                                </option>
+                                                                <%-
+                                                                include('../common/components/conLocationSelect'
+                                                                ) %>
+                                                            </select>
+                                                            <!-- <label
+                                                                for="userAddr"
+                                                            ></label>
+                                                            <input
+                                                                id="userAddr"
+                                                                type="text"
+                                                                name="userAddr"
+                                                                class="form-style"
+                                                                placeholder="Address"
+                                                                required
+                                                            /><br /> -->
+                                                        </div>
 
-                <!-- 주소 input 자료 찾아보기 -->
-                <label for="userAddr">주소</label>
-                <input
-                    id="userAddr"
-                    type="text"
-                    name="userAddr"
-                    pattern="^([a-zA-Z가-힣]){4,}$"
-                    title="주소에 특수문자가 포함되어 있습니다."
-                    required
-                /><br />
-                <!-- 부트스트랩 보통 주소가 하나의 input으로 받지 않음... -->
-                <!-- <div class="col-12">
-                    <label for="userAddr2" class="form-label">주소2</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="userAddr2"
-                        placeholder="1234 Main St"
-                    />
-                </div> -->
-                <!-- <div class="col-12"> -->
-                    <!-- <label for="userPost" class="form-label">userPost</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="userPost"
-                        placeholder="Apartment, studio, or floor"
-                    />
-                </div> -->
-                <!-- <div class="col-md-6">
-                    <label for="inputCity" class="form-label">City</label>
-                    <input type="text" class="form-control" id="inputCity" />
+                                                        <!-- category -->
+                                                        <div
+                                                            class="form-group block-select"
+                                                        >
+                                                            <select
+                                                                class="form-style"
+                                                                aria-label="Default select example"
+                                                                name="userCategory"
+                                                            >
+                                                                <option
+                                                                    value=""
+                                                                    disabled
+                                                                    selected
+                                                                >
+                                                                    관심 분야를
+                                                                    선택해주세요.
+                                                                </option>
+                                                                <option
+                                                                    value="ai"
+                                                                >
+                                                                    AI
+                                                                </option>
+                                                                <option
+                                                                    value="web"
+                                                                >
+                                                                    웹 개발
+                                                                </option>
+                                                                <option
+                                                                    value="git"
+                                                                >
+                                                                    git
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                        <div
+                                                            class="btn-register"
+                                                        >
+                                                            <button
+                                                                type="button"
+                                                                class="btn mt-4 btn-register"
+                                                                onclick="register()"
+                                                            >
+                                                                Register
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <label for="inputState" class="form-label">State</label>
-                    <select id="inputState" class="form-select">
-                        <option selected>Choose...</option>
-                        <option>...</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label for="inputZip" class="form-label">Zip</label>
-                    <input type="text" class="form-control" id="inputZip" />
-                </div> -->
-
-                <div class="mb-3">
-                    <label for="userEmail" class="form-label"
-                        >Email address</label
-                    >
-                    <input
-                        type="email"
-                        class="form-control"
-                        id="userEmail"
-                        name="userEmail"
-                        placeholder="email@example.com"
-                        pattern="^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$"
-                    title="이메일주소 형식이 올바르지 않습니다."
-                    />
-                </div>
-
-                <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    name="userCategory"
-                >
-                    <option selected>관심분야를 선택해주세요.</option>
-                    <option value="ai">AI</option>
-                    <option value="web">웹 개발</option>
-                    <option value="git">git</option>
-                </select>
-
-                <button type="button" onclick="register()">회원 가입</button>
-            </form>
-
-            <a href="/signin">Register</a>
-
+            </div>
         </main>
         <%- include('../common/footer.ejs') %>
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
         <script>
-            const checkId=/^[a-z0-9]{4,}$/
-            const checkPw=/^[a-zA-Z0-9]{8,}$/
-            const checkName=/^[가-힣]{3,5}$/
-            const checkAddr=/^[가-힣]{4,}$/
-            const checkEmail=/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/
+            const checkId = /^[a-z0-9]{4,}$/;
+            const checkPw = /^[a-zA-Z0-9]{8,}$/;
+            const checkName = /^[가-힣]{3,5}$/;
+            const checkAddr = /^[가-힣]{4,}$/;
+            const checkEmail =
+                /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
 
-            
             // 회원가입 등록 버튼
             function register() {
                 const form = document.forms['form_register'];
-                
-            
-                if(!form.userId.value){
-                    alert('아이디를 입력하세요!')
-                }
-                else if(!checkId.test(form.userId.value)){
-                    alert('아이디는 소문자, 숫자로 구성된 4자 이상의 문자여야 합니다.')
-                    form.userId.value=''
-                }else if(!form.userPw.value){
-                    alert('비밀번호를 입력하세요!')
-                }else if(!checkPw.test(form.userPw.value)){
-                    alert('비밀번호는 대소문자, 숫자로 구성된 8자 이상의 문자여야 합니다.')
-                    form.userPw.value=''
-                }else if(!form.userName.value){
-                    alert('이름을 입력하세요!')
-                }
-                else if(!checkName.test(form.userName.value)){
-                    alert('이름 형식이 올바르지 않습니다!')
-                    form.useName.value=''
-                }else if(!form.userAddr.value){
-                    alert('주소를 선택하세요!')
-                    
-                }
-                else if(!form.userEmail.value){
-                    alert('이름을 입력하세요!')
-                }
-                else if(!checkEmail.test(form.userEmail.value)){
-                    alert('이메일 형식이 올바르지 않습니다')
-                    form.userEmail.value=''
-                }
-                else{
 
-                axios({
-                    method: 'POST',
-                    url: '/signup',
-                    data: {
-                        userId: form.userId.value,
-                        userPw: form.userPw.value,
-                        userName: form.userName.value,
-                        userAddr: form.userAddr.value,
-                        userEmail: form.userEmail.value,
-                        userCategory: form.userCategory.value,
-                    },
-
-                })
-                    .then((res) => {
-                        console.log(res);
-                        if (res) {
-                            alert(`${res.data.message}`);
-                        }
+                if (!form.userId.value) {
+                    alert('아이디를 입력하세요!');
+                } else if (!checkId.test(form.userId.value)) {
+                    alert(
+                        '아이디는 소문자, 숫자로 구성된 4자 이상의 문자여야 합니다.'
+                    );
+                    form.userId.value = '';
+                } else if (!form.userPw.value) {
+                    alert('비밀번호를 입력하세요!');
+                } else if (!checkPw.test(form.userPw.value)) {
+                    alert(
+                        '비밀번호는 대소문자, 숫자로 구성된 8자 이상의 문자여야 합니다.'
+                    );
+                    form.userPw.value = '';
+                } else if (!form.userName.value) {
+                    alert('이름을 입력하세요!');
+                } else if (!checkName.test(form.userName.value)) {
+                    alert('이름 형식이 올바르지 않습니다!');
+                    form.useName.value = '';
+                } else if (!form.userAddr.value) {
+                    alert('주소를 선택하세요!');
+                } else if (!form.userEmail.value) {
+                    alert('이름을 입력하세요!');
+                } else if (!checkEmail.test(form.userEmail.value)) {
+                    alert('이메일 형식이 올바르지 않습니다');
+                    form.userEmail.value = '';
+                } else {
+                    axios({
+                        method: 'POST',
+                        url: '/signup',
+                        data: {
+                            userId: form.userId.value,
+                            userPw: form.userPw.value,
+                            userName: form.userName.value,
+                            userAddr: form.userAddr.value,
+                            userEmail: form.userEmail.value,
+                            userCategory: form.userCategory.value,
+                        },
                     })
-                    .then(() => {
-                        document.location.href = '/login'; // ->/login으로?
-                    });
-
-            }}
+                        .then((res) => {
+                            console.log(res);
+                            if (res) {
+                                alert(`${res.data.message}`);
+                            }
+                        })
+                        .then(() => {
+                            document.location.href = '/login'; // ->/login으로?
+                        });
+                }
+            }
             // 아이디 중복 체크 버튼
             function idCheck() {
                 const form = document.forms['form_register'];
 
-                if(!form.userId.value){
-                    alert('아이디를 입력하세요!')
+                if (!form.userId.value) {
+                    alert('아이디를 입력하세요!');
+                } else if (!checkId.test(form.userId.value)) {
+                    alert(
+                        '아이디는 대소문자, 숫자로 구성된 4자 이상의 문자여야 합니다.',
+                        form.userId.value
+                    );
+                    form.userId.value = '';
+                } else {
+                    axios({
+                        method: 'GET',
+                        url: `/exists/${form.userId.value}`,
+                        data: { userId: form.userId.value },
+                    }).then((res) => {
+                        console.log(res);
+                        if (res.data.result === true) {
+                            alert('이미 존재하는 아이디입니다.');
+                            form.userId.value = '';
+                        } else if (res.data.result === false) {
+                            alert('사용 가능한 아이디입니다.');
+                        } else {
+                            alert('서버 오류가 발생했습니다.');
+                        }
+                    });
                 }
-                else if(!checkId.test(form.userId.value)){
-                alert('아이디는 대소문자, 숫자로 구성된 4자 이상의 문자여야 합니다.',form.userId.value)
-                form.userId.value=''
-                }else{
-
-                axios({
-                    method: 'GET',
-                    url: `/exists/${form.userId.value}`,
-                    data: { userId: form.userId.value },
-                }).then((res) => {
-                    console.log(res);
-                    if (res.data.result === true) {
-                        alert('이미 존재하는 아이디입니다.');
-                        form.userId.value='';
-                    } else if (res.data.result === false) {
-                        alert('사용 가능한 아이디입니다.');
-
-
-                    } else {
-                        alert('서버 오류가 발생했습니다.');
-
-                    }
-                });}
             }
 
             // 비밀번호 일치 동적 폼
@@ -243,7 +327,6 @@
                 }
             }
             passwordCheckInput.addEventListener('blur', checkPasswordMatch);
-            
         </script>
     </body>
 </html>
