@@ -326,14 +326,3 @@ function compareFunc(password, hashedPassword) {
     return bcrypt.compareSync(password, hashedPassword);
 }
 
-// exports.deleteUser = async (req, res) => {
-//   const result = await User.destroy({
-//     where: { userid: req.session.userInfo.user_id },
-//   });
-//   req.session.destroy((err) =>{
-//     if (err) {
-//       return ;
-//     }
-//     res.send({result});
-//   })
-// };
