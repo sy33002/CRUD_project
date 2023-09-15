@@ -27,17 +27,14 @@ a:hover {
 .link:hover {
     color: var(--color-white);
 }
-p {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 1.7;
-}
+
 h4 {
     font-weight: 600;
 }
 h6 span {
     padding: 20 20px;
     text-transform: uppercase;
+    font-size: 20px;
     font-weight: 700;
 }
 .section {
@@ -157,12 +154,24 @@ h6 span {
     width: 50%;
 } */
 
+select option[value=''][disabled] {
+    display: none;
+}
+
+select {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    letter-spacing: 0.5px;
+    outline: none;
+    color: #c4c3ca;
+}
 .userId-flex {
     display: flex;
     justify-content: space-between;
 }
 
-.block-category {
+.block-select {
     padding-top: 26px;
 }
 
@@ -266,9 +275,22 @@ h6 span {
     box-shadow: 0 8px 24px 0 rgba(255, 235, 167, 0.2);
 }
 
-.btn-idCheck {
-    padding-top: 28px;
+.btn-sm {
+    width: 130px;
+    height: 34px;
+    font-size: 0.8em;
+    padding: 0 0;
 }
+
+.btn-idCheck {
+    padding-top: 32px;
+    padding-left: 10px;
+}
+
+.btn-register {
+    padding: auto;
+}
+
 .btn:active,
 .btn:focus {
     background-color: var(--color-white);
