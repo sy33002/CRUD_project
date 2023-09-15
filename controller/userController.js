@@ -261,7 +261,7 @@ exports.postSignup = async (req, res) => {
     }
 };
 
-// profile update
+// 회원정보 update
 exports.updateProfile = async (req, res) => {
     const data = req.session.userInfo;
     let result;
@@ -303,6 +303,19 @@ exports.updateProfile = async (req, res) => {
     }
 };
 
+// 회원 탈퇴
+exports.deleteUserself = async (req, res) => {
+    const result = await User.destroy({
+        where: { user_id: req.body.user_id },
+    });
+    if (result === 1) {
+        res.send(true);
+        return;
+    } else {
+        res.send(false);
+    }
+};
+
 // 비밀번호 암호화 함수
 const saltRounds = 5;
 function bcryptPassword(password) {
@@ -313,14 +326,3 @@ function compareFunc(password, hashedPassword) {
     return bcrypt.compareSync(password, hashedPassword);
 }
 
-// exports.deleteUser = async (req, res) => {
-//   const result = await User.destroy({
-//     where: { userid: req.session.userInfo.user_id },
-//   });
-//   req.session.destroy((err) =>{
-//     if (err) {
-//       return ;
-//     }
-//     res.send({result});
-//   })
-// };

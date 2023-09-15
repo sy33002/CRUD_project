@@ -61,9 +61,10 @@
             </select>
 
             <button type="button" onclick="userUpdate()">회원정보 수정</button>
-
+            <button type="button" onclick="deleteUserself(this, '<%= data.user_id%>')">회원탈퇴하기</button>
         </form>
         <script>
+            // 유저 정보 수정
             function userUpdate() {
                 const form = document.forms['form_userUpdate'];
                 axios({
@@ -86,7 +87,7 @@
                     }
                 });
             };
-
+            // 매니저 페이지 조회
             function managerPage() {
                 const form = document.forms['form_userUpdate'];
                 axios({
@@ -109,6 +110,7 @@
                     }
                 })
             };
+            // 로그아웃
             function logout() {
                 const form = document.forms['form_userUpdate'];
                 axios({
@@ -124,6 +126,26 @@
                         document.location.href = "/";
                     }
                 });
+            };
+            // 유저 탈퇴
+            function deleteUserself(obj, userId) {
+            if (!confirm('정말로 탈퇴하나요?')){
+                return ;
+            }
+            axios ({
+                method: 'delete',
+                url: '/manager/deleteUserself',
+                data: {
+                    user_id: userId,
+                },
+            }).then ((res) => {
+                if (res.data === true) {
+                alert('회원 탈퇴 성공!');
+                document.location.href = '/';
+                } else {
+                alert ('회원 탈퇴 실패');
+                }
+            });
             };
         </script>
     </body>

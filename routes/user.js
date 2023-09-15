@@ -11,8 +11,8 @@ router.get('/exists/:userId', controller.checkId); // 회원가입 id 중복체�
 router.post('/signup', controller.postSignup); // 회원가입 성공
 
 router.get('/myPage', controller.getProfile); // 마이페이지 render
-router.post('/updateProfile', controller.updateProfile); // 마이페이지 render
-// router.delete('/destroy', controller.deleteUser);
+router.post('/updateProfile', controller.updateProfile); // 회원정보 update
+router.delete('/manager/deleteUserself', controller.deleteUserself); // 회원탈퇴
 
 router.get('/manager', controller.getManager); // 관리자페이지 render
 router.post('/manager', controller.postManager); // 관리자페이지 render
