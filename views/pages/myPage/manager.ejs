@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../../common/head.ejs', {title: '관리자페이지' }) %>
+    </head>
+    <body>
+        <h1>관리자 페이지</h1>
+        <button type="button" onclick="getUser()">전체 유저 보기</button>
+        <!-- 전체 유저 불러오는 allUser.ejs로 이동 -->
+        <button type="button" onclick="getConferenceRegister()">행사 등록 신청 승인 페이지</button>
+        <!-- 동적 폼으로 행사 신청 불러오기 -->
+        <div id="conferenceList">
+            <!-- 행사 리스트를 여기에 동적으로 추가 -->
+        </div>
+    </body>
+    <script>
+        function getUser() {
+                axios({
+                    method: 'GET',
+                    url: '/manager/allUser',
+                }).then((res) => {
+                    if (res.status === 200) {
+                        window.location.href = '/manager/allUser';
+                    }
+                })
+        };
+        function getConferenceRegister() {
+            axios({
+                method: 'GET',
+                url: '/manager/getConferenceRegister',
+            }).then((res) => {
+                if (res.status === 200) {
+                    const conferenceList = res.data.conferences;
+                    console.log("conferenceList >>>>", conferenceList);
+                    if (Array.isArray(conferenceList) && conferenceList.length > 0) {
+                        const conferenceListContainer = document.getElementById('conferenceList');
+                        conferenceListContainer.innerHTML = ''; // Clear previous content
+
+                        conferenceList.forEach((conference) => {
+                            const conferenceElement = document.createElement('div');
+                            conferenceElement.innerHTML = `
+                                <p>행사 이름: ${conference.con_title}</p>
+                                <button onclick="approveConference(${conference.con_id})">등록 승인</button>
+                            `;
+                            // conference.{DB변수명}으로 접근할 수 있습니다. 등록 신청한 행사가 예쁘게 보여졌으면 좋을 것같아요!
+                            conferenceListContainer.appendChild(conferenceElement);
+                        });
+                    } else {
+                        const conferenceListContainer = document.getElementById('conferenceList');
+                        conferenceListContainer.innerHTML = '신청한 새로운 행사가 없습니다.';
+                    }
+                }
+            });
+        }
+        function approveConference(conferenceId) {
+            axios({
+                method: 'POST',
+                url:'/manager/approveConference',
+                data : {
+                    conferenceId: conferenceId,
+                }
+            }).then ((res) =>{
+                if (res.status === 200) {
+                    console.log(res);
+                    alert ('승인 완료되었습니다!');
+                } else {
+                    alert ('error');
+                }
+            })
+        };
+    </script>
+</html>

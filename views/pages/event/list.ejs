@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <%- include('../../common/head.ejs', {title: '행사 목록' }) %>
+        <link rel="stylesheet" href="/static/css/review.css" />
+        <script defer src="/static/js/event-write.js"></script>
+        <!-- Full Calendar CDN-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.print.min.css"
+            rel="stylesheet" media="print" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" />
+
+        <!-- full calendar 언어 CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js"></script>
+        <link rel="stylesheet" href="/static/css/pages/event/list.css">
+        <script defer src="/static/js/eventList.js"></script>
+</head>
+
+
+<body>
+    <%- include('../../common/header.ejs') %>
+        <main>
+            <div class="wrap">
+                <div class="container">
+                    <aside class="aside">
+                        <form name="searchCon">
+                            <div class="filterhead">
+                                <button type="button" class="btn btn-sm" onclick="filterDraw()">
+                                    적용
+                                </button>
+                                <div><a href="/event">필터 초기화</a></div>
+                            </div>
+                            <div class="mb-4">
+                                <span class="fw-bold d-block mb-3">행사 분야</span>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="conCategory" value="web"
+                                        id="web">
+                                    <label class="form-check-label" for="web">
+                                        web
+                                    </label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" name="conCategory" value="AI"
+                                        id="AI">
+                                    <label class="form-check-label" for="AI">
+                                        AI
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="conCategory" id="git"
+                                        value="git" />
+                                    <label class="form-check-label" for="git">
+                                        git
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <span class="fw-bold d-block mb-3">지역</span>
+                                <select class="form-select" aria-label="Default select example" name="conLocation">
+                                    <option value="" selected>
+                                        전체
+                                    </option>
+                                    <%- include('../../common/components/conLocationSelect') %>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <span class="fw-bold d-block mb-3">참여 방법</span>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="isOnoff" id="allOnoff" value=""
+                                        checked />
+                                    <label class="form-check-label" for="allOnoff">
+                                        전체
+                                    </label>
+                                </div>
+                                <%- include('../../common/components/conIsOnoffRadio', {checked: false}) %>
+                            </div>
+                            <div>
+                                <span class="fw-bold d-block mb-3">가격</span>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="conIsfree" id="conIsfree"
+                                        value="" checked />
+                                    <label class="form-check-label" for="conIsfree">
+                                        전체
+                                    </label>
+                                </div>
+                                <%- include('../../common/components/conIsFreeRadio', {checked: false}) %>
+                            </div>
+                            <br />
+                            <!-- 검색 기능 -->
+                            <!-- <form class="d-flex" role="search">
+                        <input
+                            class="form-control me-2"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                        />
+                        <button class="btn btn-outline-success" type="submit">
+                            Search
+                        </button>
+                    </form> -->
+                        </form>
+                    </aside>
+                    <article class="article">
+                        <section class="section">
+                            <div id="calendar"></div>
+                        </section>
+                        <section class="section2">
+                            <div class="row row-cols-1 row-cols-md-3 g-4">
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <img src="..." class="card-img-top" alt="..." />
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                This is a wider card with supporting
+                                                text below as a natural lead-in to
+                                                additional content. This content is
+                                                a little bit longer.
+                                            </p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-body-secondary">Last updated 3 mins ago</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <img src="..." class="card-img-top" alt="..." />
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <p class="card-text">
+                                                    This is a wider card with supporting
+                                                    text below as a natural lead-in to
+                                                    additional content. This content is
+                                                    a little bit longer.
+                                                </p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-body-secondary">Last updated 3 mins ago</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <img src="..." class="card-img-top" alt="..." />
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <p class="card-text">
+                                                    This is a wider card with supporting
+                                                    text below as a natural lead-in to
+                                                    additional content. This content is
+                                                    a little bit longer.
+                                                </p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-body-secondary">Last updated 3 mins ago</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <img src="..." class="card-img-top" alt="..." />
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <p class="card-text">
+                                                    This is a wider card with supporting
+                                                    text below as a natural lead-in to
+                                                    additional content. This content is
+                                                    a little bit longer.
+                                                </p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-body-secondary">Last updated 3 mins ago</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <img src="..." class="card-img-top" alt="..." />
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                <p class="card-text">
+                                                    This is a wider card with supporting
+                                                    text below as a natural lead-in to
+                                                    additional content. This content is
+                                                    a little bit longer.
+                                                </p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-body-secondary">Last updated 3 mins ago</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </article>
+                </div>
+            </div>
+        </main>
+        <%- include('../../common/footer.ejs') %>
+</body>
+
+</html>

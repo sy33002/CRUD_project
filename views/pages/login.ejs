@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <%- include('../common/head.ejs', {title: '로그인' }) %>
+        <link rel="stylesheet" href="/static/css/pages/login.css" />
+    </head>
+
+    <body>
+        <%- include('../common/header.ejs') %>
+        <main>
+            <!--예전 로그인 form. 작동 확인 후 삭제 -->
+            <!-- <form name="formLogin">
+                <label for="userId">ID</label>
+                <input
+                    id="userId"
+                    type="text"
+                    name="userId"
+                    class="form-style"
+                    placeholder="Your Id"
+                    required
+                /><br />
+                <label for="userPw">Password</label>
+                <input
+                    id="userPw"
+                    type="password"
+                    name="userPw"
+                    class="form-style"
+                    placeholder="Your Password"
+                    required
+                /><br />
+                <button type="button" class="btn mt-4" onclick="login()">
+                    LOGIN
+                </button>
+            </form> -->
+
+            <div class="section">
+                <div class="container">
+                    <div class="row full-height justify-content-center">
+                        <div class="col-12 text-center align-self-center py-5">
+                            <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                                <!-- <h4 class="mb-0 pb-3">Flip it!</h4> -->
+                                <!-- <input
+                                    class="checkbox"
+                                    type="checkbox"
+                                    id="reg-log"
+                                    name="reg-log"
+                                /> -->
+                                <label for="reg-log"></label>
+                                <div class="card-3d-wrap mx-auto">
+                                    <div class="card-3d-wrapper">
+                                        <div class="card-front">
+                                            <div class="center-wrap">
+                                                <div
+                                                    class="section text-center"
+                                                >
+                                                    <h6 class="pb-3">
+                                                        <span>login </span>
+                                                    </h6>
+                                                    <form name="formLogin">
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="userId"
+                                                            ></label>
+                                                            <input
+                                                                id="userId"
+                                                                type="text"
+                                                                name="userId"
+                                                                class="form-style"
+                                                                placeholder="Id"
+                                                                required
+                                                            />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="userPw"
+                                                            ></label>
+                                                            <input
+                                                                id="userPw"
+                                                                type="password"
+                                                                name="userPw"
+                                                                class="form-style"
+                                                                placeholder="Password"
+                                                                required
+                                                            />
+                                                        </div>
+                                                        <button
+                                                            type="button"
+                                                            class="btn mt-4"
+                                                            onclick="login()"
+                                                        >
+                                                            LOGIN
+                                                        </button>
+
+                                                        <!-- <p
+                                                        class="mb-0 mt-4 text-center"
+                                                    >
+                                                        <a
+                                                            href="#0"
+                                                            class="link"
+                                                            >Forgot your
+                                                            password?</a
+                                                        >
+                                                    </p> -->
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <%- include('../common/footer.ejs') %>
+        <script>
+            function login() {
+                const form = document.forms['formLogin'];
+
+                if (form.userId.value === '') {
+                    alert('아이디를 입력 해주세요.');
+                    return form.userId.focus();
+                }
+                if (form.userPw.value === '') {
+                    alert('비밀번호를 입력 해주세요.');
+                    return form.userPw.focus();
+                }
+                axios({
+                    method: 'POST',
+                    url: '/login',
+                    data: {
+                        userId: formLogin.userId.value,
+                        userPw: formLogin.userPw.value,
+                    },
+                }).then((res) => {
+                    if (res.data.result === false) {
+                        if (
+                            res.data.idCheck === true &&
+                            res.data.pwCheck === false
+                        ) {
+                            alert('비밀번호가 틀렸습니다.');
+                        } else if (res.data.idCheck === false) {
+                            alert('존재하는 사용자가 아닙니다.');
+                        }
+                    } else {
+                        alert('로그인 성공!');
+                        // 제윤: 추후에 아이디 오류, 비번 오류, 서버 오류 추가 예정
+                        document.location.href = '/';
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
+
+<!-- 지형: 유저가 입력한 정보는 userId, userPw 변수로 넘겨주시면 됩니다! -->
+
+<!-- 유저가 로그인에 성공한다면, {result: true, data: 로그인 세션} 전달 -->
+<!-- 로그인 세션 전달 변수 참고
+        data = {
+        id,
+        userName,
+        userId,
+        userPw,
+        userAddr,
+        userEmail,
+        userCategory,
+      }
+ -->
+
+<!-- 유저가 아이디는 맞고, 비밀번호가 틀렸다면 {result:false, idCheck: true, pwCheck: false, message: '비밀번호가 틀렸습니다.'} 전달 -->
+<!-- 유저가 아이디가 틀렸다면 {result:false, idCheck: false,  pwCheck: false, message: '존재하는 사용자가 없습니다.'} 전달 -->
+<!-- 만약 DB문제로 전혀 동작하지 못했다면 { result: false, message: '서버 오류가 발생했습니다.' } 전달 -->

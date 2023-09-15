@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <%- include('../common/head.ejs', {title: '메인 페이지' }) %>
+        <link rel="stylesheet" href="/static/css/pages/main.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    </head>
+
+    <body>
+        <%- include('../common/header.ejs') %>
+        <main>
+            <section class="section">
+                <div class="wrap">
+                    <h1>C.R.U.D</h1>
+                    <div class="swiper-container">
+                        <div class="swiper">
+                            <ol class="swiper-wrapper">
+                                <li class="swiper-slide poster0">
+                                    <img
+                                        src="https://carousel-slider.uiinitiative.com/images/dr-strange.jpg"
+                                        alt="베니스 유령 살인사건"
+                                    />
+                                </li>
+                                <li class="swiper-slide poster1">
+                                    <img
+                                        src="https://carousel-slider.uiinitiative.com/images/dr-strange.jpg"
+                                        alt="베니스 유령 살인사건"
+                                    />
+                                </li>
+                                <li class="swiper-slide poster2">
+                                    <img
+                                        src="https://carousel-slider.uiinitiative.com/images/dr-strange.jpg"
+                                        alt="베니스 유령 살인사건"
+                                    />
+                                </li>
+                                <li class="swiper-slide poster3">
+                                    <img
+                                        src="https://carousel-slider.uiinitiative.com/images/dr-strange.jpg"
+                                        alt="베니스 유령 살인사건"
+                                    />
+                                </li>
+                                <li class="swiper-slide poster4">
+                                    <img
+                                        src="https://carousel-slider.uiinitiative.com/images/dr-strange.jpg"
+                                        alt="베니스 유령 살인사건"
+                                    />
+                                </li>
+                                <li class="swiper-slide poster5">
+                                    <img
+                                        src="https://carousel-slider.uiinitiative.com/images/dr-strange.jpg"
+                                        alt="베니스 유령 살인사건"
+                                    />
+                                </li>
+                                <li class="swiper-slide poster6">
+                                    <img
+                                        src="https://carousel-slider.uiinitiative.com/images/dr-strange.jpg"
+                                        alt="베니스 유령 살인사건"
+                                    />
+                                </li>
+                                <li class="swiper-slide poster7">
+                                    <img
+                                        src="https://carousel-slider.uiinitiative.com/images/dr-strange.jpg"
+                                        alt="베니스 유령 살인사건"
+                                    />
+                                </li>
+                                <li class="swiper-slide poster8">
+                                    <img
+                                        src="https://carousel-slider.uiinitiative.com/images/dr-strange.jpg"
+                                        alt="베니스 유령 살인사건"
+                                    />
+                                </li>
+                                <li class="swiper-slide poster9">
+                                    <img
+                                        src="https://carousel-slider.uiinitiative.com/images/dr-strange.jpg"
+                                        alt="베니스 유령 살인사건"
+                                    />
+                                </li>
+                            </ol>
+                        </div>
+                        <div
+                            class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal"
+                        ></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+            </section>
+            <section class="section2">
+                <div class="wrap">
+                    <div class="con_top">
+                        <p class="title">9월 행사</p>
+                        <span class="more">
+                            <a href="/event">
+                                <span>더 많은 행사 보기</span>
+                                <span class="more_icon">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="currentColor"
+                                        color="var(--color-green)"
+                                        class="bi bi-chevron-right"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+                                        />
+                                    </svg>
+                                </span>
+                            </a>
+                        </span>
+                    </div>
+                    <ul class="con_list">
+                        <% for(let i=0; i < 6; i++){ %>
+                        <li class="con_item">
+                            <a href="event/<%= events[i].con_id %>">
+                                <div class="img">
+                                    <img
+                                        src="https://framerusercontent.com/images/kllDEHvDbsM7ymtUify2z8gco.png"
+                                        alt="행사"
+                                    />
+                                </div>
+                                <h2><%= events[i].con_title %></h2>
+                                <p><%= events[i].con_detail %></p>
+                            </a>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </section>
+            <section class="section3">
+                <div class="wrap"></div>
+            </section>
+            <section class="section4">
+                <div class="wrap">
+                    <div class="review_top">
+                        <span class="more">
+                            <a href="/event">
+                                <span>더 많은 행사 보기</span>
+                                <span class="more_icon">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="currentColor"
+                                        color="var(--color-white)"
+                                        class="bi bi-chevron-right"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+                                        />
+                                    </svg>
+                                </span>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="review_list">
+                        <% for(let i = 1; i <= 3; i++) { %>
+                        <ul class="list list<%= i %>">
+                            <% for(let j = 1; j <= 3; j++){ %> <% const index =
+                            i * j - 1; %>
+                            <li class="item">
+                                <div class="user_info">
+                                    <span class="user_name">
+                                        <%= reviews[index].re_title %>
+                                    </span>
+                                    <span class="user_id"> 아이디 </span>
+                                </div>
+                                <p><%= reviews[index].content_Text %></p>
+                            </li>
+                            <% } %>
+                        </ul>
+                        <% } %>
+                    </div>
+                </div>
+            </section>
+            <section class="section5">
+                <div class="wrap">
+                    <h2>FAQ</h2>
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <button
+                                    class="accordion-button collapsed"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne"
+                                    aria-expanded="true"
+                                    aria-controls="collapseOne"
+                                >
+                                    What is Framer?
+                                </button>
+                            </h3>
+                            <div
+                                id="collapseOne"
+                                class="accordion-collapse collapse"
+                                data-bs-parent="#accordionExample"
+                            >
+                                <div class="accordion-body">
+                                    <p>
+                                        Framer is a web builder for creative
+                                        pros. Be sure to check out framer.com to
+                                        learn more.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <button
+                                    class="accordion-button collapsed"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo"
+                                    aria-expanded="false"
+                                    aria-controls="collapseTwo"
+                                >
+                                    Is it easy to learn?
+                                </button>
+                            </h3>
+                            <div
+                                id="collapseTwo"
+                                class="accordion-collapse collapse"
+                                data-bs-parent="#accordionExample"
+                            >
+                                <div class="accordion-body">
+                                    <p>
+                                        Framer is the fastest tool to build
+                                        sites with, because you can ship your
+                                        design immediately, instead of having to
+                                        rebuild your design in code or a second
+                                        tool.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h3 class="accordion-header">
+                                <button
+                                    class="accordion-button collapsed"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapseThree"
+                                    aria-expanded="false"
+                                    aria-controls="collapseThree"
+                                >
+                                    Do I need to code?
+                                </button>
+                            </h3>
+                            <div
+                                id="collapseThree"
+                                class="accordion-collapse collapse"
+                                data-bs-parent="#accordionExample"
+                            >
+                                <div class="accordion-body">
+                                    <p>
+                                        Framer is an end to end tool that lets
+                                        everyone design and ship web sites. You
+                                        don’t need a frontend team or web
+                                        programming course. Just basic canvas
+                                        skills.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="section6">
+                <div class="wrap">
+                    <h2>Sign up today.</h2>
+                    <div class="buttons">
+                        <a href="/signup">Get Started</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <%- include('../common/footer.ejs') %>
+        <script>
+            const swiper = new Swiper('.swiper', {
+                effect: 'coverflow',
+                slidesPerView: 'auto',
+                grabCursor: true,
+                centeredSlides: true,
+                loop: true,
+                coverflowEffect: {
+                    rotate: 0, // 슬라이드 회전 각도
+                    stretch: 200,
+                    depth: 190, // 픽셀 단위의 깊이 오프셋(슬라이드는 Z축으로 이동)
+                    modifier: 1,
+                    slideShadows: true, // 슬라이드 그림자를 활성화
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+            });
+        </script>
+    </body>
+</html>
+<!-- data 변수로 login.session넘김.
+data 변수의 내부(참고용):
+data {
+  id: 1,
+  userName: 'asdf',
+  userId: 'asdf',
+  userPw: '$2b$05$ndlwaXJa80Z1SEMJXS9am.RqKMEsdpPWpPrSCOrF9yQPtpax6N3Mm',
+  userAddr: '',
+  userEmail: '',
+  userCategory: '관심분야를 선택해주세요.'
+}
+-->

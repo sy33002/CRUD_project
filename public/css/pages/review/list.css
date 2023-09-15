@@ -1,0 +1,23 @@
+.pagination-bar {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+main {
+    background-color: var(--color-black);
+}
+
+table {
+    margin-top: 5%;
+}
+
+.table > :not(caption) > * > * {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+.pagination > * > * {
+    background-color: var(--color-black);
+    color: var(--color-white);
+}

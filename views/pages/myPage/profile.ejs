@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <%- include('../../common/head.ejs', {title: '프로필' }) %>
+        <link rel="stylesheet" href="/static/css/review.css" />
+        <script defer src="/static/js/review.js"></script>
+    </head>
+
+    <body>
+        <%- include('../../common/header.ejs') %>
+        <main>마이 페이지</main>
+        <%- include('../../common/footer.ejs') %>
+        <form name="form_userUpdate">
+            <label for="userId">ID</label>
+            <input id="userId" type="text" name="userId" value="<%= data.user_id%>" disabled /><br />
+            <label for="userPw">Password</label>
+            <input
+                id="userPw"
+                type="password"
+                name="userPw"
+                value="<%= data.user_pw%>"
+            /><br />
+            <label for="userName">이름</label>
+            <input
+                id="userName"
+                type="text"
+                name="userName"
+                value="<%= data.user_name%>"
+            /><br />
+
+            <!-- 주소 input 자료 찾아보기 -->
+            <label for="userAddr">주소</label>
+            <input
+                id="userAddr"
+                type="text"
+                name="userAddr"
+                value="<%= data.user_addr%>"
+            /><br />
+            <div class="mb-3">
+                <label for="userEmail" class="form-label"
+                    >Email address</label
+                >
+                <input
+                    type="email"
+                    class="form-control"
+                    id="userEmail"
+                    name="user_email"
+                    value="<%= data.user_email%>"
+                />
+            </div>
+
+            <select
+                class="form-select"
+                aria-label="Default select example"
+                name="userCategory"
+            >
+                <option selected><%=data.user_category%></option>
+                <option value="ai">AI</option>
+                <option value="web">웹 개발</option>
+                <option value="git">git</option>
+            </select>
+
+            <button type="button" onclick="userUpdate()">회원정보 수정</button>
+
+        </form>
+        <script>
+            function userUpdate() {
+                const form = document.forms['form_userUpdate'];
+                axios({
+                    method: 'POST',
+                    url: '/updateProfile',
+                    data: {
+                        userId: form.userId.value,
+                        userPw: form.userPw.value,
+                        userName: form.userName.value,
+                        userAddr: form.userAddr.value,
+                        userEmail: form.userEmail.value,
+                        userCategory: form.userCategory.value,
+                    },
+                }).then((res) => {
+                    if (res.data.result === true) {
+                        alert('회원정보 수정 성공!');
+                        document.location.href = "/";
+                    } else {
+                        alert('회원정보 수정 실패 ㅠㅠ')
+                    }
+                });
+            };
+
+            function managerPage() {
+                const form = document.forms['form_userUpdate'];
+                axios({
+                    method: 'POST',
+                    url: '/manager',
+                    data: {
+                        userId: form.userId.value,
+                        userPw: form.userPw.value,
+                        userName: form.userName.value,
+                        userAddr: form.userAddr.value,
+                        userEmail: form.userEmail.value,
+                        userCategory: form.userCategory.value,
+                    },
+                }).then((res) => {
+                    if (res.data === true) {
+                        document.location.href = "/manager";
+                    } else {
+                        alert('관리자가 아닙니다!') 
+                        document.location.href = "/";
+                    }
+                })
+            };
+            function logout() {
+                const form = document.forms['form_userUpdate'];
+                axios({
+                    method: 'POST',
+                    url: '/logout',
+                    data: {
+                        userId: form.userId.value,
+                        userPw: form.userPw.value,
+                    },
+                }).then((res) => {
+                    if (res) {
+                        alert('로그아웃 성공!');
+                        document.location.href = "/";
+                    }
+                });
+            };
+        </script>
+    </body>
+</html>
