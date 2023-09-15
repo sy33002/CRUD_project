@@ -5,7 +5,6 @@ const ConferenceReview = (Sequelize, sequelize) => {
         'con_review',
         {
             re_id: {
-                // id INT NOT NULL PRIMARY KEY auto_increment,
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 primaryKey: true,
@@ -16,12 +15,10 @@ const ConferenceReview = (Sequelize, sequelize) => {
                 allowNull: false,
             },
             re_title: {
-                // varchar(100) not null,
                 type: DataTypes.STRING(100),
                 allowNull: false,
             },
             re_content: {
-                // medium not null,
                 type: DataTypes.TEXT('medium'),
                 allowNull: false,
             },
@@ -30,7 +27,6 @@ const ConferenceReview = (Sequelize, sequelize) => {
                 allowNull: false,
             },
             re_count: {
-                // int
                 type: DataTypes.INTEGER,
                 allowNull: true,
                 defaultValue: 0,
@@ -40,7 +36,6 @@ const ConferenceReview = (Sequelize, sequelize) => {
                 allowNull: true,
             },
             content_Text: {
-                // medium not null,
                 type: DataTypes.TEXT('medium'),
                 allowNull: false,
             },
