@@ -261,7 +261,7 @@ exports.postSignup = async (req, res) => {
     }
 };
 
-// profile update
+// 회원정보 update
 exports.updateProfile = async (req, res) => {
     const data = req.session.userInfo;
     let result;
@@ -300,6 +300,19 @@ exports.updateProfile = async (req, res) => {
         res.send({ result: true });
     } else {
         res.send({ result: false });
+    }
+};
+
+// 회원 탈퇴
+exports.deleteUserself = async (req, res) => {
+    const result = await User.destroy({
+        where: { user_id: req.body.user_id },
+    });
+    if (result === 1) {
+        res.send(true);
+        return;
+    } else {
+        res.send(false);
     }
 };
 
