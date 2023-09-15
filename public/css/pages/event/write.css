@@ -1,0 +1,8 @@
+/* 달력 UI */
+.daterangepicker select.monthselect {
+    width: 50%;
+}
+
+.daterangepicker select.yearselect {
+    width: 48%;
+}
