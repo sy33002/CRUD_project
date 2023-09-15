@@ -124,7 +124,28 @@ exports.approveConference = async (req, res) => {
     try {
         const conferences = await Conference.update(
             {
-                is_agreed: true,
+                is_agreed: 1,
+            },
+            {
+                where: { con_id: req.body.conferenceId },
+            }
+        );
+        res.send({ conferences });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({
+            error: 'Manager Conference Agree Error',
+            message: error.message,
+        });
+    }
+};
+
+// 관리자 페이지 conference 거절하기
+exports.rejectConference = async (req, res) => {
+    try {
+        const conferences = await Conference.update(
+            {
+                is_agreed: -1,
             },
             {
                 where: { con_id: req.body.conferenceId },

@@ -92,8 +92,8 @@ const Conference = (Sequelize, sequelize) => {
                 allowNull: false,
             },
             is_agreed: {
-                type: DataTypes.BOOLEAN,
-                defaultValue: false,
+                type: DataTypes.INTEGER,
+                defaultValue: 0,
                 allowNull: true,
             },
         },

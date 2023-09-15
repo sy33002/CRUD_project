@@ -38,9 +38,12 @@
 
                         conferenceList.forEach((conference) => {
                             const conferenceElement = document.createElement('div');
+                            // 행사를 직접적으로 보이게 하는 부분
                             conferenceElement.innerHTML = `
                                 <p>행사 이름: ${conference.con_title}</p>
+                                <p>행사 시작날짜: ${conference.con_start_date}</p>
                                 <button onclick="approveConference(${conference.con_id})">등록 승인</button>
+                                <button onclick="rejectConference(${conference.con_id})">승인 거절</button>
                             `;
                             // conference.{DB변수명}으로 접근할 수 있습니다. 등록 신청한 행사가 예쁘게 보여졌으면 좋을 것같아요!
                             conferenceListContainer.appendChild(conferenceElement);
@@ -67,6 +70,23 @@
                     alert ('error');
                 }
             })
+        };
+        function rejectConference(conferenceId) {
+            axios({
+                method: 'POST',
+                url:'/manager/rejectConference',
+                data : {
+                    conferenceId: conferenceId,
+                }
+            }).then ((res) =>{
+                if (res.status === 200) {
+                    console.log(res);
+                    alert ('행사 승인을 거절합니다.');
+                } else {
+                    alert ('error');
+                }
+            })
+
         };
     </script>
 </html>
