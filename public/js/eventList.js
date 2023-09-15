@@ -1,3 +1,18 @@
+const calendarEl = document.querySelector('#calendar');
+const calendar = new FullCalendar.Calendar(calendarEl, {
+    header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,basicWeek,basicDay',
+    },
+    // defaultDate: '2023-09-16',
+    navLinks: true, // can click day/week names to navigate views
+    editable: false,
+    eventLimit: true, // allow "more" link when too many events
+    events: [],
+});
+calendar.render();
+
 // 서버에서 모든 행사 리스트를 가져옴
 async function getEventList() {
     const response = await axios({
@@ -10,7 +25,7 @@ async function getEventList() {
 async function init() {
     let eventList = await getEventList();
     eventList = transformEventList(eventList);
-    calendarDraw(eventList);
+    calendar.setOption('events', eventList);
 }
 
 init();
@@ -36,6 +51,7 @@ async function getFilterCon() {
             conIsfree: form.conIsfree.value,
         },
     });
+    console.log(response.data);
     return response.data.eventList;
 }
 
@@ -49,27 +65,10 @@ function transformEventList(eventList) {
     }));
 }
 
-// eventList 배열을 받아와 달력에 행사 정보를 그려줌
-function calendarDraw(eventList) {
-    $('#calendar').fullCalendar({
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,basicWeek,basicDay',
-        },
-        defaultDate: '2023-09-16',
-        navLinks: true, // can click day/week names to navigate views
-        editable: false,
-        eventLimit: true, // allow "more" link when too many events
-        events: eventList,
-    });
-}
-
 // 필터된 값을 그려주는 함수
-async function filterDraw() {
-    $('#calendar').fullCalendar('destroy');
+$('.input-change').change(async function () {
     let eventList = await getFilterCon();
     eventList = transformEventList(eventList);
-    console.log(eventList);
-    calendarDraw(eventList);
-}
+
+    calendar.setOption('events', eventList);
+});
