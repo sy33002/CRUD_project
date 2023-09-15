@@ -1,5 +1,6 @@
 const { User, Sequelize } = require('../models');
 const { Conference } = require('../models');
+const { ConferenceReview } = require('../models');
 const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
 
@@ -313,6 +314,19 @@ exports.deleteUserself = async (req, res) => {
         return;
     } else {
         res.send(false);
+    }
+};
+
+// 내가 쓴 리뷰 목록 불러오기
+exports.getmyreviewList = async (req, res) => {
+    try {
+        const reviews = await ConferenceReview.findAll({
+            where: { user_id: req.query.userId },
+        });
+        res.send({ reviews });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('get myreviewList Error');
     }
 };
 
