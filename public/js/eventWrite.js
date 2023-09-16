@@ -195,6 +195,7 @@ function getInputValue() {
     };
 }
 
+// 유효성 검사
 function validateInput() {
     const {
         conTitle,
@@ -202,7 +203,6 @@ function validateInput() {
         conPeople,
         conPrice,
         conCategory,
-        conLocation,
         conStartDate,
         subEndDate,
     } = getInputValue();
@@ -227,8 +227,18 @@ function validateInput() {
         return form.conCategory.focus();
     }
 
-    if (subEndDate < conStartDate)
+    if (subEndDate > conStartDate)
         return alert('행사 기간과 모집 기간을 확인해 주세요.');
+
+    if (isOnoff) {
+    }
+
+    if (isFree) {
+        if (conPrice === '') {
+            alert('가격을 입력해 주세요.');
+            return form.conPrice.focus();
+        }
+    }
 
     return true;
 }
@@ -258,6 +268,8 @@ async function registerConference() {
 
     const inputValue = getInputValue();
 
+    console.log(inputValue);
+
     const imagePath = imageUploadData.file.path;
     const newImagePath = imagePath.replace('public/', '/static/'); // public 경로를 static으로 변경
     const conferenceRes = await axios({
@@ -268,6 +280,8 @@ async function registerConference() {
             conImagePath: newImagePath,
         },
     });
+
+    console.log(conferenceRes);
     const conferenceData = await conferenceRes.data;
 
     if (conferenceData.result) {
