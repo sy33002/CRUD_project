@@ -171,10 +171,11 @@ function getInputValue() {
     const conStartDate = conDate[0];
     const conEndDate = conDate[1];
 
-    const detailAddr = {
+    const conDetailAddr = {
         postCode: form.postcode.value,
         addr: form.address.value,
         detailAddr: form.detailAddress.value,
+        extraAddr: form.extraAddress.value,
     };
 
     return {
@@ -192,6 +193,7 @@ function getInputValue() {
         conPeople: form.conPeople.value,
         conCompanyUrl: form.conCompanyUrl.value,
         conDetail: form.conDetail.value,
+        conDetailAddr,
     };
 }
 
@@ -205,6 +207,7 @@ function validateInput() {
         conCategory,
         conStartDate,
         subEndDate,
+        conDetailAddr,
     } = getInputValue();
 
     if (conTitle.trim() === '') {
@@ -227,10 +230,22 @@ function validateInput() {
         return form.conCategory.focus();
     }
 
-    if (subEndDate > conStartDate)
+    if (subEndDate >= conStartDate)
         return alert('행사 기간과 모집 기간을 확인해 주세요.');
 
     if (isOnoff) {
+        if (conDetailAddr.postCode === '') {
+            alert('우편번호를 입력해 주세요.');
+            return form.postcode.focus();
+        }
+        if (conDetailAddr.addr === '') {
+            alert('주소를 입력해 주세요.');
+            return form.address.focus();
+        }
+        if (conDetailAddr.detailAddr === '') {
+            alert('상세 주소를 입력해 주세요.');
+            return form.detailAddr.focus();
+        }
     }
 
     if (isFree) {
