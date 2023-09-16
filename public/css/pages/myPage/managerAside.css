@@ -1,0 +1,48 @@
+main {
+    display: flex;
+}
+
+/* 좌측 메뉴 */
+.ani-navbar {
+    background-color: var(--color-black);
+    color: white;
+    top: 0;
+    bottom: 200px;
+    width: 200px;
+    padding: 25px;
+    position: relative;
+    z-index: 5;
+    transition: all 1s;
+    text-align: center;
+    transform: translateX(0px);
+    flex: 0 1 200px;
+}
+
+/* .ani-navbar:hover {
+    transform: translateX(0px);
+    transition: all 0.5s;
+} */
+
+.ani-navbar-menu {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
+.ani-navbar-menu p {
+    margin: 0;
+    margin-left: 10px;
+}
+
+.ani-navbar i {
+    transition: all 0.5s;
+    transform: translateX(125px);
+}
+/* 
+.ani-navbar:hover i {
+    transform: translateX(0px);
+} */
+
+.container {
+    flex: 1;
+}
