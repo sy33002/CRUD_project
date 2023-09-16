@@ -114,6 +114,11 @@ exports.getAllConference = async (req, res) => {
     res.render('myPage/allConference', {conferences});
 };
 
+// 관리자 페이지 행사 관리 페이지 render
+exports.getconferenceHandler = async (req, res) => {
+    res.render('myPage/conferenceHandler');
+};
+
 // 관리자 페이지에서 승인해야할 conference 보기
 exports.getConforenceRegister = async (req, res) => {
     try {
@@ -175,6 +180,19 @@ exports.rejectConference = async (req, res) => {
 };
 
 // 관리자 페이지에서 승인된 컨퍼런스 보기
+exports.getSuccessRegister = async (req, res) => {
+    try {
+        const conferences = await Conference.findAll({
+            where: { is_agreed: 1 },
+        });
+        res.send({ conferences });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Manager Conference Agree Error');
+    }
+};
+
+// 관리자 페이지에서 거절된 컨퍼런스 보기
 exports.getSuccessRegister = async (req, res) => {
     try {
         const conferences = await Conference.findAll({
