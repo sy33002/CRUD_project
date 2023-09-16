@@ -1,18 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <%- include('../../common/head.ejs', {title: '관리자페이지' }) %>
+        <%- include('../../common/head.ejs', {title: '컨퍼런스 핸들러 페이지' }) %>
     </head>
     <body>
-        <h1>관리자 페이지</h1>
-        <button type="button" onclick="getUser()">전체 유저 보기</button>
-        <!-- 전체 유저 불러오는 allUser.ejs로 이동 -->
-
-        <button type="button" onclick="getAllConference()">전체 행사 리스트</button>
-        <div id="allConference">
-            <!-- 거절한 행사 리스트를 여기에 동적으로 추가 -->
-        </div>
-
+        <h1>컨퍼런스 핸들러 페이지</h1>
         <button type="button" onclick="getConferenceRegister()">행사 등록 신청 승인 페이지</button>
         <div id="conferenceList">
             <!-- 행사 리스트를 여기에 동적으로 추가 -->
@@ -22,32 +14,8 @@
         <div id="rejectedConferenceList">
             <!-- 거절한 행사 리스트를 여기에 동적으로 추가 -->
         </div>
-        <button type="button"></button>
-
     </body>
     <script>
-        // 전체 유저 보기
-        function getUser() {
-                axios({
-                    method: 'GET',
-                    url: '/manager/allUser',
-                }).then((res) => {
-                    if (res.status === 200) {
-                        window.location.href = '/manager/allUser';
-                    }
-                })
-        };
-        // 전체 행사 보기
-        function getAllConference() {
-                axios({
-                    method: 'GET',
-                    url: '/manager/allConference',
-                }).then((res) => {
-                    if (res.status === 200) {
-                        window.location.href = '/manager/allConference';
-                    }
-                })
-        };
         // 등록 신청한 행사 보기
         function getConferenceRegister() {
             axios({
