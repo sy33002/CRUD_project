@@ -7,11 +7,14 @@
 
 <body>
     <%- include('../../common/header.ejs') %>
+   
         <main>
             <div class="wrap">
                 <section class="section">
                     <div class="my-editor">
+                        <%=conference.con_id%>
                         <button>이 행사에 대한 리뷰남기기</button>
+                        <button onclick="saveConference()">이 행사 저장하기</button>
                         <p>행사제목</p><%-conference.con_title%>
                         <br>
                        <br>
@@ -78,6 +81,14 @@
 
         </main>
         <%- include('../../common/footer.ejs') %>
+        
 </body>
 
+<script>
+    
+   
+   async function saveConference(){
+    console.log(userInfo)
+   }
+</script>
 </html>
