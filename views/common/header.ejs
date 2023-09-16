@@ -15,15 +15,17 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/event">행사 목록</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/event/write">행사 등록</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/review?page=1">리뷰 목록</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/review/write">리뷰 등록</a>
-                    </li>
+                    <% if(locals.userId !=="" ) { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/event/write">행사 등록</a>
+                        </li>
+                        <% } %>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/review?page=1">리뷰 목록</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/review/write">리뷰 등록</a>
+                            </li>
                 </ul>
                 <ul class="navbar-nav">
                     <% if(locals.userId==="" ) {%>
