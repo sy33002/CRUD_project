@@ -9,51 +9,121 @@
         />
     </head>
     <body>
+        <%- include('../../common/header.ejs') %>
 
-        <h1>관리자 페이지</h1>
+        <main>
+             <!-- 좌측 메뉴 바 -->
+             <%- include('./managerAside') %>
+
+
+            <div class="container">
+                <h4 class="my-4"></h4>
+                <div class="row">
+                    <div class="col-sm-12 mb-3 mb-sm-0">
+                        <div class="card">
+                            <h5 class="card-title">승인대기 행사 목록</h5>
+
+                            <div id="conferenceList">
+                                <a
+                                    href="#"
+                                    class="btn btn-primary"
+                                    onclick="getConferenceRegister()"
+                                    >행사 불러오기
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">승인 완료 행사 목록</h5>
+                                <p class="card-text">
+                                    With supporting text below as a natural
+                                    lead-in to additional content.
+                                </p>
+                                <button
+                                    type="button"
+                                    onclick="getConferenceRegister()"
+                                >
+                                    행사 등록 신청 승인 페이지
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">거절 행사 목록</h5>
+                                <p class="card-text">
+                                    With supporting text below as a natural
+                                    lead-in to additional content.
+                                </p>
+                                <a
+                                    href="#"
+                                    class="btn btn-primary"
+                                    onclick="getrejectedConference()"
+                                    >거절 행사 리스트</a
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
         <button type="button" onclick="getUser()">전체 유저 보기</button>
         <!-- 전체 유저 불러오는 allUser.ejs로 이동 -->
 
-        <button type="button" onclick="getAllConference()">전체 행사 리스트</button>
+        <button type="button" onclick="getAllConference()">
+            전체 행사 리스트
+        </button>
         <div id="allConference">
             <!-- 거절한 행사 리스트를 여기에 동적으로 추가 -->
         </div>
 
-        <button type="button" onclick="getConferenceRegister()">행사 등록 신청 승인 페이지</button>
+        <button type="button" onclick="getConferenceRegister()">
+            행사 등록 신청 승인 페이지
+        </button>
         <div id="conferenceList">
             <!-- 행사 리스트를 여기에 동적으로 추가 -->
         </div>
 
-        <button type="button" onclick="getrejectedConference()">거절한 행사 리스트</button>
+        <button type="button" onclick="getrejectedConference()">
+            거절한 행사 리스트
+        </button>
         <div id="rejectedConferenceList">
             <!-- 거절한 행사 리스트를 여기에 동적으로 추가 -->
         </div>
         <button type="button"></button>
+        </main>
+       
+        <%- include('../../common/footer.ejs') %>
 
+      
     </body>
     <script>
         // 전체 유저 보기
         function getUser() {
-                axios({
-                    method: 'GET',
-                    url: '/manager/allUser',
-                }).then((res) => {
-                    if (res.status === 200) {
-                        window.location.href = '/manager/allUser';
-                    }
-                })
-        };
+            axios({
+                method: 'GET',
+                url: '/manager/allUser',
+            }).then((res) => {
+                if (res.status === 200) {
+                    window.location.href = '/manager/allUser';
+                }
+            });
+        }
         // 전체 행사 보기
         function getAllConference() {
-                axios({
-                    method: 'GET',
-                    url: '/manager/allConference',
-                }).then((res) => {
-                    if (res.status === 200) {
-                        window.location.href = '/manager/allConference';
-                    }
-                })
-        };
+            axios({
+                method: 'GET',
+                url: '/manager/allConference',
+            }).then((res) => {
+                if (res.status === 200) {
+                    window.location.href = '/manager/allConference';
+                }
+            });
+        }
         // 등록 신청한 행사 보기
 
         function getConferenceRegister() {
@@ -111,9 +181,8 @@
                 } else {
                     alert('error');
                 }
-
-            })
-        };
+            });
+        }
         // 컨퍼런스 거절하기
 
         function rejectConference(conferenceId) {
@@ -130,12 +199,10 @@
                 } else {
                     alert('error');
                 }
-
-            })
-        };
+            });
+        }
         // 거절한 컨퍼런스 보기
-        function getrejectedConference(){
-
+        function getrejectedConference() {
             axios({
                 method: 'GET',
                 url: '/manager/rejectedConferenceList',
