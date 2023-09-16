@@ -43,7 +43,7 @@ exports.getReview = async (req, res) => {
 exports.postReview = async (req, res) => {
     console.log('req.body: ', req.body);
     const result = await ConferenceReview.create({
-        con_id: 1,
+        con_id: req.body.con_Id,
         re_title: req.body.subject,
         re_content: filter.clean(req.body.content),
         re_date: Date.now(),
@@ -65,7 +65,10 @@ exports.deleteReview = async (req, res) => {
 };
 
 exports.getReviewWrite = async (req, res) => {
-    const eventName = await Conference.findAll({ attributes: ['con_title'] });
+    const eventName = await Conference.findAll({
+        attributes: ['con_title', 'con_id'],
+    });
+    console.log('eventName: ', eventName);
     console.log(req.session);
     res.render('review/write', {
         eventName: eventName,

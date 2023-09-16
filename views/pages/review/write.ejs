@@ -122,7 +122,10 @@
                         >
                             <option>행사를 선택하세요</option>
                             <% for (let i = 0; i < eventName.length; i++) { %>
-                            <option value="<%= eventName[i].con_title %>">
+                            <option
+                                value="<%= eventName[i].con_title %>"
+                                data-conId="<%= eventName[i].con_id %>"
+                            >
                                 <%= eventName[i].con_title %>
                             </option>
                             <% } %>
