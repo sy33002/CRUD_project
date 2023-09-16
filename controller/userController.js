@@ -132,6 +132,11 @@ exports.getConforenceRegister = async (req, res) => {
     }
 };
 
+// 행사 관리 페이지 render
+exports.conferenceHandler = async (req, res) => {
+    res.render('myPage/conferenceHandler');
+};
+
 // 관리자 페이지 conference 승인하기
 exports.approveConference = async (req, res) => {
     try {
@@ -171,6 +176,19 @@ exports.rejectConference = async (req, res) => {
             error: 'Manager Conference Agree Error',
             message: error.message,
         });
+    }
+};
+
+// 관리자 페이지에서 승인된 컨퍼런스 보기
+exports.getSuccessRegister = async (req, res) => {
+    try {
+        const conferences = await Conference.findAll({
+            where: { is_agreed: 1 },
+        });
+        res.send({ conferences });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Manager Conference Agree Error');
     }
 };
 
