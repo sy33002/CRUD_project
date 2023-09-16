@@ -191,6 +191,7 @@ exports.postConference = async (req, res) => {
         conCount,
         conImagePath,
         conDetail,
+        conDetailAddr,
     } = req.body;
 
     try {
@@ -212,6 +213,7 @@ exports.postConference = async (req, res) => {
             con_detail: conDetail,
             con_image: conImagePath,
             user_id: req.session.userInfo.id,
+            con_detail_location: conDetailAddr,
         });
         res.send({ result: true });
     } catch (err) {
