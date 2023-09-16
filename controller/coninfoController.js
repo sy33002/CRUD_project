@@ -280,15 +280,23 @@ exports.postConferenceEdit = async (req, res) => {
     }
 };
 exports.saveConference = async (req, res) => {
+    const isLiked = await ConFavorite.findOne({
+        where: {
+            user_id: res.locals.Id,
+            con_id: req.body.con_id,
+        },
+    });
     console.log(req.body);
     if (res.locals.Id === 0) {
-        res.send({ result: false });
+        res.send({ result: 1 }); //로그인 후 이용
+    } else if (isLiked) {
+        res.send({ result: 2 }); //이미 찜 눌렀음
     } else {
         await ConFavorite.create({
             user_id: res.locals.Id,
             con_id: req.body.con_id,
         });
-        res.send({ result: true });
+        res.send({ result: 3 }); //찜 성공
     }
 };
 
