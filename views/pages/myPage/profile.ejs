@@ -28,7 +28,6 @@
                 value="<%= data.user_name%>"
             /><br />
 
-            <!-- 주소 input 자료 찾아보기 -->
             <label for="userAddr">주소</label>
             <input
                 id="userAddr"
@@ -66,7 +65,10 @@
             <div id="myreviewList">
                 <!-- myrivew리스트를 여기에 동적으로 추가 -->
             </div>
-
+            <button type="button" onclick="myFavoriteList(`<%= data.id%>`)">찜한 행사 목록 보기</button>
+            <div id="myFavoriteList">
+                <!-- myFavorite리스트를 여기에 동적으로 추가 -->
+            </div>
         </form>
         <script>
             // 유저 정보 수정
@@ -185,6 +187,56 @@
                     }
                 }
                 })
+            };
+            // 내가 찜한 행사 보기
+            function myFavoriteList(userId) {
+                axios({
+                    method: 'GET',
+                    url: '/myPage/myFavoriteList',
+                    params: {
+                        userId: userId,
+                    },
+                }).then((res) => {
+                    if (res.status === 200) {
+                    const myFavoriteList = res.data.getFavorites;
+                    if (Array.isArray(myFavoriteList) && myFavoriteList.length > 0) {
+                        const myFavoriteListContainer = document.getElementById('myreviewList');
+                        myFavoriteContainer.innerHTML = '';
+
+                        myFavoriteList.forEach((reviews) => {
+                            const favoriteElement = document.createElement('div');
+                            favoriteElement.innerHTML = `
+                                <p>행사 제목: ${myFavoriteList.con_title}</p>
+                                <p>행사 내용: ${myFavoriteList.con_content}</p>
+                                <p>행사 상세 페이지: /localhost:8000/event/${myFavoriteList.con_id}</p>
+                                <button type="button" onclick="deletefavorite(${myFavoriteList.con_id})">찜 삭제</button>
+                            `;
+                            myFavoriteContainer.appendChild(reviewElement);
+                        });
+                    } else {
+                        const myFavoriteContainer = document.getElementById('myFavoriteList');
+                        myFavoriteContainer.innerHTML = '찜한 행사가 없습니다.';
+                    }
+                    } else {
+                        console.log("error");
+                    }
+                })
+            };
+            // 찜한 행사 삭제
+            function deletefavorite(conId) {
+            axios ({
+                method: 'delete',
+                url: '/manager/deleteMyFavorite',
+                data: {
+                    con_id: conId,
+                },
+            }).then ((res) => {
+                if (res.data === true) {
+                alert('찜 리스트에서 삭제 성공');
+                } else {
+                alert ('찜 리스트 삭제 실패');
+                }
+            });
             };
         </script>
     </body>

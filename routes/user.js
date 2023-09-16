@@ -14,6 +14,8 @@ router.get('/myPage', controller.getProfile); // 마이페이지 render
 router.post('/updateProfile', controller.updateProfile); // 회원정보 update
 router.delete('/manager/deleteUserself', controller.deleteUserself); // 회원탈퇴
 router.get('/myPage/myreviewList', controller.getmyreviewList); // 마이페이지 <내가쓴리뷰목록> 조회
+router.get('/myPage/myFavoriteList', controller.getmyFavoriteList); // 마이페이지 <찜한 행사 목록> 조회
+router.delete('/manager/deleteMyFavorite', controller.deleteMyFavorite); // 마이페이지 <찜한 행사 목록> 조회
 
 router.get('/manager', controller.getManager); // 관리자페이지 render
 router.post('/manager', controller.postManager); // 관리자페이지 render
