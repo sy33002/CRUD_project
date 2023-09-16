@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-<head>
-    <%- include('../../common/head.ejs', {title: '리뷰 상세' }) %>
+    <head>
+        <%- include('../../common/head.ejs', {title: '리뷰 상세' }) %>
         <link rel="stylesheet" href="/static/css/pages/review/detail.css" />
-</head>
+    </head>
 
-<body>
-    <%- include('../../common/header.ejs') %>
+    <body>
+        <%- include('../../common/header.ejs') %>
         <main>
             <div class="wrap">
                 <section class="section">
                     <div class="my-editor">
-                        <%- review.re_content %>
+                        행사 : <%- review.con_title%> <br />
+                        제목 : <%- review.re_title%> <br />
+                        리뷰내용: <%- review.re_content %> <br />
+                        작성자: <%- review.user_id%>
                     </div>
                 </section>
             </div>
-
         </main>
         <%- include('../../common/footer.ejs') %>
-</body>
-
+    </body>
 </html>

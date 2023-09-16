@@ -1,6 +1,6 @@
 const { User, Sequelize } = require('../models');
 const { Conference } = require('../models');
-const { ConferenceReview } = require('../models');
+const { ConferenceReview, Confavorite } = require('../models');
 const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
 
@@ -333,6 +333,40 @@ exports.getmyreviewList = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send('get myreviewList Error');
+    }
+};
+
+// 내가 찜한 행사 목록 불러오기
+exports.getmyFavoriteList = async (req, res) => {
+    try {
+        const favorites = await Confavorite.findAll({
+            where: { user_id: req.query.id },
+        });
+        const getFavorites = await Promise.all(
+            favorites.map(async (favorite) => {
+                const conference = await Conference.findOne({
+                    where: { con_id: favorite.con_id }
+                });
+                return conference;
+            })
+        );
+        res.send({ getFavorites });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('get myFavoriteList Error');
+    }
+};
+
+// 찜한 항목 삭제
+exports.deleteMyFavorite = async (req, res) => {
+    const result = await Confavorite.destroy({
+        where: { con_id: req.body.con_id },
+    });
+    if (result === 1) {
+        res.send(true);
+        return;
+    } else {
+        res.send(false);
     }
 };
 
