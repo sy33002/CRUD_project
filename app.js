@@ -37,6 +37,7 @@ app.use((req, res, next) => {
     res.locals.userIsManager = 0;
     if (req.session.userInfo) {
         const userInfo = req.session.userInfo;
+        res.locals.Id = userInfo.id;
         res.locals.userId = userInfo.userId;
         res.locals.userName = userInfo.userName;
         res.locals.userIsManager = userInfo.userIsManager;

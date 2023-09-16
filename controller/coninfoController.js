@@ -139,6 +139,7 @@ exports.getConferenceWrite = (req, res) => {
     res.render('event/write');
 };
 
+//행사 상세페이지
 exports.getConferenceDetail = async (req, res) => {
     const { id } = req.params;
 
@@ -192,7 +193,7 @@ exports.postConference = async (req, res) => {
             con_count: conCount,
             con_detail: conDetail,
             con_image: conImagePath,
-            user_id: req.session.userInfo.userId,
+            user_id: req.session.userInfo.id,
         });
         res.send({ result: true });
     } catch (err) {
