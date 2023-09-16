@@ -345,4 +345,3 @@ function bcryptPassword(password) {
 function compareFunc(password, hashedPassword) {
     return bcrypt.compareSync(password, hashedPassword);
 }
-
