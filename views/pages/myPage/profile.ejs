@@ -90,7 +90,7 @@
                         alert('회원정보 수정 성공!');
                         document.location.href = "/";
                     } else {
-                        alert('회원정보 수정 실패!')
+                        alert('회원정보 변경 없음')
                     }
                 });
             };
@@ -163,31 +163,32 @@
                         userId: userId,
                     },
                 }).then((res) => {
-                    console.log('reviewList res>>>', res.data);
                     if (res.status === 200) {
-                    const reviewList = res.data.reviews;
-                    const myreviewListContainer = document.getElementById('myreviewList');
-                    myreviewListContainer.innerHTML = '';
+                        const reviewList = res.data.results;
+                        const myreviewListContainer = document.getElementById('myreviewList');
+                        myreviewListContainer.innerHTML = '';
 
-                    if (Array.isArray(reviewList) && reviewList.length > 0) {
-                        reviewList.forEach((reviews) => {
-                            const reviewElement = document.createElement('div');
-                            reviewElement.innerHTML = `
-                                <p>리뷰제목: ${reviews.re_title}</p>
-                                <p>리뷰 내용: ${reviews.re_content}</p>
-                                <p>리뷰 등록일: ${reviews.re_date}</p>
-                                <p>리뷰 조회수: ${reviews.re_count}</p>
-                                <button type="button" onclick="deleteMyReview(${reviews.re_id})">리뷰 삭제</button>
-                            `;
+                        if (Array.isArray(reviewList) && reviewList.length > 0) {
+                            reviewList.forEach((result) => {
+                                const reviewElement = document.createElement('div');
+                                reviewElement.innerHTML = `
+                                    <p>리뷰제목: ${result.review.re_title}</p>
+                                    <p>리뷰 내용: ${result.review.re_content}</p>
+                                    <p>리뷰 등록일: ${result.review.re_date}</p>
+                                    <p>리뷰 조회수: ${result.review.re_count}</p>
+                                    <p>리뷰에 대한 행사 제목: ${result.relatedConference.con_title}</p>
+                                    <p>리뷰에 대한 행사 상세 링크: <a href="http://localhost:8000/event/${result.relatedConference.con_id}">바로가기</a></p>
+                                    <button type="button" onclick="deleteMyReview(${result.review.re_id})">리뷰 삭제</button>
+                                `;
 
-                            myreviewListContainer.appendChild(reviewElement);
-                        });
-                    } else {
-                        myreviewListContainer.innerHTML = '등록한 리뷰가 없습니다.';
+                                myreviewListContainer.appendChild(reviewElement);
+                            });
+                        } else {
+                            myreviewListContainer.innerHTML = '등록한 리뷰가 없습니다.';
+                        }
                     }
-                }
-                })
-            };
+                });
+            }
             // 내가 쓴 리뷰 삭제
             function deleteMyReview(reId) {
             axios ({

@@ -330,7 +330,19 @@ exports.getmyreviewList = async (req, res) => {
         const reviews = await ConferenceReview.findAll({
             where: { user_id: req.query.userId },
         });
-        res.send({ reviews });
+
+        const reviewPromises = reviews.map(async (review) => {
+            const conId = review.con_id;
+            const relatedConference = await Conference.findOne({
+                where: { con_id: conId }
+            });
+            return {
+                review,
+                relatedConference
+            };
+        });
+        const results = await Promise.all(reviewPromises);
+        res.send({ results });
     } catch (error) {
         console.error(error);
         res.status(500).send('get myreviewList Error');
