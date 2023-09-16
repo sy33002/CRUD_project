@@ -1,14 +1,16 @@
 const calendarEl = document.querySelector('#calendar');
 const calendar = new FullCalendar.Calendar(calendarEl, {
-    header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,basicWeek,basicDay',
+    headerToolbar: {
+        // left: 'prev,next',
+        // center: 'title',
+        // right: 'month,basicWeek,basicDay',
     },
     // defaultDate: '2023-09-16',
-    navLinks: true, // can click day/week names to navigate views
+    navLinks: false, // can click day/week names to navigate views
     editable: false,
     eventLimit: true, // allow "more" link when too many events
+    locale: 'ko', // 한글 로케일 사용
+    dayNames: ['일', '월', '화', '수', '목', '금', '토'], // 요일 이름 설정
     events: [],
 });
 calendar.render();
@@ -57,11 +59,17 @@ async function getFilterCon() {
 
 // 이벤트 객체 변환 작업 수행
 function transformEventList(eventList) {
+    const color = {
+        web: '#00b1f2',
+        AI: '#20c997',
+        git: '#775dd0',
+    };
     return eventList.map((event) => ({
         title: event.con_title,
         start: new Date(event.con_start_date).toISOString().split('T')[0],
         end: new Date(event.con_end_date).toISOString().split('T')[0],
         url: `/event/${event.con_id}`,
+        color: color[event.con_category],
     }));
 }
 
