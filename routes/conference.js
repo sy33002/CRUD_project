@@ -5,7 +5,7 @@ const router = express.Router();
 const controller = require('../controller/coninfoController');
 
 router.get('/event', controller.getConferenceList); // event/list 페이지 렌더 역할 데이터 전송 x
-
+router.get('/event/calendar', controller.getConferenceCalendar); //캘린더 페이지 로드
 router.post('/event', controller.postConferenceList); // 필터 기능
 router.get('/event/list', controller.getConferenceInfo); //여기에서 send로 데이터 보내줨
 

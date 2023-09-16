@@ -32,11 +32,13 @@ app.use(
 
 // 모든 페이지에 session을 넣는 미들웨어
 app.use((req, res, next) => {
+    res.locals.Id = 0;
     res.locals.userId = '';
     res.locals.userName = '';
     res.locals.userIsManager = 0;
     if (req.session.userInfo) {
         const userInfo = req.session.userInfo;
+        res.locals.Id = userInfo.id;
         res.locals.userId = userInfo.userId;
         res.locals.userName = userInfo.userName;
         res.locals.userIsManager = userInfo.userIsManager;

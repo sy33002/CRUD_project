@@ -93,19 +93,22 @@ function getUserIP(req) {
 //     }
 // };
 
-// 순수 렌더 역할만
-exports.getConferenceList = async (req, res) => {
-    try {
-        return res.render('event/list');
-    } catch (err) {
-        console.log(err);
-        res.send('server error');
-    }
+// 순수 리스트 렌더역할
+exports.getConferenceList = (req, res) => {
+    return res.render('event/list');
+};
+//캘린더 페이지로드
+exports.getConferenceCalendar = (req, res) => {
+    return res.render('event/calendar');
 };
 
 // event/list에 모든 행사 리스트 넘겨주는 함수
 exports.getConferenceInfo = async (req, res) => {
-    const eventList = await Conference.findAll();
+    const eventList = await Conference.findAll({
+        where: {
+            is_agreed: true,
+        },
+    });
     res.send({ eventList });
 };
 
@@ -139,6 +142,7 @@ exports.getConferenceWrite = (req, res) => {
     res.render('event/write');
 };
 
+//행사 상세페이지
 exports.getConferenceDetail = async (req, res) => {
     const { id } = req.params;
 
@@ -152,6 +156,11 @@ exports.getConferenceDetail = async (req, res) => {
     }
     res.render(`event/detail`, { conference: result });
 };
+// exports.saveConference=async(req,res)=>{
+//     const{con_id}=req.params;
+//     const{ }=
+// }
+//행사 상세페이지에서 찜(유저가 있을 경우 )
 
 //게시글 등록(DB에 저장까지만~)
 exports.postConference = async (req, res) => {
@@ -192,6 +201,7 @@ exports.postConference = async (req, res) => {
             con_count: conCount,
             con_detail: conDetail,
             con_image: conImagePath,
+            user_id: req.session.userInfo.id,
         });
         res.send({ result: true });
     } catch (err) {

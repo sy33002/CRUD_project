@@ -3,16 +3,9 @@
 
 <head>
     <%- include('../../common/head.ejs', {title: '행사 목록' }) %>
-        <link rel="stylesheet" href="/static/css/review.css" />
-        <script defer src="/static/js/event-write.js"></script>
         <!-- Full Calendar CDN-->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.print.min.css"
-            rel="stylesheet" media="print" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" />
+        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 
-        <!-- full calendar 언어 CDN -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js"></script>
         <link rel="stylesheet" href="/static/css/pages/event/list.css">
         <script defer src="/static/js/eventList.js"></script>
 </head>
@@ -34,22 +27,22 @@
                             <div class="mb-4">
                                 <span class="fw-bold d-block mb-3">행사 분야</span>
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" name="conCategory" value="web"
-                                        id="web">
+                                    <input class="form-check-input input-change" type="checkbox" name="conCategory"
+                                        value="web" id="web">
                                     <label class="form-check-label" for="web">
                                         web
                                     </label>
                                 </div>
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" name="conCategory" value="AI"
-                                        id="AI">
+                                    <input class="form-check-input input-change" type="checkbox" name="conCategory"
+                                        value="AI" id="AI">
                                     <label class="form-check-label" for="AI">
                                         AI
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="conCategory" id="git"
-                                        value="git" />
+                                    <input class="form-check-input input-change" type="checkbox" name="conCategory"
+                                        id="git" value="git" />
                                     <label class="form-check-label" for="git">
                                         git
                                     </label>
@@ -57,7 +50,8 @@
                             </div>
                             <div class="mb-4">
                                 <span class="fw-bold d-block mb-3">지역</span>
-                                <select class="form-select" aria-label="Default select example" name="conLocation">
+                                <select class="form-select input-change" aria-label="Default select example"
+                                    name="conLocation">
                                     <option value="" selected>
                                         전체
                                     </option>
@@ -67,8 +61,8 @@
                             <div class="mb-4">
                                 <span class="fw-bold d-block mb-3">참여 방법</span>
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" name="isOnoff" id="allOnoff" value=""
-                                        checked />
+                                    <input class="form-check-input input-change" type="radio" name="isOnoff"
+                                        id="allOnoff" value="" checked />
                                     <label class="form-check-label" for="allOnoff">
                                         전체
                                     </label>
@@ -78,8 +72,8 @@
                             <div>
                                 <span class="fw-bold d-block mb-3">가격</span>
                                 <div class="form-check mb-2">
-                                    <input class="form-check-input" type="radio" name="conIsfree" id="conIsfree"
-                                        value="" checked />
+                                    <input class="form-check-input input-change" type="radio" name="conIsfree"
+                                        id="conIsfree" value="" checked />
                                     <label class="form-check-label" for="conIsfree">
                                         전체
                                     </label>
@@ -198,6 +192,7 @@
             </div>
         </main>
         <%- include('../../common/footer.ejs') %>
+
 </body>
 
 </html>

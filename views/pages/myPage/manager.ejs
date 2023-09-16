@@ -9,147 +9,70 @@
         />
     </head>
     <body>
-        <%- include('../../common/header.ejs') %>
 
-        <main>
-            <!-- 좌측 메뉴 바 -->
-            <%- include('./managerAside') %>
-            <!-- 승인 대기 행사 목록 -->
-            <div class="container">
-                <h4 class="my-4"></h4>
-                <div class="row">
-                    <div class="col-sm-12 mb-3 mb-sm-0">
-                        <div class="card">
-                            <div class="card-body">
-                                <!-- 전체 행사  -->
-                                <!-- <div class="container">
+        <h1>관리자 페이지</h1>
+        <button type="button" onclick="getUser()">전체 유저 보기</button>
+        <!-- 전체 유저 불러오는 allUser.ejs로 이동 -->
 
-                                    <table class="table text-center">
-                                        <thead>
-                                            <tr class="border-bottom">
-                                                <th>아이디</th>
-                                                <th>이름</th>
-                                                <th>이메일</th>
-                                                <th>지역</th>
-                                                <th>관심 분야</th>
-                                                <th>관리자</th>
-                                                <th></th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <%# for (let con of conference) { %>
-                                            <tr
-                                                class="border-bottom"
-                                                id="tr_<%#= con.con_id %>"
-                                            >
-                                                <td><%#= user.user_id %></td>
-                                                <td><%#= user.user_name %></td>
-                                                <td><%#= user.user_email %></td>
-                                                <td><%#= user.user_addr %></td>
-                                                <td>
-                                                    <%#= user.user_category %>
-                                                </td>
-                                                <td>
-                                                    <%#= user.user_isManager ===
-                                                    true ? 'O' : 'X' %>
-                                                </td>
-                                                <%# if (user.user_isManager ===
-                                                1) { %>
-                                                <td>
-                                                    <button
-                                                        class="btn btn-outline-secondary"
-                                                        type="button"
-                                                        onclick="revokeManager(this, '<%#= user.id %>')"
-                                                    >
-                                                        관리자 권한 회수
-                                                    </button>
-                                                </td>
+        <button type="button" onclick="getAllConference()">전체 행사 리스트</button>
+        <div id="allConference">
+            <!-- 거절한 행사 리스트를 여기에 동적으로 추가 -->
+        </div>
 
-                                                <%# } %>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div> -->
+        <button type="button" onclick="getConferenceRegister()">행사 등록 신청 승인 페이지</button>
+        <div id="conferenceList">
+            <!-- 행사 리스트를 여기에 동적으로 추가 -->
+        </div>
 
-                                <h5 class="card-title">승인대기 행사 목록</h5>
-
-                                <div id="conferenceList">
-                                    <a
-                                        href="#"
-                                        class="btn btn-primary"
-                                        onclick="getConferenceRegister()"
-                                        >행사 불러오기
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6 mb-3 mb-sm-0">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">승인 완료 행사 목록</h5>
-                                <p class="card-text">
-                                    With supporting text below as a natural
-                                    lead-in to additional content.
-                                </p>
-                                <a href="#" class="btn btn-primary"
-                                    >Go somewhere</a
-                                >
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">거절 행사 목록</h5>
-                                <p class="card-text">
-                                    With supporting text below as a natural
-                                    lead-in to additional content.
-                                </p>
-                                <a
-                                    href="#"
-                                    class="btn btn-primary"
-                                    onclick="getrejectedConference()"
-                                    >거절 행사 리스트</a
-                                >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- <button type="button" onclick="getUser()">전체 유저 보기</button> -->
-                <!-- 전체 유저 불러오는 allUser.ejs로 이동 -->
-                <!-- <button type="button" onclick="getConferenceRegister()">
-                    행사 등록 신청 승인 페이지
-                </button> -->
-                <!-- 동적 폼으로 행사 신청 불러오기 -->
-                <!-- <div id="conferenceList"> -->
-                <!-- 행사 리스트를 여기에 동적으로 추가 -->
-                <!-- </div> -->
-                <!-- <button type="button" onclick="getrejectedConference()">
-                    거절한 행사 리스트
-                </button> -->
-                <div id="rejectedConferenceList">
-                    <!-- 거절한 행사 리스트를 여기에 동적으로 추가 -->
-                </div>
-            </div>
-        </main>
-        <%- include('../../common/footer.ejs') %>
+        <button type="button" onclick="getrejectedConference()">거절한 행사 리스트</button>
+        <div id="rejectedConferenceList">
+            <!-- 거절한 행사 리스트를 여기에 동적으로 추가 -->
+        </div>
     </body>
     <script>
-        // function getUser() {
-        //     axios({
-        //         method: 'GET',
-        //         url: '/manager/allUser',
-        //     }).then((res) => {
-        //         if (res.status === 200) {
-        //             window.location.href = '/manager/allUser';
-        //         }
-        //     });
-        // }
+        // 전체 유저 보기
+        function getUser() {
+                axios({
+                    method: 'GET',
+                    url: '/manager/allUser',
+                }).then((res) => {
+                    if (res.status === 200) {
+                        window.location.href = '/manager/allUser';
+                    }
+                })
+        };
+        // 전체 행사 보기
+        function getAllConference() {
+            axios({
+                method: 'GET',
+                url: '/manager/getAllConference',
+            }).then((res) => {
+                if (res.status === 200) {
+                    const allConference = res.data.conferences;
+                    console.log("allConference >>>>", allConference);
+                    if (Array.isArray(allConference) && allConference.length > 0) {
+                        const allConferenceContainer = document.getElementById('allConference');
+                        allConferenceContainer.innerHTML = ''; // Clear previous content
+
+                        allConference.forEach((conference) => {
+                            const conferenceElement = document.createElement('div');
+                            // 행사를 직접적으로 보이게 하는 부분
+                            conferenceElement.innerHTML = `
+                                <p>행사 이름: ${conference.con_title}</p>
+                                <p>행사 시작날짜: ${conference.con_start_date}</p>
+                            `;
+                            // conference.{DB변수명}으로 접근할 수 있습니다. 등록 신청한 행사가 예쁘게 보여졌으면 좋을 것같아요!
+                            allConferenceContainer.appendChild(conferenceElement);
+                        });
+                    } else {
+                        const allConferenceContainer = document.getElementById('allConference');
+                        allConferenceContainer.innerHTML = '신청한 새로운 행사가 없습니다.';
+                    }
+                }
+            });
+        }
+        // 등록 신청한 행사 보기
+
         function getConferenceRegister() {
             axios({
                 method: 'GET',
@@ -190,6 +113,7 @@
                 }
             });
         }
+        // 컨퍼런스 승인하기
         function approveConference(conferenceId) {
             axios({
                 method: 'POST',
@@ -204,8 +128,11 @@
                 } else {
                     alert('error');
                 }
-            });
-        }
+
+            })
+        };
+        // 컨퍼런스 거절하기
+
         function rejectConference(conferenceId) {
             axios({
                 method: 'POST',
@@ -220,9 +147,12 @@
                 } else {
                     alert('error');
                 }
-            });
-        }
-        function getrejectedConference() {
+
+            })
+        };
+        // 거절한 컨퍼런스 보기
+        function getrejectedConference(){
+
             axios({
                 method: 'GET',
                 url: '/manager/rejectedConferenceList',

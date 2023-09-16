@@ -1,5 +1,7 @@
 const { User, Sequelize } = require('../models');
 const { Conference } = require('../models');
+const { Confavorite } = require('../models');
+const { ConferenceReview } = require('../models');
 const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
 
@@ -104,6 +106,12 @@ exports.revokeManager = async (req, res) => {
         console.error(error);
         res.status(500).send(false);
     }
+};
+
+// 관리자 페이지에서 전체 컨퍼런스 보기
+exports.getAllConference = async (req, res) => {
+    const conferences = await Conference.findAll();
+    res.send({ conferences });
 };
 
 // 관리자 페이지에서 승인해야할 conference 보기
@@ -316,6 +324,69 @@ exports.deleteUserself = async (req, res) => {
     }
 };
 
+// 내가 쓴 리뷰 목록 불러오기
+exports.getmyreviewList = async (req, res) => {
+    try {
+        const reviews = await ConferenceReview.findAll({
+            where: { user_id: req.query.userId },
+        });
+        res.send({ reviews });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('get myreviewList Error');
+    }
+};
+
+// 내가 쓴 리뷰 삭제
+exports.deleteMyReview = async (req, res) => {
+    const result = await ConferenceReview.destroy({
+        where: { re_id: req.body.re_id },
+    });
+    if (result === 1) {
+        res.send(true);
+        return;
+    } else {
+        res.send(false);
+    }
+};
+
+// 내가 찜한 행사 목록 불러오기
+exports.getmyFavoriteList = async (req, res) => {
+    console.log("getmyFavoriteList>>>", req.query);
+    try {
+        const favorites = await Confavorite.findAll({
+            where: { user_id: req.query.userId },
+        });
+        console.log("favorites>>>", favorites);
+        const getFavorites = await Promise.all(
+            favorites.map(async (favorite) => {
+                const conference = await Conference.findOne({
+                    where: { con_id: favorite.con_id }
+                });
+                console.log("conference>>>", conference);
+                return conference;
+            })
+        );
+        res.send({ getFavorites });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('get myFavoriteList Error');
+    }
+};
+
+// 찜한 항목 삭제
+exports.deleteMyFavorite = async (req, res) => {
+    const result = await Confavorite.destroy({
+        where: { con_id: req.body.con_id },
+    });
+    if (result === 1) {
+        res.send(true);
+        return;
+    } else {
+        res.send(false);
+    }
+};
+
 // 비밀번호 암호화 함수
 const saltRounds = 5;
 function bcryptPassword(password) {
@@ -325,4 +396,3 @@ function bcryptPassword(password) {
 function compareFunc(password, hashedPassword) {
     return bcrypt.compareSync(password, hashedPassword);
 }
-

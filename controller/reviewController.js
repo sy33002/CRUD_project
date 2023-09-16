@@ -1,7 +1,7 @@
 const Filter = require('badwords-ko'); // npm install badwords-ko --save
 const filter = new Filter();
 
-const { ConferenceReview, Sequelize } = require('../models'); // ../models/index.js
+const { ConferenceReview, Sequelize, Conference } = require('../models'); // ../models/index.js
 const { Op } = require('sequelize');
 
 exports.getReview = async (req, res) => {
@@ -13,19 +13,25 @@ exports.getReview = async (req, res) => {
         const startIndex = offset; // offset 변수를 사용하여 startIndex를 계산
         const endIndex = startIndex + itemsPerPage; // endIndex를 계산
 
-        const count = await ConferenceReview.count();
         const result = await ConferenceReview.findAll({
             offset: offset,
             limit: limit,
             order: [['re_id', 'DESC']],
         });
+
+        const count = await ConferenceReview.count();
         const totalPages = Math.ceil(count / itemsPerPage);
+        const startPage = Math.max(pageNum - Math.floor(limit / 2), 1);
+        const endPage = Math.min(startPage + limit - 1, totalPages);
 
         res.render('review/list', {
             result: result,
             count: count,
             currentPage: pageNum,
             totalPages: totalPages,
+            startPage: startPage,
+            totalPages: totalPages,
+            endPage: endPage,
         });
         console.log(count);
     } catch (err) {
@@ -35,7 +41,7 @@ exports.getReview = async (req, res) => {
 };
 
 exports.postReview = async (req, res) => {
-    console.log(req.body);
+    console.log('req.body: ', req.body);
     const result = await ConferenceReview.create({
         con_id: 1,
         re_title: req.body.subject,
@@ -46,6 +52,7 @@ exports.postReview = async (req, res) => {
                 ? req.session.userInfo.userId
                 : '익명사용자',
         content_Text: filter.clean(req.body.content).replace(/<[^>]*>/g, ''),
+        con_title: req.body.eventName,
     });
     res.send(result);
 };
@@ -57,9 +64,12 @@ exports.deleteReview = async (req, res) => {
     res.send(true);
 };
 
-exports.getReviewWrite = (req, res) => {
+exports.getReviewWrite = async (req, res) => {
+    const eventName = await Conference.findAll({ attributes: ['con_title'] });
     console.log(req.session);
-    res.render('review/write');
+    res.render('review/write', {
+        eventName: eventName,
+    });
 };
 
 exports.getReviewDetail = async (req, res) => {

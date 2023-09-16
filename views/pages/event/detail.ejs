@@ -7,17 +7,88 @@
 
 <body>
     <%- include('../../common/header.ejs') %>
+   
         <main>
             <div class="wrap">
                 <section class="section">
                     <div class="my-editor">
-                        <%- conference.con_count %>
+                        <%=conference.con_id%>
+                        <button>이 행사에 대한 리뷰남기기</button>
+                        <button onclick="saveConference()">이 행사 저장하기</button>
+                        <p>행사제목</p><%-conference.con_title%>
+                        <br>
+                       <br>
+                        <p>행사 조회수</p><%- conference.con_count %>
+                        <br>
+                        <br>
+                        <p>행사 시작 날짜</p><%- conference.con_start_date%>
+                        <br>
+                        <br>
+                        <p>행사 끝나는 날짜</p><%- conference.con_end_date%>
+                        <br>
+                        <br>
+                        <p>행사 모집 시작</p><%- conference.sub_start_date%>
+                        <br>
+<br>
+                        <p>행사 모집 마감 날짜</p><%- conference.sub_end_date%>
+                        <br>
+<br>
+                        <p>온라인/오프라인</p>
+                        <% if(conference.is_onoff===false){%>
+                            <p>오프라인</p>
+                            <%-conference.con_location%>
+                            <%-conference.con_detail_location%>
+                        <%}else{%>
+                            <p>온라인</p>
+                            <%}%>
+                        
+                <br>
+                <br>
+                <p>행사 분야</p>
+                <%-conference.con_category%>
+                <br>
+                
+                <br>
+                <p>행사주최</p>
+                <%-conference.con_company%>
+                <br>
+                <p>행사 url</p>
+                <%-conference.con_company_url%>
+                <br>
+                <br>
+                <p>유/무료</p>
+                <% if(conference.con_isfree===false){%>
+                    <p>유료</p>
+                    <%-conference.con_price%>
+                <%}else{%>
+                    <p>무료</p>
+                    <%}%>
+<br>
+<br>
+<p>행사 주최</p>
+<%-conference.con_company%>
+<br>
+<br>
+<p>행사규모</p>
+<%-conference.con_people%>
+<br>
+<br>
+<p>행사 내용</p>
+<%-conference.con_detail%>
                     </div>
                 </section>
             </div>
 
         </main>
         <%- include('../../common/footer.ejs') %>
+        
 </body>
 
+<script>
+    
+   
+   async function saveConference(){
+    console.log(userInfo)
+   }
+</script>
 </html>
