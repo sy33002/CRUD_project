@@ -39,6 +39,10 @@ const ConferenceReview = (Sequelize, sequelize) => {
                 type: DataTypes.TEXT('medium'),
                 allowNull: false,
             },
+            con_title: {
+                type: DataTypes.STRING(100),
+                allowNull: false,
+            },
         },
         {
             tableName: 'con_review', // 실제 db 테이블명
