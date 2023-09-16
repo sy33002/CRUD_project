@@ -286,7 +286,7 @@ async function registerConference() {
     console.log(inputValue);
 
     const imagePath = imageUploadData.file.path;
-    const newImagePath = imagePath.replace('public/', '/static/'); // public 경로를 static으로 변경
+    const newImagePath = imagePath.replace('public', 'static'); // public 경로를 static으로 변경
     const conferenceRes = await axios({
         method: 'POST',
         url: '/event/write',
