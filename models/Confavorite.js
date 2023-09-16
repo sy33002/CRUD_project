@@ -13,7 +13,7 @@ const ConFavorite = (Sequelize, sequelize) => {
             },
             is_favorite: {
                 type: DataTypes.BOOLEAN,
-                defaultValue: false,
+                defaultValue: 0,
                 allowNull: false,
             }
         },
