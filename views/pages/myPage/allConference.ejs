@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('../../common/head.ejs', {title: '전체 컨퍼런스 조회 페이지' }) %>
+    </head>
+    <body>
+        <h1>전체 컨퍼런스 페이지</h1>
+        <table border="1 solid" cellspacing="0">
+          <thead>
+            <tr>
+              <th>con_id</th>
+              <th>con_title</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let con of conferences) { %>
+            <tr id="tr_<%= con.id %>">
+              <td><%= con.con_id %></td>
+              <td><%= con.con_title %></td>
+            </tr>
+            <%}%>
+          </tbody>
+        </table>
+    </body>
+</html>

@@ -111,7 +111,7 @@ exports.revokeManager = async (req, res) => {
 // 관리자 페이지에서 전체 컨퍼런스 보기
 exports.getAllConference = async (req, res) => {
     const conferences = await Conference.findAll();
-    res.send({ conferences });
+    res.render('myPage/allConference', {conferences});
 };
 
 // 관리자 페이지에서 승인해야할 conference 보기
