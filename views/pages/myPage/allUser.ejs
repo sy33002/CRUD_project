@@ -2,61 +2,75 @@
 <html lang="en">
     <head>
         <%- include('../../common/head.ejs', {title: '유저 조회 페이지' }) %>
+        <link
+            rel="stylesheet"
+            href="/static/css/pages/myPage/managerAside.css"
+        />
     </head>
     <body>
         <%- include('../../common/header.ejs') %>
         <main>
-            <h1>유저 페이지</h1>
-            <table border="1 solid" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>user_id</th>
-                        <th>user_name</th>
-                        <th>user_email</th>
-                        <th>user_addr</th>
-                        <th>user_category</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for (let user of users) { %>
-                    <tr id="tr_<%= user.id %>">
-                        <td><%= user.user_id %></td>
-                        <td><%= user.user_name %></td>
-                        <td><%= user.user_email %></td>
-                        <td><%= user.user_addr %></td>
-                        <td><%= user.user_category %></td>
-                        <td><%= user.user_isManager %></td>
-                        <% if (user.user_isManager === 1) { %>
-                        <td>
-                            <button
-                                type="button"
-                                onclick="revokeManager(this, '<%= user.id %>')"
-                            >
-                                관리자 권한 회수
-                            </button>
-                        </td>
-                        <% } else { %>
-                        <td>
-                            <button
-                                type="button"
-                                onclick="makeManager(this, '<%= user.id %>')"
-                            >
-                                관리자 권한 부여
-                            </button>
-                        </td>
-                        <% } %>
-                        <td>
-                            <button
-                                type="button"
-                                onclick="deleteUser(this, '<%= user.id%>')"
-                            >
-                                삭제
-                            </button>
-                        </td>
-                    </tr>
-                    <%}%>
-                </tbody>
-            </table>
+            <%- include('./managerAside') %>
+            <div class="container">
+                <table class="table text-center">
+                    <thead>
+                        <tr class="border-bottom">
+                            <th>아이디</th>
+                            <th>이름</th>
+                            <th>이메일</th>
+                            <th>지역</th>
+                            <th>관심 분야</th>
+                            <th>관리자</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (let user of users) { %>
+                        <tr class="border-bottom" id="tr_<%= user.id %>">
+                            <td><%= user.user_id %></td>
+                            <td><%= user.user_name %></td>
+                            <td><%= user.user_email %></td>
+                            <td><%= user.user_addr %></td>
+                            <td><%= user.user_category %></td>
+                            <td>
+                                <%= user.user_isManager === true ? 'O' : 'X' %>
+                            </td>
+                            <% if (user.user_isManager === 1) { %>
+                            <td>
+                                <button
+                                    class="btn btn-outline-secondary"
+                                    type="button"
+                                    onclick="revokeManager(this, '<%= user.id %>')"
+                                >
+                                    관리자 권한 회수
+                                </button>
+                            </td>
+                            <% } else { %>
+                            <td>
+                                <button
+                                    class="btn btn-outline-secondary"
+                                    type="button"
+                                    onclick="makeManager(this, '<%= user.id %>')"
+                                >
+                                    관리자 권한 부여
+                                </button>
+                            </td>
+                            <% } %>
+                            <td>
+                                <button
+                                    class="btn btn-outline-secondary"
+                                    type="button"
+                                    onclick="deleteUser(this, '<%= user.id%>')"
+                                >
+                                    삭제
+                                </button>
+                            </td>
+                        </tr>
+                        <%}%>
+                    </tbody>
+                </table>
+            </div>
         </main>
         <%- include('../../common/footer.ejs') %>
 
