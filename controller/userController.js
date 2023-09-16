@@ -1,6 +1,6 @@
 const { User, Sequelize } = require('../models');
 const { Conference } = require('../models');
-const { Confavorite } = require('../models');
+const { ConFavorite } = require('../models');
 const { ConferenceReview } = require('../models');
 const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
@@ -402,7 +402,7 @@ exports.deleteMyReview = async (req, res) => {
 exports.getmyFavoriteList = async (req, res) => {
     console.log("getmyFavoriteList>>>", req.query);
     try {
-        const favorites = await Confavorite.findAll({
+        const favorites = await ConFavorite.findAll({
             where: { user_id: req.query.userId },
         });
         console.log("favorites>>>", favorites);
@@ -424,7 +424,7 @@ exports.getmyFavoriteList = async (req, res) => {
 
 // 찜한 항목 삭제
 exports.deleteMyFavorite = async (req, res) => {
-    const result = await Confavorite.destroy({
+    const result = await ConFavorite.destroy({
         where: { con_id: req.body.con_id },
     });
     if (result === 1) {
