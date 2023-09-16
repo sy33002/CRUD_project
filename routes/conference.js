@@ -12,10 +12,9 @@ router.get('/event/list', controller.getConferenceInfo); //여기에서 send로 
 router.get('/event/write', controller.getConferenceWrite);
 
 router.get('/event/:id', controller.getConferenceDetail);
+router.post('/event/:id', controller.saveConference); //찜기능 confavorite table에 user 테이블의 id와 con_id를 추가
 
 router.post('/event/write', controller.postConference);
-
-router.post('/event/:id', controller.postConferenceEdit);
 
 //관리자페이지에서 행사 등록 요청 보낸 것들
 router.post(

@@ -74,6 +74,7 @@
         <button type="button" onclick="getUser()">전체 유저 보기</button>
         <!-- 전체 유저 불러오는 allUser.ejs로 이동 -->
 
+
         <button type="button" onclick="getAllConference()">
             전체 행사 리스트
         </button>
@@ -96,8 +97,10 @@
         </div>
         <button type="button"></button>
         </main>
-       
+          <button type="button" onclick="getAllConference()">전체 행사 리스트</button>
+        <button type="button" onclick="getConferenceHandler()">행사 관리 페이지</button>
         <%- include('../../common/footer.ejs') %>
+
 
       
     </body>
@@ -166,6 +169,7 @@
                 }
             });
         }
+
         // 컨퍼런스 승인하기
         function approveConference(conferenceId) {
             axios({
@@ -238,5 +242,17 @@
                 }
             });
         }
+                function getConferenceHandler() {
+                axios({
+                    method: 'GET',
+                    url: '/manager/conferenceHandler',
+                }).then((res) => {
+                    if (res.status === 200) {
+                        window.location.href = '/manager/conferenceHandler';
+                    }
+                })
+        };
+
+
     </script>
 </html>

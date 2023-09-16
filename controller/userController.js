@@ -1,6 +1,6 @@
 const { User, Sequelize } = require('../models');
 const { Conference } = require('../models');
-const { Confavorite } = require('../models');
+const { ConFavorite } = require('../models');
 const { ConferenceReview } = require('../models');
 const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
@@ -114,6 +114,11 @@ exports.getAllConference = async (req, res) => {
     res.render('myPage/allConference', {conferences});
 };
 
+// 관리자 페이지 행사 관리 페이지 render
+exports.getconferenceHandler = async (req, res) => {
+    res.render('myPage/conferenceHandler');
+};
+
 // 관리자 페이지에서 승인해야할 conference 보기
 exports.getConforenceRegister = async (req, res) => {
     try {
@@ -125,6 +130,11 @@ exports.getConforenceRegister = async (req, res) => {
         console.error(error);
         res.status(500).send('Manager Conference Agree Error');
     }
+};
+
+// 행사 관리 페이지 render
+exports.conferenceHandler = async (req, res) => {
+    res.render('myPage/conferenceHandler');
 };
 
 // 관리자 페이지 conference 승인하기
@@ -166,6 +176,32 @@ exports.rejectConference = async (req, res) => {
             error: 'Manager Conference Agree Error',
             message: error.message,
         });
+    }
+};
+
+// 관리자 페이지에서 승인된 컨퍼런스 보기
+exports.getSuccessRegister = async (req, res) => {
+    try {
+        const conferences = await Conference.findAll({
+            where: { is_agreed: 1 },
+        });
+        res.send({ conferences });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Manager Conference Agree Error');
+    }
+};
+
+// 관리자 페이지에서 거절된 컨퍼런스 보기
+exports.getSuccessRegister = async (req, res) => {
+    try {
+        const conferences = await Conference.findAll({
+            where: { is_agreed: 1 },
+        });
+        res.send({ conferences });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Manager Conference Agree Error');
     }
 };
 
@@ -366,7 +402,7 @@ exports.deleteMyReview = async (req, res) => {
 exports.getmyFavoriteList = async (req, res) => {
     console.log("getmyFavoriteList>>>", req.query);
     try {
-        const favorites = await Confavorite.findAll({
+        const favorites = await ConFavorite.findAll({
             where: { user_id: req.query.userId },
         });
         console.log("favorites>>>", favorites);
@@ -388,7 +424,7 @@ exports.getmyFavoriteList = async (req, res) => {
 
 // 찜한 항목 삭제
 exports.deleteMyFavorite = async (req, res) => {
-    const result = await Confavorite.destroy({
+    const result = await ConFavorite.destroy({
         where: { con_id: req.body.con_id },
     });
     if (result === 1) {

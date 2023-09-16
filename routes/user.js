@@ -25,10 +25,13 @@ router.delete('/manager/deleteUser', controller.deleteUser); /// 관리자 페�
 router.post('/manager/makeManager', controller.makeManager); /// 관리자 페이지 매니저 권한 부여
 router.post('/manager/revokeManager', controller.revokeManager); /// 관리자 페이지 매니저 권한 회수
 
-router.get('/manager/allConference', controller.getAllConference); // 관리자 페이지 전체 컨퍼런스 목록들
+router.get('/manager/allConference', controller.getAllConference); // 관리자 페이지 전체 컨퍼런스 목록 render
 router.get('/manager/getConferenceRegister', controller.getConforenceRegister); // 관리자 페이지 승인할 컨퍼런스 목록들
+router.get('/manager/conferenceHandler', controller.conferenceHandler); // 관리자 페이지 행사 관리 페이지 render
+
 router.post('/manager/approveConference', controller.approveConference); // 컨퍼런스 승인
 router.post('/manager/rejectConference', controller.rejectConference); // 컨퍼런스 거절
+router.get('/manager/getSuccessRegister', controller.getSuccessRegister); // 승인한 컨퍼런스 리스트 가져오기
 router.get('/manager/rejectedConferenceList', controller.rejectConferenceList); // 거절한 컨퍼런스 리스트 가져오기
 
 module.exports = router;
