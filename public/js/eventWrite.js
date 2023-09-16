@@ -300,7 +300,9 @@ async function registerConference() {
     const conferenceData = await conferenceRes.data;
 
     if (conferenceData.result) {
-        alert('등록이 완료되었습니다.');
+        alert(
+            '관리자에게 등록요청이 완료되었습니다. 등록 요청한 행사의 승인여부는 마이페이지에서 보실 수 있습니다.'
+        );
         document.location.href = '/event';
     } else {
         alert('등록에 실패하였습니다.');
