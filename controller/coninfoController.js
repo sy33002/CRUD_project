@@ -158,19 +158,6 @@ exports.getConferenceDetail = async (req, res) => {
     console.log('유저 세션 아이디값', res.locals.Id);
     res.render(`event/detail`, { conference: result, user_id: res.locals.Id });
 };
-exports.saveConference = async (req, res) => {
-    console.log(req.body);
-    if (res.locals.Id === 0) {
-        res.send({ result: false });
-    } else {
-        await ConFavorite.create({
-            user_id: res.locals.Id,
-            con_id: req.body.con_id,
-        });
-        res.send({ result: true });
-    }
-};
-//행사 상세페이지에서 찜(유저가 있을 경우 )
 
 //게시글 등록(DB에 저장까지만~)
 exports.postConference = async (req, res) => {
@@ -290,6 +277,18 @@ exports.postConferenceEdit = async (req, res) => {
         res.send({ result });
     } catch (err) {
         console.error(err);
+    }
+};
+exports.saveConference = async (req, res) => {
+    console.log(req.body);
+    if (res.locals.Id === 0) {
+        res.send({ result: false });
+    } else {
+        await ConFavorite.create({
+            user_id: res.locals.Id,
+            con_id: req.body.con_id,
+        });
+        res.send({ result: true });
     }
 };
 
