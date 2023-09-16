@@ -194,11 +194,11 @@ import TextAlign from 'https://esm.sh/@tiptap/extension-text-align';
         const contents = editor.getHTML();
         const textContents = editor.getText();
         const eventName = document.querySelector('#eventSelect').value;
+        const conId = $('#eventSelect').find(':selected').attr('data-conId');
 
         if (title.trim() === '') return alert('제목을 작성해주세요.');
         if (contents.trim() === '' || contents.trim() === '<p></p>')
             return alert('내용을 작성해주세요.');
-
         axios({
             method: 'POST',
             url: '/review',
@@ -207,6 +207,7 @@ import TextAlign from 'https://esm.sh/@tiptap/extension-text-align';
                 content: contents,
                 content_Text: textContents,
                 eventName: eventName,
+                con_Id: conId,
             },
         })
             .then((res) => {
