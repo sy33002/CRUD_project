@@ -2,32 +2,168 @@
 <html lang="en">
     <head>
         <%- include('../../common/head.ejs', {title: '관리자페이지' }) %>
+        <link rel="stylesheet" href="/static/css/pages/myPage/manager.css" />
     </head>
     <body>
-        <h1>관리자 페이지</h1>
-        <button type="button" onclick="getUser()">전체 유저 보기</button>
-        <!-- 전체 유저 불러오는 allUser.ejs로 이동 -->
-        <button type="button" onclick="getConferenceRegister()">행사 등록 신청 승인 페이지</button>
-        <!-- 동적 폼으로 행사 신청 불러오기 -->
-        <div id="conferenceList">
-            <!-- 행사 리스트를 여기에 동적으로 추가 -->
-        </div>
-        <button type="button" onclick="getrejectedConference()">거절한 행사 리스트</button>
-        <div id="rejectedConferenceList">
-            <!-- 거절한 행사 리스트를 여기에 동적으로 추가 -->
-        </div>
+        <%- include('../../common/header.ejs') %>
+
+        <main>
+            <h1>관리자 페이지</h1>
+            <!-- <nav class="nav-container">
+                <div class="search-box">
+                    <input
+                        type="text"
+                        class="search-box-input"
+                        placeholder="Search"
+                    />
+                    <button class="search-box-btn">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+
+                <div class="notification">
+                
+                    <div class="notification-icon">
+                        <span class="notification-badge">9</span>
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                </div>
+            </nav> -->
+            <!-- 좌측 메뉴바 -->
+            <nav class="ani-navbar">
+                <div class="ani-navbar-menu">
+                    <p>User</p>
+                </div>
+                <div class="ani-navbar-menu ani-navbar-menu__icon">
+                    <p>행사</p>
+                </div>
+                <div class="ani-navbar-menu ani-navbar-menu__icon">
+                    <p>Alerts</p>
+                </div>
+                <div class="ani-navbar-menu ani-navbar-menu__icon">
+                    <p>Stats</p>
+                </div>
+            </nav>
+            <!-- dashboard -->
+            <div class="container">
+                <h4 class="my-4">Dashboard</h4>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="card monthly">
+                            <div
+                                class="card-body d-flex justify-content-between"
+                            >
+                                <div>
+                                    <p class="card-text mb-2">
+                                        Earnings (Monthly)
+                                    </p>
+                                    <h4>$400,000</h4>
+                                </div>
+                                <i
+                                    class="fas fa-calendar"
+                                    style="
+                                        font-size: 30px;
+                                        margin-top: 20px;
+                                        color: #6c757d;
+                                    "
+                                ></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card annual">
+                            <div
+                                class="card-body d-flex justify-content-between"
+                            >
+                                <div>
+                                    <p class="card-text mb-2">
+                                        Earnings (Annual)
+                                    </p>
+                                    <h4>$800,000</h4>
+                                </div>
+                                <i
+                                    class="fa-solid fa-dollar-sign"
+                                    style="
+                                        font-size: 30px;
+                                        margin-top: 20px;
+                                        color: #6c757d;
+                                    "
+                                ></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card tasks">
+                            <div
+                                class="card-body d-flex justify-content-between"
+                            >
+                                <div>
+                                    <p class="card-text mb-2">Tasks</p>
+                                    <h4>13</h4>
+                                </div>
+                                <i
+                                    class="fa-solid fa-list-check"
+                                    style="
+                                        font-size: 30px;
+                                        margin-top: 20px;
+                                        color: #6c757d;
+                                    "
+                                ></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="card requests">
+                            <div
+                                class="card-body d-flex justify-content-between"
+                            >
+                                <div>
+                                    <p class="card-text mb-2">Requests</p>
+                                    <h4>26</h4>
+                                </div>
+                                <i
+                                    class="fa-solid fa-comments"
+                                    style="
+                                        font-size: 30px;
+                                        margin-top: 20px;
+                                        color: #6c757d;
+                                    "
+                                ></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" onclick="getUser()">전체 유저 보기</button>
+            <!-- 전체 유저 불러오는 allUser.ejs로 이동 -->
+            <button type="button" onclick="getConferenceRegister()">
+                행사 등록 신청 승인 페이지
+            </button>
+            <!-- 동적 폼으로 행사 신청 불러오기 -->
+            <div id="conferenceList">
+                <!-- 행사 리스트를 여기에 동적으로 추가 -->
+            </div>
+            <button type="button" onclick="getrejectedConference()">
+                거절한 행사 리스트
+            </button>
+            <div id="rejectedConferenceList">
+                <!-- 거절한 행사 리스트를 여기에 동적으로 추가 -->
+            </div>
+        </main>
+        <%- include('../../common/footer.ejs') %>
     </body>
     <script>
         function getUser() {
-                axios({
-                    method: 'GET',
-                    url: '/manager/allUser',
-                }).then((res) => {
-                    if (res.status === 200) {
-                        window.location.href = '/manager/allUser';
-                    }
-                })
-        };
+            axios({
+                method: 'GET',
+                url: '/manager/allUser',
+            }).then((res) => {
+                if (res.status === 200) {
+                    window.location.href = '/manager/allUser';
+                }
+            });
+        }
         function getConferenceRegister() {
             axios({
                 method: 'GET',
@@ -35,13 +171,18 @@
             }).then((res) => {
                 if (res.status === 200) {
                     const conferenceList = res.data.conferences;
-                    console.log("conferenceList >>>>", conferenceList);
-                    if (Array.isArray(conferenceList) && conferenceList.length > 0) {
-                        const conferenceListContainer = document.getElementById('conferenceList');
+                    console.log('conferenceList >>>>', conferenceList);
+                    if (
+                        Array.isArray(conferenceList) &&
+                        conferenceList.length > 0
+                    ) {
+                        const conferenceListContainer =
+                            document.getElementById('conferenceList');
                         conferenceListContainer.innerHTML = ''; // Clear previous content
 
                         conferenceList.forEach((conference) => {
-                            const conferenceElement = document.createElement('div');
+                            const conferenceElement =
+                                document.createElement('div');
                             // 행사를 직접적으로 보이게 하는 부분
                             conferenceElement.innerHTML = `
                                 <p>행사 이름: ${conference.con_title}</p>
@@ -50,11 +191,15 @@
                                 <button onclick="rejectConference(${conference.con_id})">승인 거절</button>
                             `;
                             // conference.{DB변수명}으로 접근할 수 있습니다. 등록 신청한 행사가 예쁘게 보여졌으면 좋을 것같아요!
-                            conferenceListContainer.appendChild(conferenceElement);
+                            conferenceListContainer.appendChild(
+                                conferenceElement
+                            );
                         });
                     } else {
-                        const conferenceListContainer = document.getElementById('conferenceList');
-                        conferenceListContainer.innerHTML = '신청한 새로운 행사가 없습니다.';
+                        const conferenceListContainer =
+                            document.getElementById('conferenceList');
+                        conferenceListContainer.innerHTML =
+                            '신청한 새로운 행사가 없습니다.';
                     }
                 }
             });
@@ -62,62 +207,70 @@
         function approveConference(conferenceId) {
             axios({
                 method: 'POST',
-                url:'/manager/approveConference',
-                data : {
+                url: '/manager/approveConference',
+                data: {
                     conferenceId: conferenceId,
-                }
-            }).then ((res) =>{
+                },
+            }).then((res) => {
                 if (res.status === 200) {
                     console.log(res);
-                    alert ('승인 완료되었습니다!');
+                    alert('승인 완료되었습니다!');
                 } else {
-                    alert ('error');
+                    alert('error');
                 }
-            })
-        };
+            });
+        }
         function rejectConference(conferenceId) {
             axios({
                 method: 'POST',
-                url:'/manager/rejectConference',
-                data : {
+                url: '/manager/rejectConference',
+                data: {
                     conferenceId: conferenceId,
-                }
-            }).then ((res) =>{
+                },
+            }).then((res) => {
                 if (res.status === 200) {
                     console.log(res);
-                    alert ('행사 승인을 거절합니다.');
+                    alert('행사 승인을 거절합니다.');
                 } else {
-                    alert ('error');
+                    alert('error');
                 }
-            })
-
-        };
-        function getrejectedConference(){
+            });
+        }
+        function getrejectedConference() {
             axios({
                 method: 'GET',
                 url: '/manager/rejectedConferenceList',
             }).then((res) => {
                 if (res.status === 200) {
                     const rejectedConferenceList = res.data.conferences;
-                    if (Array.isArray(rejectedConferenceList) && rejectedConferenceList.length > 0) {
-                        const rejectedConferenceListContainer = document.getElementById('rejectedConferenceList');
+                    if (
+                        Array.isArray(rejectedConferenceList) &&
+                        rejectedConferenceList.length > 0
+                    ) {
+                        const rejectedConferenceListContainer =
+                            document.getElementById('rejectedConferenceList');
                         rejectedConferenceListContainer.innerHTML = ''; // Clear previous content
 
                         rejectedConferenceList.forEach((conference) => {
-                            const rejectedElement = document.createElement('div');
+                            const rejectedElement =
+                                document.createElement('div');
                             // 행사를 직접적으로 보이게 하는 부분
                             rejectedElement.innerHTML = `
                                 <p>행사 이름: ${conference.con_title}</p>
                             `;
                             // conference.{DB변수명}으로 접근할 수 있습니다. 등록 신청한 행사가 예쁘게 보여졌으면 좋을 것같아요!
-                            rejectedConferenceListContainer.appendChild(rejectedElement);
+                            rejectedConferenceListContainer.appendChild(
+                                rejectedElement
+                            );
                         });
                     } else {
-                        const rejectedConferenceListContainer = document.getElementById('rejectedConferenceList');
-                        rejectedConferenceListContainer.innerHTML = '거절한 행사가 없습니다.';
+                        const rejectedConferenceListContainer =
+                            document.getElementById('rejectedConferenceList');
+                        rejectedConferenceListContainer.innerHTML =
+                            '거절한 행사가 없습니다.';
                     }
                 }
             });
-        };
+        }
     </script>
 </html>

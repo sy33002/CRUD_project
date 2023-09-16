@@ -4,98 +4,118 @@
         <%- include('../../common/head.ejs', {title: '유저 조회 페이지' }) %>
     </head>
     <body>
-        <h1>유저 페이지</h1>
-        <table border="1 solid" cellspacing="0">
-            <thead>
-              <tr>
-                <th>user_id</th>
-                <th>user_name</th>
-                <th>user_email</th>
-                <th>user_addr</th>
-                <th>user_category</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% for (let user of users) { %>
-              <tr id="tr_<%= user.id %>">
-                <td><%= user.user_id %></td>
-                <td><%= user.user_name %></td>
-                <td><%= user.user_email %></td>
-                <td><%= user.user_addr %></td>
-                <td><%= user.user_category %></td>
-                <td><%= user.user_isManager %></td>
-                <% if (user.user_isManager === 1) { %>
-                  <td>
-                      <button type="button" onclick="revokeManager(this, '<%= user.id %>')">관리자 권한 회수</button>
-                  </td>
-                  <% } else { %>
-                  <td>
-                      <button type="button" onclick="makeManager(this, '<%= user.id %>')">관리자 권한 부여</button>
-                  </td>
-                  <% } %>
-                <td>
-                  <button type="button" onclick="deleteUser(this, '<%= user.id%>')">삭제</button>
-                </td>
-              </tr>
-              <%}%>
-            </tbody>
-          </table>
-      <script>
-        // 유저 삭제
-        function deleteUser(obj, userId) {
-          if (!confirm('정말로 삭제하나요?')){
-            return ;
-          }
-          axios ({
-            method: 'delete',
-            url: '/manager/deleteUser',
-            data: {
-              user_id: userId,
-            },
-          }).then ((res) => {
-            console.log(res);
-            if (res.data === true) {
-              alert('유저 삭제 성공!');
-              obj.parentElement.parentElement.remove();
-            } else {
-              alert ('유저 삭제 실패');
+        <%- include('../../common/header.ejs') %>
+        <main>
+            <h1>유저 페이지</h1>
+            <table border="1 solid" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>user_id</th>
+                        <th>user_name</th>
+                        <th>user_email</th>
+                        <th>user_addr</th>
+                        <th>user_category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for (let user of users) { %>
+                    <tr id="tr_<%= user.id %>">
+                        <td><%= user.user_id %></td>
+                        <td><%= user.user_name %></td>
+                        <td><%= user.user_email %></td>
+                        <td><%= user.user_addr %></td>
+                        <td><%= user.user_category %></td>
+                        <td><%= user.user_isManager %></td>
+                        <% if (user.user_isManager === 1) { %>
+                        <td>
+                            <button
+                                type="button"
+                                onclick="revokeManager(this, '<%= user.id %>')"
+                            >
+                                관리자 권한 회수
+                            </button>
+                        </td>
+                        <% } else { %>
+                        <td>
+                            <button
+                                type="button"
+                                onclick="makeManager(this, '<%= user.id %>')"
+                            >
+                                관리자 권한 부여
+                            </button>
+                        </td>
+                        <% } %>
+                        <td>
+                            <button
+                                type="button"
+                                onclick="deleteUser(this, '<%= user.id%>')"
+                            >
+                                삭제
+                            </button>
+                        </td>
+                    </tr>
+                    <%}%>
+                </tbody>
+            </table>
+        </main>
+        <%- include('../../common/footer.ejs') %>
+
+        <script>
+            // 유저 삭제
+            function deleteUser(obj, userId) {
+                if (!confirm('정말로 삭제하나요?')) {
+                    return;
+                }
+                axios({
+                    method: 'delete',
+                    url: '/manager/deleteUser',
+                    data: {
+                        user_id: userId,
+                    },
+                }).then((res) => {
+                    console.log(res);
+                    if (res.data === true) {
+                        alert('유저 삭제 성공!');
+                        obj.parentElement.parentElement.remove();
+                    } else {
+                        alert('유저 삭제 실패');
+                    }
+                });
             }
-          });
-        };
-        // 관리자 권한 부여
-        function makeManager(obj, userId) {
-          axios ({
-            method: 'POST',
-            url: '/manager/makeManager',
-            data: {
-              user_id: userId,
-            },
-          }).then ((res) => {
-            console.log(res);
-            if (res.data === true) {
-              alert('매니저 권한 부여 성공!');
-            } else {
-              alert ('매니저 권한 부여 실패');
+            // 관리자 권한 부여
+            function makeManager(obj, userId) {
+                axios({
+                    method: 'POST',
+                    url: '/manager/makeManager',
+                    data: {
+                        user_id: userId,
+                    },
+                }).then((res) => {
+                    console.log(res);
+                    if (res.data === true) {
+                        alert('매니저 권한 부여 성공!');
+                    } else {
+                        alert('매니저 권한 부여 실패');
+                    }
+                });
             }
-          });
-        };
-        // 관리자 권한 회수
-        function revokeManager(obj, userId) {
-          axios ({
-            method: 'POST',
-            url: '/manager/revokeManager',
-            data: {
-              user_id: userId,
-            },
-          }).then ((res) => {
-            console.log(res);
-            if (res.data === true) {
-              alert('매니저 권한 회수 성공!');
-            } else {
-              alert ('매니저 권한 회수 실패');
+            // 관리자 권한 회수
+            function revokeManager(obj, userId) {
+                axios({
+                    method: 'POST',
+                    url: '/manager/revokeManager',
+                    data: {
+                        user_id: userId,
+                    },
+                }).then((res) => {
+                    console.log(res);
+                    if (res.data === true) {
+                        alert('매니저 권한 회수 성공!');
+                    } else {
+                        alert('매니저 권한 회수 실패');
+                    }
+                });
             }
-          });
-        }
-      </script>
+        </script>
     </body>
 </html>
