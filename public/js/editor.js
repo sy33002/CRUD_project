@@ -193,6 +193,7 @@ import TextAlign from 'https://esm.sh/@tiptap/extension-text-align';
         const title = document.querySelector('#post-title-inp').value;
         const contents = editor.getHTML();
         const textContents = editor.getText();
+        const eventName = document.querySelector('#eventSelect').value;
 
         if (title.trim() === '') return alert('제목을 작성해주세요.');
         if (contents.trim() === '' || contents.trim() === '<p></p>')
@@ -205,6 +206,7 @@ import TextAlign from 'https://esm.sh/@tiptap/extension-text-align';
                 subject: title,
                 content: contents,
                 content_Text: textContents,
+                eventName: eventName,
             },
         })
             .then((res) => {
