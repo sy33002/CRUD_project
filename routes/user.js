@@ -11,8 +11,11 @@ router.get('/exists/:userId', controller.checkId); // 회원가입 id 중복체�
 router.post('/signup', controller.postSignup); // 회원가입 성공
 
 router.get('/myPage', controller.getProfile); // 마이페이지 render
+router.post('/myPage/myProfile', controller.postProfile); // 마이페이지 프로필 수정 render
+router.get('/myPage/myreviewListRender', controller.getmyreviewListRender); // 마이페이지 리뷰리스트 render
 router.post('/updateProfile', controller.updateProfile); // 회원정보 update
 router.delete('/manager/deleteUserself', controller.deleteUserself); // 회원탈퇴
+
 router.get('/myPage/myreviewList', controller.getmyreviewList); // 마이페이지 <내가쓴리뷰목록> 조회
 router.delete('/manager/deleteMyReview', controller.deleteMyReview); // 마이페이지 <내가쓴리뷰목록> 삭제
 router.get('/myPage/myFavoriteList', controller.getmyFavoriteList); // 마이페이지 <찜한 행사 목록> 조회
@@ -20,8 +23,10 @@ router.delete('/manager/deleteMyFavorite', controller.deleteMyFavorite); // 마�
 
 router.get('/manager', controller.getManager); // 관리자페이지 render
 router.post('/manager', controller.postManager); // 관리자페이지 render
+
 router.get('/manager/allUser', controller.getUser); // 관리자페이지 전체 유저 조회
 router.delete('/manager/deleteUser', controller.deleteUser); /// 관리자 페이지 유저 삭제
+
 router.post('/manager/makeManager', controller.makeManager); /// 관리자 페이지 매니저 권한 부여
 router.post('/manager/revokeManager', controller.revokeManager); /// 관리자 페이지 매니저 권한 회수
 
