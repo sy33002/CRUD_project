@@ -152,18 +152,12 @@ exports.getConferenceDetail = async (req, res) => {
     const result1 = await Conference.findOne({
         where: { con_id: id },
     }); //컨퍼런스 전체 정보
-    const result2 = await ConFavorite.findAll({
 
     const reviews = await ConferenceReview.findAll({
         where: { con_id: id },
     });
     console.log('reviews : ', reviews);
 
-
-    const result1 = await Conference.findOne({
-
-        where: { con_id: id },
-    });
     console.log(result1);
     if (result1) {
         await result1.increment('con_count', { by: 1 });
@@ -177,6 +171,7 @@ exports.getConferenceDetail = async (req, res) => {
         conference: result1,
         confavorite: result2.length,
         user_id: res.locals.Id,
+        reviews: reviews,
     });
 };
 
