@@ -80,3 +80,26 @@ $('.input-change').change(async function () {
 
     calendar.setOption('events', eventList);
 });
+
+const filterBtn = document.querySelector('.filter_btn');
+
+filterBtn.addEventListener('click', () => {
+    document.body.classList.add('filter');
+});
+
+const filterApplyBtn = document.querySelector('.filter_apply_btn_wrap');
+
+filterApplyBtn.addEventListener('click', () => {
+    document.body.classList.remove('filter');
+});
+
+window.addEventListener(
+    'resize',
+    () => {
+        const innerWidth = window.innerWidth;
+        if (innerWidth >= 1250) {
+            document.body.classList.remove('filter');
+        }
+    },
+    true
+);
