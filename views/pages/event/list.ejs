@@ -1,110 +1,23 @@
 <!DOCTYPE html>
 <html lang="ko">
+    <head>
+        <%- include('../../common/head.ejs', {title: '행사 목록' }) %>
+        <script defer src="/static/js/eventList.js"></script>
+    </head>
 
-<head>
-  <%- include('../../common/head.ejs', {title: '행사 목록' }) %>
-
-</head>
-
-
-<body>
-  <%- include('../../common/header.ejs') %>
-    <main>
-      <div class="wrap">
-        <article class="article">
-          <section class="section">
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-              <div class="col">
-                <div class="card h-100">
-                  <img src="..." class="card-img-top" alt="..." />
-                  <div class="card-body">
-                    <p class="card-text">
-                      This is a wider card with supporting
-                      text below as a natural lead-in to
-                      additional content. This content is
-                      a little bit longer.
-                    </p>
-                  </div>
-                  <div class="card-footer">
-                    <small class="text-body-secondary">Last updated 3 mins ago</small>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100">
-                  <img src="..." class="card-img-top" alt="..." />
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <p class="card-text">
-                        This is a wider card with supporting
-                        text below as a natural lead-in to
-                        additional content. This content is
-                        a little bit longer.
-                      </p>
-                  </div>
-                  <div class="card-footer">
-                    <small class="text-body-secondary">Last updated 3 mins ago</small>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100">
-                  <img src="..." class="card-img-top" alt="..." />
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <p class="card-text">
-                        This is a wider card with supporting
-                        text below as a natural lead-in to
-                        additional content. This content is
-                        a little bit longer.
-                      </p>
-                  </div>
-                  <div class="card-footer">
-                    <small class="text-body-secondary">Last updated 3 mins ago</small>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100">
-                  <img src="..." class="card-img-top" alt="..." />
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <p class="card-text">
-                        This is a wider card with supporting
-                        text below as a natural lead-in to
-                        additional content. This content is
-                        a little bit longer.
-                      </p>
-                  </div>
-                  <div class="card-footer">
-                    <small class="text-body-secondary">Last updated 3 mins ago</small>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100">
-                  <img src="..." class="card-img-top" alt="..." />
-                  <div class="card-body">
-                    <h5 class="card-title">
-                      <p class="card-text">
-                        This is a wider card with supporting
-                        text below as a natural lead-in to
-                        additional content. This content is
-                        a little bit longer.
-                      </p>
-                  </div>
-                  <div class="card-footer">
-                    <small class="text-body-secondary">Last updated 3 mins ago</small>
-                  </div>
-                </div>
-              </div>
+    <body>
+        <%- include('../../common/header.ejs') %>
+        <main>
+            <div class="wrap">
+                <article class="article py-5">
+                    <section class="section">
+                        <ul
+                            class="eventList row row-cols-1 row-cols-md-3 g-4"
+                        ></ul>
+                    </section>
+                </article>
             </div>
-          </section>
-        </article>
-      </div>
-    </main>
-    <%- include('../../common/footer.ejs') %>
-
-</body>
-
+        </main>
+        <%- include('../../common/footer.ejs') %>
+    </body>
 </html>
