@@ -158,7 +158,9 @@ exports.getConferenceDetail = async (req, res) => {
         where: { con_id: id },
     });
     console.log('reviews : ', reviews);
-    const result = await Conference.findOne({
+
+
+    const result1 = await Conference.findOne({
 
         where: { con_id: id },
     });
@@ -166,6 +168,10 @@ exports.getConferenceDetail = async (req, res) => {
     if (result1) {
         await result1.increment('con_count', { by: 1 });
     }
+
+    const result2 = await ConFavorite.findAll({
+        where: { con_id: id },
+    });
     console.log('유저 세션 아이디값', res.locals.Id);
     res.render(`event/detail`, {
         conference: result1,
