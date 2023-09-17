@@ -303,22 +303,33 @@ exports.postSignup = async (req, res) => {
     }
 };
 
-// 회원정보 수정 페이지 정보 post
-exports.postProfile= async (req, res) => {
-    const userId = req.body.userId;
-    const userData = await User.findOne({
-        where: { user_id: userId },
-    });
-    res.send({ data: userData.dataValues });
-};
-
-// 마이 리뷰 페이지 render
-exports.getmyreviewListRender = async (req, res) => {
+// 마이페이지 -> 회원 정보 수정 페이지
+exports.myProfileRender = async (req, res) => {
     const userId = req.query.userId;
     const userData = await User.findOne({
         where: { user_id: userId },
     });
-    res.render('myPage/myreviewList', { data:userData });
+    res.render('myPage/profileUpdate',{ data: userData.dataValues });
+};
+
+// 마이페이지 -> 마이 리뷰 페이지
+exports.myreviewListRender = async (req, res) => {
+    const userId = req.query.userId;
+    const userData = await User.findOne({
+        where: { user_id: userId },
+    });
+    res.render('myPage/myreviewList', { data:userData.dataValues });
+};
+
+// 마이페이지 -> 찜한 행사 페이지
+exports.myFavoriteConListRender = async (req, res) => {
+    const userId = req.query.userId;
+    console.log("userId>>>>>", userId);
+    const userData = await User.findOne({
+        where: { id: userId },
+    });
+    console.log("userData>>>>>", userData);
+    res.render('myPage/myFavoriteCon', { data:userData.dataValues });
 };
 
 // 회원정보 update

@@ -15,22 +15,22 @@
 
         <main>마이 페이지</main>
         
-        <form name="form_userUpdate">
+        <!-- <form name="form_userUpdate">
             <label for="userId">ID</label>
-            <input id="userId" type="text" name="userId" value="<%= data.user_id%>" disabled /><br />
+            <input id="userId" type="text" name="userId" value="<%= data.userId%>" disabled /><br />
             <label for="userPw">Password</label>
             <input
                 id="userPw"
                 type="password"
                 name="userPw"
-                value="<%= data.user_pw%>"
+                value="<%= data.userPw%>"
             /><br />
             <label for="userName">이름</label>
             <input
                 id="userName"
                 type="text"
                 name="userName"
-                value="<%= data.user_name%>"
+                value="<%= data.userName%>"
             /><br />
 
 
@@ -39,7 +39,7 @@
                     id="userAddr"
                     type="text"
                     name="userAddr"
-                    value="<%= data.user_addr%>"
+                    value="<%= data.userAddr%>"
                 /><br />
                 <div class="mb-3">
                     <label for="userEmail" class="form-label"
@@ -50,7 +50,7 @@
                         class="form-control"
                         id="userEmail"
                         name="user_email"
-                        value="<%= data.user_email%>"
+                        value="<%= data.userEmail%>"
                     />
                 </div>
 
@@ -63,27 +63,27 @@
                     <option value="ai">AI</option>
                     <option value="web">웹 개발</option>
                     <option value="git">git</option>
-                </select>
+                </select> -->
 
-                <button type="button" onclick="userUpdate()">
+                <button type="button" onclick="myProfileUpdate(`<%=data.userId%>`)">
                     회원정보 수정
                 </button>
-                <button
+                <!-- <button
                     type="button"
-                    onclick="deleteUserself(this, '<%= data.user_id%>')"
+                    onclick="deleteUserself(this, '<%= data.userId%>')"
                 >
-                    회원탈퇴하기</button
+                    회원탈퇴하기</button -->
                 ><br />
                 <button
                     type="button"
-                    onclick="myreviewList(`<%= data.user_id%>`)"
+                    onclick="myreviewList(`<%= data.userId%>`)"
                 >
                     내가 쓴 리뷰 보기
                 </button>
                 <div id="myreviewList">
                     <!-- myrivew리스트를 여기에 동적으로 추가 -->
                 </div>
-                <button type="button" onclick="myFavoriteList(`<%= data.id%>`)">
+                <button type="button" onclick="myFavoriteConList(`<%= data.id%>`)">
                     찜한 행사 목록 보기
                 </button>
                 <div id="myFavoriteList">
@@ -92,52 +92,37 @@
             </form>
         </main>
         <%- include('../../common/footer.ejs') %>
-
-
-            <button type="button" onclick="userUpdate()">회원정보 수정</button>
-            <button type="button" onclick="deleteUserself(this, '<%= data.user_id%>')">회원탈퇴하기</button><br/>
-            <button type="button" onclick="myreviewList(`<%= data.user_id%>`)">내가 쓴 리뷰 보기</button>
-            <div id="myreviewList">
-                <!-- myrivew리스트를 여기에 동적으로 추가 -->
-            </div>
-            <button type="button" onclick="myFavoriteList(`<%= data.id%>`)">찜한 행사 목록 보기</button>
-            <div id="myFavoriteList">
-                <!-- myFavorite리스트를 여기에 동적으로 추가 -->
-            </div>
-        </form>
-        <%- include('../../common/footer.ejs') %>
-
         <script>
-            // profile update페이지 렌더
-            function myProfileUpdate(userId) {
+            // 마이페이지-> Profile update페이지 렌더
+            function  myProfileUpdate(userId) {
                 axios({
-                    method: 'POST', // POST 요청으로 변경
-                    url: '/myPage/myProfile',
-                    data: {
-                        userId: userId,
-                    }
+                    method: 'GET',
+                    url: `/myPage/myProfileRender?userId=${userId}`,
                 }).then((res) => {
                     if (res.status === 200) {
-                        console.log("res data>>>>", res.data);
+                        window.location.href = `/myPage/myProfileRender?userId=${userId}`;
                     }
-                });
-            }
-            // profile update페이지 렌더
-            function myreviewListRender(userId) {
+                })
+            };
+            // 마이페이지 -> review 렌더
+            function myreviewList(userId) {
                 axios({
                     method: 'GET',
                     url: `/myPage/myreviewListRender?userId=${userId}`,
                 }).then((res) => {
                     if (res.status === 200) {
-                        console.log("res data>>>>", res.data);
-                        // window.location.href = '/myPage/myreviewListRender';
+                        window.location.href = `/myPage/myreviewListRender?userId=${userId}`;
                     }
                 });
             }
-                    if (res.data.result === true) {
-                        alert('회원정보 수정 성공!');
-                    } else {
-                        alert('회원정보 변경 없음');
+            // 마이페이지 -> 찜한 행사 렌더
+            function myFavoriteConList(userId) {
+                axios({
+                    method: 'GET',
+                    url: `/myPage/myFavoriteConListRender?userId=${userId}`,
+                }).then((res) => {
+                    if (res.status === 200) {
+                        window.location.href = `/myPage/myFavoriteConListRender?userId=${userId}`;
                     }
                 });
             }
@@ -201,124 +186,124 @@
                     }
                 });
             }
-            // 내가 쓴 리뷰 보기
-            function myreviewList(userId) {
-                axios({
-                    method: 'GET',
-                    url: '/myPage/myreviewList',
-                    params: {
-                        userId: userId,
-                    },
-                }).then((res) => {
-                    if (res.status === 200) {
-                        const reviewList = res.data.results;
-                        const myreviewListContainer =
-                            document.getElementById('myreviewList');
-                        myreviewListContainer.innerHTML = '';
+            // // 내가 쓴 리뷰 보기
+            // function myreviewList(userId) {
+            //     axios({
+            //         method: 'GET',
+            //         url: '/myPage/myreviewList',
+            //         params: {
+            //             userId: userId,
+            //         },
+            //     }).then((res) => {
+            //         if (res.status === 200) {
+            //             const reviewList = res.data.results;
+            //             const myreviewListContainer =
+            //                 document.getElementById('myreviewList');
+            //             myreviewListContainer.innerHTML = '';
 
-                        if (
-                            Array.isArray(reviewList) &&
-                            reviewList.length > 0
-                        ) {
-                            reviewList.forEach((result) => {
-                                const reviewElement =
-                                    document.createElement('div');
-                                reviewElement.innerHTML = `
-                                    <p>리뷰제목: ${result.review.re_title}</p>
-                                    <p>리뷰 내용: ${result.review.re_content}</p>
-                                    <p>리뷰 등록일: ${result.review.re_date}</p>
-                                    <p>리뷰 조회수: ${result.review.re_count}</p>
-                                    <p>리뷰에 대한 행사 제목: ${result.relatedConference.con_title}</p>
-                                    <p>리뷰에 대한 행사 상세 링크: <a href="http://localhost:8000/event/${result.relatedConference.con_id}">바로가기</a></p>
-                                    <button type="button" onclick="deleteMyReview(${result.review.re_id})">리뷰 삭제</button>
-                                `;
+            //             if (
+            //                 Array.isArray(reviewList) &&
+            //                 reviewList.length > 0
+            //             ) {
+            //                 reviewList.forEach((result) => {
+            //                     const reviewElement =
+            //                         document.createElement('div');
+            //                     reviewElement.innerHTML = `
+            //                         <p>리뷰제목: ${result.review.re_title}</p>
+            //                         <p>리뷰 내용: ${result.review.re_content}</p>
+            //                         <p>리뷰 등록일: ${result.review.re_date}</p>
+            //                         <p>리뷰 조회수: ${result.review.re_count}</p>
+            //                         <p>리뷰에 대한 행사 제목: ${result.relatedConference.con_title}</p>
+            //                         <p>리뷰에 대한 행사 상세 링크: <a href="http://localhost:8000/event/${result.relatedConference.con_id}">바로가기</a></p>
+            //                         <button type="button" onclick="deleteMyReview(${result.review.re_id})">리뷰 삭제</button>
+            //                     `;
 
-                                myreviewListContainer.appendChild(
-                                    reviewElement
-                                );
-                            });
-                        } else {
-                            myreviewListContainer.innerHTML =
-                                '등록한 리뷰가 없습니다.';
-                        }
-                    }
-                });
-            }
-            // 내가 쓴 리뷰 삭제
-            function deleteMyReview(reId) {
-                axios({
-                    method: 'delete',
-                    url: '/manager/deleteMyReview',
-                    data: {
-                        re_id: reId,
-                    },
-                }).then((res) => {
-                    if (res.data === true) {
-                        alert('리뷰 삭제 성공');
-                    } else {
-                        alert('리뷰 삭제 실패');
-                    }
-                });
-            }
+            //                     myreviewListContainer.appendChild(
+            //                         reviewElement
+            //                     );
+            //                 });
+            //             } else {
+            //                 myreviewListContainer.innerHTML =
+            //                     '등록한 리뷰가 없습니다.';
+            //             }
+            //         }
+            //     });
+            // }
+            // // 내가 쓴 리뷰 삭제
+            // function deleteMyReview(reId) {
+            //     axios({
+            //         method: 'delete',
+            //         url: '/manager/deleteMyReview',
+            //         data: {
+            //             re_id: reId,
+            //         },
+            //     }).then((res) => {
+            //         if (res.data === true) {
+            //             alert('리뷰 삭제 성공');
+            //         } else {
+            //             alert('리뷰 삭제 실패');
+            //         }
+            //     });
+            // }
             // 내가 찜한 행사 보기
-            function myFavoriteList(userId) {
-                axios({
-                    method: 'GET',
-                    url: '/myPage/myFavoriteList',
-                    params: {
-                        userId: userId,
-                    },
-                }).then((res) => {
-                    if (res.status === 200) {
-                        const myFavoriteList = res.data.getFavorites;
-                        if (
-                            Array.isArray(myFavoriteList) &&
-                            myFavoriteList.length > 0
-                        ) {
-                            const myFavoriteListContainer =
-                                document.getElementById('myFavoriteList');
-                            myFavoriteListContainer.innerHTML = '';
+            // function myFavoriteList(userId) {
+            //     axios({
+            //         method: 'GET',
+            //         url: '/myPage/myFavoriteList',
+            //         params: {
+            //             userId: userId,
+            //         },
+            //     }).then((res) => {
+            //         if (res.status === 200) {
+            //             const myFavoriteList = res.data.getFavorites;
+            //             if (
+            //                 Array.isArray(myFavoriteList) &&
+            //                 myFavoriteList.length > 0
+            //             ) {
+            //                 const myFavoriteListContainer =
+            //                     document.getElementById('myFavoriteList');
+            //                 myFavoriteListContainer.innerHTML = '';
 
-                            myFavoriteList.forEach((favorite) => {
-                                const favoriteElement =
-                                    document.createElement('div');
-                                favoriteElement.innerHTML = `
-                                    <p>행사 제목: ${favorite.con_title}</p>
-                                    <p>행사 내용: ${favorite.con_content}</p>
-                                    <p>행사 상세 페이지: /localhost:8000/event/${favorite.con_id}</p>
-                                    <button type="button" onclick="deletefavorite(${favorite.con_id})">찜 삭제</button>
-                                `;
-                                myFavoriteListContainer.appendChild(
-                                    favoriteElement
-                                );
-                            });
-                        } else {
-                            const myFavoriteListContainer =
-                                document.getElementById('myFavoriteList');
-                            myFavoriteListContainer.innerHTML =
-                                '찜한 행사가 없습니다.';
-                        }
-                    } else {
-                        console.log('error');
-                    }
-                });
-            }
-            // 찜한 행사 삭제
-            function deletefavorite(conId) {
-                axios({
-                    method: 'delete',
-                    url: '/manager/deleteMyFavorite',
-                    data: {
-                        con_id: conId,
-                    },
-                }).then((res) => {
-                    if (res.data === true) {
-                        alert('찜 리스트에서 삭제되었습니다.');
-                    } else {
-                        alert('이미 삭제하였거나 삭제할 수 없습니다.');
-                    }
-                });
-            }
+            //                 myFavoriteList.forEach((favorite) => {
+            //                     const favoriteElement =
+            //                         document.createElement('div');
+            //                     favoriteElement.innerHTML = `
+            //                         <p>행사 제목: ${favorite.con_title}</p>
+            //                         <p>행사 내용: ${favorite.con_content}</p>
+            //                         <p>행사 상세 페이지: /localhost:8000/event/${favorite.con_id}</p>
+            //                         <button type="button" onclick="deletefavorite(${favorite.con_id})">찜 삭제</button>
+            //                     `;
+            //                     myFavoriteListContainer.appendChild(
+            //                         favoriteElement
+            //                     );
+            //                 });
+            //             } else {
+            //                 const myFavoriteListContainer =
+            //                     document.getElementById('myFavoriteList');
+            //                 myFavoriteListContainer.innerHTML =
+            //                     '찜한 행사가 없습니다.';
+            //             }
+            //         } else {
+            //             console.log('error');
+            //         }
+            //     });
+            // }
+            // // 찜한 행사 삭제
+            // function deletefavorite(conId) {
+            //     axios({
+            //         method: 'delete',
+            //         url: '/manager/deleteMyFavorite',
+            //         data: {
+            //             con_id: conId,
+            //         },
+            //     }).then((res) => {
+            //         if (res.data === true) {
+            //             alert('찜 리스트에서 삭제되었습니다.');
+            //         } else {
+            //             alert('이미 삭제하였거나 삭제할 수 없습니다.');
+            //         }
+            //     });
+            // }
         </script>
     </body>
 </html>
