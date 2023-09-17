@@ -8,103 +8,117 @@
             rel="stylesheet"
             href="/static/css/pages/myPage/managerAside.css"
         />
+        <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
     </head>
 
     <body>
         <%- include('../../common/header.ejs') %>
 
-        <main>마이 페이지</main>
-        
-        <form name="form_userUpdate">
-            <label for="userId">ID</label>
-            <input id="userId" type="text" name="userId" value="<%= data.user_id%>" disabled /><br />
-            <label for="userPw">Password</label>
-            <input
-                id="userPw"
-                type="password"
-                name="userPw"
-                value="<%= data.user_pw%>"
-            /><br />
-            <label for="userName">이름</label>
-            <input
-                id="userName"
-                type="text"
-                name="userName"
-                value="<%= data.user_name%>"
-            /><br />
-
-
-                <label for="userAddr">주소</label>
-                <input
-                    id="userAddr"
-                    type="text"
-                    name="userAddr"
-                    value="<%= data.user_addr%>"
-                /><br />
-                <div class="mb-3">
-                    <label for="userEmail" class="form-label"
-                        >Email address</label
-                    >
+        <main>
+            <%- include('./profileAside') %>
+            <section>
+                <form name="form_userUpdate">
+                    <label for="userId">ID</label>
                     <input
-                        type="email"
-                        class="form-control"
-                        id="userEmail"
-                        name="user_email"
-                        value="<%= data.user_email%>"
-                    />
-                </div>
+                        id="userId"
+                        type="text"
+                        name="userId"
+                        value="<%= data.user_id%>"
+                        disabled
+                    /><br />
+                    <label for="userPw">Password</label>
+                    <input
+                        id="userPw"
+                        type="password"
+                        name="userPw"
+                        value="<%= data.user_pw%>"
+                    /><br />
+                    <label for="userName">이름</label>
+                    <input
+                        id="userName"
+                        type="text"
+                        name="userName"
+                        value="<%= data.user_name%>"
+                    /><br />
 
-                <select
-                    class="form-select"
-                    aria-label="Default select example"
-                    name="userCategory"
-                >
-                    <option selected><%=data.user_category%></option>
-                    <option value="ai">AI</option>
-                    <option value="web">웹 개발</option>
-                    <option value="git">git</option>
-                </select>
+                    <label for="userAddr">주소</label>
+                    <input
+                        id="userAddr"
+                        type="text"
+                        name="userAddr"
+                        value="<%= data.user_addr%>"
+                    /><br />
+                    <div class="mb-3">
+                        <label for="userEmail" class="form-label"
+                            >Email address</label
+                        >
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="userEmail"
+                            name="user_email"
+                            value="<%= data.user_email%>"
+                        />
+                    </div>
 
-                <button type="button" onclick="userUpdate()">
-                    회원정보 수정
-                </button>
-                <button
+                    <select
+                        class="form-select"
+                        aria-label="Default select example"
+                        name="userCategory"
+                    >
+                        <option selected><%=data.user_category%></option>
+                        <option value="ai">AI</option>
+                        <option value="web">웹 개발</option>
+                        <option value="git">git</option>
+                    </select>
+
+                    <button type="button" onclick="userUpdate()">
+                        회원정보 수정
+                    </button>
+                    <button
+                        type="button"
+                        onclick="deleteUserself(this, '<%= data.user_id%>')"
+                    >
+                        회원탈퇴하기</button
+                    ><br />
+                    <button
+                        type="button"
+                        onclick="myreviewList(`<%= data.user_id%>`)"
+                    >
+                        내가 쓴 리뷰 보기
+                    </button>
+                    <div id="myreviewList">
+                        <!-- myrivew리스트를 여기에 동적으로 추가 -->
+                    </div>
+                    <button
+                        type="button"
+                        onclick="myFavoriteList(`<%= data.id%>`)"
+                    >
+                        찜한 행사 목록 보기
+                    </button>
+                    <div id="myFavoriteList">
+                        <!-- myFavorite리스트를 여기에 동적으로 추가 -->
+                    </div>
+                </form>
+
+                <!-- <button
                     type="button"
-                    onclick="deleteUserself(this, '<%= data.user_id%>')"
-                >
-                    회원탈퇴하기</button
-                ><br />
-                <button
-                    type="button"
-                    onclick="myreviewList(`<%= data.user_id%>`)"
+                    onclick="myreviewList(`<%#= data.user_id%>`)"
                 >
                     내가 쓴 리뷰 보기
                 </button>
                 <div id="myreviewList">
                     <!-- myrivew리스트를 여기에 동적으로 추가 -->
-                </div>
-                <button type="button" onclick="myFavoriteList(`<%= data.id%>`)">
+                <!-- </div>
+                <button type="button" onclick="myFavoriteList(`<%#= data.id%>`)">
                     찜한 행사 목록 보기
                 </button>
                 <div id="myFavoriteList">
                     <!-- myFavorite리스트를 여기에 동적으로 추가 -->
                 </div>
-            </form>
+            </section>
         </main>
-        <%- include('../../common/footer.ejs') %>
 
-
-            <button type="button" onclick="userUpdate()">회원정보 수정</button>
-            <button type="button" onclick="deleteUserself(this, '<%= data.user_id%>')">회원탈퇴하기</button><br/>
-            <button type="button" onclick="myreviewList(`<%= data.user_id%>`)">내가 쓴 리뷰 보기</button>
-            <div id="myreviewList">
-                <!-- myrivew리스트를 여기에 동적으로 추가 -->
-            </div>
-            <button type="button" onclick="myFavoriteList(`<%= data.id%>`)">찜한 행사 목록 보기</button>
-            <div id="myFavoriteList">
-                <!-- myFavorite리스트를 여기에 동적으로 추가 -->
-            </div>
-        </form>
         <%- include('../../common/footer.ejs') %>
 
         <script>
@@ -226,6 +240,7 @@
                                 reviewElement.innerHTML = `
                                     <p>리뷰제목: ${result.review.re_title}</p>
                                     <p>리뷰 내용: ${result.review.re_content}</p>
+                                    <p>리뷰 링크: <a href="http://localhost:8000/review/${result.review.re_id}">바로가기</a></p>
                                     <p>리뷰 등록일: ${result.review.re_date}</p>
                                     <p>리뷰 조회수: ${result.review.re_count}</p>
                                     <p>리뷰에 대한 행사 제목: ${result.relatedConference.con_title}</p>
