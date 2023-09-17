@@ -39,13 +39,7 @@
                                     <h2 class="card-title">행사 등록 완료</h2>
                                     <section>
                                         <ul id="successConferenceList"></ul>
-                                        <!-- <button
-                                            type="button"
-                                            class="btn btn-outline-secondary"
-                                            onclick="getSuccessRegister()"
-                                        >
-                                            행사 등록 완료
-                                        </button> -->
+                            
                                     </section>
                                 </div>
                             </div>
@@ -58,31 +52,13 @@
                                     </h2>
                                     <section>
                                         <ul id="rejectedConferenceList"></ul>
-                                        <!-- <button
-                                            type="button"
-                                            class="btn btn-outline-secondary"
-                                            onclick="getrejectedConference()"
-                                        >
-                                            거절한 행사 리스트
-                                        </button> -->
+                                
                                     </section>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- <div>
-                    <section id="successConferenceList">
-                        <button type="button" onclick="getSuccessRegister()">
-                            행사 등록 완료
-                        </button>
-                    </section>
-                    <section id="rejectedConferenceList">
-                        <button type="button" onclick="getrejectedConference()">
-                            거절한 행사 리스트
-                        </button>
-                    </section>
-                </div> -->
             </div>
         </main>
         <%- include('../../common/footer.ejs') %>
@@ -139,43 +115,6 @@
 
         // 컨퍼런스 승인하기approveConference
         function approveConference(conferenceId) {
-            // 행사 요소를 찾아옴
-            // const conferenceElement = document.querySelector(
-            //     `#conference${conferenceId.con_id}`
-            // );
-
-            // if (!conferenceElement) {
-            //     console.error(`행사 ID ${conferenceId}를 찾을 수 없습니다.`);
-            //     return;
-            // }
-
-            // 행사 요소를 행사 등록 대기 목록에서 제거
-            // const conferenceListContainer =
-            //     document.getElementById('conferenceList');
-            // conferenceListContainer.removeChild(conferenceElement);
-
-            // 등록 승인 버튼과 승인 거절 버튼 삭제
-            // const approveButton = conferenceElement.querySelector(
-            //     `button[onclick="approveConference(${conferenceId})"]`
-            // );
-            // const rejectButton = conferenceElement.querySelector(
-            //     `button[onclick="rejectConference(${conferenceId})"]`
-            // );
-
-            // approveButton.remove();
-            // rejectButton.remove();
-
-            // 행사 요소를 행사 등록 완료 섹션에 추가
-            // const successConferenceListContainer = document.getElementById(
-            //     'successConferenceList'
-            // );
-
-            // if (successConferenceListContainer) {
-            //     successConferenceListContainer.appendChild(conferenceElement);
-            // } else {
-            //     console.error('행사 등록 완료 목록을 찾을 수 없습니다.');
-            // }
-
             axios({
                 method: 'POST',
                 url: '/manager/approveConference',
