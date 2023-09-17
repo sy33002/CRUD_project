@@ -9,13 +9,13 @@ const ConFavorite = (Sequelize, sequelize) => {
             },
             con_id: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                allowNull: true,
             },
             is_favorite: {
                 type: DataTypes.BOOLEAN,
-                defaultValue: false,
+                defaultValue: 0,
                 allowNull: false,
-            }
+            },
         },
         {
             tableName: 'con_favorite', // 실제 db 테이블명

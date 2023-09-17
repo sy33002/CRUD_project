@@ -1,4 +1,5 @@
 const { Conference, Sequelize, ConferenceReview } = require('../models');
+const { ConFavorite } = require('../models');
 const { Op } = require('sequelize');
 
 // ../models/index.js
@@ -93,19 +94,22 @@ function getUserIP(req) {
 //     }
 // };
 
-// 순수 렌더 역할만
-exports.getConferenceList = async (req, res) => {
-    try {
-        return res.render('event/list');
-    } catch (err) {
-        console.log(err);
-        res.send('server error');
-    }
+// 순수 리스트 렌더역할
+exports.getConferenceList = (req, res) => {
+    return res.render('event/list');
+};
+//캘린더 페이지로드
+exports.getConferenceCalendar = (req, res) => {
+    return res.render('event/calendar');
 };
 
 // event/list에 모든 행사 리스트 넘겨주는 함수
 exports.getConferenceInfo = async (req, res) => {
-    const eventList = await Conference.findAll();
+    const eventList = await Conference.findAll({
+        where: {
+            is_agreed: true,
+        },
+    });
     res.send({ eventList });
 };
 
@@ -155,7 +159,8 @@ exports.getConferenceDetail = async (req, res) => {
     if (result) {
         await result.increment('con_count', { by: 1 });
     }
-    res.render(`event/detail`, { conference: result });
+    console.log('유저 세션 아이디값', res.locals.Id);
+    res.render(`event/detail`, { conference: result, user_id: res.locals.Id });
 };
 
 //게시글 등록(DB에 저장까지만~)
@@ -177,6 +182,7 @@ exports.postConference = async (req, res) => {
         conCount,
         conImagePath,
         conDetail,
+        conDetailAddr,
     } = req.body;
 
     try {
@@ -198,6 +204,7 @@ exports.postConference = async (req, res) => {
             con_detail: conDetail,
             con_image: conImagePath,
             user_id: req.session.userInfo.id,
+            con_detail_location: conDetailAddr,
         });
         res.send({ result: true });
     } catch (err) {
@@ -274,6 +281,26 @@ exports.postConferenceEdit = async (req, res) => {
         res.send({ result });
     } catch (err) {
         console.error(err);
+    }
+};
+exports.saveConference = async (req, res) => {
+    const isLiked = await ConFavorite.findOne({
+        where: {
+            user_id: res.locals.Id,
+            con_id: req.body.con_id,
+        },
+    });
+    console.log(req.body);
+    if (res.locals.Id === 0) {
+        res.send({ result: 1 }); //로그인 후 이용
+    } else if (isLiked) {
+        res.send({ result: 2 }); //이미 찜 눌렀음
+    } else {
+        await ConFavorite.create({
+            user_id: res.locals.Id,
+            con_id: req.body.con_id,
+        });
+        res.send({ result: 3 }); //찜 성공
     }
 };
 

@@ -148,6 +148,12 @@ main h1 {
     font-weight: 300;
     letter-spacing: -0.5px;
     color: var(--color-white);
+
+    display: -webkit-box;
+    overflow: hidden;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 
 @media all and (max-width: 810px) {
@@ -225,20 +231,22 @@ main h1 {
     color: var(--color-white);
 }
 
-.section4 .review_list .item .user_info {
+.section4 .review_list .item .review_info {
     margin-bottom: 20px;
 }
 
-.section4 .review_list .item .user_info span {
+.section4 .review_list .item .review_info span {
     display: block;
 }
 
-.section4 .review_list .item .user_info .user_name {
+.section4 .review_list .item .review_info .review_title {
     font-size: 20px;
     font-weight: 700;
+    line-height: 24px;
+    margin-bottom: 5px;
 }
 
-.section4 .review_list .item .user_info .user_id {
+.section4 .review_list .item .review_info .review_category {
     font-size: 14px;
     color: rgb(153, 153, 153);
 }
@@ -246,6 +254,11 @@ main h1 {
 .section4 .review_list .item p {
     line-height: 1.6em;
     word-wrap: break-word;
+
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
 }
 
 .section4 .list1 .item:nth-child(1),

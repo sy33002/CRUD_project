@@ -66,6 +66,7 @@ ConFavorite.belongsTo(User, {
 db.Conference = Conference;
 db.User = User;
 db.ConferenceReview = ConferenceReview;
+db.ConFavorite = ConFavorite;
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
