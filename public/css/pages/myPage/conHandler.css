@@ -1,0 +1,11 @@
+main {
+    flex-direction: initial;
+}
+
+.conIsAgreed {
+    display: flex;
+}
+
+.container {
+    padding: 30px 0px;
+}

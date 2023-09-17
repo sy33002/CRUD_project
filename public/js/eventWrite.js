@@ -283,10 +283,19 @@ async function registerConference() {
 
     const inputValue = getInputValue();
 
-    console.log(inputValue);
-
     const imagePath = imageUploadData.file.path;
-    const newImagePath = imagePath.replace('public', 'static'); // public 경로를 static으로 변경
+
+    let newImagePath = '';
+    if (imagePath.startsWith('public/')) {
+        // 맥용
+        newImagePath = imagePath.replace('public/', '/static/'); // public 경로를 static으로 변경
+    }
+
+    if (imagePath.startsWith('public\\')) {
+        // 윈도우 용
+        newImagePath = imagePath.replace(`public\\`, `\\static\\`); // public 경로를 static으로 변경
+    }
+
     const conferenceRes = await axios({
         method: 'POST',
         url: '/event/write',
@@ -301,7 +310,9 @@ async function registerConference() {
 
     if (conferenceData.result) {
         alert(
+
             '관리자에게 등록요청이 완료되었습니다. 등록 요청한 행사의 승인여부는 마이페이지에서 보실 수 있습니다.'
+
         );
         document.location.href = '/event';
     } else {
