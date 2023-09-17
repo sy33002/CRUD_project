@@ -9,7 +9,8 @@
     <body>
         <%- include('../../common/header.ejs') %>
         <h1>마이 페이지</h1>
-            <button type="button" onclick="myreviewList(`<%= data.userId%>`)">내가 쓴 리뷰 보기</button>
+        <p><%=data.user_id%></p>
+            <button type="button" onclick="myreviewList(`<%= data.user_id%>`)">내가 쓴 리뷰 보기</button>
             <div id="myreviewList">
                 <!-- myrivew리스트를 여기에 동적으로 추가 -->
             </div>

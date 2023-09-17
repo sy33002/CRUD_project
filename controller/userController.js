@@ -19,7 +19,6 @@ exports.getSignup = (req, res) => {
 exports.getProfile = async (req, res) => {
     const data = req.session.userInfo;
     if (data) {
-        console.log("getProfile contoroller>>", data);
         res.render('myPage/profile', {data});
     } else {
         res.render('login');
@@ -49,11 +48,9 @@ exports.getUser = async (req, res) => {
 
 // 관리자 페이지에서 유저 삭제 하기
 exports.deleteUser = async (req, res) => {
-    console.log('req.body.user_id >>>>', req.body.user_id);
     const result = await User.destroy({
         where: { id: req.body.user_id },
     });
-    console.log(result);
     if (result === 1) {
         res.send(true);
         return;
@@ -324,11 +321,9 @@ exports.myreviewListRender = async (req, res) => {
 // 마이페이지 -> 찜한 행사 페이지
 exports.myFavoriteConListRender = async (req, res) => {
     const userId = req.query.userId;
-    console.log("userId>>>>>", userId);
     const userData = await User.findOne({
         where: { id: userId },
     });
-    console.log("userData>>>>>", userData);
     res.render('myPage/myFavoriteCon', { data:userData.dataValues });
 };
 
@@ -427,18 +422,19 @@ exports.deleteMyReview = async (req, res) => {
 
 // 내가 찜한 행사 목록 불러오기
 exports.getmyFavoriteList = async (req, res) => {
-    console.log("getmyFavoriteList>>>", req.query);
     try {
         const favorites = await ConFavorite.findAll({
             where: { user_id: req.query.userId },
         });
+        // const favoritesLength = await ConFavorite.findAll({
+        //     where: { con_id: favorites.dataValues.con_id },
+        // });
         const getFavorites = await Promise.all(
             favorites.map(async (favorite) => {
                 const conference = await Conference.findOne({
                     where: { con_id: favorite.con_id }
                 });
                 console.log("conference>>>", conference.dataValues);
-                console.log("favorites.length>>>", favorites);
                 return conference.dataValues;
             })
         );
