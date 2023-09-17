@@ -115,6 +115,20 @@
                             multiple
                         />
                         <!-- 행사 선택 하는 코드 eventName 값으로 가져온다 -->
+                        <% if(prevPage) {%>
+                        <select
+                            name="selectedEvent"
+                            id="eventSelect"
+                            style="width: 300px"
+                        >
+                            <option
+                                value="<%= eventName[1].con_title %>"
+                                data-conId="<%= eventName[1].con_id %>"
+                            >
+                                <%= eventName[1].con_title %>
+                            </option>
+                        </select>
+                        <% } else {%>
                         <select
                             name="selectedEvent"
                             id="eventSelect"
@@ -130,6 +144,7 @@
                             </option>
                             <% } %>
                         </select>
+                        <%}%>
                     </div>
                 </div>
                 <div class="post-title">

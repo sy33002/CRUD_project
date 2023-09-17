@@ -65,13 +65,30 @@ exports.deleteReview = async (req, res) => {
 };
 
 exports.getReviewWrite = async (req, res) => {
+    // 이전 페이지의 URL에서 :id 값을 추출하는 함수
+    function getIdFromUrl(url) {
+        const parts = url.split('/'); // URL을 '/'로 분할
+        const idIndex = parts.indexOf('event'); // 'event' 부분의 인덱스
+        if (idIndex !== -1 && idIndex < parts.length - 1) {
+            return parts[idIndex + 1]; // :id 값을 추출
+        }
+        return null; // :id 값을 찾지 못한 경우
+    }
+
+    const prevPage = req.get('Referer'); // 이전 페이지의 URL 가져오기
+    const idValue = getIdFromUrl(prevPage); // 이전 페이지 URL에서 :id 값을 추출
+
+    console.log('idVal : ==== ', idValue);
+
     const eventName = await Conference.findAll({
         attributes: ['con_title', 'con_id'],
     });
+    console.log('이전 페이지: ', req.get('Referer'));
     console.log('eventName: ', eventName);
     console.log(req.session);
     res.render('review/write', {
         eventName: eventName,
+        prevPage: idValue,
     });
 };
 
