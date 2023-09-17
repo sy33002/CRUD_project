@@ -35,8 +35,9 @@
             <div class="col-md-6">
                 <div class="my-editor">
                     <button class="btn btn-primary mb-3" onclick="writeReview()">이 행사에 대한 리뷰 남기기</button>
-                    <button class="btn btn-success mb-3" onclick="saveConference()">이 행사 저장하기</button>
+                    <button class="btn btn-success mb-3" onclick="saveConference()">이 행사 저장하기(찜하기로 변경할거임)</button>
                     <p class="lead">행사 조회수: <%- conference.con_count %></p>
+                    <p class="lead"> <%- confavorite %>명의 사람이 이 행사에 관심이 있습니다!</p>
                     <p class="lead">행사 모집 시작: <%- conference.sub_start_date %></p>
                     <p class="lead">행사 모집 마감: <%- conference.sub_end_date %></p>
                     <p class="lead">온라인/오프라인: <%- conference.is_onoff ? '온라인' : '오프라인' %></p>
