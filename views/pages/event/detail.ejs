@@ -17,7 +17,7 @@
             <!-- 왼쪽 컨텐츠 - 행사 이미지, 정보 -->
             <div class="col-md-6">
                 <!-- 행사 이미지 추가 -->
-                <img defer src="<%=conference.con_image%>" alt="행사 이미지" class="img-fluid mb-4">
+                <img src="<%=conference.con_image%>" alt="행사 이미지" class="img-fluid mb-4">
 
                 <!-- 행사 정보 -->
                 <h1 class="display-4"><%-conference.con_title%></h1>
@@ -25,7 +25,7 @@
                 <p class="mb-2">행사 종료 날짜: <%- conference.con_end_date %></p>
                 <p class="mb-2">행사 분야: <%- conference.con_category %></p>
                 <p class="mb-2">행사 주최: <%- conference.con_company %></p>
-                <p class="mb-2">행사 URL: <a href="<%- conference.con_company_url %>"><%- conference.con_company_url %></a></p>
+                <p class="mb-2">행사 URL: <a href="<%= conference.con_company_url %>"><%- conference.con_company_url %></a></p>
                 <p class="mb-2">유/무료: <%- conference.con_isfree ? '무료' : '유료' %></p>
                 <p class="mb-2">행사 주최: <%- conference.con_company %></p>
                 <p class="mb-2">행사규모: <%- conference.con_people %></p>
