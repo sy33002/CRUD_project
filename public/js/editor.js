@@ -166,10 +166,18 @@ import TextAlign from 'https://esm.sh/@tiptap/extension-text-align';
         addRemoveLinks: true, // 업로드된 파일 삭제 링크 표시
         maxFiles: 1, // 최대 파일 수를 1로 설정
         success: function (file, response) {
-            // console.log(file);
-            // console.log(response);
             const imagePath = response.file.path;
-            const url = '/' + imagePath.replace('public/', 'static/'); // public 경로를 static으로 변경
+            let url = '';
+            if (imagePath.startsWith('public/')) {
+                // 맥용
+                url = imagePath.replace('public/', '/static/'); // public 경로를 static으로 변경
+            }
+
+            if (imagePath.startsWith('public\\')) {
+                // 윈도우 용
+                url = imagePath.replace(`public\\`, `\\static\\`); // public 경로를 static으로 변경
+            }
+
             if (url) {
                 editor.chain().focus().setImage({ src: url }).run();
             }
@@ -199,6 +207,7 @@ import TextAlign from 'https://esm.sh/@tiptap/extension-text-align';
         if (title.trim() === '') return alert('제목을 작성해주세요.');
         if (contents.trim() === '' || contents.trim() === '<p></p>')
             return alert('내용을 작성해주세요.');
+        if (!conId) return alert('행사를 선택해 주세요.');
         axios({
             method: 'POST',
             url: '/review',
