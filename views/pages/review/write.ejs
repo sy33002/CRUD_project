@@ -122,10 +122,10 @@
                             style="width: 300px"
                         >
                             <option
-                                value="<%= eventName[1].con_title %>"
-                                data-conId="<%= eventName[1].con_id %>"
+                                value="<%= eventName[prevPage-1].con_title %>"
+                                data-conId="<%= eventName[prevPage-1].con_id %>"
                             >
-                                <%= eventName[1].con_title %>
+                                <%= eventName[prevPage-1].con_title %>
                             </option>
                         </select>
                         <% } else {%>
