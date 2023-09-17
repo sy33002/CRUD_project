@@ -1,4 +1,4 @@
-const { Conference, Sequelize } = require('../models');
+const { Conference, Sequelize, ConferenceReview } = require('../models');
 const { ConFavorite } = require('../models');
 const { Op } = require('sequelize');
 
@@ -148,10 +148,18 @@ exports.getConferenceDetail = async (req, res) => {
     const { id } = req.params;
 
     console.log(id);
+
     const result1 = await Conference.findOne({
         where: { con_id: id },
     }); //컨퍼런스 전체 정보
     const result2 = await ConFavorite.findAll({
+
+    const reviews = await ConferenceReview.findAll({
+        where: { con_id: id },
+    });
+    console.log('reviews : ', reviews);
+    const result = await Conference.findOne({
+
         where: { con_id: id },
     });
     console.log(result1);
