@@ -13,7 +13,7 @@ router.post('/signup', controller.postSignup); // 회원가입 성공
 router.get('/myPage', controller.getProfile); // 마이페이지 render
 router.get('/myPage/myProfileRender', controller.myProfileRender); // 마이페이지 -> 프로필 수정 페이지
 router.get('/myPage/myreviewListRender', controller.myreviewListRender); // 마이페이지 -> review 렌더
-router.get('/myPage/myFavoriteConListRender', controller.myFavoriteConListRender); // 마이페이지 -> review 렌더
+router.get('/myPage/myFavoriteConListRender', controller.myFavoriteConListRender); // 마이페이지 -> 찜기능 렌더
 router.post('/updateProfile', controller.updateProfile); // 회원정보 update
 router.delete('/manager/deleteUserself', controller.deleteUserself); // 회원탈퇴
 

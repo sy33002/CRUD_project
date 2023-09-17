@@ -432,14 +432,14 @@ exports.getmyFavoriteList = async (req, res) => {
         const favorites = await ConFavorite.findAll({
             where: { user_id: req.query.userId },
         });
-        console.log("favorites>>>", favorites);
         const getFavorites = await Promise.all(
             favorites.map(async (favorite) => {
                 const conference = await Conference.findOne({
                     where: { con_id: favorite.con_id }
                 });
-                console.log("conference>>>", conference);
-                return conference;
+                console.log("conference>>>", conference.dataValues);
+                console.log("favorites.length>>>", favorites);
+                return conference.dataValues;
             })
         );
         res.send({ getFavorites });
