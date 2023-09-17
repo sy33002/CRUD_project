@@ -8,6 +8,9 @@ exports.index = async (req, res) => {
         order: [['re_id', 'DESC']],
     });
     const events = await Conference.findAll({
+        where: {
+            is_agreed: true,
+        },
         limit: 10,
         order: [['con_id', 'DESC']],
     });

@@ -1,4 +1,4 @@
-const { Conference, Sequelize } = require('../models');
+const { Conference, Sequelize, ConferenceReview } = require('../models');
 const { ConFavorite } = require('../models');
 const { Op } = require('sequelize');
 
@@ -148,15 +148,31 @@ exports.getConferenceDetail = async (req, res) => {
     const { id } = req.params;
 
     console.log(id);
-    const result = await Conference.findOne({
+
+    const result1 = await Conference.findOne({
+        where: { con_id: id },
+    }); //컨퍼런스 전체 정보
+
+    const reviews = await ConferenceReview.findAll({
         where: { con_id: id },
     });
-    console.log(result);
-    if (result) {
-        await result.increment('con_count', { by: 1 });
+    console.log('reviews : ', reviews);
+
+    console.log(result1);
+    if (result1) {
+        await result1.increment('con_count', { by: 1 });
     }
+
+    const result2 = await ConFavorite.findAll({
+        where: { con_id: id },
+    });
     console.log('유저 세션 아이디값', res.locals.Id);
-    res.render(`event/detail`, { conference: result, user_id: res.locals.Id });
+    res.render(`event/detail`, {
+        conference: result1,
+        confavorite: result2.length,
+        user_id: res.locals.Id,
+        reviews: reviews,
+    });
 };
 
 //게시글 등록(DB에 저장까지만~)
