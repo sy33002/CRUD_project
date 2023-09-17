@@ -108,21 +108,32 @@
         <%- include('../../common/footer.ejs') %>
 
         <script>
-            // 유저 정보 수정
-            function userUpdate() {
-                const form = document.forms['form_userUpdate'];
+            // profile update페이지 렌더
+            function myProfileUpdate(userId) {
                 axios({
-                    method: 'POST',
-                    url: '/updateProfile',
+                    method: 'POST', // POST 요청으로 변경
+                    url: '/myPage/myProfile',
                     data: {
-                        userId: form.userId.value,
-                        userPw: form.userPw.value,
-                        userName: form.userName.value,
-                        userAddr: form.userAddr.value,
-                        userEmail: form.userEmail.value,
-                        userCategory: form.userCategory.value,
-                    },
+                        userId: userId,
+                    }
                 }).then((res) => {
+                    if (res.status === 200) {
+                        console.log("res data>>>>", res.data);
+                    }
+                });
+            }
+            // profile update페이지 렌더
+            function myreviewListRender(userId) {
+                axios({
+                    method: 'GET',
+                    url: `/myPage/myreviewListRender?userId=${userId}`,
+                }).then((res) => {
+                    if (res.status === 200) {
+                        console.log("res data>>>>", res.data);
+                        // window.location.href = '/myPage/myreviewListRender';
+                    }
+                });
+            }
                     if (res.data.result === true) {
                         alert('회원정보 수정 성공!');
                     } else {

@@ -65,6 +65,9 @@
     </body>
     <script>
         // 등록 신청한 행사 보기
+        window.onload = function () {
+            getConferenceRegister(); // 페이지 로딩 시 행사 등록 대기 목록을 표시
+        };
         function getConferenceRegister() {
             axios({
                 method: 'GET',

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <%- include('../../common/head.ejs', {title: '프로필' }) %>
+        <link rel="stylesheet" href="/static/css/review.css" />
+        <script defer src="/static/js/review.js"></script>
+    </head>
+
+    <body>
+        <%- include('../../common/header.ejs') %>
+        <h1>마이 페이지</h1>
+            <button type="button" onclick="myreviewList(`<%= data.userId%>`)">내가 쓴 리뷰 보기</button>
+            <div id="myreviewList">
+                <!-- myrivew리스트를 여기에 동적으로 추가 -->
+            </div>
+        </form>
+        <%- include('../../common/footer.ejs') %>
+        <script>
+            // 내가 쓴 리뷰 보기
+            function myreviewList(userId) {
+                axios({
+                    method: 'GET',
+                    url: '/myPage/myreviewList',
+                    params: {
+                        userId: userId,
+                    },
+                }).then((res) => {
+                    if (res.status === 200) {
+                        const reviewList = res.data.results;
+                        const myreviewListContainer = document.getElementById('myreviewList');
+                        myreviewListContainer.innerHTML = '';
+
+                        if (Array.isArray(reviewList) && reviewList.length > 0) {
+                            reviewList.forEach((result) => {
+                                const reviewElement = document.createElement('div');
+                                reviewElement.innerHTML = `
+                                    <p>리뷰제목: ${result.review.re_title}</p>
+                                    <p>리뷰 내용: ${result.review.re_content}</p>
+                                    <p>리뷰 등록일: ${result.review.re_date}</p>
+                                    <p>리뷰 조회수: ${result.review.re_count}</p>
+                                    <p>리뷰에 대한 행사 제목: ${result.relatedConference.con_title}</p>
+                                    <p>리뷰에 대한 행사 상세 링크: <a href="http://localhost:8000/event/${result.relatedConference.con_id}">바로가기</a></p>
+                                    <button type="button" onclick="deleteMyReview(${result.review.re_id})">리뷰 삭제</button>
+                                `;
+
+                                myreviewListContainer.appendChild(reviewElement);
+                            });
+                        } else {
+                            myreviewListContainer.innerHTML = '등록한 리뷰가 없습니다.';
+                        }
+                    }
+                });
+            }
+            // 내가 쓴 리뷰 삭제
+            function deleteMyReview(reId) {
+            axios ({
+                method: 'delete',
+                url: '/manager/deleteMyReview',
+                data: {
+                    re_id: reId,
+                },
+            }).then ((res) => {
+                if (res.data === true) {
+                alert('리뷰 삭제 성공');
+                } else {
+                alert ('리뷰 삭제 실패');
+                }
+            });
+            };
+        </script>
+    </body>
+</html>

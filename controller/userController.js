@@ -19,10 +19,8 @@ exports.getSignup = (req, res) => {
 exports.getProfile = async (req, res) => {
     const data = req.session.userInfo;
     if (data) {
-        const userData = await User.findOne({
-            where: { user_id: data.userId },
-        });
-        res.render('myPage/profile', { data: userData });
+        console.log("getProfile contoroller>>", data);
+        res.render('myPage/profile', {data});
     } else {
         res.render('login');
     }
@@ -303,6 +301,24 @@ exports.postSignup = async (req, res) => {
             message: '오류가 발생했습니다.',
         });
     }
+};
+
+// 회원정보 수정 페이지 정보 post
+exports.postProfile= async (req, res) => {
+    const userId = req.body.userId;
+    const userData = await User.findOne({
+        where: { user_id: userId },
+    });
+    res.send({ data: userData.dataValues });
+};
+
+// 마이 리뷰 페이지 render
+exports.getmyreviewListRender = async (req, res) => {
+    const userId = req.query.userId;
+    const userData = await User.findOne({
+        where: { user_id: userId },
+    });
+    res.render('myPage/myreviewList', { data:userData });
 };
 
 // 회원정보 update
