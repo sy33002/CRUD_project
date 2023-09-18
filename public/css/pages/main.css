@@ -8,7 +8,39 @@ main h1 {
     color: var(--color-green);
     text-align: center;
 }
+/* Conference&Developer for U! Developer */
+  .wrapper {
+    font-weight: 600;
+    font-size: 50px;
+    width: 100%;
+    letter-spacing: -3.8px;
+    color: var(--color-green);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .typing-demo {
+    width: 24ch;
+    text-align: center;
+    animation: typing 2s steps(22), blink .5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
 
+  }
+  
+  @keyframes typing {
+    from {
+      width: 0
+    }
+  }
+      
+  @keyframes blink {
+    50% {
+      border-color: transparent
+    }
+  }
 /*  */
 .section {
     padding: 120px 0;
