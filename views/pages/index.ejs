@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko">
-    <head>
-        <%- include('../common/head.ejs', {title: '메인 페이지' }) %>
-        <link rel="stylesheet" href="/static/css/pages/main.css" />
-        <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
-        />
-        <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    </head>
 
-    <body>
-        <%- include('../common/header.ejs') %>
+<head>
+    <%- include('../common/head.ejs', {title: '메인 페이지' }) %>
+        <link rel="stylesheet" href="/static/css/pages/main.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+        <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+</head>
+
+<body>
+    <%- include('../common/header.ejs') %>
         <main>
             <section class="section">
                 <div class="wrap">
@@ -19,28 +17,25 @@
                     <div class="swiper-container">
                         <div class="swiper">
                             <ul class="swiper-wrapper">
-                                <% if(events.length) { %> <% if(events.length>
-                                5){ %> <% for(let i=0; i < 6; i++){ %>
-                                <li class="swiper-slide">
-                                    <img
-                                        src="<%= events[i].con_image %>"
-                                        alt=""
-                                    />
-                                </li>
-                                <% } %> <% }else{ %> <% events.forEach((con)=> {
-                                %>
-                                <li class="swiper-slide">
-                                    <img
-                                        src="<%= events[i].con_image %>"
-                                        alt=""
-                                    />
-                                </li>
-                                <% }) %> <% } %> <% } %>
+                                <% if(events.length) { %>
+                                    <% if(events.length>
+                                        5){ %> <% for(let i=0; i < 6; i++){ %>
+                                            <li class="swiper-slide">
+                                                <img src="<%= events[i].con_image %>" alt="" />
+                                            </li>
+                                            <% } %>
+                                                <% }else{ %>
+                                                    <% events.forEach((con)=> {
+                                                        %>
+                                                        <li class="swiper-slide">
+                                                            <img src="<%= events[i].con_image %>" alt="" />
+                                                        </li>
+                                                        <% }) %>
+                                                            <% } %>
+                                                                <% } %>
                             </ul>
                         </div>
-                        <div
-                            class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal"
-                        ></div>
+                        <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal"></div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
                     </div>
@@ -54,51 +49,50 @@
                             <a href="/event">
                                 <span>더 많은 행사 보기</span>
                                 <span class="more_icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="currentColor"
-                                        color="var(--color-green)"
-                                        class="bi bi-chevron-right"
-                                        viewBox="0 0 16 16"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
-                                        />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        color="var(--color-green)" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
                                     </svg>
                                 </span>
                             </a>
                         </span>
                     </div>
                     <ul class="con_list">
-                        <% if(events.length) { %> <% if(events.length> 5){ %> <%
-                        for(let i=0; i < 6; i++){ %>
-                        <li class="con_item">
-                            <a href="event/<%= events[i].con_id %>">
-                                <div class="img">
-                                    <img
-                                        src="<%= events[i].con_image %>"
-                                        alt="행사"
-                                    />
-                                </div>
-                                <h2><%= events[i].con_title %></h2>
-                                <p><%= events[i].con_detail %></p>
-                            </a>
-                        </li>
-                        <% } %> <% }else{ %> <% events.forEach((con)=> { %>
-                        <li class="con_item">
-                            <a href="event/<%= con.con_id %>">
-                                <div class="img">
-                                    <img
-                                        src="<%= events[i].con_image %>"
-                                        alt="행사"
-                                    />
-                                </div>
-                                <h2><%= con.con_title %></h2>
-                                <p><%= con.con_detail %></p>
-                            </a>
-                        </li>
-                        <% }) %> <% } %> <% } %>
+                        <% if(events.length) { %>
+                            <% if(events.length> 5){ %> <% for(let i=0; i < 6; i++){ %>
+                                    <li class="con_item">
+                                        <a href="event/<%= events[i].con_id %>">
+                                            <div class="img">
+                                                <img src="<%= events[i].con_image %>" alt="행사" />
+                                            </div>
+                                            <h2>
+                                                <%= events[i].con_title %>
+                                            </h2>
+                                            <p>
+                                                <%= events[i].con_detail %>
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <% } %>
+                                        <% }else{ %>
+                                            <% events.forEach((con)=> { %>
+                                                <li class="con_item">
+                                                    <a href="event/<%= con.con_id %>">
+                                                        <div class="img">
+                                                            <img src="<%= events[i].con_image %>" alt="행사" />
+                                                        </div>
+                                                        <h2>
+                                                            <%= con.con_title %>
+                                                        </h2>
+                                                        <p>
+                                                            <%= con.con_detail %>
+                                                        </p>
+                                                    </a>
+                                                </li>
+                                                <% }) %>
+                                                    <% } %>
+                                                        <% } %>
                     </ul>
                 </div>
             </section>
@@ -112,42 +106,37 @@
                             <a href="/reveiw">
                                 <span>더 많은 리뷰 보기</span>
                                 <span class="more_icon">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="currentColor"
-                                        color="var(--color-white)"
-                                        class="bi bi-chevron-right"
-                                        viewBox="0 0 16 16"
-                                    >
-                                        <path
-                                            fill-rule="evenodd"
-                                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
-                                        />
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                        color="var(--color-white)" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
                                     </svg>
                                 </span>
                             </a>
                         </span>
                     </div>
                     <div class="review_list">
-                        <% if(reviews.length> 8) { %> <% for(let i=1; i <=3;
-                        i++) { %>
-                        <ul class="list list<%= i %>">
-                            <% for(let j=1; j <=3; j++){ %> <% const index=i * j
-                            - 1; %>
-                            <li class="item">
-                                <div class="review_info">
-                                    <span class="review_title">
-                                        <%= reviews[index].re_title %>
-                                    </span>
-                                    <span class="review_category">
-                                        행사 종류
-                                    </span>
-                                </div>
-                                <p><%= reviews[index].content_Text %></p>
-                            </li>
-                            <% } %>
-                        </ul>
-                        <% } %> <% } %>
+                        <% if(reviews.length> 8) { %> <% for(let i=1; i <=3; i++) { %>
+                                <ul class="list list<%= i %>">
+                                    <% for(let j=1; j <=3; j++){ %>
+                                        <% const index=i * j - 1; %>
+                                            <li class="item">
+                                                <div class="review_info">
+                                                    <span class="review_title">
+                                                        <%= reviews[index].re_title %>
+                                                    </span>
+                                                    <span class="review_category">
+                                                        <%= reviews[index].con_title %>
+                                                    </span>
+                                                </div>
+                                                <p>
+                                                    <%= reviews[index].content_Text %>
+                                                </p>
+                                            </li>
+                                            <% } %>
+                                </ul>
+                                <% } %>
+                                    <% } %>
                     </div>
                 </div>
             </section>
@@ -157,22 +146,13 @@
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item">
                             <h3 class="accordion-header">
-                                <button
-                                    class="accordion-button collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseOne"
-                                    aria-expanded="true"
-                                    aria-controls="collapseOne"
-                                >
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                     What is Framer?
                                 </button>
                             </h3>
-                            <div
-                                id="collapseOne"
-                                class="accordion-collapse collapse"
-                                data-bs-parent="#accordionExample"
-                            >
+                            <div id="collapseOne" class="accordion-collapse collapse"
+                                data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <p>
                                         Framer is a web builder for creative
@@ -184,22 +164,13 @@
                         </div>
                         <div class="accordion-item">
                             <h3 class="accordion-header">
-                                <button
-                                    class="accordion-button collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTwo"
-                                    aria-expanded="false"
-                                    aria-controls="collapseTwo"
-                                >
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     Is it easy to learn?
                                 </button>
                             </h3>
-                            <div
-                                id="collapseTwo"
-                                class="accordion-collapse collapse"
-                                data-bs-parent="#accordionExample"
-                            >
+                            <div id="collapseTwo" class="accordion-collapse collapse"
+                                data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <p>
                                         Framer is the fastest tool to build
@@ -213,22 +184,13 @@
                         </div>
                         <div class="accordion-item">
                             <h3 class="accordion-header">
-                                <button
-                                    class="accordion-button collapsed"
-                                    type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree"
-                                    aria-expanded="false"
-                                    aria-controls="collapseThree"
-                                >
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                     Do I need to code?
                                 </button>
                             </h3>
-                            <div
-                                id="collapseThree"
-                                class="accordion-collapse collapse"
-                                data-bs-parent="#accordionExample"
-                            >
+                            <div id="collapseThree" class="accordion-collapse collapse"
+                                data-bs-parent="#accordionExample">
                                 <div class="accordion-body">
                                     <p>
                                         Framer is an end to end tool that lets
@@ -253,32 +215,33 @@
             </section>
         </main>
         <%- include('../common/footer.ejs') %>
-        <script>
-            const swiper = new Swiper('.swiper', {
-                effect: 'coverflow',
-                slidesPerView: 'auto',
-                grabCursor: true,
-                centeredSlides: true,
-                loop: true,
-                autoplay: {
-                    delay: 2500,
-                    disableOnInteraction: false,
-                },
-                coverflowEffect: {
-                    rotate: 0, // 슬라이드 회전 각도
-                    stretch: 200,
-                    depth: 190, // 픽셀 단위의 깊이 오프셋(슬라이드는 Z축으로 이동)
-                    modifier: 1,
-                    slideShadows: true, // 슬라이드 그림자를 활성화
-                },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-                pagination: {
-                    el: '.swiper-pagination',
-                },
-            });
-        </script>
-    </body>
+            <script>
+                const swiper = new Swiper('.swiper', {
+                    effect: 'coverflow',
+                    slidesPerView: 'auto',
+                    grabCursor: true,
+                    centeredSlides: true,
+                    loop: true,
+                    autoplay: {
+                        delay: 2500,
+                        disableOnInteraction: false,
+                    },
+                    coverflowEffect: {
+                        rotate: 0, // 슬라이드 회전 각도
+                        stretch: 200,
+                        depth: 190, // 픽셀 단위의 깊이 오프셋(슬라이드는 Z축으로 이동)
+                        modifier: 1,
+                        slideShadows: true, // 슬라이드 그림자를 활성화
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                    pagination: {
+                        el: '.swiper-pagination',
+                    },
+                });
+            </script>
+</body>
+
 </html>

@@ -141,6 +141,11 @@ main h1 {
     font-weight: 600;
     letter-spacing: -0.8px;
     line-height: 1.5em;
+    display: -webkit-box;
+    overflow: hidden;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 }
 .section2 .con_item p {
     font-size: 20px;
@@ -244,6 +249,11 @@ main h1 {
     font-weight: 700;
     line-height: 24px;
     margin-bottom: 5px;
+    display: -webkit-box;
+    overflow: hidden;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 }
 
 .section4 .review_list .item .review_info .review_category {
