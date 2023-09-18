@@ -29,4 +29,13 @@ const uploadDetail = multer({
     limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-module.exports = uploadDetail;
+function getIdFromUrl(url) {
+    const parts = url.split('/'); // URL을 '/'로 분할
+    const idIndex = parts.indexOf('event'); // 'event' 부분의 인덱스
+    if (idIndex !== -1 && idIndex < parts.length - 1) {
+        return parts[idIndex + 1]; // :id 값을 추출
+    }
+    return null; // :id 값을 찾지 못한 경우
+}
+
+module.exports = { getIdFromUrl, uploadDetail };

@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controller/reviewController');
-const uploadDetail = require('../utils');
 
 router.get('/review', controller.getReview); // 리뷰 페이지
 router.post('/review', controller.postReview); // 리뷰 작성 요청
