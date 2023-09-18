@@ -2,18 +2,34 @@
 <html lang="ko">
     <head>
         <%- include('../../common/head.ejs', {title: '프로필' }) %>
-        <link rel="stylesheet" href="/static/css/review.css" />
-        <script defer src="/static/js/review.js"></script>
+        <!-- 제윤: 여기 왜 있는 script랑 css 이지...? -->
+        <!-- <link rel="stylesheet" href="/static/css/review.css" /> -->
+        <!-- <script defer src="/static/js/review.js"></script> -->
+
+        <link
+            rel="stylesheet"
+            href="/static/css/pages/myPage/managerAside.css"
+        />
+        <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
     </head>
 
     <body>
         <%- include('../../common/header.ejs') %>
-        <h1>마이 페이지</h1>
-            <button type="button" onclick="myFavoriteList(`<%= data.id%>`)">찜한 행사 목록 보기</button>
-            <div id="myFavoriteList">
-                <!-- myFavorite리스트를 여기에 동적으로 추가 -->
+
+        <main>
+            <%- include('./profileAside') %>
+
+            <div>
+                <h1>내가 찜한 행사</h1>
+                <!--제윤: 이미지 안 뜨는 버그 수정 필요 -->
+
+                <div id="myFavoriteList">
+                    <!-- myFavorite리스트를 여기에 동적으로 추가 -->
+                </div>
+                <img src="" alt="" />
             </div>
-        </form>
+        </main>
+
         <%- include('../../common/footer.ejs') %>
         <script>
             // 내가 찜한 행사 보기
@@ -28,46 +44,73 @@
                     if (res.status === 200) {
                         const myFavoriteList = res.data.getFavorites;
                         const favoritesLength = res.data.favoritesLength;
-                        if (Array.isArray(myFavoriteList) && myFavoriteList.length > 0) {
-                            const myFavoriteListContainer = document.getElementById('myFavoriteList');
+                        if (
+                            Array.isArray(myFavoriteList) &&
+                            myFavoriteList.length > 0
+                        ) {
+                            const myFavoriteListContainer =
+                                document.getElementById('myFavoriteList');
                             myFavoriteListContainer.innerHTML = '';
 
                             myFavoriteList.forEach((favorite) => {
-                                const favoriteElement = document.createElement('div');
+                                const favoriteElement =
+                                    document.createElement('div');
                                 favoriteElement.innerHTML = `
+                                  
+                                    <p>행사 사진: <img src="${favorite.con_image}" alt="행사 사진"></p>
                                     <p>행사 제목: ${favorite.con_title}</p>
                                     <p>행사 내용: ${favorite.con_content}</p>
                                     <p>행사 상세 페이지: /localhost:8000/event/${favorite.con_id}</p>
+                                    <p>행사 유/무료: /localhost:8000/event/${favorite.con_isfree}</p>
+                                    <p>행사 가격: /localhost:8000/event/${favorite.con_price}</p>
+                                    <p>행사 장소: /localhost:8000/event/${favorite.con_detail_location}</p>
+                                    <hr>
+                                    <h2>행사 기간</h2>
+                                    <p>행사 시작: ${favorite.con_start_date}</p>
+                                    <p>행사 끝: ${favorite.con_end_date}</p>
+                                    <p>행사 모집 시작: ${favorite.sub_start_date}</p>
+                                    <p>행사 모집 끝: ${favorite.sub_end_date}</p>
+                                    <hr>
                                     <p>다른 사람 찜 갯수: ${favoritesLength}</p>
-                                    <button type="button" onclick="deletefavorite(${favorite.con_id})">찜 삭제</button>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="deletefavorite(${favorite.con_id})">찜 삭제</button>
                                 `;
-                                myFavoriteListContainer.appendChild(favoriteElement);
+                                myFavoriteListContainer.appendChild(
+                                    favoriteElement
+                                );
                             });
                         } else {
-                            const myFavoriteListContainer = document.getElementById('myFavoriteList');
-                            myFavoriteListContainer.innerHTML = '찜한 행사가 없습니다.';
+                            const myFavoriteListContainer =
+                                document.getElementById('myFavoriteList');
+                            myFavoriteListContainer.innerHTML =
+                                '찜한 행사가 없습니다.';
                         }
                     } else {
-                        console.log("error");
+                        console.log('error');
                     }
-                })
+                });
+            }
+
+            window.onload = function () {
+                const userId = `<%= data.id %>`;
+                myFavoriteList(userId); // 페이지 로딩 시 내가 찜한 행사 보기
             };
+
             // 찜한 행사 삭제
             function deletefavorite(conId) {
-            axios ({
-                method: 'delete',
-                url: '/manager/deleteMyFavorite',
-                data: {
-                    con_id: conId,
-                },
-            }).then ((res) => {
-                if (res.data === true) {
-                alert('찜 리스트에서 삭제되었습니다.');
-                } else {
-                alert ('이미 삭제하였거나 삭제할 수 없습니다.');
-                }
-            });
-            };
+                axios({
+                    method: 'delete',
+                    url: '/manager/deleteMyFavorite',
+                    data: {
+                        con_id: conId,
+                    },
+                }).then((res) => {
+                    if (res.data === true) {
+                        alert('찜 리스트에서 삭제되었습니다.');
+                    } else {
+                        alert('이미 삭제하였거나 삭제할 수 없습니다.');
+                    }
+                });
+            }
         </script>
     </body>
 </html>

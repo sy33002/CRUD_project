@@ -1,21 +1,40 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
-        <%- include('../../common/head.ejs', {title: '프로필' }) %>
-        <link rel="stylesheet" href="/static/css/review.css" />
-        <script defer src="/static/js/review.js"></script>
+        <%- include('../../common/head.ejs', {title: '나의 리뷰보기' }) %>
+        <!-- 제윤: 여기 왜 있는 script랑 css 이지...? -->
+        <!-- <link rel="stylesheet" href="/static/css/review.css" /> -->
+        <!-- <script defer src="/static/js/review.js"></script> -->
+        <link
+            rel="stylesheet"
+            href="/static/css/pages/myPage/managerAside.css"
+        />
+        <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
     </head>
 
     <body>
         <%- include('../../common/header.ejs') %>
-        <h1>마이 페이지</h1>
-        <p><%=data.user_id%></p>
-            <button type="button" onclick="myreviewList(`<%= data.user_id%>`)">내가 쓴 리뷰 보기</button>
-            <div id="myreviewList">
-                <!-- myrivew리스트를 여기에 동적으로 추가 -->
+        <main>
+            <%- include('./profileAside') %>
+
+            <div>
+                <h1>마이 페이지</h1>
+                <p><%=data.user_id%></p>
+                <!-- <p>리뷰 조회수: <%#=data.re_count%></p> -->
+
+                <button
+                    type="button"
+                    onclick="myreviewList(`<%= data.user_id%>`)"
+                >
+                    내가 쓴 리뷰 보기
+                </button>
+                <div id="myreviewList">
+                    <!-- my review 리스트를 여기에 동적으로 추가 -->
+                </div>
             </div>
-        </form>
+        </main>
         <%- include('../../common/footer.ejs') %>
+
         <script>
             // 내가 쓴 리뷰 보기
             function myreviewList(userId) {
@@ -28,12 +47,17 @@
                 }).then((res) => {
                     if (res.status === 200) {
                         const reviewList = res.data.results;
-                        const myreviewListContainer = document.getElementById('myreviewList');
+                        const myreviewListContainer =
+                            document.getElementById('myreviewList');
                         myreviewListContainer.innerHTML = '';
 
-                        if (Array.isArray(reviewList) && reviewList.length > 0) {
+                        if (
+                            Array.isArray(reviewList) &&
+                            reviewList.length > 0
+                        ) {
                             reviewList.forEach((result) => {
-                                const reviewElement = document.createElement('div');
+                                const reviewElement =
+                                    document.createElement('div');
                                 reviewElement.innerHTML = `
                                     <p>리뷰제목: ${result.review.re_title}</p>
                                     <p>리뷰 내용: ${result.review.re_content}</p>
@@ -44,30 +68,39 @@
                                     <button type="button" onclick="deleteMyReview(${result.review.re_id})">리뷰 삭제</button>
                                 `;
 
-                                myreviewListContainer.appendChild(reviewElement);
+                                myreviewListContainer.appendChild(
+                                    reviewElement
+                                );
                             });
                         } else {
-                            myreviewListContainer.innerHTML = '등록한 리뷰가 없습니다.';
+                            myreviewListContainer.innerHTML =
+                                '등록한 리뷰가 없습니다.';
                         }
                     }
                 });
             }
+
+            window.onload = function () {
+                const userId = '<%= data.user_id %>';
+                myreviewList(userId); // 페이지 로딩 시 내가 쓴 리뷰 보기
+            };
+
             // 내가 쓴 리뷰 삭제
             function deleteMyReview(reId) {
-            axios ({
-                method: 'delete',
-                url: '/manager/deleteMyReview',
-                data: {
-                    re_id: reId,
-                },
-            }).then ((res) => {
-                if (res.data === true) {
-                alert('리뷰 삭제 성공');
-                } else {
-                alert ('리뷰 삭제 실패');
-                }
-            });
-            };
+                axios({
+                    method: 'delete',
+                    url: '/manager/deleteMyReview',
+                    data: {
+                        re_id: reId,
+                    },
+                }).then((res) => {
+                    if (res.data === true) {
+                        alert('리뷰 삭제 성공');
+                    } else {
+                        alert('리뷰 삭제 실패');
+                    }
+                });
+            }
         </script>
     </body>
 </html>

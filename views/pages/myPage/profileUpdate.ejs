@@ -2,69 +2,100 @@
 <html lang="ko">
     <head>
         <%- include('../../common/head.ejs', {title: '프로필' }) %>
-        <link rel="stylesheet" href="/static/css/review.css" />
-        <script defer src="/static/js/review.js"></script>
+        <!-- 제윤: 여기 왜 있는 script랑 css 이지...? -->
+        <!-- <link rel="stylesheet" href="/static/css/review.css" /> -->
+        <!-- <script defer src="/static/js/review.js"></script> -->
+
+        <link
+            rel="stylesheet"
+            href="/static/css/pages/myPage/managerAside.css"
+        />
+        <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
     </head>
 
     <body>
         <%- include('../../common/header.ejs') %>
-        <h1>회원정보 수정 페이지</h1>
-        <main>마이 페이지222222</main>
-        
-        <form name="form_userUpdate">
-            <label for="userId">ID</label>
-            <input id="userId" type="text" name="userId" value="<%= data.user_id%>" disabled /><br />
-            <label for="userPw">Password</label>
-            <input
-                id="userPw"
-                type="password"
-                name="userPw"
-                value="<%= data.user_pw%>"
-            /><br />
-            <label for="userName">이름</label>
-            <input
-                id="userName"
-                type="text"
-                name="userName"
-                value="<%= data.user_name%>"
-            /><br />
 
-            <label for="userAddr">주소</label>
-            <input
-                id="userAddr"
-                type="text"
-                name="userAddr"
-                value="<%= data.user_addr%>"
-            /><br />
-            <div class="mb-3">
-                <label for="userEmail" class="form-label"
-                    >Email address</label
-                >
-                <input
-                    type="email"
-                    class="form-control"
-                    id="userEmail"
-                    name="user_email"
-                    value="<%= data.user_email%>"
-                />
+        <main>
+            <%- include('./profileAside') %>
+            <div>
+                <h1>회원정보 수정 페이지</h1>
+
+                <form name="form_userUpdate">
+                    <label for="userId">ID</label>
+                    <input
+                        id="userId"
+                        type="text"
+                        name="userId"
+                        value="<%= data.user_id%>"
+                        disabled
+                    /><br />
+                    <label for="userPw">Password</label>
+                    <input
+                        id="userPw"
+                        type="password"
+                        name="userPw"
+                        value="<%= data.user_pw%>"
+                    /><br />
+                    <label for="userName">이름</label>
+                    <input
+                        id="userName"
+                        type="text"
+                        name="userName"
+                        value="<%= data.user_name%>"
+                    /><br />
+
+                    <label for="userAddr">주소</label>
+                    <input
+                        id="userAddr"
+                        type="text"
+                        name="userAddr"
+                        value="<%= data.user_addr%>"
+                    /><br />
+                    <div class="mb-3">
+                        <label for="userEmail" class="form-label"
+                            >Email address</label
+                        >
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="userEmail"
+                            name="user_email"
+                            value="<%= data.user_email%>"
+                        />
+                    </div>
+
+                    <select
+                        class="form-select"
+                        aria-label="Default select example"
+                        name="userCategory"
+                    >
+                        <option selected><%=data.user_category%></option>
+                        <option value="ai">AI</option>
+                        <option value="web">웹 개발</option>
+                        <option value="git">git</option>
+                    </select>
+
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="userUpdate()"
+                    >
+                        회원정보 수정
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        onclick="deleteUserself(this, '<%= data.user_id%>')"
+                    >
+                        회원탈퇴하기</button
+                    ><br />
+                </form>
             </div>
-
-            <select
-                class="form-select"
-                aria-label="Default select example"
-                name="userCategory"
-            >
-                <option selected><%=data.user_category%></option>
-                <option value="ai">AI</option>
-                <option value="web">웹 개발</option>
-                <option value="git">git</option>
-            </select>
-
-            <button type="button" onclick="userUpdate()">회원정보 수정</button>
-            <button type="button" onclick="deleteUserself(this, '<%= data.user_id%>')">회원탈퇴하기</button><br/>
+        </main>
 
         <%- include('../../common/footer.ejs') %>
-        </form>
+
         <script>
             // 유저 정보 수정
             function userUpdate() {
@@ -84,10 +115,10 @@
                     if (res.data.result === true) {
                         alert('회원정보 수정 성공!');
                     } else {
-                        alert('회원정보 변경 없음')
+                        alert('회원정보 변경 없음');
                     }
                 });
-            };
+            }
             // 매니저 페이지 조회
             function managerPage() {
                 const form = document.forms['form_userUpdate'];
@@ -104,13 +135,13 @@
                     },
                 }).then((res) => {
                     if (res.data === true) {
-                        document.location.href = "/manager";
+                        document.location.href = '/manager';
                     } else {
-                        alert('관리자가 아닙니다!') 
-                        document.location.href = "/";
+                        alert('관리자가 아닙니다!');
+                        document.location.href = '/';
                     }
-                })
-            };
+                });
+            }
             // 로그아웃
             function logout() {
                 const form = document.forms['form_userUpdate'];
@@ -124,30 +155,30 @@
                 }).then((res) => {
                     if (res) {
                         alert('로그아웃 성공!');
-                        document.location.href = "/";
+                        document.location.href = '/';
                     }
                 });
-            };
+            }
             // 유저 탈퇴
             function deleteUserself(obj, userId) {
-            if (!confirm('정말로 탈퇴하나요?')){
-                return ;
-            }
-            axios ({
-                method: 'delete',
-                url: '/manager/deleteUserself',
-                data: {
-                    user_id: userId,
-                },
-            }).then ((res) => {
-                if (res.data === true) {
-                alert('회원 탈퇴 성공!');
-                document.location.href = '/';
-                } else {
-                alert ('회원 탈퇴 실패');
+                if (!confirm('정말로 탈퇴하나요?')) {
+                    return;
                 }
-            });
-            };
+                axios({
+                    method: 'delete',
+                    url: '/manager/deleteUserself',
+                    data: {
+                        user_id: userId,
+                    },
+                }).then((res) => {
+                    if (res.data === true) {
+                        alert('회원 탈퇴 성공!');
+                        document.location.href = '/';
+                    } else {
+                        alert('회원 탈퇴 실패');
+                    }
+                });
+            }
         </script>
     </body>
 </html>
