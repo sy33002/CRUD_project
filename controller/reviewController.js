@@ -1,25 +1,29 @@
 const Filter = require('badwords-ko'); // npm install badwords-ko --save
 const filter = new Filter();
 
+const { getIdFromUrl } = require('../utils');
 const { ConferenceReview, Sequelize, Conference } = require('../models'); // ../models/index.js
 const { Op } = require('sequelize');
 
 exports.getReview = async (req, res) => {
-    const pageNum = req.query.page; // 페이지 번호
-    const limit = 5; // 보여줄 리뷰 수
+    const pageNum = req.query.page || 1; // 페이지 번호
+    const limit = 10; // 보여줄 리뷰 수
     const offset = 0 + (pageNum - 1) * limit; // 몇 번 부터 보여줄지
+    const idValue = getIdFromUrl(req.get('Referer')); // 이전 페이지 URL에서 :id 값을 추출
+
     try {
         const itemsPerPage = limit;
-        const startIndex = offset; // offset 변수를 사용하여 startIndex를 계산
-        const endIndex = startIndex + itemsPerPage; // endIndex를 계산
+
+        const whereConditions = idValue !== null ? { con_id: idValue } : {};
 
         const result = await ConferenceReview.findAll({
+            where: whereConditions,
             offset: offset,
             limit: limit,
             order: [['re_id', 'DESC']],
         });
 
-        const count = await ConferenceReview.count();
+        const count = await ConferenceReview.count({ where: whereConditions });
         const totalPages = Math.ceil(count / itemsPerPage);
         const startPage = Math.max(pageNum - Math.floor(limit / 2), 1);
         const endPage = Math.min(startPage + limit - 1, totalPages);
@@ -65,18 +69,7 @@ exports.deleteReview = async (req, res) => {
 };
 
 exports.getReviewWrite = async (req, res) => {
-    // 이전 페이지의 URL에서 :id 값을 추출하는 함수
-    function getIdFromUrl(url) {
-        const parts = url.split('/'); // URL을 '/'로 분할
-        const idIndex = parts.indexOf('event'); // 'event' 부분의 인덱스
-        if (idIndex !== -1 && idIndex < parts.length - 1) {
-            return parts[idIndex + 1]; // :id 값을 추출
-        }
-        return null; // :id 값을 찾지 못한 경우
-    }
-
-    const prevPage = req.get('Referer'); // 이전 페이지의 URL 가져오기
-    const idValue = getIdFromUrl(prevPage); // 이전 페이지 URL에서 :id 값을 추출
+    const idValue = getIdFromUrl(req.get('Referer')); // 이전 페이지 URL에서 :id 값을 추출
 
     console.log('idVal : ==== ', idValue);
 
