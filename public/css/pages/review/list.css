@@ -4,10 +4,6 @@
     margin-top: 40px;
 }
 
-main {
-    background-color: var(--color-black);
-}
-
 .table_scroll {
     max-width: 100%;
     overflow-x: auto;
@@ -30,7 +26,7 @@ main {
     -webkit-line-clamp: 1;
 }
 
-.table thead th,
+/* .table thead th,
 .table tbody th,
 .table tbody td {
     background-color: var(--color-black);
@@ -40,4 +36,4 @@ main {
 .pagination .page-link {
     background-color: var(--color-black);
     color: var(--color-white);
-}
+} */
