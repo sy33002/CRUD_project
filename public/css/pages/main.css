@@ -9,7 +9,7 @@ main h1 {
     text-align: center;
 }
 /* Conference&Developer for U! Developer */
-  .wrapper {
+.wrapper {
     font-weight: 600;
     font-size: 50px;
     width: 100%;
@@ -18,29 +18,35 @@ main h1 {
     text-align: center;
     display: flex;
     justify-content: center;
-  }
-  
-  .typing-demo {
-    width: 24ch;
+}
+
+.typing-demo {
     text-align: center;
-    animation: typing 2s steps(22), blink .5s step-end infinite alternate;
+    animation: typing 4s steps(22), blink .5s step-end infinite alternate;
     white-space: nowrap;
     overflow: hidden;
-    border-right: 3px solid;
+}
 
-  }
-  
-  @keyframes typing {
+@keyframes typing {
     from {
-      width: 0
+        max-width: 0;
     }
-  }
-      
-  @keyframes blink {
+    to {
+        max-width: 100%;
+    }
+}
+
+@keyframes blink {
     50% {
-      border-color: transparent
+        content: "";
     }
-  }
+}
+
+.Em {
+    font-weight: 600;
+    font-size: 60px;
+    color: #298047;
+}
 /*  */
 .section {
     padding: 120px 0;
