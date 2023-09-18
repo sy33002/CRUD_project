@@ -44,47 +44,68 @@
                     if (res.status === 200) {
                         const myFavoriteList = res.data.getFavorites;
                         const favoritesLength = res.data.favoriteLengths;
-                        if (
-                            Array.isArray(myFavoriteList) &&
-                            myFavoriteList.length > 0
-                        ) {
-                            const myFavoriteListContainer =
-                                document.getElementById('myFavoriteList');
+                        if (Array.isArray(myFavoriteList) && myFavoriteList.length > 0) {
+                            const currentDate = new Date();
+                            const myFavoriteListContainer = document.getElementById('myFavoriteList');
                             myFavoriteListContainer.innerHTML = '';
 
                             for (let i = 0; i < myFavoriteList.length; i++) {
-                                const favoriteElement =
-                                    document.createElement('div');
-                                    index = 0;
-                                favoriteElement.innerHTML = `
-                                  
-                                    <p>행사 사진: <img src="${myFavoriteList[i].con_image}" alt="행사 사진"></p>
-                                    <p>행사 제목: ${myFavoriteList[i].con_title}</p>
-                                    <p>행사 내용: ${myFavoriteList[i].con_content}</p>
-                                    <p>행사 상세 페이지: /localhost:8000/event/${myFavoriteList[i].con_id}</p>
-                                    <p>행사 유/무료: /localhost:8000/event/${myFavoriteList[i].con_isfree}</p>
-                                    <p>행사 가격: /localhost:8000/event/${myFavoriteList[i].con_price}</p>
-                                    <p>행사 장소: /localhost:8000/event/${myFavoriteList[i].con_detail_location}</p>
-                                    <hr>
-                                    <h2>행사 기간</h2>
-                                    <p>행사 시작: ${myFavoriteList[i].con_start_date}</p>
-                                    <p>행사 끝: ${myFavoriteList[i].con_end_date}</p>
-                                    <p>행사 모집 시작: ${myFavoriteList[i].sub_start_date}</p>
-                                    <p>행사 모집 끝: ${myFavoriteList[i].sub_end_date}</p>
-                                    <hr>
-                                    <p>다른 사람 찜 갯수: ${favoritesLength[i]}</p>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="deletefavorite(${myFavoriteList[i].con_id})">찜 삭제</button>
-                                `;
-                                myFavoriteListContainer.appendChild(
-                                    favoriteElement
-                                );
-                                index++;
-                            };
+                                const favoriteElement = document.createElement('div');
+                                index = 0;
+
+                                // 행사 종료 날짜 가져오기
+                                const endDate = new Date(myFavoriteList[i].con_end_date);
+
+                                if (currentDate > endDate) {
+                                    // 행사가 이미 종료된 경우에만 버튼을 보이도록 설정
+                                    favoriteElement.innerHTML = `
+                                        <p>행사 사진: <img src="${myFavoriteList[i].con_image}" alt="행사 사진"></p>
+                                        <p>행사 제목: ${myFavoriteList[i].con_title}</p>
+                                        <p>행사 내용: ${myFavoriteList[i].con_content}</p>
+                                        <p>행사 상세 페이지: /localhost:8000/event/${myFavoriteList[i].con_id}</p>
+                                        <p>행사 유/무료: /localhost:8000/event/${myFavoriteList[i].con_isfree}</p>
+                                        <p>행사 가격: /localhost:8000/event/${myFavoriteList[i].con_price}</p>
+                                        <p>행사 장소: /localhost:8000/event/${myFavoriteList[i].con_detail_location}</p>
+                                        <hr>
+                                        <h2>행사 기간</h2>
+                                        <p>행사 시작: ${myFavoriteList[i].con_start_date}</p>
+                                        <p>행사 끝: ${myFavoriteList[i].con_end_date}</p>
+                                        <p>행사 모집 시작: ${myFavoriteList[i].sub_start_date}</p>
+                                        <p>행사 모집 끝: ${myFavoriteList[i].sub_end_date}</p>
+                                        <hr>
+                                        <p>다른 사람 찜 갯수: ${favoritesLength[i]}</p>
+                                        <button type="button" class="btn btn-outline-secondary" onclick="deletefavorite(${myFavoriteList[i].con_id})">찜 삭제</button>
+                                        <button type="button" class="btn btn-outline-secondary" id="reviewButton">
+                                            <a href="/review/write">지난 행사에 대한 리뷰 남기기</a>
+                                        </button>
+                                    `;
+                                } else {
+                                    // 행사가 종료되지 않은 경우에는 찜 삭제 버튼만 추가
+                                    favoriteElement.innerHTML = `
+                                        <p>행사 사진: <img src="${myFavoriteList[i].con_image}" alt="행사 사진"></p>
+                                        <p>행사 제목: ${myFavoriteList[i].con_title}</p>
+                                        <p>행사 내용: ${myFavoriteList[i].con_content}</p>
+                                        <p>행사 상세 페이지: /localhost:8000/event/${myFavoriteList[i].con_id}</p>
+                                        <p>행사 유/무료: /localhost:8000/event/${myFavoriteList[i].con_isfree}</p>
+                                        <p>행사 가격: /localhost:8000/event/${myFavoriteList[i].con_price}</p>
+                                        <p>행사 장소: /localhost:8000/event/${myFavoriteList[i].con_detail_location}</p>
+                                        <hr>
+                                        <h2>행사 기간</h2>
+                                        <p>행사 시작: ${myFavoriteList[i].con_start_date}</p>
+                                        <p>행사 끝: ${myFavoriteList[i].con_end_date}</p>
+                                        <p>행사 모집 시작: ${myFavoriteList[i].sub_start_date}</p>
+                                        <p>행사 모집 끝: ${myFavoriteList[i].sub_end_date}</p>
+                                        <hr>
+                                        <p>다른 사람 찜 갯수: ${favoritesLength[i]}</p>
+                                        <button type="button" class="btn btn-outline-secondary" onclick="deletefavorite(${myFavoriteList[i].con_id})">찜 삭제</button>
+                                    `;
+                                }
+
+                                myFavoriteListContainer.appendChild(favoriteElement);
+                            }
                         } else {
-                            const myFavoriteListContainer =
-                                document.getElementById('myFavoriteList');
-                            myFavoriteListContainer.innerHTML =
-                                '찜한 행사가 없습니다.';
+                            const myFavoriteListContainer = document.getElementById('myFavoriteList');
+                            myFavoriteListContainer.innerHTML = '찜한 행사가 없습니다.';
                         }
                     } else {
                         console.log('error');
