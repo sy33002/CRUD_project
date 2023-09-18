@@ -28,7 +28,7 @@ const ConferenceReview = (Sequelize, sequelize) => {
                 allowNull: false,
                 get() {
                     const date = this.getDataValue('re_date');
-                    return moment(date).format('YY.MM.DD HH:mm');
+                    return moment(date).format('YYYY.MM.DD HH:mm');
                 },
             },
             re_count: {

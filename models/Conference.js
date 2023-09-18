@@ -22,7 +22,7 @@ const Conference = (Sequelize, sequelize) => {
                 allowNull: false,
                 get() {
                     const date = this.getDataValue('con_start_date');
-                    return moment(date).format('YY.MM.DD HH:mm');
+                    return moment(date).format('YYYY.MM.DD HH:mm');
                 },
             },
 
@@ -31,7 +31,7 @@ const Conference = (Sequelize, sequelize) => {
                 allowNull: false,
                 get() {
                     const date = this.getDataValue('con_end_date');
-                    return moment(date).format('YY.MM.DD HH:mm');
+                    return moment(date).format('YYYY.MM.DD HH:mm');
                 },
             },
 
@@ -40,7 +40,7 @@ const Conference = (Sequelize, sequelize) => {
                 allowNull: false,
                 get() {
                     const date = this.getDataValue('sub_start_date');
-                    return moment(date).format('YY.MM.DD HH:mm');
+                    return moment(date).format('YYYY.MM.DD HH:mm');
                 },
             },
 
@@ -49,7 +49,7 @@ const Conference = (Sequelize, sequelize) => {
                 allowNull: false,
                 get() {
                     const date = this.getDataValue('sub_end_date');
-                    return moment(date).format('YY.MM.DD HH:mm');
+                    return moment(date).format('YYYY.MM.DD HH:mm');
                 },
             },
 
@@ -125,7 +125,7 @@ const Conference = (Sequelize, sequelize) => {
                 allowNull: false,
                 get() {
                     const date = this.getDataValue('createdAt');
-                    return moment(date).format('YY.MM.DD HH:mm');
+                    return moment(date).format('YYYY.MM.DD HH:mm');
                 },
             },
 
@@ -134,7 +134,7 @@ const Conference = (Sequelize, sequelize) => {
                 allowNull: false,
                 get() {
                     const date = this.getDataValue('updatedAt');
-                    return moment(date).format('YY.MM.DD HH:mm');
+                    return moment(date).format('YYYY.MM.DD HH:mm');
                 },
             },
         },
