@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+const moment = require('moment');
 
 const ConferenceReview = (Sequelize, sequelize) => {
     const model = Sequelize.define(
@@ -25,6 +26,10 @@ const ConferenceReview = (Sequelize, sequelize) => {
             re_date: {
                 type: DataTypes.DATE,
                 allowNull: false,
+                get() {
+                    const date = this.getDataValue('re_date');
+                    return moment(date).format('YY.MM.DD HH:mm');
+                },
             },
             re_count: {
                 type: DataTypes.INTEGER,

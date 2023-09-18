@@ -1,4 +1,5 @@
 const { DataTypes } = require('sequelize');
+const moment = require('moment');
 
 const Conference = (Sequelize, sequelize) => {
     const model = Sequelize.define(
@@ -19,21 +20,37 @@ const Conference = (Sequelize, sequelize) => {
             con_start_date: {
                 type: DataTypes.DATE,
                 allowNull: false,
+                get() {
+                    const date = this.getDataValue('con_start_date');
+                    return moment(date).format('YY.MM.DD HH:mm');
+                },
             },
 
             con_end_date: {
                 type: DataTypes.DATE,
                 allowNull: false,
+                get() {
+                    const date = this.getDataValue('con_end_date');
+                    return moment(date).format('YY.MM.DD HH:mm');
+                },
             },
 
             sub_start_date: {
                 type: DataTypes.DATE,
                 allowNull: false,
+                get() {
+                    const date = this.getDataValue('sub_start_date');
+                    return moment(date).format('YY.MM.DD HH:mm');
+                },
             },
 
             sub_end_date: {
                 type: DataTypes.DATE,
                 allowNull: false,
+                get() {
+                    const date = this.getDataValue('sub_end_date');
+                    return moment(date).format('YY.MM.DD HH:mm');
+                },
             },
 
             is_onoff: {
@@ -102,6 +119,23 @@ const Conference = (Sequelize, sequelize) => {
             con_detail_location: {
                 type: DataTypes.JSON,
                 allowNull: true,
+            },
+            createdAt: {
+                type: DataTypes.DATE,
+                allowNull: false,
+                get() {
+                    const date = this.getDataValue('createdAt');
+                    return moment(date).format('YY.MM.DD HH:mm');
+                },
+            },
+
+            updatedAt: {
+                type: DataTypes.DATE,
+                allowNull: false,
+                get() {
+                    const date = this.getDataValue('updatedAt');
+                    return moment(date).format('YY.MM.DD HH:mm');
+                },
             },
         },
         {
