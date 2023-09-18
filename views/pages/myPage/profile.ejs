@@ -1,113 +1,109 @@
 <!DOCTYPE html>
 <html lang="ko">
-    <head>
-        <%- include('../../common/head.ejs', {title: '프로필' }) %>
+
+<head>
+    <%- include('../../common/head.ejs', {title: '프로필' }) %>
         <link rel="stylesheet" href="/static/css/review.css" />
         <script defer src="/static/js/review.js"></script>
-        <link
-            rel="stylesheet"
-            href="/static/css/pages/myPage/managerAside.css"
-        />
+        <link rel="stylesheet" href="/static/css/pages/myPage/managerAside.css" />
         <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
-    </head>
+</head>
 
-    <body>
-        <%- include('../../common/header.ejs') %>
+<body>
+    <%- include('../../common/header.ejs') %>
 
 
         <main>마이 페이지</main>
-                <button type="button" onclick="myProfileUpdate('<%=data.userId%>')">
-                    회원정보 수정
-                </button>
-                ><br />
-                <button
-                    type="button"
-                    onclick="myreviewList('<%= data.userId%>')"
-                >
-                    내가 쓴 리뷰 보기
-                </button>
-                <button type="button" onclick="myFavoriteConList('<%= data.id%>')">
-                    찜한 행사 목록 보기
-                </button>
-            </section>
+        <button type="button" onclick="myProfileUpdate('<%=data.userId%>')">
+            회원정보 수정
+        </button>
+        ><br />
+        <button type="button" onclick="myreviewList('<%= data.userId%>')">
+            내가 쓴 리뷰 보기
+        </button>
+        <button type="button" onclick="myFavoriteConList('<%= data.id%>')">
+            찜한 행사 목록 보기
+        </button>
+        </section>
         </main>
 
         <%- include('../../common/footer.ejs') %>
-        <script>
-            // 마이페이지-> Profile update페이지 렌더
-            function  myProfileUpdate(userId) {
-                axios({
-                    method: 'GET',
-                    url: `/myPage/myProfileRender?userId=${userId}`,
-                }).then((res) => {
-                    if (res.status === 200) {
-                        window.location.href = `/myPage/myProfileRender?userId=${userId}`;
-                    }
-                })
-            };
-            // 마이페이지 -> review 렌더
-            function myreviewList(userId) {
-                axios({
-                    method: 'GET',
-                    url: `/myPage/myreviewListRender?userId=${userId}`,
-                }).then((res) => {
-                    if (res.status === 200) {
-                        window.location.href = `/myPage/myreviewListRender?userId=${userId}`;
-                    }
-                });
-            }
-            // 마이페이지 -> 찜한 행사 렌더
-            function myFavoriteConList(userId) {
-                axios({
-                    method: 'GET',
-                    url: `/myPage/myFavoriteConListRender?userId=${userId}`,
-                }).then((res) => {
-                    if (res.status === 200) {
-                        window.location.href = `/myPage/myFavoriteConListRender?userId=${userId}`;
-                    }
-                });
-            }
-            // 매니저 페이지 조회
-            function managerPage() {
-                const form = document.forms['form_userUpdate'];
-                axios({
-                    method: 'POST',
-                    url: '/manager',
-                    data: {
-                        userId: form.userId.value,
-                        userPw: form.userPw.value,
-                        userName: form.userName.value,
-                        userAddr: form.userAddr.value,
-                        userEmail: form.userEmail.value,
-                        userCategory: form.userCategory.value,
-                    },
-                }).then((res) => {
-                    if (res.data === true) {
-                        document.location.href = '/manager';
-                    } else {
-                        alert('관리자가 아닙니다!');
-                        document.location.href = '/';
-                    }
-                });
-            }
-            // 로그아웃
-            function logout() {
-                const form = document.forms['form_userUpdate'];
-                axios({
-                    method: 'POST',
-                    url: '/logout',
-                    data: {
-                        userId: form.userId.value,
-                        userPw: form.userPw.value,
-                    },
-                }).then((res) => {
-                    if (res) {
-                        alert('로그아웃 성공!');
-                        document.location.href = '/';
-                    }
-                });
-            }
-           
-        </script>
-    </body>
+            <script>
+                // 마이페이지-> Profile update페이지 렌더
+                function myProfileUpdate(userId) {
+                    axios({
+                        method: 'GET',
+                        url: `/myPage/myProfileRender?userId=${userId}`,
+                    }).then((res) => {
+                        if (res.status === 200) {
+                            window.location.href = `/myPage/myProfileRender?userId=${userId}`;
+                        }
+                    })
+                };
+                // 마이페이지 -> review 렌더
+                function myreviewList(userId) {
+                    axios({
+                        method: 'GET',
+                        url: `/myPage/myreviewListRender?userId=${userId}`,
+                    }).then((res) => {
+                        if (res.status === 200) {
+                            window.location.href = `/myPage/myreviewListRender?userId=${userId}`;
+                        }
+                    });
+                }
+                // 마이페이지 -> 찜한 행사 렌더
+                function myFavoriteConList(userId) {
+                    axios({
+                        method: 'GET',
+                        url: `/myPage/myFavoriteConListRender?userId=${userId}`,
+                    }).then((res) => {
+                        if (res.status === 200) {
+                            window.location.href = `/myPage/myFavoriteConListRender?userId=${userId}`;
+                        }
+                    });
+                }
+                // 매니저 페이지 조회
+                function managerPage() {
+                    const form = document.forms['form_userUpdate'];
+                    axios({
+                        method: 'POST',
+                        url: '/manager',
+                        data: {
+                            userId: form.userId.value,
+                            userPw: form.userPw.value,
+                            userName: form.userName.value,
+                            userAddr: form.userAddr.value,
+                            userEmail: form.userEmail.value,
+                            userCategory: form.userCategory.value,
+                        },
+                    }).then((res) => {
+                        if (res.data === true) {
+                            document.location.href = '/manager';
+                        } else {
+                            alert('관리자가 아닙니다!');
+                            document.location.href = '/';
+                        }
+                    });
+                }
+                // 로그아웃
+                function logout() {
+                    const form = document.forms['form_userUpdate'];
+                    axios({
+                        method: 'POST',
+                        url: '/logout',
+                        data: {
+                            userId: form.userId.value,
+                            userPw: form.userPw.value,
+                        },
+                    }).then((res) => {
+                        if (res) {
+                            alert('로그아웃 성공!');
+                            document.location.href = '/';
+                        }
+                    });
+                }
+
+            </script>
+</body>
+
 </html>
