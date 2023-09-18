@@ -20,7 +20,8 @@ router.delete('/manager/deleteUserself', controller.deleteUserself); // 회원�
 router.get('/myPage/myreviewList', controller.getmyreviewList); // 마이페이지 <내가쓴리뷰목록> 조회
 router.delete('/manager/deleteMyReview', controller.deleteMyReview); // 마이페이지 <내가쓴리뷰목록> 삭제
 router.get('/myPage/myFavoriteList', controller.getmyFavoriteList); // 마이페이지 <찜한 행사 목록> 조회
-router.delete('/manager/deleteMyFavorite', controller.deleteMyFavorite); // 마이페이지 <찜한 행사 목록> 조회
+router.delete('/manager/deleteMyFavorite', controller.deleteMyFavorite); // 마이페이지 <찜한 행사 목록> 삭제
+router.get('/myPage/writeReview', controller.getwriteReview); // 마이페이지 <찜한 행사 목록> 에서 지난행사 리뷰 남기기
 
 router.get('/manager', controller.getManager); // 관리자페이지 render
 router.post('/manager', controller.postManager); // 관리자페이지 render

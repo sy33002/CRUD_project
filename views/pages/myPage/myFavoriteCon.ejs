@@ -51,8 +51,6 @@
 
                             for (let i = 0; i < myFavoriteList.length; i++) {
                                 const favoriteElement = document.createElement('div');
-                                index = 0;
-
                                 // 행사 종료 날짜 가져오기
                                 const endDate = new Date(myFavoriteList[i].con_end_date);
 
@@ -75,9 +73,7 @@
                                         <hr>
                                         <p>다른 사람 찜 갯수: ${favoritesLength[i]}</p>
                                         <button type="button" class="btn btn-outline-secondary" onclick="deletefavorite(${myFavoriteList[i].con_id})">찜 삭제</button>
-                                        <button type="button" class="btn btn-outline-secondary" id="reviewButton">
-                                            <a href="/review/write">지난 행사에 대한 리뷰 남기기</a>
-                                        </button>
+                                        <button type="button" class="btn btn-outline-secondary" onclick="writeReview(${myFavoriteList[i].con_id})")>지난 행사에 대한 리뷰 남기기</button>
                                     `;
                                 } else {
                                     // 행사가 종료되지 않은 경우에는 찜 삭제 버튼만 추가
@@ -131,6 +127,19 @@
                         alert('찜 리스트에서 삭제되었습니다.');
                     } else {
                         alert('이미 삭제하였거나 삭제할 수 없습니다.');
+                    }
+                });
+            }
+            function writeReview(conId){
+                axios({
+                    method: 'GET',
+                    url: '/myPage/writeReview',
+                    params: {
+                        conId: conId,
+                    },
+                }).then((res) => {
+                    if (res.status === 200) {
+                        document.documentElement.innerHTML = res.data;
                     }
                 });
             }

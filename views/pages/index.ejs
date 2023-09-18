@@ -125,10 +125,11 @@
                                 <ul class="list list<%= i %>">
                                     <% for(let j=1; j <=3; j++){ %>
                                         <% const index=i * j - 1; %>
-                                            <li class="item">
+                                            <li class="item"><a href="review/<%= reviews[i].re_id %>">
                                                 <div class="review_info">
                                                     <span class="review_title">
                                                         <%= reviews[index].re_title %>
+                                                    </a>
                                                     </span>
                                                     <span class="review_category">
                                                         <%= reviews[index].con_title %>
