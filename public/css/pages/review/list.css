@@ -8,16 +8,36 @@ main {
     background-color: var(--color-black);
 }
 
-table {
-    margin-top: 5%;
+.table_scroll {
+    max-width: 100%;
+    overflow-x: auto;
 }
 
-.table > :not(caption) > * > * {
+.table_scroll table {
+    min-width: 800px;
+}
+
+.table_scroll table td {
+    height: 40px;
+    vertical-align: middle;
+}
+
+.table_scroll table td .link {
+    display: -webkit-box;
+    overflow: hidden;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+.table thead th,
+.table tbody th,
+.table tbody td {
     background-color: var(--color-black);
     color: var(--color-white);
 }
 
-.pagination > * > * {
+.pagination .page-link {
     background-color: var(--color-black);
     color: var(--color-white);
 }
