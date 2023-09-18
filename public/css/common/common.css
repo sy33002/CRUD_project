@@ -61,6 +61,13 @@ footer .wrap .depth2_list {
     color: #999;
 }
 
+footer .wrap .depth2_list span {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #35c130;
+}
+
 @media all and (max-width: 810px) {
     footer .wrap {
         flex-direction: column;
