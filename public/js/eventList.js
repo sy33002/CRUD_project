@@ -42,10 +42,14 @@ async function listDraw() {
                                     주최 : ${con.con_company}
                                 </span>
                                 <span class="date">
-                                    일시 : 
-                                    ${dateFormat(
-                                        con.con_start_date
-                                    )} ~ ${dateFormat(con.con_end_date)}
+                                    <span class="text">
+                                        일시 : 
+                                    </span>
+                                    <span>
+                                        ${dateFormat(
+                                            con.con_start_date
+                                        )} ~ ${dateFormat(con.con_end_date)}
+                                    </span>
                                 </span>
                                 <ul>
                                     <li>
