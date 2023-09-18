@@ -462,6 +462,16 @@ exports.deleteMyFavorite = async (req, res) => {
     }
 };
 
+// 찜한 행사 중 리뷰 남기기
+exports.getwriteReview = async (req, res) => {
+    const conId = req.query.conId;
+    const conData1 = await Conference.findOne({
+        where: { con_id: conId },
+    });
+    const conData2 = [conData1.dataValues];
+    res.render('review/write', { eventName: conData2, prevPage: 1 });
+};
+
 // 비밀번호 암호화 함수
 const saltRounds = 5;
 function bcryptPassword(password) {
