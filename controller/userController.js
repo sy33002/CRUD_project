@@ -322,7 +322,7 @@ exports.myreviewListRender = async (req, res) => {
 exports.myFavoriteConListRender = async (req, res) => {
     const userId = req.query.userId;
     const userData = await User.findOne({
-        where: { id: userId },
+        where: { user_id: userId },
     });
     res.render('myPage/myFavoriteCon', { data:userData.dataValues });
 };
