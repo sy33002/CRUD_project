@@ -1,7 +1,7 @@
 const Filter = require('badwords-ko'); // npm install badwords-ko --save
 const filter = new Filter();
 
-const { getIdFromUrl } = require('../utils');
+const { getIdFromUrl } = require('../utils/utils');
 const { ConferenceReview, Sequelize, Conference } = require('../models'); // ../models/index.js
 const { Op } = require('sequelize');
 
