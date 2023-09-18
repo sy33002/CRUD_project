@@ -43,7 +43,7 @@
                 }).then((res) => {
                     if (res.status === 200) {
                         const myFavoriteList = res.data.getFavorites;
-                        const favoritesLength = res.data.favoritesLength;
+                        const favoritesLength = res.data.favoriteLengths;
                         if (
                             Array.isArray(myFavoriteList) &&
                             myFavoriteList.length > 0
@@ -52,32 +52,34 @@
                                 document.getElementById('myFavoriteList');
                             myFavoriteListContainer.innerHTML = '';
 
-                            myFavoriteList.forEach((favorite) => {
+                            for (let i = 0; i < myFavoriteList.length; i++) {
                                 const favoriteElement =
                                     document.createElement('div');
+                                    index = 0;
                                 favoriteElement.innerHTML = `
                                   
-                                    <p>행사 사진: <img src="${favorite.con_image}" alt="행사 사진"></p>
-                                    <p>행사 제목: ${favorite.con_title}</p>
-                                    <p>행사 내용: ${favorite.con_content}</p>
-                                    <p>행사 상세 페이지: /localhost:8000/event/${favorite.con_id}</p>
-                                    <p>행사 유/무료: /localhost:8000/event/${favorite.con_isfree}</p>
-                                    <p>행사 가격: /localhost:8000/event/${favorite.con_price}</p>
-                                    <p>행사 장소: /localhost:8000/event/${favorite.con_detail_location}</p>
+                                    <p>행사 사진: <img src="${myFavoriteList[i].con_image}" alt="행사 사진"></p>
+                                    <p>행사 제목: ${myFavoriteList[i].con_title}</p>
+                                    <p>행사 내용: ${myFavoriteList[i].con_content}</p>
+                                    <p>행사 상세 페이지: /localhost:8000/event/${myFavoriteList[i].con_id}</p>
+                                    <p>행사 유/무료: /localhost:8000/event/${myFavoriteList[i].con_isfree}</p>
+                                    <p>행사 가격: /localhost:8000/event/${myFavoriteList[i].con_price}</p>
+                                    <p>행사 장소: /localhost:8000/event/${myFavoriteList[i].con_detail_location}</p>
                                     <hr>
                                     <h2>행사 기간</h2>
-                                    <p>행사 시작: ${favorite.con_start_date}</p>
-                                    <p>행사 끝: ${favorite.con_end_date}</p>
-                                    <p>행사 모집 시작: ${favorite.sub_start_date}</p>
-                                    <p>행사 모집 끝: ${favorite.sub_end_date}</p>
+                                    <p>행사 시작: ${myFavoriteList[i].con_start_date}</p>
+                                    <p>행사 끝: ${myFavoriteList[i].con_end_date}</p>
+                                    <p>행사 모집 시작: ${myFavoriteList[i].sub_start_date}</p>
+                                    <p>행사 모집 끝: ${myFavoriteList[i].sub_end_date}</p>
                                     <hr>
-                                    <p>다른 사람 찜 갯수: ${favoritesLength}</p>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="deletefavorite(${favorite.con_id})">찜 삭제</button>
+                                    <p>다른 사람 찜 갯수: ${favoritesLength[i]}</p>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="deletefavorite(${myFavoriteList[i].con_id})">찜 삭제</button>
                                 `;
                                 myFavoriteListContainer.appendChild(
                                     favoriteElement
                                 );
-                            });
+                                index++;
+                            };
                         } else {
                             const myFavoriteListContainer =
                                 document.getElementById('myFavoriteList');

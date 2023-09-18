@@ -426,11 +426,14 @@ exports.getmyFavoriteList = async (req, res) => {
         const favorites = await ConFavorite.findAll({
             where: { user_id: req.query.userId },
         });
-        const favoriteCon_id = favorites[0].dataValues.con_id;
-        const favoritesLength = await ConFavorite.findAll({
-            where: { con_id: favoriteCon_id },
-        });
-        console.log("favoriteLength", favoritesLength.length);
+        const favoriteLengths = [];
+        for (let i = 0; i < favorites.length; i++) {
+            const favoriteCon_id = favorites[i].dataValues.con_id;
+            const favoritesLength = await ConFavorite.findAll({
+                where: { con_id: favoriteCon_id },
+            });
+            favoriteLengths.push(favoritesLength.length);
+        }
         const getFavorites = await Promise.all(
             favorites.map(async (favorite) => {
                 const conference = await Conference.findOne({
@@ -439,7 +442,7 @@ exports.getmyFavoriteList = async (req, res) => {
                 return conference.dataValues;
             })
         );
-        res.send({ getFavorites, favoritesLength: favoritesLength.length });
+        res.send({ getFavorites, favoriteLengths });
     } catch (error) {
         console.error(error);
         res.status(500).send('get myFavoriteList Error');
