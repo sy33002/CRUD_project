@@ -33,7 +33,7 @@
                                                         <br />
                                                         <span>00000000</span>
                                                     </h6>
-                                                    <form name="formLogin">
+                                                    <form name="userFormLogin">
                                                         <div class="form-group">
                                                             <label
                                                                 for="userId"
@@ -63,7 +63,7 @@
                                                         <button
                                                             type="button"
                                                             class="btn mt-4"
-                                                            onclick="login()"
+                                                            onclick="userLogin()"
                                                         >
                                                             LOGIN
                                                         </button>
@@ -79,39 +79,47 @@
                                                     <h6 class="pb-3">
                                                         <span>manager</span>
                                                         <br />
-                                                        <span>00000001</span>
+
+                                                        <span>00000000</span>
                                                     </h6>
-                                                    <form name="formLogin">
+                                                    <form
+                                                        name="managerFormLogin"
+                                                    >
                                                         <div class="form-group">
                                                             <label
-                                                                for="userId"
+                                                                for="managerId"
                                                             ></label>
                                                             <input
-                                                                id="userId"
+                                                                id="managerId"
                                                                 type="text"
-                                                                name="userId"
+                                                                name="managerId"
                                                                 class="form-style"
-                                                                placeholder="Id"
+                                                                placeholder="Manager Id"
+
                                                                 required
                                                             />
                                                         </div>
                                                         <div class="form-group">
                                                             <label
-                                                                for="userPw"
+
+                                                                for="managerPw"
                                                             ></label>
                                                             <input
-                                                                id="userPw"
+                                                                id="managerPw"
                                                                 type="password"
-                                                                name="userPw"
+                                                                name="managerPw"
                                                                 class="form-style"
-                                                                placeholder="Password"
+                                                                placeholder="Manager Password"
+
                                                                 required
                                                             />
                                                         </div>
                                                         <button
                                                             type="button"
                                                             class="btn mt-4"
-                                                            onclick="login()"
+
+                                                            onclick="managerLogin()"
+
                                                         >
                                                             LOGIN
                                                         </button>
@@ -130,8 +138,8 @@
 
         <%- include('../common/footer.ejs') %>
         <script>
-            function login() {
-                const form = document.forms['formLogin'];
+            function userLogin() {
+                const form = document.forms['userFormLogin'];
 
                 if (form.userId.value === '') {
                     alert('아이디를 입력 해주세요.');
@@ -145,8 +153,8 @@
                     method: 'POST',
                     url: '/login',
                     data: {
-                        userId: formLogin.userId.value,
-                        userPw: formLogin.userPw.value,
+                        userId: userFormLogin.userId.value,
+                        userPw: userFormLogin.userPw.value,
                     },
                 }).then((res) => {
                     if (res.data.result === false) {
@@ -160,7 +168,42 @@
                         }
                     } else {
                         alert('로그인 성공!');
-                        // 제윤: 추후에 아이디 오류, 비번 오류, 서버 오류 추가 예정
+
+                        document.location.href = '/';
+                    }
+                });
+            }
+            function managerLogin() {
+                const form = document.forms['managerFormLogin'];
+
+                if (form.managerId.value === '') {
+                    alert('아이디를 입력 해주세요.');
+                    return form.managerId.focus();
+                }
+                if (form.managerId.value === '') {
+                    alert('비밀번호를 입력 해주세요.');
+                    return form.managerId.focus();
+                }
+                axios({
+                    method: 'POST',
+                    url: '/login',
+                    data: {
+                        userId: managerFormLogin.managerId.value,
+                        userPw: managerFormLogin.managerPw.value,
+                    },
+                }).then((res) => {
+                    if (res.data.result === false) {
+                        if (
+                            res.data.idCheck === true &&
+                            res.data.pwCheck === false
+                        ) {
+                            alert('비밀번호가 틀렸습니다.');
+                        } else if (res.data.idCheck === false) {
+                            alert('존재하는 관리자가 아닙니다.');
+                        }
+                    } else {
+                        alert('로그인 성공!');
+
                         document.location.href = '/';
                     }
                 });
