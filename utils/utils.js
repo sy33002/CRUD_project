@@ -7,7 +7,7 @@ const fs = require('fs');
 const uploadDetail = multer({
     storage: multer.diskStorage({
         destination(req, file, done) {
-            const folderPath = `public/images/upload/${req.params.path}`;
+            const folderPath = `public/images/upload/`;
 
             fs.readdir(folderPath, (err) => {
                 // uploads 폴더 없으면 생성
@@ -15,7 +15,7 @@ const uploadDetail = multer({
                     fs.mkdirSync(folderPath, { recursive: true });
                 }
 
-                done(null, `public/images/upload/${req.params.path}`);
+                done(null, `public/images/upload/`);
             });
         },
         filename(req, file, done) {

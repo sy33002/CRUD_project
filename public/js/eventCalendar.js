@@ -64,13 +64,26 @@ function transformEventList(eventList) {
         AI: '#20c997',
         git: '#775dd0',
     };
-    return eventList.map((event) => ({
-        title: event.con_title,
-        start: new Date(event.con_start_date).toISOString().split('T')[0],
-        end: new Date(event.con_end_date).toISOString().split('T')[0],
-        url: `/event/${event.con_id}`,
-        color: color[event.con_category],
-    }));
+
+    eventList.forEach((event) => {
+        console.log(event);
+    });
+
+    return eventList.map((event) => {
+        const con_start_date = event.con_start_date
+            .split(' ')[0]
+            .replaceAll('.', '-');
+        const con_end_date = event.con_end_date
+            .split(' ')[0]
+            .replaceAll('.', '-');
+        return {
+            title: event.con_title,
+            start: con_start_date,
+            end: con_end_date,
+            url: `/event/${event.con_id}`,
+            color: color[event.con_category],
+        };
+    });
 }
 
 // 필터된 값을 그려주는 함수

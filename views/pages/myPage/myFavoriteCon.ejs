@@ -65,12 +65,14 @@
                             myFavoriteListContainer.innerHTML = '';
 
                             for (let i = 0; i < myFavoriteList.length; i++) {
+
                                 const favoriteElement =
                                     document.createElement('div');
                                 favoriteElement.classList.add('col-4');
                                 favoriteElement.classList.add('cardSize');
 
                                 index = 0;
+
 
                                 // 행사 종료 날짜 가져오기
                                 const endDate = new Date(
@@ -80,6 +82,7 @@
                                 if (currentDate > endDate) {
                                     // 행사가 이미 종료된 경우에만 버튼을 보이도록 설정
                                     favoriteElement.innerHTML = `
+
 
 
                                     <div class="col-md-6 mb-3  favCard">
@@ -103,6 +106,7 @@
                                         </a> 
                                     </div>
                                         
+
                                     `;
                                 } else {
                                     // 행사가 종료되지 않은 경우에는 찜 삭제 버튼만 추가
@@ -195,6 +199,19 @@
                         alert('찜 리스트에서 삭제되었습니다.');
                     } else {
                         alert('이미 삭제하였거나 삭제할 수 없습니다.');
+                    }
+                });
+            }
+            function writeReview(conId){
+                axios({
+                    method: 'GET',
+                    url: '/myPage/writeReview',
+                    params: {
+                        conId: conId,
+                    },
+                }).then((res) => {
+                    if (res.status === 200) {
+                        document.documentElement.innerHTML = res.data;
                     }
                 });
             }

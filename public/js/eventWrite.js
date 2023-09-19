@@ -77,12 +77,15 @@ $("input:text[name='conPeople']").on('keyup', function () {
 // 달력 API 세팅
 $('input.daterange').daterangepicker({
     autoUpdateInput: false,
+    timePicker: true,
     opens: 'center',
     showDropdowns: true,
+    // startDate: moment().startOf('day'),
+    // endDate: moment().startOf('day').add(32, 'hour'),
     locale: {
         cancelLabel: '취소', // Cancel 버튼 텍스트 변경
         applyLabel: '적용', // Apply 버튼 텍스트 변경
-        format: 'YYYY-MM-DD',
+        format: 'YYYY-MM-DD HH:mm',
         daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
         monthNames: [
             '1',
@@ -103,9 +106,9 @@ $('input.daterange').daterangepicker({
 
 $('input.daterange').on('apply.daterangepicker', function (ev, picker) {
     $(this).val(
-        picker.startDate.format('YYYY-MM-DD') +
-            ' - ' +
-            picker.endDate.format('YYYY-MM-DD')
+        picker.startDate.format('YYYY-MM-DD HH:mm') +
+            ' ~ ' +
+            picker.endDate.format('YYYY-MM-DD HH:mm')
     );
 });
 
@@ -163,8 +166,9 @@ function getPostcode() {
 }
 
 function getInputValue() {
-    const subDate = form.subDate.value.split(' - ');
-    const conDate = form.conDate.value.split(' - ');
+    console.log(form.subDate.value);
+    const subDate = form.subDate.value.split(' ~ ');
+    const conDate = form.conDate.value.split(' ~ ');
 
     const subStartDate = subDate[0];
     const subEndDate = subDate[1];
@@ -283,25 +287,14 @@ async function registerConference() {
 
     const inputValue = getInputValue();
 
-    const imagePath = imageUploadData.file.path;
-
-    let newImagePath = '';
-    if (imagePath.startsWith('public/')) {
-        // 맥용
-        newImagePath = imagePath.replace('public/', '/static/'); // public 경로를 static으로 변경
-    }
-
-    if (imagePath.startsWith('public\\')) {
-        // 윈도우 용
-        newImagePath = imagePath.replace(`public\\`, `\\static\\`); // public 경로를 static으로 변경
-    }
+    const imagePath = imageUploadData.file;
 
     const conferenceRes = await axios({
         method: 'POST',
         url: '/event/write',
         data: {
             ...inputValue,
-            conImagePath: newImagePath,
+            conImagePath: imagePath,
         },
     });
 
@@ -310,9 +303,7 @@ async function registerConference() {
 
     if (conferenceData.result) {
         alert(
-
             '관리자에게 등록요청이 완료되었습니다. 등록 요청한 행사의 승인여부는 마이페이지에서 보실 수 있습니다.'
-
         );
         document.location.href = '/event';
     } else {
