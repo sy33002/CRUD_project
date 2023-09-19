@@ -9,21 +9,16 @@ exports.getReview = async (req, res) => {
     const pageNum = req.query.page || 1; // 페이지 번호
     const limit = 10; // 보여줄 리뷰 수
     const offset = 0 + (pageNum - 1) * limit; // 몇 번 부터 보여줄지
-    const idValue = getIdFromUrl(req.get('Referer')); // 이전 페이지 URL에서 :id 값을 추출
 
     try {
         const itemsPerPage = limit;
-
-        const whereConditions = idValue !== null ? { con_id: idValue } : {};
-
         const result = await ConferenceReview.findAll({
-            where: whereConditions,
             offset: offset,
             limit: limit,
             order: [['re_id', 'DESC']],
         });
 
-        const count = await ConferenceReview.count({ where: whereConditions });
+        const count = await ConferenceReview.count();
         const totalPages = Math.ceil(count / itemsPerPage);
         const startPage = Math.max(pageNum - Math.floor(limit / 2), 1);
         const endPage = Math.min(startPage + limit - 1, totalPages);
@@ -61,13 +56,6 @@ exports.postReview = async (req, res) => {
     res.send(result);
 };
 
-exports.deleteReview = async (req, res) => {
-    const result = await ConferenceReview.destroy({
-        where: { re_id: 1 },
-    });
-    res.send(true);
-};
-
 exports.getReviewWrite = async (req, res) => {
     const idValue = getIdFromUrl(req.get('Referer')); // 이전 페이지 URL에서 :id 값을 추출
 
@@ -76,9 +64,7 @@ exports.getReviewWrite = async (req, res) => {
     const eventName = await Conference.findAll({
         attributes: ['con_title', 'con_id'],
     });
-    console.log('이전 페이지: ', req.get('Referer'));
-    console.log('eventName: ', eventName);
-    console.log(req.session);
+
     res.render('review/write', {
         eventName: eventName,
         prevPage: idValue,
