@@ -156,9 +156,6 @@ exports.getConferenceDetail = async (req, res) => {
     const reviews = await ConferenceReview.findAll({
         where: { con_id: id },
     });
-    console.log('reviews : ', reviews);
-    console.log(reviews.length);
-    console.log(result1);
     if (result1) {
         await result1.increment('con_count', { by: 1 });
     }
