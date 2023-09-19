@@ -9,6 +9,11 @@ main h1 {
     text-align: center;
 }
 /* Conference&Developer for U! Developer */
+.typing-demo .highlight {
+    color: rgb(214, 245, 137); 
+    font-weight: bold;
+}
+
 .wrapper {
     font-weight: 600;
     font-size: 50px;
@@ -226,6 +231,13 @@ main h1 {
 }
 
 /* 리뷰 목록 */
+.review_list li.item {
+    transition: transform 0.3s ease;
+}
+
+.review_list li.item:hover {
+    transform: scale(1.1);
+}
 
 .section4 {
     padding: 100px 0;
