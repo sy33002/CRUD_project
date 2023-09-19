@@ -2,122 +2,173 @@
 <html lang="ko">
     <head>
         <%- include('../../common/head.ejs', {title: '프로필' }) %>
-        <!-- 제윤: 여기 왜 있는 script랑 css 이지...? -->
-        <!-- <link rel="stylesheet" href="/static/css/review.css" /> -->
-        <!-- <script defer src="/static/js/review.js"></script> -->
-
         <link
             rel="stylesheet"
             href="/static/css/pages/myPage/managerAside.css"
         />
         <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
     </head>
-
+    <style>
+        .padding {
+            width: 100%;
+            padding: 40px 40px;
+            min-width: 200px;
+            max-width: 700px;
+        }
+        .btnControl {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
     <body>
         <%- include('../../common/header.ejs') %>
 
         <main>
             <%- include('./profileAside') %>
-            <div>
-                <h1>회원정보 수정 페이지</h1>
-
-                <form name="form_userUpdate">
-                    <label for="userId">ID</label>
-                    <input
-                        id="userId"
-                        type="text"
-                        name="userId"
-                        value="<%= data.user_id%>"
-                        disabled
-                    /><br />
-                    <label for="userPw">Password</label>
-                    <input
-                        id="userPw"
-                        type="password"
-                        name="userPw"
-                        value="<%= data.user_pw%>"
-                    /><br />
-                    <label for="userName">이름</label>
-                    <input
-                        id="userName"
-                        type="text"
-                        name="userName"
-                        value="<%= data.user_name%>"
-                    /><br />
-
-                    <label for="userAddr">주소</label>
-                    <input
-                        id="userAddr"
-                        type="text"
-                        name="userAddr"
-                        value="<%= data.user_addr%>"
-                    /><br />
-                    <div class="mb-3">
-                        <label for="userEmail" class="form-label"
-                            >Email address</label
-                        >
-                        <input
-                            type="email"
-                            class="form-control"
-                            id="userEmail"
-                            name="user_email"
-                            value="<%= data.user_email%>"
-                        />
+            <div class="padding">
+                <div class="card-body">
+                    <div class="card-title text-center">
+                        <%= data.user_id%>님 환영합니다!
                     </div>
 
-                    <select
-                        class="form-select"
-                        aria-label="Default select example"
-                        name="userCategory"
-                    >
-                        <!-- <option selected><%#=data.user_category%></option> -->
-                        <option value="ai">AI</option>
-                        <option value="web">웹 개발</option>
-                        <option value="git">git</option>
-                    </select>
+                    <hr />
+                    <label for="userId" class="col-form-label"></label>
 
-                    <button
-                        type="button"
-                        class="btn btn-outline-secondary"
-                        onclick="userUpdate()"
-                    >
-                        회원정보 수정
-                    </button>
-                    <button
-                        type="button"
-                        class="btn btn-outline-secondary"
-                        onclick="deleteUserself(this, '<%= data.user_id%>')"
-                    >
-                        회원탈퇴하기</button
-                    ><br />
-                </form>
+                    <input
+                        id="userId"
+                        type="hidden"
+                        name="userId"
+                        value="<%= data.user_id %>"
+                    />
+
+                    <form name="form_userUpdate">
+                        <label for="userPw" class="col-form-label"></label>
+                        <input
+                            id="userPw"
+                            type="password"
+                            name="userPw"
+                            class="form-control"
+                            placeholder="새로운 비밀번호"
+                        />
+
+                        <label for="userName" class="col-form-label"></label>
+                        <input
+                            id="userName"
+                            type="text"
+                            name="userName"
+                            class="form-control"
+                            value="<%= data.user_name%>"
+                        />
+                        <br />
+
+                        <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            name="userAddr"
+                        >
+                            <%-
+                            include('../../common/components/conLocationSelect'
+                            ) %>
+                        </select>
+
+                        <div class="mb-3">
+                            <label for="userEmail" class="form-label"></label>
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="userEmail"
+                                name="user_email"
+                                value="<%= data.user_email%>"
+                            />
+                        </div>
+
+                        <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            name="userCategory"
+                        >
+                            <option value="ai">AI</option>
+                            <option value="web">웹 개발</option>
+                            <option value="git">git</option>
+                        </select>
+                        <br />
+                        <div class="btnControl">
+                            <button
+                                type="button"
+                                class="btn btn-outline-secondary"
+                                onclick="userUpdate()"
+                            >
+                                회원정보 수정
+                            </button>
+                            <button
+                                type="button"
+                                class="btn btn-outline-secondary"
+                                onclick="deleteUserself(this, '<%= data.user_id%>')"
+                            >
+                                회원탈퇴하기
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </main>
 
         <%- include('../../common/footer.ejs') %>
 
         <script>
+            // 유효성 검사
+            const checkPw = /^[a-zA-Z0-9]{8,}$/;
+            const checkName = /^[가-힣]{3,5}$/;
+            const checkAddr = /^[가-힣]{4,}$/;
+            const checkEmail =
+                /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
+
             // 유저 정보 수정
             function userUpdate() {
                 const form = document.forms['form_userUpdate'];
-                axios({
-                    method: 'POST',
-                    url: '/myPage/updateProfile',
-                    data: {
-                        userId: form.userId.value,
-                        userPw: form.userPw.value,
-                        userName: form.userName.value,
-                        userAddr: form.userAddr.value,
-                        userEmail: form.userEmail.value,
-                        userCategory: form.userCategory.value,
-                    },
-                }).then((res) => {
-                    if (res.data.result === true) {
-                        alert('회원정보 수정 성공!');
-                    } else {
-                        alert('회원정보 변경 없음');
-                    }
-                });
+
+                const userId = document.querySelector('#userId').value;
+
+                if (!form.userPw.value) {
+                    alert('비밀번호를 입력하세요!');
+                } else if (!checkPw.test(form.userPw.value)) {
+                    alert(
+                        '비밀번호는 대소문자, 숫자로 구성된 8자 이상의 문자여야 합니다.'
+                    );
+                    form.userPw.value = '';
+                } else if (!form.userName.value) {
+                    alert('이름을 입력하세요!');
+                } else if (!checkName.test(form.userName.value)) {
+                    alert('이름 형식이 올바르지 않습니다!');
+                    form.userName.value = '';
+                } else if (!form.userAddr.value) {
+                    alert('주소를 선택하세요!');
+                } else if (!form.userEmail.value) {
+                    alert('이메일을 입력하세요!');
+                } else if (!checkEmail.test(form.userEmail.value)) {
+                    alert('이메일 형식이 올바르지 않습니다');
+                    form.userEmail.value = '';
+                } else {
+                    axios({
+                        method: 'POST',
+                        url: '/updateProfile',
+                        data: {
+                            userId: userId,
+                            userPw: form.userPw.value,
+                            userName: form.userName.value,
+                            userAddr: form.userAddr.value,
+                            userEmail: form.userEmail.value,
+                            userCategory: form.userCategory.value,
+                        },
+                    }).then((res) => {
+                        if (res.data.result === true) {
+                            alert('회원정보 수정 성공!');
+                        } else {
+                            alert('회원정보 변경 없음');
+                        }
+                    });
+                }
+
             }
             // 매니저 페이지 조회
             function managerPage() {
