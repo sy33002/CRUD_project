@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <%- include('../../common/head.ejs', {title: '내가 등록 신청한 행사' }) %>
+
+        <link
+            rel="stylesheet"
+            href="/static/css/pages/myPage/managerAside.css"
+        />
+        <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
+    </head>
+
+    <body>
+        <%- include('../../common/header.ejs') %>
+
+        <main>
+            <%- include('./profileAside') %>
+            <div>
+                <h1>회원정보 수정 페이지</h1>
+                <h1>My Registered Conferences</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Conference ID</th>
+                            <th>Conference Name</th>
+                            <th>startDate</th>
+                            <th>endDate</th>
+                            <th>관리 승인 여부</th>
+                            <!-- 다른 필드 추가 -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% data.forEach(function(conference) { %>
+                            <tr>
+                                <td><%= conference.dataValues.con_id %></td>
+                                <td><%= conference.dataValues.con_title %></td>
+                                <td><%= conference.dataValues.con_start_date %></td>
+                                <td><%= conference.dataValues.con_end_date %></td>
+                                <td>
+                                    <% if (conference.dataValues.is_agreed === 1) { %>
+                                        승인완료
+                                    <% } else if (conference.dataValues.is_agreed === 0) { %>
+                                        승인대기중
+                                    <% } else if (conference.dataValues.is_agreed === -1) { %>
+                                        거절
+                                    <% } else { %>
+                                        알 수 없음
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+        </main>
+        <%- include('../../common/footer.ejs') %>
+        <script>
+        </script>
+    </body>
+</html>
