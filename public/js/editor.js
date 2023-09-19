@@ -166,20 +166,10 @@ import TextAlign from 'https://esm.sh/@tiptap/extension-text-align';
         addRemoveLinks: true, // 업로드된 파일 삭제 링크 표시
         maxFiles: 1, // 최대 파일 수를 1로 설정
         success: function (file, response) {
-            const imagePath = response.file.path;
-            let url = '';
-            if (imagePath.startsWith('public/')) {
-                // 맥용
-                url = imagePath.replace('public/', '/static/'); // public 경로를 static으로 변경
-            }
+            const imagePath = response.file;
 
-            if (imagePath.startsWith('public\\')) {
-                // 윈도우 용
-                url = imagePath.replace(`public\\`, `\\static\\`); // public 경로를 static으로 변경
-            }
-
-            if (url) {
-                editor.chain().focus().setImage({ src: url }).run();
+            if (imagePath) {
+                editor.chain().focus().setImage({ src: imagePath }).run();
             }
         },
         error: function (file, errorMessage) {

@@ -8,6 +8,17 @@ main h1 {
     color: var(--color-green);
     text-align: center;
 }
+@media all and (max-width: 1000px) {
+    main h1 {
+        font-size: 62px;
+    }
+}
+
+@media all and (max-width: 800px) {
+    main h1 {
+        font-size: 40px;
+    }
+}
 /* Conference&Developer for U! Developer */
 .typing-demo .highlight {
     color: rgb(214, 245, 137); 
@@ -27,7 +38,7 @@ main h1 {
 
 .typing-demo {
     text-align: center;
-    animation: typing 4s steps(22), blink .5s step-end infinite alternate;
+    animation: typing 4s steps(22), blink 0.5s step-end infinite alternate;
     white-space: nowrap;
     overflow: hidden;
 }
@@ -43,7 +54,7 @@ main h1 {
 
 @keyframes blink {
     50% {
-        content: "";
+        content: '';
     }
 }
 
@@ -280,9 +291,16 @@ main h1 {
 }
 
 .section4 .review_list .item {
-    padding: 30px;
     width: 100%;
     border-radius: 20px;
+}
+
+.section4 .review_list .item a {
+    padding: 30px;
+    display: block;
+}
+
+.section4 .review_list .item a > * {
     color: var(--color-white);
 }
 
@@ -334,6 +352,13 @@ main h1 {
 
 .section4 .list1 .item:nth-child(3) {
     background-color: #fff;
+}
+
+.section4 .list1 .item:nth-child(3) a .review_title {
+    color: #333;
+}
+
+.section4 .list1 .item:nth-child(3) a p {
     color: #666;
 }
 
@@ -384,6 +409,18 @@ main h1 {
     line-height: 1.6em;
 }
 
+@media all and (max-width: 1000px) {
+    .section5 h2 {
+        font-size: 40px;
+    }
+}
+
+@media all and (max-width: 800px) {
+    .section5 h2 {
+        font-size: 32px;
+    }
+}
+
 /* Sign up today. */
 
 .section6 {
@@ -412,52 +449,14 @@ main h1 {
     font-weight: 600;
 }
 
-/* FLOAT */
-.btnFloat {
-    background: none;
-    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.5);
+@media all and (max-width: 1000px) {
+    .section6 h2 {
+        font-size: 40px;
+    }
 }
 
-.btnFloat:before {
-    content: 'Float';
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 120px;
-    height: 50px;
-    border-radius: 5px;
-    transition: all 0.2s;
-}
-
-.btnBlueGreen.btnFloat:before {
-    background: #00ae68;
-}
-
-.btnLightBlue.btnFloat:before {
-    background: #5dc8cd;
-}
-
-.btnOrange.btnFloat:before {
-    background: #ffaa40;
-}
-
-.btnPurple.btnFloat:before {
-    background: #8d336a;
-}
-
-.btnFloat:before {
-    box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.4);
-}
-
-.btnFloat:hover:before {
-}
-
-.btnFloat:hover:before {
-    margin-top: -2px;
-    margin-left: 0px;
-    transform: scale(1.1, 1.1);
-    -ms-transform: scale(1.1, 1.1);
-    -webkit-transform: scale(1.1, 1.1);
-    box-shadow: 0px 5px 5px -2px rgba(0, 0, 0, 0.25);
+@media all and (max-width: 800px) {
+    .section6 h2 {
+        font-size: 32px;
+    }
 }
