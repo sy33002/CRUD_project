@@ -10,90 +10,6 @@ function getUserIP(req) {
     return addr;
 }
 
-// async function searchConferenceList(req, res) {
-//     const { isOnoff, conLocation, conCategory, conIsfree } = req.body;
-//     console.log('isOnoff>>>>>>>>>>>>>>', isOnoff);
-//     if (
-//         isOnoff === undefined ||
-//         conLocation === undefined ||
-//         conCategory === undefined ||
-//         conIsfree === undefined
-//     ) {
-//         console.log('없음');
-//     }
-//     if (isOnoff === 2 && conIsfree === 2) {
-//         //오프라인 온라인에서 전체를 선택하면
-//         console.log('전체');
-//         const conferenceRes = await Conference.findAll({
-//             where: {
-//                 [Op.and]: [
-//                     { con_location: conLocation },
-//                     { con_category: conCategory },
-//                 ],
-//             },
-//         });
-//         return conferenceRes;
-//     } else if (isOnoff === 2) {
-//         console.log('isOnoff === 2');
-//         const conferenceRes = await Conference.findAll({
-//             where: {
-//                 [Op.and]: [
-//                     { con_location: conLocation },
-//                     { con_category: conCategory },
-//                     { con_isfree: conIsfree },
-//                 ],
-//             },
-//         });
-//         return conferenceRes;
-//     } else if (conIsfree === 2) {
-//         console.log('conIsfree === 2');
-//         const conferenceRes = await Conference.findAll({
-//             where: {
-//                 [Op.and]: [
-//                     { is_onoff: isOnoff },
-//                     { con_location: conLocation },
-//                     { con_category: conCategory },
-//                 ],
-//             },
-//         });
-//         return conferenceRes;
-//     } else {
-//         console.log('else');
-//         const conferenceRes = await Conference.findAll({
-//             where: {
-//                 [Op.and]: [
-//                     { is_onoff: isOnoff },
-//                     { con_location: conLocation },
-//                     { con_category: conCategory },
-//                     { con_isfree: conIsfree },
-//                 ],
-//             },
-//         });
-//         return conferenceRes;
-//     }
-// }
-
-// exports.getConferenceList = async (req, res) => {
-//     try {
-//         let conference;
-//         console.log('req.body22222====', req.body);
-//         if (!Object.keys(req.body).length) {
-//             //req.query가 빈 객체면
-
-//             conference = await Conference.findAll();
-//             return res.render('event/list');
-//         } else {
-//             console.log('ddddddd');
-//             conference = await searchConferenceList(req);
-//             console.log('>>>>>>>', conference);
-//             return res.send({ conference });
-//         }
-//     } catch (err) {
-//         console.log(err);
-//         res.send('server error');
-//     }
-// };
-
 // 순수 리스트 렌더역할
 exports.getConferenceList = (req, res) => {
     return res.render('event/list');
@@ -105,12 +21,47 @@ exports.getConferenceCalendar = (req, res) => {
 
 // event/list에 모든 행사 리스트 넘겨주는 함수
 exports.getConferenceInfo = async (req, res) => {
-    const eventList = await Conference.findAll({
-        where: {
-            is_agreed: true,
-        },
-    });
-    res.send({ eventList });
+    let whereClause = {
+        is_agreed: true,
+    };
+
+    if (req.query.date) {
+        // 쿼리문 있을 때만 필터
+        const date = req.query.date;
+        const startDate = new Date(date);
+        const endDate = new Date(startDate);
+        endDate.setMonth(startDate.getMonth() + 1);
+
+        whereClause[Op.or] = [];
+
+        whereClause[Op.or] = [
+            {
+                // 행사 기간이 해당 년, 월에 해당하는 거만 추출
+                [Op.and]: [
+                    { con_start_date: { [Op.gte]: startDate } },
+                    { con_start_date: { [Op.lt]: endDate } },
+                ],
+            },
+            {
+                [Op.and]: [
+                    { con_end_date: { [Op.gte]: startDate } },
+                    { con_end_date: { [Op.lt]: endDate } },
+                ],
+            },
+        ];
+    }
+
+    try {
+        const eventList = await Conference.findAll({
+            where: whereClause,
+            order: [['con_end_date', 'ASC']],
+        });
+
+        res.send({ eventList });
+    } catch (err) {
+        console.log(err);
+        res.send('server error');
+    }
 };
 
 // 필터링 역할
