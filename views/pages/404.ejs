@@ -3,15 +3,17 @@
     <head>
         <%- include('../common/head.ejs', {title: '404' }) %>
         <link rel="stylesheet" href="/static/css/pages/404.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     </head>
     <body>
         <%- include('../common/header.ejs') %>
-
-        <div>
-            <h1 class="404">404</h1>
-            <h1 class="wrong">잘못된 경로 입니다!</h1>
-            <h4 class="gohome"><a href="/">홈으로 이동하기</a></h4>
-        </div>
+        
+        <div id="parentdiv">
+            <i class="fas fa-exclamation-circle"></i>
+            <h1 class="error-404 animate__animated animate__flash" >404 Error.</h1><br/>
+            <h1 class="error-message">Page not found</h1><br/>
+            <h4 class="go-home"><a href="/">Go to home</a></h4><br/>
+        </div>        
         
         <%- include('../common/footer.ejs') %>
     </body>

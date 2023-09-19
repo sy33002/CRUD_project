@@ -1,8 +1,34 @@
-div {
-    display: flex;
-    flex-direction: column;
+#parentdiv {
+    display: flex; 
+    flex-direction: column; 
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     margin: 0;
+    background-color: var(--color-black);
+}
+
+.error-404 {
+    font-size: 100px;
+    font-weight: bold;
+    color: var(--color-green);
+}
+
+.fas {
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.error-message {
+    font-size: 30px;
+    color: var(--color-green);
+}
+
+.go-home a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--color-green);
+    color: var(--color-black);
+    text-decoration: none;
+    border-radius: 20px;
 }
