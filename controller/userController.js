@@ -521,18 +521,13 @@ exports.getwriteReview = async (req, res) => {
 
 //마이페이지: 내가 등록 신청한 행사 보기
 exports.myRegisterConRender = async (req, res) => {
-    const userId = req.query.userId;
     const data = req.session.userInfo;
     if (data) {
-        if (data.userId === userId) {
-            const id = data.id;
-            const result = await Conference.findAll({
-                where: { user_id: id },
-            });
+        const id = data.id;
+        const result = await Conference.findAll({
+            where: { user_id: id },
+        });
         res.render('myPage/myRegisterCon', { data: result });
-        } else {
-            res.render('404');
-        }
     } else {
         res.render('login');
     }
