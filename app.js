@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const config = require('./config/config.json');
 
 const path = require('path');
 const app = express();
@@ -15,8 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/static', express.static(__dirname + '/public'));
 
-// 임시 키
-const MySessionSecretKey = '1234';
+
+const MySessionSecretKey = config.sessionSecretKey;
+
 // 세션 옵션 객체
 app.use(
     session({
@@ -25,12 +27,13 @@ app.use(
         saveUninitialized: true,
         cookie: {
             httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000, // 24시간
+            maxAge: 3 * 60 * 60 * 1000, // 3시간
+            name: 'random-session-cookie-name',
         },
     })
 );
 
-// 모든 페이지에 session을 넣는 미들웨어
+// header session을 넣는 미들웨어
 app.use((req, res, next) => {
     res.locals.Id = 0;
     res.locals.userId = '';
