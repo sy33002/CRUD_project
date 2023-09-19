@@ -8,31 +8,6 @@
     <body>
         <%- include('../common/header.ejs') %>
         <main>
-            <!--예전 로그인 form. 작동 확인 후 삭제 -->
-            <!-- <form name="formLogin">
-                <label for="userId">ID</label>
-                <input
-                    id="userId"
-                    type="text"
-                    name="userId"
-                    class="form-style"
-                    placeholder="Your Id"
-                    required
-                /><br />
-                <label for="userPw">Password</label>
-                <input
-                    id="userPw"
-                    type="password"
-                    name="userPw"
-                    class="form-style"
-                    placeholder="Your Password"
-                    required
-                /><br />
-                <button type="button" class="btn mt-4" onclick="login()">
-                    LOGIN
-                </button>
-            </form> -->
-
             <div class="section">
                 <div class="container">
                     <div class="row full-height justify-content-center">
@@ -54,9 +29,11 @@
                                                     class="section text-center"
                                                 >
                                                     <h6 class="pb-3">
-                                                        <span>login </span>
+                                                        <span>user</span>
+                                                        <br />
+                                                        <span>00000000</span>
                                                     </h6>
-                                                    <form name="formLogin">
+                                                    <form name="userFormLogin">
                                                         <div class="form-group">
                                                             <label
                                                                 for="userId"
@@ -86,21 +63,60 @@
                                                         <button
                                                             type="button"
                                                             class="btn mt-4"
-                                                            onclick="login()"
+                                                            onclick="userLogin()"
                                                         >
                                                             LOGIN
                                                         </button>
-
-                                                        <!-- <p
-                                                        class="mb-0 mt-4 text-center"
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-back">
+                                            <div class="center-wrap">
+                                                <div
+                                                    class="section text-center"
+                                                >
+                                                    <h6 class="pb-3">
+                                                        <span>manager</span>
+                                                        <br />
+                                                        <span>00000000</span>
+                                                    </h6>
+                                                    <form
+                                                        name="managerFormLogin"
                                                     >
-                                                        <a
-                                                            href="#0"
-                                                            class="link"
-                                                            >Forgot your
-                                                            password?</a
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="managerId"
+                                                            ></label>
+                                                            <input
+                                                                id="managerId"
+                                                                type="text"
+                                                                name="managerId"
+                                                                class="form-style"
+                                                                placeholder="Manager Id"
+                                                                required
+                                                            />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="managerPw"
+                                                            ></label>
+                                                            <input
+                                                                id="managerPw"
+                                                                type="password"
+                                                                name="managerPw"
+                                                                class="form-style"
+                                                                placeholder="Manager Password"
+                                                                required
+                                                            />
+                                                        </div>
+                                                        <button
+                                                            type="button"
+                                                            class="btn mt-4"
+                                                            onclick="managerLogin()"
                                                         >
-                                                    </p> -->
+                                                            LOGIN
+                                                        </button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -116,8 +132,8 @@
 
         <%- include('../common/footer.ejs') %>
         <script>
-            function login() {
-                const form = document.forms['formLogin'];
+            function userLogin() {
+                const form = document.forms['userFormLogin'];
 
                 if (form.userId.value === '') {
                     alert('아이디를 입력 해주세요.');
@@ -131,8 +147,8 @@
                     method: 'POST',
                     url: '/login',
                     data: {
-                        userId: formLogin.userId.value,
-                        userPw: formLogin.userPw.value,
+                        userId: userFormLogin.userId.value,
+                        userPw: userFormLogin.userPw.value,
                     },
                 }).then((res) => {
                     if (res.data.result === false) {
@@ -146,7 +162,42 @@
                         }
                     } else {
                         alert('로그인 성공!');
-                        // 제윤: 추후에 아이디 오류, 비번 오류, 서버 오류 추가 예정
+
+                        document.location.href = '/';
+                    }
+                });
+            }
+            function managerLogin() {
+                const form = document.forms['managerFormLogin'];
+
+                if (form.managerId.value === '') {
+                    alert('아이디를 입력 해주세요.');
+                    return form.managerId.focus();
+                }
+                if (form.managerId.value === '') {
+                    alert('비밀번호를 입력 해주세요.');
+                    return form.managerId.focus();
+                }
+                axios({
+                    method: 'POST',
+                    url: '/login',
+                    data: {
+                        userId: managerFormLogin.managerId.value,
+                        userPw: managerFormLogin.managerPw.value,
+                    },
+                }).then((res) => {
+                    if (res.data.result === false) {
+                        if (
+                            res.data.idCheck === true &&
+                            res.data.pwCheck === false
+                        ) {
+                            alert('비밀번호가 틀렸습니다.');
+                        } else if (res.data.idCheck === false) {
+                            alert('존재하는 관리자가 아닙니다.');
+                        }
+                    } else {
+                        alert('로그인 성공!');
+
                         document.location.href = '/';
                     }
                 });
