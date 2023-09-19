@@ -2,14 +2,6 @@ const { Conference, Sequelize, ConferenceReview } = require('../models');
 const { ConFavorite } = require('../models');
 const { Op } = require('sequelize');
 
-// ../models/index.js
-const cookieParser = require('cookie-parser');
-//ip를 가져오는 함수
-function getUserIP(req) {
-    const addr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    return addr;
-}
-
 // 순수 리스트 렌더역할
 exports.getConferenceList = (req, res) => {
     return res.render('event/list');
@@ -171,28 +163,7 @@ exports.postConference = async (req, res) => {
         console.error(err);
         res.send({ result: false });
     }
-
-    //관리자 페이지 안만들면 /event경로로 갑니다..
-    // res.redirect('/');
-    //관리자 페이지가 있을 경우
-    //res.render('관리자페이지',{result})
 };
-// exports.updateConferenceCnt = async (req, res) => {
-//     if (req.cookies[conId] == undefined) {
-//         // key, value, 옵션을 설정해준다.
-//         res.cookie(conCount, getUserIP(req), {
-//             // 유효시간 : 일주일
-//             maxAge: 60 * 60 * 24 * 7,
-//         });
-//         // 조회수 증가 쿼리
-//         await Conference.updateOne(
-//             { con_id: conId },
-//             { $inc: { con_count: 1 } }
-//         );
-//     }
-//     res.render({ conCount: Conference.con_count });
-//     //ejs에서 conCount라는 변수를 써서 조회수를 보이게 하면 될 것 같습니다..
-// };
 
 exports.postConferenceEdit = async (req, res) => {
     const {

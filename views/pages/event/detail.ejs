@@ -48,7 +48,7 @@
                 <p class="mb-2">이 행사에 <%- conference.con_count %>명이 관심이 있습니다.</p>
                 <ul>
                     <li>
-                        <span class=>#
+                        <span id="1">#
                             <%if(conference.is_onoff){%>
                             오프라인
                             <%}else{%>
@@ -58,7 +58,7 @@
                         </span>
                     </li>
                     <li>
-                        <span>#
+                        <span id="2">#
                             <%if(conference.is_free){%>
                                 무료
                                 <%}else{%>
@@ -67,7 +67,7 @@
                         </span>
                     </li>
                     <li>
-                        <span>#
+                        <span id="3">#
                             <%-conference.con_category%>
                         </span>
                     </li>
