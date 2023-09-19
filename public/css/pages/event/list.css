@@ -81,6 +81,10 @@
     display: flex;
 }
 
+.event-list .event-item .event-content .status {
+    margin-left: 10px;
+}
+
 .event-list .event-item .event-content .date .text {
     min-width: 44px;
 }
