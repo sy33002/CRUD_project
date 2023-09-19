@@ -1,3 +1,12 @@
+.select {
+    width: 180px;
+    float: right;
+}
+
+.section {
+    clear: both;
+}
+
 .event-list {
     display: flex;
     flex-direction: column;
@@ -21,12 +30,26 @@
 .event-list .event-item-wrap .event-img {
     width: 280px;
     height: 180px;
+    position: relative;
 }
 
 .event-list .event-item-wrap .event-img img {
     width: 100%;
     height: 100%;
 }
+.event-list .event-item-wrap .img-blur {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+}
+
 .event-list .event-item .event-content {
     padding-left: 40px;
 }
@@ -77,16 +100,16 @@
 .event-list .event-item .event-content .desc ul li:nth-child(3) {
     background-color: rgb(93, 147, 228);
 }
-.event-list .event-item .event-content .date {
+.event-list .event-item .event-content .period {
     display: flex;
 }
 
-.event-list .event-item .event-content .status {
-    margin-left: 10px;
+.event-list .event-item .event-content .period .text {
+    min-width: 44px;
 }
 
-.event-list .event-item .event-content .date .text {
-    min-width: 44px;
+.event-list .event-item .event-content .period .status {
+    margin-left: 10px;
 }
 
 @media all and (max-width: 800px) {
@@ -118,8 +141,21 @@
         line-height: 18px;
     }
 
-    .event-list .event-item .event-content .date .text {
+    .event-list .event-item .event-content .period {
+        flex-wrap: wrap;
+    }
+
+    .event-list .event-item .event-content .period .text {
         min-width: 40px;
+    }
+
+    .event-list .event-item .event-content .period .date {
+        flex: 1;
+    }
+    .event-list .event-item .event-content .period .status {
+        margin-left: 40px;
+        margin-top: 5px;
+        flex: 0 0 100%;
     }
 
     .event-list .event-item .event-content .desc ul {
@@ -146,7 +182,11 @@
         font-size: 12px;
         line-height: 14px;
     }
-    .event-list .event-item .event-content .date .text {
+    .event-list .event-item .event-content .period .text {
         min-width: 35px;
+    }
+
+    .event-list .event-item .event-content .period .status {
+        margin-left: 35px;
     }
 }

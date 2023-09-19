@@ -53,7 +53,6 @@ async function getFilterCon() {
             conIsfree: form.conIsfree.value,
         },
     });
-    console.log(response.data);
     return response.data.eventList;
 }
 
@@ -64,10 +63,6 @@ function transformEventList(eventList) {
         AI: '#20c997',
         git: '#775dd0',
     };
-
-    eventList.forEach((event) => {
-        console.log(event);
-    });
 
     return eventList.map((event) => {
         const con_start_date = event.con_start_date
