@@ -11,16 +11,23 @@
         />
         <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
     </head>
-
+    <style>
+        .cardCenter {
+            padding: 30px 0px;
+        }
+        .marginRemove {
+            margin: 0 auto;
+        }
+    </style>
     <body>
         <%- include('../../common/header.ejs') %>
         <main>
             <%- include('./profileAside') %>
 
-            <div>
+            <div class="cardCenter">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-10">
+                        <div class="col-lg-10 marginRemove">
                             <div class="card">
                                 <div class="card-body">
                                     <table class="table text-center">
@@ -41,7 +48,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </main>
@@ -77,7 +83,7 @@
                                     <td>${result.relatedConference.con_title}</td>
                                     <td><a href="http://localhost:8000/event/${result.relatedConference.con_id}">바로가기</a></td>
                                     <td><a href="http://localhost:8000/review/${result.review.re_id}">바로가기</a></td>
-                                    <button type="button" onclick="deleteMyReview(${result.review.re_id})">리뷰 삭제</button>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="deleteMyReview(${result.review.re_id})">리뷰 삭제</button>
                                 `;
 
                                 myreviewListContainer.appendChild(
