@@ -8,31 +8,6 @@
     <body>
         <%- include('../common/header.ejs') %>
         <main>
-            <!--예전 로그인 form. 작동 확인 후 삭제 -->
-            <!-- <form name="formLogin">
-                <label for="userId">ID</label>
-                <input
-                    id="userId"
-                    type="text"
-                    name="userId"
-                    class="form-style"
-                    placeholder="Your Id"
-                    required
-                /><br />
-                <label for="userPw">Password</label>
-                <input
-                    id="userPw"
-                    type="password"
-                    name="userPw"
-                    class="form-style"
-                    placeholder="Your Password"
-                    required
-                /><br />
-                <button type="button" class="btn mt-4" onclick="login()">
-                    LOGIN
-                </button>
-            </form> -->
-
             <div class="section">
                 <div class="container">
                     <div class="row full-height justify-content-center">
@@ -54,7 +29,9 @@
                                                     class="section text-center"
                                                 >
                                                     <h6 class="pb-3">
-                                                        <span>login </span>
+                                                        <span>user</span>
+                                                        <br />
+                                                        <span>00000000</span>
                                                     </h6>
                                                     <form name="formLogin">
                                                         <div class="form-group">
@@ -90,17 +67,54 @@
                                                         >
                                                             LOGIN
                                                         </button>
-
-                                                        <!-- <p
-                                                        class="mb-0 mt-4 text-center"
-                                                    >
-                                                        <a
-                                                            href="#0"
-                                                            class="link"
-                                                            >Forgot your
-                                                            password?</a
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-back">
+                                            <div class="center-wrap">
+                                                <div
+                                                    class="section text-center"
+                                                >
+                                                    <h6 class="pb-3">
+                                                        <span>manager</span>
+                                                        <br />
+                                                        <span>00000001</span>
+                                                    </h6>
+                                                    <form name="formLogin">
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="userId"
+                                                            ></label>
+                                                            <input
+                                                                id="userId"
+                                                                type="text"
+                                                                name="userId"
+                                                                class="form-style"
+                                                                placeholder="Id"
+                                                                required
+                                                            />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="userPw"
+                                                            ></label>
+                                                            <input
+                                                                id="userPw"
+                                                                type="password"
+                                                                name="userPw"
+                                                                class="form-style"
+                                                                placeholder="Password"
+                                                                required
+                                                            />
+                                                        </div>
+                                                        <button
+                                                            type="button"
+                                                            class="btn mt-4"
+                                                            onclick="login()"
                                                         >
-                                                    </p> -->
+                                                            LOGIN
+                                                        </button>
                                                     </form>
                                                 </div>
                                             </div>
