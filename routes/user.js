@@ -31,6 +31,7 @@ router.get('/myPage/writeReview', controller.getwriteReview); // 마이페이지
 // router.post('/manager', controller.postManager); // 관리자페이지 render
 router.get('/manager/allUser', controller.getUser); // 관리자페이지: 전체 유저 조회
 router.delete('/manager/deleteUser', controller.deleteUser); /// 관리자 페이지: 유저 삭제
+router.delete('/manager/deleteConference', controller.deleteConference); /// 관리자 페이지: 행사 삭제
 
 router.post('/manager/makeManager', controller.makeManager); /// 관리자 페이지: 매니저 권한 부여
 router.post('/manager/revokeManager', controller.revokeManager); /// 관리자 페이지: 매니저 권한 회수
