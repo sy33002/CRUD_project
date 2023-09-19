@@ -16,7 +16,7 @@ exports.index = async (req, res) => {
             },
         },
         limit: 10,
-        order: [['con_id', 'DESC']],
+        order: [['con_count', 'DESC']],
     });
     res.render('index', { data, reviews, events });
 };
