@@ -15,20 +15,19 @@ exports.getSignup = (req, res) => {
     res.render('signup');
 }
 
-// 관리자페이지 버튼
-exports.postManager = async (req, res) => {
-    const data = req.session.userInfo;
-    if (data.userIsManager === 1) {
-        res.send(true);
-    } else {
-        res.send(false);
-    }
-};
-
 // 관리자 페이지: 전체 유저 보기
 exports.getUser = async (req, res) => {
-    const users = await User.findAll();
-    res.render('myPage/allUser', { users });
+    if (req.session.userInfo) {
+       const data =  req.session.userInfo;
+       if (data.userIsManager === true) {
+           const users = await User.findAll();
+           res.render('myPage/allUser', { users });
+       } else{
+            res.render('404');
+       }
+     } else {
+        res.render('404');
+    };
 };
 
 // 관리자 페이지: 유저 삭제 하기
@@ -90,13 +89,43 @@ exports.revokeManager = async (req, res) => {
 
 // 관리자 페이지: 전체 컨퍼런스 보기
 exports.getAllConference = async (req, res) => {
-    const conferences = await Conference.findAll();
-    res.render('myPage/allConference', {conferences});
+    if (req.session.userInfo) {
+        const data =  req.session.userInfo;
+        if (data.userIsManager === true) {
+            const conferences = await Conference.findAll();
+            res.render('myPage/allConference', {conferences});
+        } else{
+             res.render('404');
+        }
+      } else {
+         res.render('404');
+     };
+};
+// 관리자 페이지: 컨퍼런스 삭제하기
+exports.deleteConference = async (req, res) => {
+    const result = await Conference.destroy({
+        where: { con_id: req.body.con_id },
+    });
+    if (result === 1) {
+        res.send(true);
+        return;
+    } else {
+        res.send(false);
+    }
 };
 
 // 관리자 페이지: 행사 관리 페이지 render
 exports.getconferenceHandler = async (req, res) => {
-    res.render('myPage/conferenceHandler');
+    if (req.session.userInfo) {
+        const data =  req.session.userInfo;
+        if (data.userIsManager === true) {
+            res.render('myPage/conferenceHandler');
+        } else{
+             res.render('404');
+        }
+      } else {
+         res.render('404');
+     };
 };
 
 // 관리자 페이지: 승인해야할 conference 보기
@@ -114,7 +143,17 @@ exports.getConforenceRegister = async (req, res) => {
 
 // 관리자 페이지: 행사 관리 페이지 render
 exports.conferenceHandler = async (req, res) => {
-    res.render('myPage/conferenceHandler');
+    if (req.session.userInfo) {
+        const data =  req.session.userInfo;
+        if (data.userIsManager === true) {
+            res.render('myPage/conferenceHandler');
+        } else{
+             res.render('404');
+        }
+      } else {
+         res.render('404');
+     };
+
 };
 
 // 관리자 페이지: conference 승인하기
@@ -302,19 +341,37 @@ exports.myProfileRender = async (req, res) => {
 // 마이페이지 -> 마이 리뷰 페이지
 exports.myreviewListRender = async (req, res) => {
     const userId = req.query.userId;
-    const userData = await User.findOne({
-        where: { user_id: userId },
-    });
-    res.render('myPage/myreviewList', { data:userData.dataValues });
+    const data = req.session.userInfo;
+    if (data) {
+        if (data.userId === userId) {
+            const userData = await User.findOne({
+                where: { user_id: userId },
+            });
+            res.render('myPage/myreviewList', { data:userData.dataValues });
+        } else {
+            res.render('404');
+        }
+    } else {
+        res.render('login');
+    }
 };
 
 // 마이페이지 -> 찜한 행사 페이지
 exports.myFavoriteConListRender = async (req, res) => {
     const userId = req.query.userId;
-    const userData = await User.findOne({
-        where: { user_id: userId },
-    });
-    res.render('myPage/myFavoriteCon', { data:userData.dataValues });
+    const data = req.session.userInfo;
+    if (data) {
+        if (data.userId === userId) {
+            const userData = await User.findOne({
+                where: { user_id: userId },
+            });
+            res.render('myPage/myFavoriteCon', { data:userData.dataValues });
+        } else {
+            res.render('404');
+        }
+    } else {
+        res.render('login');
+    }
 };
 
 // 회원정보 update
@@ -464,13 +521,21 @@ exports.getwriteReview = async (req, res) => {
 
 //마이페이지: 내가 등록 신청한 행사 보기
 exports.myRegisterConRender = async (req, res) => {
+    const userId = req.query.userId;
     const data = req.session.userInfo;
-    const id = data.id;
-    const result = await Conference.findAll({
-        where: { user_id: id },
-    });
-    console.log("result>>>> ", result);
-    res.render('myPage/myRegisterCon', { data: result });
+    if (data) {
+        if (data.userId === userId) {
+            const id = data.id;
+            const result = await Conference.findAll({
+                where: { user_id: id },
+            });
+        res.render('myPage/myRegisterCon', { data: result });
+        } else {
+            res.render('404');
+        }
+    } else {
+        res.render('login');
+    }
 };
 
 // 비밀번호 암호화 함수
