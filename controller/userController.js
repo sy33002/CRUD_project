@@ -101,6 +101,18 @@ exports.getAllConference = async (req, res) => {
          res.render('404');
      };
 };
+// 관리자 페이지: 컨퍼런스 삭제하기
+exports.deleteConference = async (req, res) => {
+    const result = await Conference.destroy({
+        where: { con_id: req.body.con_id },
+    });
+    if (result === 1) {
+        res.send(true);
+        return;
+    } else {
+        res.send(false);
+    }
+};
 
 // 관리자 페이지: 행사 관리 페이지 render
 exports.getconferenceHandler = async (req, res) => {
@@ -350,7 +362,7 @@ exports.myFavoriteConListRender = async (req, res) => {
     const data = req.session.userInfo;
     if (data) {
         if (data.userId === userId) {
-            const userId = req.query.userfindOne({
+            const userData = await User.findOne({
                 where: { user_id: userId },
             });
             res.render('myPage/myFavoriteCon', { data:userData.dataValues });

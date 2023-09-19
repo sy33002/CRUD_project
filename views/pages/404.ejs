@@ -2,15 +2,17 @@
 <html lang="ko">
     <head>
         <%- include('../common/head.ejs', {title: '404' }) %>
-        <!-- <link rel="stylesheet" href="/static/css/pages/login.css" /> -->
+        <link rel="stylesheet" href="/static/css/pages/404.css" />
     </head>
-
     <body>
         <%- include('../common/header.ejs') %>
-		<h1>잘못된 경로 입니다!</h1>
-		<h4><a href="/">홈으로 이동하기</a></h4>
+
+        <div>
+            <h1 class="404">404</h1>
+            <h1 class="wrong">잘못된 경로 입니다!</h1>
+            <h4 class="gohome"><a href="/">홈으로 이동하기</a></h4>
+        </div>
+        
         <%- include('../common/footer.ejs') %>
-        <script>
-        </script>
     </body>
 </html>

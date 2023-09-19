@@ -27,7 +27,7 @@
                             <th>주최 정보</th>
                             <th>조회수</th>
                             <th>승인 여부</th>
-                            <th></th>
+                            <th>삭제하기</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -46,6 +46,7 @@
                             <td>
                                 <%= con.is_agreed === true? '승인':'거절' %>
                             </td>
+                            <td><button type="button" onclick="deleteConference('<%=con.con_id%>')">삭제하기</td>
                         </tr>
                         <%}%>
                     </tbody>
@@ -53,5 +54,23 @@
             </div>
         </main>
         <%- include('../../common/footer.ejs') %>
+        <script>
+                // 행사 삭제
+                function deleteConference(conId) {
+                axios({
+                    method: 'delete',
+                    url: '/manager/deleteConference',
+                    data: {
+                        con_id: conId,
+                    },
+                }).then((res) => {
+                    if (res.data === true) {
+                        alert('행사 삭제되었습니다.');
+                    } else {
+                        alert('이미 삭제하였거나 삭제할 수 없습니다.');
+                    }
+                });
+            }
+        </script>
     </body>
 </html>
