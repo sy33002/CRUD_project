@@ -13,6 +13,7 @@ router.post('/signup', controller.postSignup); // 회원가입 성공
 router.get('/myPage/myProfileRender', controller.myProfileRender); // 마이페이지 -> 프로필 수정 페이지
 router.get('/myPage/myreviewListRender', controller.myreviewListRender); // 마이페이지 -> review 렌더
 router.get('/myPage/myFavoriteConListRender', controller.myFavoriteConListRender); // 마이페이지 -> 찜기능 렌더
+router.get('/myPage/myRegisterConRender', controller.myRegisterConRender); // 마이페이지 -> 내가 등록한 행사 렌더
 router.post('/updateProfile', controller.updateProfile); // 회원정보 update
 router.delete('/manager/deleteUserself', controller.deleteUserself); // 회원탈퇴
 
@@ -22,7 +23,6 @@ router.get('/myPage/myFavoriteList', controller.getmyFavoriteList); // 마이페
 router.delete('/manager/deleteMyFavorite', controller.deleteMyFavorite); // 마이페이지 <찜한 행사 목록> 삭제
 router.get('/myPage/writeReview', controller.getwriteReview); // 마이페이지 <찜한 행사 목록> 에서 지난행사 리뷰 남기기
 
-router.get('/manager', controller.getManager); // 관리자페이지 render
 router.post('/manager', controller.postManager); // 관리자페이지 render
 
 router.get('/manager/allUser', controller.getUser); // 관리자페이지 전체 유저 조회
