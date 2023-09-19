@@ -21,6 +21,7 @@
 }
 .event-list .event-item:hover {
     transform: translateY(-5px);
+    box-shadow: 5px 5px 8px rgb(0, 0, 0, 0.2);
 }
 .event-list .event-item-wrap {
     display: flex;
