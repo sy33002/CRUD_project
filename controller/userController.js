@@ -13,17 +13,7 @@ exports.getLogin = (req, res) => {
 // signup 페이지 렌더
 exports.getSignup = (req, res) => {
     res.render('signup');
-};
-
-// MyPage 렌더
-exports.getProfile = async (req, res) => {
-    const data = req.session.userInfo;
-    if (data) {
-        res.render('myPage/profile', {data});
-    } else {
-        res.render('login');
-    }
-};
+}
 
 // 관리자 페이지 render
 exports.getManager = async (req, res) => {
@@ -302,11 +292,16 @@ exports.postSignup = async (req, res) => {
 
 // 마이페이지 -> 회원 정보 수정 페이지
 exports.myProfileRender = async (req, res) => {
-    const userId = req.query.userId;
-    const userData = await User.findOne({
-        where: { user_id: userId },
-    });
-    res.render('myPage/profileUpdate',{ data: userData.dataValues });
+    const data = req.session.userInfo;
+    if (data) {
+        const userId = data.userId;
+        const userData = await User.findOne({
+            where: { user_id: userId },
+        });
+        res.render('myPage/profileUpdate',{ data: userData.dataValues });
+    } else {
+        res.render('login');
+    }
 };
 
 // 마이페이지 -> 마이 리뷰 페이지
