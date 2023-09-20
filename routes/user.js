@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('../controller/userController');
+const cookieParser = require('cookie-parser');
 
 router.get('/login', controller.getLogin); // 로그인 render
 router.post('/login', controller.postLogin); // 로그인 성공여부
@@ -11,10 +12,12 @@ router.get('/exists/:userId', controller.checkId); // 회원가입 id 중복체�
 router.post('/signup', controller.postSignup); // 회원가입 성공
 
 
-
 router.get('/myPage/myProfileRender', controller.myProfileRender); // 마이페이지 -> 프로필 수정 페이지 render
 router.get('/myPage/myreviewListRender', controller.myreviewListRender); // 마이페이지 -> review render
-router.get('/myPage/myFavoriteConListRender', controller.myFavoriteConListRender); // 마이페이지 -> 찜기능 render
+router.get(
+    '/myPage/myFavoriteConListRender',
+    controller.myFavoriteConListRender
+); // 마이페이지 -> 찜기능 render
 router.get('/myPage/myRegisterConRender', controller.myRegisterConRender); // 마이페이지 -> 내가 등록한 행사 render
 
 router.post('/myPage/updateProfile', controller.updateProfile); // 회원정보 update
@@ -25,8 +28,6 @@ router.delete('/manager/deleteMyReview', controller.deleteMyReview); // 마이�
 router.get('/myPage/myFavoriteList', controller.getmyFavoriteList); // 마이페이지 <찜한 행사 목록> 조회
 router.delete('/manager/deleteMyFavorite', controller.deleteMyFavorite); // 마이페이지 <찜한 행사 목록> 삭제
 router.get('/myPage/writeReview', controller.getwriteReview); // 마이페이지 <찜한 행사 목록> 에서 지난행사 리뷰 남기기
-
-
 
 // router.post('/manager', controller.postManager); // 관리자페이지 render
 router.get('/manager/allUser', controller.getUser); // 관리자페이지: 전체 유저 조회

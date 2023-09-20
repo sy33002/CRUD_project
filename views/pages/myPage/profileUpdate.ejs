@@ -24,8 +24,8 @@
         <%- include('../../common/header.ejs') %>
 
         <main>
-            <%- include('./profileAside') %>
-            <div class="padding">
+            <%- include('./profileAside',{ id: data.id }) %>
+            <div class="padding content">
                 <div class="card-body">
                     <div class="card-title text-center">
                         <%= data.user_id%>님 환영합니다!
@@ -151,7 +151,7 @@
                 } else {
                     axios({
                         method: 'POST',
-                        url: '/updateProfile',
+                        url: '/myPage/updateProfile',
                         data: {
                             userId: userId,
                             userPw: form.userPw.value,
@@ -168,7 +168,6 @@
                         }
                     });
                 }
-
             }
             // 매니저 페이지 조회
             function managerPage() {

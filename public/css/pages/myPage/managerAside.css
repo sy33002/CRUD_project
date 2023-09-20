@@ -2,47 +2,68 @@ main {
     display: flex;
 }
 
-/* 좌측 메뉴 */
-.ani-navbar {
-    background-color: var(--color-black);
-    color: white;
-    top: 0;
-    bottom: 200px;
-    width: 200px;
-    padding: 25px;
-    position: relative;
-    z-index: 5;
-    transition: all 1s;
-    text-align: center;
-    transform: translateX(0px);
-    flex: 0 1 200px;
-}
-
-/* .ani-navbar:hover {
-    transform: translateX(0px);
-    transition: all 0.5s;
-} */
-
-.ani-navbar-menu {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-}
-
-.ani-navbar-menu p {
-    margin: 0;
-    margin-left: 10px;
-}
-
-.ani-navbar i {
-    transition: all 0.5s;
-    transform: translateX(125px);
-}
-/* 
-.ani-navbar:hover i {
-    transform: translateX(0px);
-} */
-
 .container {
     flex: 1;
+}
+
+/* The side navigation menu */
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: var(--color-black);
+    /* color: var(---color-green); */
+    position: fixed;
+    height: 100%-2rem;
+    overflow: auto;
+}
+
+/* Sidebar links */
+.sidebar a {
+    display: block;
+    color: rgb(11, 244, 10);
+    padding: 16px;
+    text-decoration: none;
+}
+
+/* Active/current link */
+/* .sidebar a.active {
+    background-color: #04aa6d;
+    color: rgb(192, 29, 29);
+} */
+
+/* Links on mouse-over */
+.sidebar a:hover:not(.active) {
+    background-color: #555;
+    color: rgb(11, 244, 10);
+}
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+div.content {
+    margin-left: 200px;
+    padding: 1px 16px;
+    height: 1000px;
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .sidebar a {
+        float: left;
+    }
+    div.content {
+        margin-left: 0;
+    }
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
 }
