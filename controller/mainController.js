@@ -2,6 +2,7 @@ const { ConferenceReview } = require('../models'); // ../models/index.js
 const { Conference } = require('../models'); // ../models/index.js
 const { Sequelize, Op } = require('sequelize');
 const moment = require('moment');
+const cookieParser = require('cookie-parser');
 
 exports.index = async (req, res) => {
     const data = req.session.userInfo;
@@ -22,6 +23,7 @@ exports.index = async (req, res) => {
                 ['re_count', 'DESC'],
             ],
         });
+
         const events = await Conference.findAll({
             where: {
                 is_agreed: true,
