@@ -518,8 +518,10 @@ exports.getmyFavoriteList = async (req, res) => {
 
 // 마이페이지: 찜한 항목 삭제
 exports.deleteMyFavorite = async (req, res) => {
+    const conId = req.body.con_id;
+    console.log("conId >>>>", conId);
     const result = await ConFavorite.destroy({
-        where: { con_id: req.body.con_id },
+        where: { con_id: conId },
     });
     if (result === 1) {
         res.send(true);

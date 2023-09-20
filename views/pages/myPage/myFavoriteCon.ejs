@@ -193,8 +193,10 @@
                 }).then((res) => {
                     if (res.data === true) {
                         alert('찜 리스트에서 삭제되었습니다.');
+                        window.location.reload();
                     } else {
                         alert('이미 삭제하였거나 삭제할 수 없습니다.');
+                        window.location.reload();
                     }
                 });
             }
