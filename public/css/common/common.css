@@ -70,6 +70,10 @@ footer .wrap .depth2_list span {
     color: #35c130;
 }
 
+footer a {
+    color: #999;
+}
+
 span {
     display: block;
 }
