@@ -47,7 +47,7 @@
                                 <% } %> <% }else{ %> <% events.forEach((con)=> {
                                 %>
                                 <li class="swiper-slide">
-                                    <img src="<%= events.con_image %>" alt="" />
+                                    <img src="<%= con.con_image %>" alt="" />
                                 </li>
                                 <% }) %> <% } %> <% } %>
                             </ul>
@@ -109,7 +109,7 @@
                             <a href="event/<%= con.con_id %>">
                                 <div class="img">
                                     <img
-                                        src="<%= events.con_image %>"
+                                        src="<%= con.con_image %>"
                                         alt="행사"
                                     />
                                 </div>
