@@ -260,10 +260,9 @@ exports.postLogin = async (req, res) => {
                 console.log('>>>>>', req.cookies.redirectURL);
 
                 if (req.cookies.redirectURL === undefined) {
-                    console.log('if로 들어감');
                     return res.send({ result: true, data });
                 } else {
-                    console.log('else로 들어감');
+                    res.clearCookie('redirectURL');
                     return res.send({
                         result: true,
                         data,
@@ -295,6 +294,7 @@ exports.getLogout = async (req, res) => {
         if (err) {
             return;
         }
+
         res.redirect('/');
     });
 };
@@ -400,8 +400,11 @@ exports.myRegisterConRender = async (req, res) => {
                 where: { user_id: userId },
             });
             const user_id_num = userData[0].dataValues.user_id;
-            console.log("user_id_num>>>>", user_id_num);
-            res.render('myPage/myRegisterCon', { data: userData, id: user_id_num });
+            console.log('user_id_num>>>>', user_id_num);
+            res.render('myPage/myRegisterCon', {
+                data: userData,
+                id: user_id_num,
+            });
         } else {
             res.render('404');
         }
@@ -535,7 +538,7 @@ exports.getmyFavoriteList = async (req, res) => {
 // 마이페이지: 찜한 항목 삭제
 exports.deleteMyFavorite = async (req, res) => {
     const conId = req.body.con_id;
-    console.log("conId >>>>", conId);
+    console.log('conId >>>>', conId);
     const result = await ConFavorite.destroy({
         where: { con_id: conId },
     });
@@ -556,7 +559,6 @@ exports.getwriteReview = async (req, res) => {
     const conData2 = [conData1.dataValues];
     res.render('review/write', { eventName: conData2, prevPage: 1 });
 };
-
 
 // 비밀번호 암호화 함수
 const saltRounds = 5;

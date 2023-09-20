@@ -11,11 +11,6 @@ const ConFavorite = (Sequelize, sequelize) => {
                 type: DataTypes.INTEGER,
                 allowNull: true,
             },
-            is_favorite: {
-                type: DataTypes.BOOLEAN,
-                defaultValue: 0,
-                allowNull: false,
-            },
         },
         {
             tableName: 'con_favorite', // 실제 db 테이블명
