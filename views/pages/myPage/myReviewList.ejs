@@ -114,8 +114,10 @@
                 }).then((res) => {
                     if (res.data === true) {
                         alert('리뷰 삭제 성공');
+                        window.location.reload();
                     } else {
                         alert('리뷰 삭제 실패');
+                        window.location.reload();
                     }
                 });
             }
