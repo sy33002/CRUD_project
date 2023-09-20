@@ -24,7 +24,7 @@
         <%- include('../../common/header.ejs') %>
 
         <main>
-            <%- include('./profileAside') %>
+            <%- include('./profileAside',{ id: data.id }) %>
             <div class="padding">
                 <div class="card-body">
                     <div class="card-title text-center">
@@ -151,7 +151,7 @@
                 } else {
                     axios({
                         method: 'POST',
-                        url: '/updateProfile',
+                        url: '/myPage/updateProfile',
                         data: {
                             userId: userId,
                             userPw: form.userPw.value,

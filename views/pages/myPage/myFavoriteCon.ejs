@@ -30,7 +30,7 @@
         <%- include('../../common/header.ejs') %>
 
         <main>
-            <%- include('./profileAside') %>
+            <%- include('./profileAside', { id: data.id }) %>
 
             <div class="container myContent">
                 <div class="row" id="myFavoriteList"></div>
