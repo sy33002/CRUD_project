@@ -36,7 +36,8 @@
                             <td><%= index + 1 %></td>
                             <td>
                                 <% if (conference.dataValues.is_agreed === 1) { %>
-                                    <a href="<%= conference.dataValues.conference_link %>"><%= conference.dataValues.con_title %></a>
+                                    <a href="/event/<%= conference.dataValues.con_id %>">
+                                        <%= conference.dataValues.con_title %></a>
                                 <% } else { %>
                                     <%= conference.dataValues.con_title %>
                                 <% } %>
