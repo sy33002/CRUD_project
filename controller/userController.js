@@ -400,10 +400,7 @@ exports.myRegisterConRender = async (req, res) => {
                 where: { user_id: userId },
             });
             const user_id_num = userData[0].dataValues.user_id;
-            res.render('myPage/myRegisterCon', {
-                data: userData,
-                id: user_id_num,
-            });
+            res.render('myPage/myRegisterCon', { data: userData, id: user_id_num });
         } else {
             res.render('404');
         }
@@ -411,6 +408,7 @@ exports.myRegisterConRender = async (req, res) => {
         res.render('login');
     }
 };
+
 
 // 회원정보 update
 exports.updateProfile = async (req, res) => {
