@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
     <head>
-        <%- include('../../common/head.ejs', {title: '내가 등록 신청한 행사' })
-        %>
+        <%- include('../../common/head.ejs', {title: '내가 등록 신청한 행사' }) %>
 
         <link
             rel="stylesheet"
@@ -35,23 +34,31 @@
                         <% data.forEach(function(conference, index) { %>
                         <tr class="border-bottom">
                             <td><%= index + 1 %></td>
-                            <td><%= conference.dataValues.con_title %></td>
+                            <td>
+                                <% if (conference.dataValues.is_agreed === 1) { %>
+                                    <a href="<%= conference.dataValues.conference_link %>"><%= conference.dataValues.con_title %></a>
+                                <% } else { %>
+                                    <%= conference.dataValues.con_title %>
+                                <% } %>
+                            </td>
                             <td><%= conference.dataValues.con_company %></td>
                             <td><%= conference.dataValues.createdAt %></td>
                             <td>
-                                <% if (conference.dataValues.is_agreed === 1) {
-                                %> 승인 완료 <% } else if
-                                (conference.dataValues.is_agreed === 0) { %>
-                                승인 대기중 <% } else if
-                                (conference.dataValues.is_agreed === -1) { %>
-                                거절 <% } else { %> 알 수 없음 <% } %>
+                                <% if (conference.dataValues.is_agreed === 1) { %>
+                                    승인 완료
+                                <% } else if (conference.dataValues.is_agreed === 0) { %>
+                                    승인 대기중
+                                <% } else if (conference.dataValues.is_agreed === -1) { %>
+                                    거절
+                                <% } else { %>
+                                    알 수 없음
+                                <% } %>
                             </td>
                         </tr>
                         <% }); %>
                     </tbody>
                 </table>
             </div>
-  
         </main>
         <%- include('../../common/footer.ejs') %>
         <script></script>
