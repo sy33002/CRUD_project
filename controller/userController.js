@@ -400,7 +400,6 @@ exports.myRegisterConRender = async (req, res) => {
                 where: { user_id: userId },
             });
             const user_id_num = userData[0].dataValues.user_id;
-            console.log('user_id_num>>>>', user_id_num);
             res.render('myPage/myRegisterCon', {
                 data: userData,
                 id: user_id_num,
