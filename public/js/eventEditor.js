@@ -1,14 +1,188 @@
-const form = document.forms['register-conference'];
+import { Editor } from 'https://esm.sh/@tiptap/core';
+import StarterKit from 'https://esm.sh/@tiptap/starter-kit';
+import Image from 'https://esm.sh/@tiptap/extension-image';
+import TextAlign from 'https://esm.sh/@tiptap/extension-text-align';
+
+const buttons = {
+    bold: document.querySelector('[data-tiptap-button="bold"]'),
+    italic: document.querySelector('[data-tiptap-button="italic"]'),
+    image: document.querySelector('[data-tiptap-button="image"]'),
+    heading2: document.querySelector('[data-tiptap-button="heading2"]'),
+    heading3: document.querySelector('[data-tiptap-button="heading3"]'),
+    paragraph: document.querySelector('[data-tiptap-button="paragraph"]'),
+    strike: document.querySelector('[data-tiptap-button="strike"]'),
+    left: document.querySelector('[data-tiptap-button="left"]'),
+    center: document.querySelector('[data-tiptap-button="center"]'),
+    right: document.querySelector('[data-tiptap-button="right"]'),
+};
+
+// 초기 icon active
+buttons.paragraph.classList.add('active');
+buttons.left.classList.add('active');
+
+// editor 세팅
+const editor = new Editor({
+    element: document.querySelector('[data-tiptap-editor]'),
+    extensions: [
+        StarterKit,
+        TextAlign.configure({
+            types: ['heading', 'paragraph'],
+        }),
+        // Image,
+        Image.configure({
+            inline: true,
+        }),
+    ],
+    content: '',
+    onUpdate({ editor }) {
+        // content.innerHTML = JSON.stringify(editor.getJSON());
+        // console.log(editor.getHTML());
+
+        buttons.heading2.classList.toggle(
+            'active',
+            editor.isActive('heading', { level: 2 })
+        );
+        buttons.heading3.classList.toggle(
+            'active',
+            editor.isActive('heading', { level: 3 })
+        );
+        buttons.paragraph.classList.toggle(
+            'active',
+            editor.isActive('paragraph')
+        );
+        buttons.bold.classList.toggle('active', editor.isActive('bold'));
+        buttons.italic.classList.toggle('active', editor.isActive('italic'));
+        buttons.strike.classList.toggle('active', editor.isActive('strike'));
+        buttons.left.classList.toggle(
+            'active',
+            editor.isActive({ textAlign: 'left' })
+        );
+        buttons.center.classList.toggle(
+            'active',
+            editor.isActive({ textAlign: 'center' })
+        );
+        buttons.right.classList.toggle(
+            'active',
+            editor.isActive({ textAlign: 'right' })
+        );
+    },
+    onSelectionUpdate({ editor }) {
+        // console.log('selection update');
+        buttons.heading2.classList.toggle(
+            'active',
+            editor.isActive('heading', { level: 2 })
+        );
+        buttons.heading3.classList.toggle(
+            'active',
+            editor.isActive('heading', { level: 3 })
+        );
+        buttons.paragraph.classList.toggle(
+            'active',
+            editor.isActive('paragraph')
+        );
+        buttons.bold.classList.toggle('active', editor.isActive('bold'));
+        buttons.italic.classList.toggle('active', editor.isActive('italic'));
+        buttons.strike.classList.toggle('active', editor.isActive('strike'));
+        buttons.left.classList.toggle(
+            'active',
+            editor.isActive({ textAlign: 'left' })
+        );
+        buttons.center.classList.toggle(
+            'active',
+            editor.isActive({ textAlign: 'center' })
+        );
+        buttons.right.classList.toggle(
+            'active',
+            editor.isActive({ textAlign: 'right' })
+        );
+    },
+    // onCreate({ editor }) {
+    //     console.log(editor.getHTML());
+    // content.innerHTML = JSON.stringify(editor.getJSON());
+    // },
+}); // add your configuration, extensions, content, etc.
+
+buttons.heading2.addEventListener('click', () => {
+    editor.chain().focus().toggleHeading({ level: 2 }).run();
+});
+
+buttons.heading3.addEventListener('click', () => {
+    editor.chain().focus().toggleHeading({ level: 3 }).run();
+});
+
+buttons.paragraph.addEventListener('click', () => {
+    editor.chain().focus().setParagraph().run();
+});
+
+buttons.bold.addEventListener('click', () => {
+    buttons.bold.classList.toggle('active');
+    editor.chain().focus().toggleBold().run();
+});
+
+buttons.italic.addEventListener('click', () => {
+    buttons.italic.classList.toggle('active');
+    editor.chain().focus().toggleItalic().run();
+});
+
+buttons.strike.addEventListener('click', () => {
+    buttons.strike.classList.toggle('active');
+    editor.chain().focus().toggleStrike().run();
+});
+
+buttons.left.addEventListener('click', () => {
+    editor.chain().focus().setTextAlign('left').run();
+});
+
+buttons.center.addEventListener('click', () => {
+    editor.chain().focus().setTextAlign('center').run();
+});
+
+buttons.right.addEventListener('click', () => {
+    editor.chain().focus().setTextAlign('right').run();
+});
+
+const file = document.querySelector('#fileUploadForm');
+
+Dropzone.autoDiscover = false; // deprecated 된 옵션. false로 해놓는걸 공식문서에서 명시
+
+// 이미지 등록
+const myDropzone = new Dropzone('#fileUploadForm', {
+    paramName: 'conferenceFile', // 서버에서 사용할 파일 필드 이름
+    maxFilesize: 5, // 최대 파일 크기 (MB)
+    acceptedFiles: '.jpg, .jpeg, .png, .gif', // 허용하는 파일 확장자
+    addRemoveLinks: true, // 업로드된 파일 삭제 링크 표시
+    maxFiles: 1, // 최대 파일 수를 1로 설정
+    success: function (file, response) {
+        const imagePath = response.file;
+
+        if (imagePath) {
+            editor.chain().focus().setImage({ src: imagePath }).run();
+        }
+    },
+    error: function (file, errorMessage) {
+        alert('파일 업로드 실패: ' + errorMessage);
+    },
+});
+// 파일 업로드 제한 해제 (추가 파일 업로드 가능하도록)
+myDropzone.on('complete', function (file) {
+    this.removeFile(file);
+});
+buttons.image.addEventListener('click', () => {
+    file.click();
+    // editor.commands.insertContent('<h1>Example Text</h1>');
+});
+
+// 행사 쓰기
 const formData = new FormData();
 let isConOnoff = false;
 let isFree = false;
 
 const conTitle = document.querySelector('#conTitle');
 const conCompany = document.querySelector('#conCompany');
-const isOnoff = document.querySelector('#isOnoff');
 const conLocation = document.querySelector('#conLocation');
 const conCategory = document.querySelector('#conCategory');
-const conIsfree = document.querySelector('#conIsfree');
+const isOnoff = document.querySelector('input[name="isOnoff"]:checked');
+const conIsfree = document.querySelector('input[name="conIsfree"]:checked');
 const conPrice = document.querySelector('#conPrice');
 const conPeople = document.querySelector('#conPeople');
 const conCompanyUrl = document.querySelector('#conCompanyUrl');
@@ -182,15 +356,21 @@ function getPostcode() {
     }).open();
 }
 
-function getInputValue() {
-    console.log(subDate.value);
-    const subDate = subDate.value.split(' ~ ');
-    const conDate = conDate.value.split(' ~ ');
+const postCodeBtn = document.querySelector('#postCodeBtn');
+if (postCodeBtn) {
+    postCodeBtn.addEventListener('click', getPostcode);
+}
 
-    const subStartDate = subDate[0];
-    const subEndDate = subDate[1];
-    const conStartDate = conDate[0];
-    const conEndDate = conDate[1];
+function getInputValue() {
+    const subDateFormat = subDate.value.split(' ~ ');
+    const conDateFormat = conDate.value.split(' ~ ');
+    const contents = editor.getHTML();
+    const textContents = editor.getText();
+
+    const subStartDate = subDateFormat[0];
+    const subEndDate = subDateFormat[1];
+    const conStartDate = conDateFormat[0];
+    const conEndDate = conDateFormat[1];
 
     const conDetailAddr = {
         postCode: postcode.value,
@@ -213,7 +393,8 @@ function getInputValue() {
         conPrice: conPrice.value === '' ? 0 : conPrice.value, // 빈값 일 때는 0 보내기 (이렇게 안하면 db 충돌남)
         conPeople: conPeople.value,
         conCompanyUrl: conCompanyUrl.value,
-        conDetail: conDetail.value,
+        conDetail: contents,
+        detailText: textContents,
         conDetailAddr,
     };
 }
@@ -280,6 +461,13 @@ function validateInput() {
 }
 
 // 전송 폼
+
+const eventWriteBtn = document.querySelector('#event-write');
+
+if (eventWriteBtn) {
+    eventWriteBtn.addEventListener('click', registerConference);
+}
+
 async function registerConference() {
     const isFormValid = validateInput();
 
@@ -304,6 +492,8 @@ async function registerConference() {
 
     const inputValue = getInputValue();
 
+    console.log(inputValue, 'inputValue');
+
     const imagePath = imageUploadData.file;
 
     const conferenceRes = await axios({
@@ -315,7 +505,6 @@ async function registerConference() {
         },
     });
 
-    console.log(conferenceRes);
     const conferenceData = await conferenceRes.data;
 
     if (conferenceData.result) {
