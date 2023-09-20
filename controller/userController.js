@@ -328,9 +328,9 @@ exports.postSignup = async (req, res) => {
 exports.myProfileRender = async (req, res) => {
     const data = req.session.userInfo;
     if (data) {
-        const userId = data.userId;
+        const userId = data.id;
         const userData = await User.findOne({
-            where: { user_id: userId },
+            where: { id: userId },
         });
         res.render('myPage/profileUpdate',{ data: userData.dataValues });
     } else {
@@ -343,9 +343,9 @@ exports.myreviewListRender = async (req, res) => {
     const userId = req.query.userId;
     const data = req.session.userInfo;
     if (data) {
-        if (data.userId === userId) {
+        if (data.id == userId) {
             const userData = await User.findOne({
-                where: { user_id: userId },
+                where: { id: userId },
             });
             res.render('myPage/myreviewList', { data:userData.dataValues });
         } else {
@@ -361,11 +361,31 @@ exports.myFavoriteConListRender = async (req, res) => {
     const userId = req.query.userId;
     const data = req.session.userInfo;
     if (data) {
-        if (data.userId === userId) {
+        if (data.id == userId) {
             const userData = await User.findOne({
-                where: { user_id: userId },
+                where: { id: userId },
             });
             res.render('myPage/myFavoriteCon', { data:userData.dataValues });
+        } else {
+            res.render('404');
+        }
+    } else {
+        res.render('login');
+    }
+};
+
+//마이페이지: 내가 등록 신청한 행사 보기
+exports.myRegisterConRender = async (req, res) => {
+    const userId = req.query.userId;
+    const data = req.session.userInfo;
+    if (data) {
+        if (data.id == userId) {
+            const userData = await Conference.findAll({
+                where: { user_id: userId },
+            });
+            const user_id_num = userData[0].dataValues.user_id;
+            console.log("user_id_num>>>>", user_id_num);
+            res.render('myPage/myRegisterCon', { data: userData, id: user_id_num });
         } else {
             res.render('404');
         }
@@ -498,8 +518,10 @@ exports.getmyFavoriteList = async (req, res) => {
 
 // 마이페이지: 찜한 항목 삭제
 exports.deleteMyFavorite = async (req, res) => {
+    const conId = req.body.con_id;
+    console.log("conId >>>>", conId);
     const result = await ConFavorite.destroy({
-        where: { con_id: req.body.con_id },
+        where: { con_id: conId },
     });
     if (result === 1) {
         res.send(true);
@@ -519,19 +541,6 @@ exports.getwriteReview = async (req, res) => {
     res.render('review/write', { eventName: conData2, prevPage: 1 });
 };
 
-//마이페이지: 내가 등록 신청한 행사 보기
-exports.myRegisterConRender = async (req, res) => {
-    const data = req.session.userInfo;
-    if (data) {
-        const id = data.id;
-        const result = await Conference.findAll({
-            where: { user_id: id },
-        });
-        res.render('myPage/myRegisterCon', { data: result });
-    } else {
-        res.render('login');
-    }
-};
 
 // 비밀번호 암호화 함수
 const saltRounds = 5;

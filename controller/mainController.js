@@ -22,7 +22,6 @@ exports.index = async (req, res) => {
                 ['re_count', 'DESC'],
             ],
         });
-        console.log('reviews : ', reviews);
         const events = await Conference.findAll({
             where: {
                 is_agreed: true,
