@@ -68,6 +68,10 @@ footer .wrap .depth2_list span {
     color: #35c130;
 }
 
+span {
+    display: block;
+}
+
 @media all and (max-width: 810px) {
     footer .wrap {
         flex-direction: column;

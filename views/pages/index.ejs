@@ -31,22 +31,25 @@
                     <div class="swiper-container">
                         <div class="swiper">
                             <ul class="swiper-wrapper">
-                                <% if(events.length) { %>
-                                    <% if(events.length>
-                                        5){ %> <% for(let i=0; i < 6; i++){ %>
-                                            <li class="swiper-slide">
-                                                <img src="<%= events[i].con_image %>" alt="" />
-                                            </li>
-                                            <% } %>
-                                                <% }else{ %>
-                                                    <% events.forEach((con)=> {
-                                                        %>
-                                                        <li class="swiper-slide">
-                                                            <img src="<%= con.con_image %>" alt="" />
-                                                        </li>
-                                                        <% }) %>
-                                                            <% } %>
-                                                                <% } %>
+
+                                <% if(events.length) { %> <% if(events.length>
+                                5){ %> <% for(let i=0; i < 6; i++){ %>
+                                <li class="swiper-slide">
+                                    <img
+                                        src="<%= events[i].con_image %>"
+                                        alt=""
+                                    />
+                                </li>
+                                <% } %> <% }else{ %> <% events.forEach((con)=> {
+                                %>
+                                <li class="swiper-slide">
+                                    <img
+                                        src="<%= events.con_image %>"
+                                        alt=""
+                                    />
+                                </li>
+                                <% }) %> <% } %> <% } %>
+
                             </ul>
                         </div>
                         <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal"></div>
@@ -73,40 +76,36 @@
                         </span>
                     </div>
                     <ul class="con_list">
-                        <% if(events.length) { %>
-                            <% if(events.length> 5){ %> <% for(let i=0; i < 6; i++){ %>
-                                    <li class="con_item">
-                                        <a href="event/<%= events[i].con_id %>">
-                                            <div class="img">
-                                                <img src="<%= events[i].con_image %>" alt="행사" />
-                                            </div>
-                                            <h2>
-                                                <%= events[i].con_title %>
-                                            </h2>
-                                            <p>
-                                                <%= events[i].con_detail %>
-                                            </p>
-                                        </a>
-                                    </li>
-                                    <% } %>
-                                        <% }else{ %>
-                                            <% events.forEach((con)=> { %>
-                                                <li class="con_item">
-                                                    <a href="event/<%= con.con_id %>">
-                                                        <div class="img">
-                                                            <img src="<%= con.con_image %>" alt="행사" />
-                                                        </div>
-                                                        <h2>
-                                                            <%= con.con_title %>
-                                                        </h2>
-                                                        <p>
-                                                            <%= con.con_detail %>
-                                                        </p>
-                                                    </a>
-                                                </li>
-                                                <% }) %>
-                                                    <% } %>
-                                                        <% } %>
+
+                        <% if(events.length) { %> <% if(events.length> 5){ %> <%
+                        for(let i=0; i < 6; i++){ %>
+                        <li class="con_item">
+                            <a href="event/<%= events[i].con_id %>">
+                                <div class="img">
+                                    <img
+                                        src="<%= events[i].con_image %>"
+                                        alt="행사"
+                                    />
+                                </div>
+                                <h2><%= events[i].con_title %></h2>
+                                <p><%= events[i].con_detail %></p>
+                            </a>
+                        </li>
+                        <% } %> <% }else{ %> <% events.forEach((con)=> { %>
+                        <li class="con_item">
+                            <a href="event/<%= con.con_id %>">
+                                <div class="img">
+                                    <img
+                                        src="<%= events.con_image %>"
+                                        alt="행사"
+                                    />
+                                </div>
+                                <h2><%= con.con_title %></h2>
+                                <p><%= con.con_detail %></p>
+                            </a>
+                        </li>
+                        <% }) %> <% } %> <% } %>
+
                     </ul>
                 </div>
             </section>
