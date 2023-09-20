@@ -137,6 +137,10 @@ const Conference = (Sequelize, sequelize) => {
                     return moment(date).format('YYYY.MM.DD HH:mm');
                 },
             },
+            detail_Text: {
+                type: DataTypes.TEXT('medium'),
+                allowNull: false,
+            },
         },
         {
             tableName: 'conference_info',

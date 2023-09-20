@@ -1,3 +1,6 @@
+@import url('../../common/editor.css');
+@import url('../../common/editorToolbar.css');
+
 /* 달력 UI */
 .daterangepicker select.monthselect {
     width: 50%;
