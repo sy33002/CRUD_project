@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-<head>
-    <%- include('../common/head.ejs', {title: '메인 페이지' }) %>
+    <head>
+        <%- include('../common/head.ejs', {title: '메인 페이지' }) %>
         <link rel="stylesheet" href="/static/css/pages/main.css" />
 
         <!-- aos cdn -->
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+        <link
+            href="https://unpkg.com/aos@2.3.1/dist/aos.css"
+            rel="stylesheet"
+        />
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
         <!-- swiper cdn -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+        />
         <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-</head>
+    </head>
 
-<body>
-    <%- include('../common/header.ejs') %>
+    <body>
+        <%- include('../common/header.ejs') %>
         <main>
             <section class="section">
                 <div class="wrap">
@@ -31,7 +36,6 @@
                     <div class="swiper-container">
                         <div class="swiper">
                             <ul class="swiper-wrapper">
-
                                 <% if(events.length) { %> <% if(events.length>
                                 5){ %> <% for(let i=0; i < 6; i++){ %>
                                 <li class="swiper-slide">
@@ -43,16 +47,14 @@
                                 <% } %> <% }else{ %> <% events.forEach((con)=> {
                                 %>
                                 <li class="swiper-slide">
-                                    <img
-                                        src="<%= events.con_image %>"
-                                        alt=""
-                                    />
+                                    <img src="<%= events.con_image %>" alt="" />
                                 </li>
                                 <% }) %> <% } %> <% } %>
-
                             </ul>
                         </div>
-                        <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal"></div>
+                        <div
+                            class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal"
+                        ></div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
                     </div>
@@ -66,17 +68,28 @@
                             <a href="/event">
                                 <span>더 많은 행사 보기</span>
                                 <span class="more_icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                        color="var(--color-green)" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="currentColor"
+                                        color="var(--color-green)"
+                                        class="bi bi-chevron-right"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+                                        />
                                     </svg>
                                 </span>
                             </a>
                         </span>
                     </div>
+                    <div>
+                        <span class="text">
+                            앞으로 다가올 행사 중 관심이 많은 행사를 만나보세요!
+                        </span>
+                    </div>
                     <ul class="con_list">
-
                         <% if(events.length) { %> <% if(events.length> 5){ %> <%
                         for(let i=0; i < 6; i++){ %>
                         <li class="con_item">
@@ -105,7 +118,6 @@
                             </a>
                         </li>
                         <% }) %> <% } %> <% } %>
-
                     </ul>
                 </div>
             </section>
@@ -119,55 +131,74 @@
                             <a href="/review?page=1">
                                 <span>더 많은 리뷰 보기</span>
                                 <span class="more_icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                                        color="var(--color-white)" class="bi bi-chevron-right" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd"
-                                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="currentColor"
+                                        color="var(--color-white)"
+                                        class="bi bi-chevron-right"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"
+                                        />
                                     </svg>
                                 </span>
                             </a>
                         </span>
                     </div>
                     <div class="review_list">
-                        <% if(reviews.length> 8) { %> <% for(let i=1; i <=3; i++) { %>
-                                <ul class="list list<%= i %>">
-                                    <% for(let j=1; j <=3; j++){ %>
-                                        <% const index=i * j - 1; %>
-                                            <li class="item">
-                                                <a href="review/<%= reviews[i].re_id %>">
-                                                    <div class="review_info">
-                                                        <span class="review_title">
-                                                            <%= reviews[index].re_title %>
-                                                        </span>
-                                                        <span class="review_category">
-                                                            <%= reviews[index].con_title %>
-                                                        </span>
-                                                    </div>
-                                                    <p>
-                                                        <%= reviews[index].content_Text %>
-                                                    </p>
-                                                </a>
-                                            </li>
-                                            <% } %>
-                                </ul>
-                                <% } %>
-                                    <% } %>
+                        <% if(reviews.length> 8) { %> <% for(let i=1; i <=3;
+                        i++) { %>
+                        <ul class="list list<%= i %>">
+                            <% for(let j=1; j <=3; j++){ %> <% const index=i * j
+                            - 1; %>
+                            <li class="item">
+                                <a href="review/<%= reviews[i].re_id %>">
+                                    <div class="review_info">
+                                        <span class="review_title">
+                                            <%= reviews[index].re_title %>
+                                        </span>
+                                        <span class="review_category">
+                                            <%= reviews[index].con_title %>
+                                        </span>
+                                    </div>
+                                    <p><%= reviews[index].content_Text %></p>
+                                </a>
+                            </li>
+                            <% } %>
+                        </ul>
+                        <% } %> <% } %>
                     </div>
                 </div>
             </section>
             <section class="section5">
                 <div class="wrap">
                     <h2 data-aos="fade-up" data-aos-offset="100">FAQ</h2>
-                    <div class="accordion" id="accordionExample" data-aos="fade-up" data-aos-offset="250">
+                    <div
+                        class="accordion"
+                        id="accordionExample"
+                        data-aos="fade-up"
+                        data-aos-offset="250"
+                    >
                         <div class="accordion-item">
                             <h3 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <button
+                                    class="accordion-button collapsed"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne"
+                                    aria-expanded="true"
+                                    aria-controls="collapseOne"
+                                >
                                     C.R.U.D는 어떤 사이트인가요?
                                 </button>
                             </h3>
-                            <div id="collapseOne" class="accordion-collapse collapse"
-                                data-bs-parent="#accordionExample">
+                            <div
+                                id="collapseOne"
+                                class="accordion-collapse collapse"
+                                data-bs-parent="#accordionExample"
+                            >
                                 <div class="accordion-body">
                                     <p>
                                         C.R.U.D는 'Conferences & Reviews for U!
@@ -180,13 +211,22 @@
                         </div>
                         <div class="accordion-item">
                             <h3 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <button
+                                    class="accordion-button collapsed"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo"
+                                    aria-expanded="false"
+                                    aria-controls="collapseTwo"
+                                >
                                     프로젝트의 github 주소를 알려주세요.
                                 </button>
                             </h3>
-                            <div id="collapseTwo" class="accordion-collapse collapse"
-                                data-bs-parent="#accordionExample">
+                            <div
+                                id="collapseTwo"
+                                class="accordion-collapse collapse"
+                                data-bs-parent="#accordionExample"
+                            >
                                 <div class="accordion-body">
                                     <p>
                                         https://github.com/sesac-ydp5-pullAmen/Dev_Conference_Info_Service
@@ -196,13 +236,22 @@
                         </div>
                         <div class="accordion-item">
                             <h3 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <button
+                                    class="accordion-button collapsed"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapseThree"
+                                    aria-expanded="false"
+                                    aria-controls="collapseThree"
+                                >
                                     어떤 기술이 쓰였나요?
                                 </button>
                             </h3>
-                            <div id="collapseThree" class="accordion-collapse collapse"
-                                data-bs-parent="#accordionExample">
+                            <div
+                                id="collapseThree"
+                                class="accordion-collapse collapse"
+                                data-bs-parent="#accordionExample"
+                            >
                                 <div class="accordion-body">
                                     <p>
                                         주로 사용된 언어는 javascript이고, 웹
@@ -228,34 +277,33 @@
             </section>
         </main>
         <%- include('../common/footer.ejs') %>
-            <script>
-                AOS.init();
-                const swiper = new Swiper('.swiper', {
-                    effect: 'coverflow',
-                    slidesPerView: 'auto',
-                    grabCursor: true,
-                    centeredSlides: true,
-                    loop: true,
-                    autoplay: {
-                        delay: 2500,
-                        disableOnInteraction: false,
-                    },
-                    coverflowEffect: {
-                        rotate: 0, // 슬라이드 회전 각도
-                        stretch: 200,
-                        depth: 190, // 픽셀 단위의 깊이 오프셋(슬라이드는 Z축으로 이동)
-                        modifier: 1,
-                        slideShadows: true, // 슬라이드 그림자를 활성화
-                    },
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
-                    pagination: {
-                        el: '.swiper-pagination',
-                    },
-                });
-            </script>
-</body>
-
+        <script>
+            AOS.init();
+            const swiper = new Swiper('.swiper', {
+                effect: 'coverflow',
+                slidesPerView: 'auto',
+                grabCursor: true,
+                centeredSlides: true,
+                loop: true,
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+                coverflowEffect: {
+                    rotate: 0, // 슬라이드 회전 각도
+                    stretch: 200,
+                    depth: 190, // 픽셀 단위의 깊이 오프셋(슬라이드는 Z축으로 이동)
+                    modifier: 1,
+                    slideShadows: true, // 슬라이드 그림자를 활성화
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                },
+            });
+        </script>
+    </body>
 </html>
