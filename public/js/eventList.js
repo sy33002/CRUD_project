@@ -1,8 +1,11 @@
 const select = document.querySelector('select');
+const title = document.querySelector('h2');
 
 select.addEventListener('change', (e) => {
     const date = e.target.value;
-
+    var selectedOption = select.options[select.selectedIndex];
+    var selectedOptionText = selectedOption.text;
+    title.innerText = selectedOptionText + ' 행사';
     displayMonthEvents(date);
 });
 
@@ -45,7 +48,6 @@ async function fetchEventList(date) {
             },
         });
 
-        console.log(response.data.eventList);
         return response.data.eventList;
     } catch (error) {
         console.error('Error fetching event list:', error);
