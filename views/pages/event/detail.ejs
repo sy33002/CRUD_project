@@ -34,7 +34,7 @@
                     <div class="col-md-6">
                         <button type="button" class="btn btn-no-bg position-relative" onclick="saveConference()"
                             data-toggle="tooltip" data-placement="top" title="찜하기">
-                            <i class="fas fa-heart custom-heart-button fa-2x"></i>
+                            <i class="fas fa-heart custom-heart-button fa-3x"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 <%-confavorite%>
                                 <span class="visually-hidden"></span>
@@ -48,7 +48,7 @@
                 <p class="mb-2">이 행사에 <%- conference.con_count %>명이 관심이 있습니다.</p>
                 <ul>
                     <li>
-                        <span id="1">#
+                        <span class="badge rounded-pill text-danger-emphasis bg-danger-subtle" style="font-size: 18px; " >#
                             <%if(conference.is_onoff){%>
                             오프라인
                             <%}else{%>
@@ -58,7 +58,7 @@
                         </span>
                     </li>
                     <li>
-                        <span id="2">#
+                        <span class="badge rounded-pill text-warning-emphasis bg-warning-subtle" style="font-size: 18px">#
                             <%if(conference.is_free){%>
                                 무료
                                 <%}else{%>
@@ -67,7 +67,7 @@
                         </span>
                     </li>
                     <li>
-                        <span id="3">#
+                        <span class="badge rounded-pill text-info-emphasis bg-info-subtle" style="font-size: 18px">#
                             <%-conference.con_category%>
                         </span>
                     </li>
@@ -100,7 +100,17 @@
             <!-- 행사 소개 섹션 -->
             <section  id="con_intruduce">
                 <h2 class="mt-4">행사 소개</h2>
-                <p class="mb-2">행사 시작 날짜: <%- conference.con_start_date %></p>
+                <% const con_start=conference.con_start_date.split(' ')%>
+                <% const con_start_date=con_start[0] %>
+                <% const con_start_time=con_start[1]%>
+                <% const con_end=conference.con_end_date.split(' ')%>
+                <% const con_end_date=con_end[0]%>
+                <% const con_end_time=con_end[1]%>
+                <% if(con_start_date===con_end_date){%>
+                <p class="mb-2">행사 기간: <%- con_start_date %>,<%-con_start_time%>~<%-con_end_time%></p>
+                <%}%>
+                <p class="mb-2">행사 시작 날짜: <%- con_start_date %></p>
+                <p class="mb-2">행사 시작 시간: <%- con_start_time %></p>
                 <p class="mb-2">행사 종료 날짜: <%- conference.con_end_date %></p>
                 <p class="mb-2">행사 분야: <%- conference.con_category %></p>
                 <p class="mb-2">행사 주최: <%- conference.con_company %></p>
@@ -212,6 +222,9 @@
         async function saveConference(con_id) {
             try {
                 var currentPageURL = window.location.href;
+               
+                
+
 
                 // URL에서 숫자 추출
                 var match = currentPageURL.match(/\/(\d+)$/);
@@ -230,19 +243,39 @@
                     console.log(response.data.result);
                     if (response.data.result === 1) {
                         if (confirm('로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?')) {
-                    window.location.href = '/login'; // 로그인 페이지 URL로 이동
+                           // 로그인 페이지로 이동하기 전에 현재 페이지 URL을 쿠키에 저장
+                    document.cookie = 'returnTo=' + currentPageURL;
+
+                    // 로그인 페이지로 이동
+                    window.location.href = '/login'; 
+                    
+                    
                 }
                         
                     } else if (response.data.result === 2) {
-                        alert(
+                        if(confirm(
                             '이미 찜한 행사입니다! 찜한 행사는 마이페이지에서 확인할 수 있습니다.'
-                        );
+                        )){
+                            window.location.href=`/myPage/myFavoriteConListRender?userId=${response.data.id.user_id}`
+                        };
                     } else {
-                        alert(
-                            '찜 성공! 찜한 행사는 마이페이지에서 확인할 수 있습니다.'
-                        );
-                        window.location.reload();
-                    }
+                        if(confirm(
+                            '찜성공! 찜한 행사는 마이페이지에서 확인할 수 있습니다.'
+                        )){
+                            window.location.href=`/myPage/myFavoriteConListRender?userId=${response.data.id.user_id}`
+                        };
+                         // 쿠키에서 이전 페이지 URL을 가져옴
+                var previousPage = getCookie("previousPage");
+
+                if (previousPage) {
+                 // 이전 페이지 URL이 존재하면 해당 페이지로 이동
+                window.location.href = previousPage;
+                } else {
+                // 이전 페이지 URL이 없으면 페이지 새로고침
+                window.location.reload();
+                }
+                }
+                    
                 } else {
                     console.error('URL에서 숫자를 찾을 수 없습니다.');
                 }
@@ -251,6 +284,12 @@
                 console.error('에러 발생:', error);
             }
         }
+        //
+        function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
+}
 
     </script>
     <!-- 지도  -->
