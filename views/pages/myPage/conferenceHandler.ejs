@@ -12,47 +12,62 @@
         <%- include('../../common/header.ejs') %>
         <main>
             <%- include('./managerAside') %>
-            <h1>행사 관리 페이지</h1>
 
-            <div>
+            <div class="margin">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-10">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body text-center">
+                                    <div class="card-title">
+                                        <h2>행사 등록 대기 목록</h2>
+                                    </div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="border-bottom">
+                                                <th></th>
+                                                <th>행사 제목</th>
+                                                <th>신청 시간</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="conferenceList"></tbody>
+                                    </table>
+                                    <!-- 
                                     <h2 class="card-title">
                                         행사 등록 대기 목록
                                     </h2>
                                     <div>
                                         <ul id="conferenceList"></ul>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="container">
+                <div class="container padding">
                     <div class="row conIsAgreed">
                         <div class="col-lg-6">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body text-center">
                                     <h2 class="card-title">행사 등록 완료</h2>
+                                    <hr />
                                     <section>
                                         <ul id="successConferenceList"></ul>
-                            
                                     </section>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body text-center">
                                     <h2 class="card-title">
                                         행사 등록 거절 리스트
                                     </h2>
+                                    <hr />
                                     <section>
                                         <ul id="rejectedConferenceList"></ul>
-                                
                                     </section>
                                 </div>
                             </div>
@@ -85,18 +100,16 @@
 
                         conferenceList.forEach((conference) => {
                             const conferenceElement =
-                                document.createElement('div');
+                                document.createElement('tr');
                             // 행사를 직접적으로 보이게 하는 부분
                             conferenceElement.innerHTML = `
-                                                <li id="conference${conference.con_id}">
-                                                    <p>            <span>
-                                                    행사 이름: ${conference.con_title}
-                                                    </span>
-                                                 
-                                                    <button class="btn btn-outline-secondary" onclick="approveConference(${conference.con_id})">등록 승인</button>
-                                                    <button class="btn btn-outline-secondary" onclick="rejectConference(${conference.con_id})">승인 거절</button></p>
-                                        
-                                                </li>
+                                                <td></td>
+                                                <td>${conference.con_title}</td>
+                                                <td>${conference.createdAt}</td>
+                                                <td><button class="btn btn-outline-secondary" onclick="approveConference(${conference.con_id})">승인</button></td>
+                                                <td><button class="btn btn-outline-secondary" onclick="rejectConference(${conference.con_id})">거절</button></td>
+
+                                                
                                              
                                                 
                                             `;
@@ -173,11 +186,10 @@
                         successConferenceListContainer.innerHTML = ''; // Clear previous content
 
                         successConferenceList.forEach((conference) => {
-                            const successElement =
-                                document.createElement('div');
+                            const successElement = document.createElement('li');
                             // 행사를 직접적으로 보이게 하는 부분
                             successElement.innerHTML = `
-                                                <p>행사 이름: ${conference.con_title}</p>
+                                                <li> ${conference.con_title}</li>
                                             `;
                             // conference.{DB변수명}으로 접근할 수 있습니다. 등록 신청한 행사가 예쁘게 보여졌으면 좋을 것같아요!
                             successConferenceListContainer.appendChild(
@@ -212,10 +224,10 @@
 
                         rejectedConferenceList.forEach((conference) => {
                             const rejectedElement =
-                                document.createElement('div');
+                                document.createElement('li');
                             // 행사를 직접적으로 보이게 하는 부분
                             rejectedElement.innerHTML = `
-                                                <p>행사 이름: ${conference.con_title}</p>
+                                                <li> ${conference.con_title}</li>
                                             `;
                             // conference.{DB변수명}으로 접근할 수 있습니다. 등록 신청한 행사가 예쁘게 보여졌으면 좋을 것같아요!
                             rejectedConferenceListContainer.appendChild(

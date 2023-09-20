@@ -11,6 +11,7 @@ router.get('/signup', controller.getSignup); // 회원가입 render
 router.get('/exists/:userId', controller.checkId); // 회원가입 id 중복체크
 router.post('/signup', controller.postSignup); // 회원가입 성공
 
+
 router.get('/myPage/myProfileRender', controller.myProfileRender); // 마이페이지 -> 프로필 수정 페이지 render
 router.get('/myPage/myreviewListRender', controller.myreviewListRender); // 마이페이지 -> review render
 router.get(

@@ -1,21 +1,21 @@
 <!-- 좌측 메뉴바 -->
 <nav class="ani-navbar">
     <div class="ani-navbar-menu">
-        <a href="/myPage/myProfileRender?userId=<%=data.user_id%>">프로필</a>
+        <a href="/myPage/myProfileRender?userId=<%= id %>">프로필</a>
     </div>
     <div class="ani-navbar-menu">
-        <a href="/myPage/myreviewListRender?userId=<%=data.user_id%>"
+        <a href="/myPage/myreviewListRender?userId=<%= id %>"
             >리뷰 관리</a
         >
     </div>
     <div class="ani-navbar-menu">
-        <a href="/myPage/myFavoriteConListRender?userId=<%= data.user_id%>"
+        <a href="/myPage/myFavoriteConListRender?userId=<%= id %>"
             >내가 찜한 행사</a
         >
     </div>    
     <div class="ani-navbar-menu">
-        <a href="/myPage/myRegisterConRender"
-            >내가 등록 신청한 행사</a
-        >
+        <a href="/myPage/myRegisterConRender?userId=<%= id %>">
+            내가 등록 신청한 행사</a>
     </div>
+    
 </nav>
