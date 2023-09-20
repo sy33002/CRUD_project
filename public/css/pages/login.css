@@ -244,20 +244,21 @@ h6 span {
     justify-content: center;
     -ms-flex-pack: center;
     text-align: center;
-    border: none;
-    background-color: var(--color-green);
-    color: var(--color-white);
+    border: 3px solid var(--color-green);
+    /* background-color: var(--color-green); */
+
+    color: var(--color-green);
     box-shadow: 0 8px 24px 0 rgba(255, 235, 167, 0.2);
 }
-.btn:active,
+/* .btn:active,
 .btn:focus {
-    background-color: var(--color-white);
-    color: var(--color-green);
+    background-color: var(--color-green);
+    color: var(--color-black);
     box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
-}
+} */
 .btn:hover {
-    background-color: var(--color-white);
-    color: var(--color-green);
+    background-color: var(--color-green);
+    color: var(--color-black);
 
     box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
 }
