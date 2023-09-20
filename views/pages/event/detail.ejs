@@ -1,331 +1,72 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-<link defer rel="stylesheet" href="/static/css/pages/event/detail.css" />   
-<!-- Font Awesome 라이브러리 추가 -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-<!-- 카카오맵 api 및 마커라이브러리 -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6f19fc94da41af704131c0bd9ae48f87&libraries=services"></script>
-<script defer src="/static/js/eventDetail.js"></script>
-<%- include('../../common/head.ejs', {title: '행사 상세' }) %>
+    <%- include('../../common/head.ejs', {title: conference.con_title }) %>
+        <!-- Font Awesome 라이브러리 추가 -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+        <!-- 카카오맵 api 및 마커라이브러리 -->
+        <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6f19fc94da41af704131c0bd9ae48f87&libraries=services"></script>
+        <link defer rel="stylesheet" href="/static/css/pages/event/detail.css" />
+        <script defer src="/static/js/eventDetail.js"></script>
 </head>
 
 <body>
-    <header><%- include('../../common/header.ejs') %></header>
+    <%- include('../../common/header.ejs') %>
 
-    <main class="container mt-5">
-        <!-- 행사 타이틀 섹션 -->
-       <!-- 행사 타이틀 섹션 -->
-<section id="sticky-conference-title">
-    <div class="container">
-        <div class="row">
-            <!-- 행사 이미지 (왼쪽) -->
-            <div class="col-md-5 con_img">
-                <img src="<%=conference.con_image%>" alt="행사 이미지" class="con_image" />
+        <main>
+            <div class="wrap">
+                <article class="article">
+                    <section class="section">
+                        <div class="top">
+                            <div class="img-wrapper">
+                                <img class="h-100 w-100" src="<%= conference.con_image %>" alt="행사 이미지">
+                            </div>
+                            <div class="aside">
+                                <div class="con-wrap">
+                                    <span class="title fs-5 mb-2">
+                                        <%= conference.con_title %>
+                                    </span>
+                                    <div>
+                                        <ul class="d-flex gap-3 align-items-center">
+                                            <li style="color: rgb(240, 151, 123)">#<%= conference.is_onoff ? '온라인'
+                                                    : '오프라인' %>
+                                            </li>
+                                            <li style="color: rgb(109, 198, 112)">#<%= conference.is_free ? '유료' : '무료'
+                                                    %>
+                                            </li>
+                                            <li style="color: rgb(93, 147, 228)">#<%= conference.con_category %>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contents-wrap">
+                                <div class="menu-wrap border-bottom">
+                                    <div class="btn-group w-100" role="group">
+                                        <a href="#introduction" class="menu-btn">행사 소개</a>
+                                        <a href="#location" class="menu-btn">행사 장소</a>
+                                        <a href="#review" class="menu-btn">행사 리뷰</a>
+                                        <a href="#inquiries" class="menu-btn">문의 하기</a>
+                                    </div>
+                                </div>
+                                <div class="contents">
+                                    <div id="#introduction" class="introduction">
+
+                                        <%= conference.con_detail %>
+
+                                    </div>
+                                    <div style="height: 1800px">후</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                </article>
             </div>
-            
-            <!-- 행사 정보 (오른쪽) -->
-            <div class="col-md-7 con_info_container">
-                <!-- 리뷰 버튼과 찜 버튼 -->
-                <div class="row">
-                    <div class="col-md-3">
-                        <button class="btn btn-primary mb-3" onclick="location.href='/review/write'">이 행사에 대한 리뷰 남기기</button>
-                    </div>
-                    <div class="col-md-6">
-                        <button type="button" class="btn btn-no-bg position-relative" onclick="saveConference()"
-                            data-toggle="tooltip" data-placement="top" title="찜하기">
-                            <i class="fas fa-heart custom-heart-button fa-3x"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                <%-confavorite%>
-                                <span class="visually-hidden"></span>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- 행사 제목 및 정보 -->
-                <h1 class="display-4"><%-conference.con_title%></h1>
-                <p class="mb-2">이 행사에 <%- conference.con_count %>명이 관심이 있습니다.</p>
-                <ul>
-                    <li>
-                        <span class="badge rounded-pill text-danger-emphasis bg-danger-subtle" style="font-size: 18px; " >#
-                            <%if(conference.is_onoff){%>
-                            오프라인
-                            <%}else{%>
-                            온라인
-                                <%}%>
-                        
-                        </span>
-                    </li>
-                    <li>
-                        <span class="badge rounded-pill text-warning-emphasis bg-warning-subtle" style="font-size: 18px">#
-                            <%if(conference.is_free){%>
-                                무료
-                                <%}else{%>
-                                유료
-                                    <%}%>
-                        </span>
-                    </li>
-                    <li>
-                        <span class="badge rounded-pill text-info-emphasis bg-info-subtle" style="font-size: 18px">#
-                            <%-conference.con_category%>
-                        </span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    
-    <!-- 카테고리 선택 버튼 -->
-    <div class="container">
-        <div class="btn-group" role="group" aria-label="Basic radio toggle button group" id="categorybar">
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btnradio1">행사 소개</label>
-          
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btnradio2">행사 장소</label>
-          
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btnradio3">행사 내용</label>
-    
-            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
-            <label class="btn btn-outline-primary" for="btnradio4">행사 리뷰</label>
-        </div>
-    </div>
-</section>
-
-        
-        <!-- 행사 상세 정보 섹션 -->
-        <section class="con_detail_info">
-            <!-- 행사 소개 섹션 -->
-            <section  id="con_intruduce">
-                <h2 class="mt-4">행사 소개</h2>
-                <% const con_start=conference.con_start_date.split(' ')%>
-                <% const con_start_date=con_start[0] %>
-                <% const con_start_time=con_start[1]%>
-                <% const con_end=conference.con_end_date.split(' ')%>
-                <% const con_end_date=con_end[0]%>
-                <% const con_end_time=con_end[1]%>
-                <% if(con_start_date===con_end_date){%>
-                <p class="mb-2">행사 기간: <%- con_start_date %>,<%-con_start_time%>~<%-con_end_time%></p>
-                <%}%>
-                <p class="mb-2">행사 시작 날짜: <%- con_start_date %></p>
-                <p class="mb-2">행사 시작 시간: <%- con_start_time %></p>
-                <p class="mb-2">행사 종료 날짜: <%- conference.con_end_date %></p>
-                <p class="mb-2">행사 분야: <%- conference.con_category %></p>
-                <p class="mb-2">행사 주최: <%- conference.con_company %></p>
-                <p class="mb-2">행사 모집 시작 날짜: <%- conference.sub_start_date %></p>
-                <p class="mb-2">행사 모집 종료 날짜: <%- conference.sub_end_date %></p>
-                <p class="mb-2">행사 URL: <a href="<%= conference.con_company_url %>"><%- conference.con_company_url %></a></p>
-                <p class="mb-2">참가 비용: <%- conference.con_isfree ? '무료' : '유료' %></p>
-            </section>
-            
-            <!-- 행사 장소 섹션 -->
-            <section  id="con_location">
-                <h2 class="mt-4">행사 장소</h2>
-                <p class="lead">온라인/오프라인: <%- conference.is_onoff ? '오프라인' : '온라인' %></p>  
-                <% if (conference.is_onoff) { %>
-                    <p class="lead">도로명주소: <%- conference.con_detail_location.addr %></p>
-                    <p class="lead">우편 주소: <%- conference.con_detail_location.postCode %></p>
-                    <p class="lead">상세 주소: <%- conference.con_detail_location.extraAddr%></p>
-                    <div id="map" style="width: 100%; height: 400px;"></div>
-                <%}%>
-            </section>
-            
-            <!-- 행사 내용 섹션 -->
-            <section  id="con_content">
-                <h2 class="mt-4">행사 내용</h2>
-                
-                <p><%- conference.con_detail %></p>
-            </section>
-            
-            <!-- 행사 리뷰 섹션 -->
-            <section id="con_review">
-                <h2 class="mt-4">행사 리뷰</h2>
-                <div class="table-responsive">
-                    <table class="table align-middle">
-                        <thead>
-                            <tr>
-                                <th class="col-md-2">작성자</th>
-                                <th class="col-md-4">제목</th>
-                                <th class="col-md-2">날짜</th>
-                                <th class="col-md-2">시간</th>
-                                <th class="col-md-2">조회수</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% if (reviews && reviews.length > 0) { %>
-                                <% reviews.forEach(function(review) { %>
-                                    <% const dateParts=review.re_date.split(' ')%>
-                                    <% const datePart=dateParts[0]%>
-                                    <% const timePart=dateParts[1]%>
-                                    <tr>
-                                        <td><%-review.user_id%></td>
-                                        <td><a data-toggle="tooltip" data-placement="top" title="리뷰 바로 보러가기" href="/review/<%-review.re_id%>"><%-review.re_title%></a></td>
-                                        <td><%-datePart%></td>
-                                        <td><%-timePart%></td>
-                                        <td><%-review.re_count%></td>
-                                    </tr>
-                                <% }); %>
-                            <% } else { %>
-                                <tr>
-                                    <td colspan="5">리뷰가 없습니다.</td>
-                                </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            </section>
-        </section>
-    </main>
-    <!-- 문의하기 폼 -->
-<div id="contact-form">
-    <h2>문의하기</h2>
-    <form id="inquiry-form">
-        <div class="form-group">
-            <label for="name">이름:</label>
-            <input type="text" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-            <label for="email">이메일:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-            <label for="message">메시지:</label>
-            <textarea id="message" name="message" required></textarea>
-        </div>
-        <button type="submit">문의하기</button>
-    </form>
-</div>
-
-<!-- 관리자 답변 섹션 -->
-<div id="admin-response">
-    <h2>관리자 답변</h2>
-    <div id="response-message"></div>
-</div>
-    
-
-    <footer><%- include('../../common/footer.ejs') %></footer>
-        
-    
-
-    <!-- Bootstrap 스크립트 추가 -->
-    
-
-    <!-- Axios 라이브러리 및 saveConference 함수 추가 -->
-    <script>
-        // 모달 표시 함수
-
-
-        //찜하는 함수
-        async function saveConference(con_id) {
-            try {
-                var currentPageURL = window.location.href;
-               
-                
-
-
-                // URL에서 숫자 추출
-                var match = currentPageURL.match(/\/(\d+)$/);
-                if (match) {
-                
-
-                    var number1 = match[1];
-
-                    console.log(number1);
-
-                    // axios를 사용하여 POST 요청 보내기
-                    const response = await axios.post(`/event/${number1}`, {
-                        con_id: number1,
-                    });
-
-                    console.log(response.data.result);
-                    if (response.data.result === 1) {
-                        if (confirm('로그인이 필요한 서비스입니다. 로그인 페이지로 이동하시겠습니까?')) {
-                           // 로그인 페이지로 이동하기 전에 현재 페이지 URL을 쿠키에 저장
-                    document.cookie = 'returnTo=' + currentPageURL;
-
-                    // 로그인 페이지로 이동
-                    window.location.href = '/login'; 
-                    
-                    
-                }
-                        
-                    } else if (response.data.result === 2) {
-                        if(confirm(
-                            '이미 찜한 행사입니다! 찜한 행사는 마이페이지에서 확인할 수 있습니다.'
-                        )){
-                            window.location.href=`/myPage/myFavoriteConListRender?userId=${response.data.id.user_id}`
-                        };
-                    } else {
-                        if(confirm(
-                            '찜성공! 찜한 행사는 마이페이지에서 확인할 수 있습니다.'
-                        )){
-                            window.location.href=`/myPage/myFavoriteConListRender?userId=${response.data.id.user_id}`
-                        };
-                         // 쿠키에서 이전 페이지 URL을 가져옴
-                var previousPage = getCookie("previousPage");
-
-                if (previousPage) {
-                 // 이전 페이지 URL이 존재하면 해당 페이지로 이동
-                window.location.href = previousPage;
-                } else {
-                // 이전 페이지 URL이 없으면 페이지 새로고침
-                window.location.reload();
-                }
-                }
-                    
-                } else {
-                    console.error('URL에서 숫자를 찾을 수 없습니다.');
-                }
-            } catch (error) {
-                // 예외 처리 코드
-                console.error('에러 발생:', error);
-            }
-        }
-        //
-        function getCookie(name) {
-    var value = "; " + document.cookie;
-    var parts = value.split("; " + name + "=");
-    if (parts.length == 2) return parts.pop().split(";").shift();
-}
-
-    </script>
-    <!-- 지도  -->
-    <script>
-        
-        window.onload = function () {
-            // Kakao 지도 API 초기화
-            kakao.maps.load(function () {
-                var container = document.getElementById('map'); // 지도를 담을 영역의 DOM 레퍼런스
-                var postCode = '<%- conference.con_detail_location.addr %>'; // 페이지에서 받아온 우편번호 사용
-    
-                // Geocoder 초기화
-                var geocoder = new kakao.maps.services.Geocoder();
-    
-                // 주소 검색
-                geocoder.addressSearch(postCode, function (result, status) {
-                    if (status === kakao.maps.services.Status.OK) {
-                        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-    
-                        // 지도 생성 및 마커 추가
-                        var map = new kakao.maps.Map(container, {
-                            center: coords,
-                            level: 3
-                        });
-    
-                        var marker = new kakao.maps.Marker({
-                            position: coords,
-                            map: map
-                        });
-                    }
-                });
-            });
-        };
-    
-
-    </script>
+        </main>
+        <%- include('../../common/footer.ejs') %>
 </body>
 
 </html>

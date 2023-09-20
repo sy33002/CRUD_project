@@ -33,7 +33,10 @@
     height: 180px;
     position: relative;
 }
-
+.event-list .event-item-wrap .img-wrapper {
+    width: 100%;
+    height: 100%;
+}
 .event-list .event-item-wrap .event-img img {
     width: 100%;
     height: 100%;

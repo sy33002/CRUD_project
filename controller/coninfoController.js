@@ -135,6 +135,7 @@ exports.postConference = async (req, res) => {
         conImagePath,
         conDetail,
         conDetailAddr,
+        detailText,
     } = req.body;
 
     try {
@@ -157,7 +158,10 @@ exports.postConference = async (req, res) => {
             con_image: conImagePath,
             user_id: req.session.userInfo.id,
             con_detail_location: conDetailAddr,
+            detail_Text: detailText,
         });
+        console.log(result, 'result');
+
         res.send({ result: true });
     } catch (err) {
         console.error(err);
@@ -183,6 +187,7 @@ exports.postConferenceEdit = async (req, res) => {
         conCount,
         conImagePath,
         conDetail,
+        detailText,
     } = req.body;
 
     try {
@@ -203,6 +208,7 @@ exports.postConferenceEdit = async (req, res) => {
                 con_company_url: conCompanyUrl,
                 con_count: conCount,
                 con_detail: conDetail,
+                detail_Text: detailText,
                 con_image: conImagePath,
             },
             {
