@@ -32,7 +32,7 @@
         <main>
             <%- include('./profileAside', { id: data.id }) %>
 
-            <div class="container myContent">
+            <div class="container myContent content">
                 <div class="row" id="myFavoriteList"></div>
             </div>
         </main>
@@ -61,14 +61,12 @@
                             myFavoriteListContainer.innerHTML = '';
 
                             for (let i = 0; i < myFavoriteList.length; i++) {
-
                                 const favoriteElement =
                                     document.createElement('div');
                                 favoriteElement.classList.add('col-4');
                                 favoriteElement.classList.add('cardSize');
 
                                 index = 0;
-
 
                                 // 행사 종료 날짜 가져오기
                                 const endDate = new Date(
@@ -200,7 +198,7 @@
                     }
                 });
             }
-            function writeReview(conId){
+            function writeReview(conId) {
                 axios({
                     method: 'GET',
                     url: '/myPage/writeReview',
