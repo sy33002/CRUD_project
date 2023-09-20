@@ -116,7 +116,7 @@ section {
 }
 /* "찜하기" 버튼 스타일 */
 .custom-heart-button {
-    background-color: #ffffff; /* 원하는 배경색으로 변경 */
+   
     border: none; /* 기본 테두리 제거 */
     color: #000000; /* 아이콘 색상 변경 */
     size:60px;
@@ -129,6 +129,6 @@ section {
 .custom-heart-icon {
     color: #fff; /* 아이콘 색상 변경 */
 }
-span#1{
-    background-color: rgb(240, 151, 123);
+li{
+    margin-bottom:10px;
 }

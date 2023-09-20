@@ -1,7 +1,7 @@
 const { Conference, Sequelize, ConferenceReview } = require('../models');
 const { ConFavorite } = require('../models');
 const { Op } = require('sequelize');
-
+const { User } = require('../models');
 // 순수 리스트 렌더역할
 exports.getConferenceList = (req, res) => {
     return res.render('event/list');
@@ -221,11 +221,15 @@ exports.saveConference = async (req, res) => {
             con_id: req.body.con_id,
         },
     });
-    console.log(req.body);
+    const id = await User.findOne({
+        where: {
+            id: res.locals.Id,
+        },
+    });
     if (res.locals.Id === 0) {
         res.send({ result: 1 }); //로그인 후 이용
     } else if (isLiked) {
-        res.send({ result: 2 }); //이미 찜 눌렀음
+        res.send({ result: 2, id }); //이미 찜 눌렀음
     } else {
         await ConFavorite.create({
             user_id: res.locals.Id,
