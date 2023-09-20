@@ -4,9 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;300;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@200;300;400;500;600;700;800;900&display=swap');
 
-body {
-    /* font-family: 'Poppins', sans-serif; */
-    font-family: 'Inter', 'Noto Sans KR', sans-serif;
+main {
     font-weight: 200;
     font-size: 15px;
     line-height: 1.7;
@@ -37,7 +35,7 @@ h4 {
 }
 h6 span {
     padding: 20 20px;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     font-weight: 700;
 }
 .section {
@@ -246,20 +244,21 @@ h6 span {
     justify-content: center;
     -ms-flex-pack: center;
     text-align: center;
-    border: none;
-    background-color: var(--color-green);
-    color: var(--color-white);
+    border: 3px solid var(--color-green);
+    /* background-color: var(--color-green); */
+
+    color: var(--color-green);
     box-shadow: 0 8px 24px 0 rgba(255, 235, 167, 0.2);
 }
-.btn:active,
+/* .btn:active,
 .btn:focus {
-    background-color: var(--color-white);
-    color: var(--color-green);
+    background-color: var(--color-green);
+    color: var(--color-black);
     box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
-}
+} */
 .btn:hover {
-    background-color: var(--color-white);
-    color: var(--color-green);
+    background-color: var(--color-green);
+    color: var(--color-black);
 
     box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
 }

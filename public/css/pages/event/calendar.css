@@ -1,0 +1,128 @@
+.wrap {
+    display: flex;
+}
+
+.aside {
+    position: sticky;
+    height: min-content;
+    z-index: 990;
+    width: 250px;
+    left: 0;
+    padding-right: 25px;
+}
+
+.article {
+    flex: 1;
+}
+
+.section2 {
+    margin-top: 50px;
+}
+
+@media all and (min-width: 1250px) {
+    main > .wrap {
+        position: relative;
+        width: 1250px;
+    }
+}
+
+/* 행사 종류 input */
+.custom-checkbox label {
+    background: #fff;
+    border-radius: 50px;
+    outline: 1px solid #f0f0f0;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+.custom-checkbox label:hover {
+    outline: 1.5px solid #a5d8ff;
+}
+
+.custom-checkbox label > div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.custom-checkbox input + label .con-color {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.custom-checkbox input#web + label .con-color {
+    background-color: #00b1f2;
+}
+
+.custom-checkbox input#AI + label .con-color {
+    background-color: #20c997;
+}
+
+.custom-checkbox input#git + label .con-color {
+    background-color: #775dd0;
+}
+
+.custom-checkbox input:checked + label {
+    outline: 1.5px solid #228be6;
+    box-shadow: rgb(8 60 130 / 6%) 0px 0px 0px 0.05rem,
+        rgb(30 34 40 / 4%) 0rem 0rem 1.25rem;
+}
+
+/* 달력 css */
+#calendar {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+#calendar .fc-col-header-cell a {
+    color: #5a5f7d;
+}
+#calendar .fc-day-sun a {
+    color: red;
+}
+
+#calendar .fc-daygrid-day-number {
+    color: #555;
+    font-weight: 300;
+}
+
+/* 필터 반응형 */
+.filter {
+    overflow: hidden;
+}
+
+.filter_apply_btn_wrap {
+    display: none;
+}
+
+.filter_btn_wrap {
+    text-align: right;
+    display: none;
+}
+
+@media all and (max-width: 1250px) {
+    .aside {
+        position: fixed;
+        padding: 50px 40px;
+        left: 0;
+        background: white;
+        width: 100%;
+        height: 100vh;
+        transform: translate(100%, 0);
+        transition: all ease-in-out 0.3s;
+    }
+
+    .filter_apply_btn_wrap {
+        display: block;
+    }
+
+    .filter .aside {
+        transform: translate(0);
+    }
+
+    .filter .aside {
+        /* padding: 50px 70px; */
+    }
+    .filter_btn_wrap {
+        display: block;
+    }
+}

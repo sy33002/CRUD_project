@@ -7,7 +7,7 @@ const fs = require('fs');
 const uploadDetail = multer({
     storage: multer.diskStorage({
         destination(req, file, done) {
-            const folderPath = `public/images/upload/${req.params.path}`;
+            const folderPath = `public/images/upload/`;
 
             fs.readdir(folderPath, (err) => {
                 // uploads 폴더 없으면 생성
@@ -15,7 +15,7 @@ const uploadDetail = multer({
                     fs.mkdirSync(folderPath, { recursive: true });
                 }
 
-                done(null, `public/images/upload/${req.params.path}`);
+                done(null, `public/images/upload/`);
             });
         },
         filename(req, file, done) {
@@ -29,4 +29,13 @@ const uploadDetail = multer({
     limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-module.exports = uploadDetail;
+function getIdFromUrl(url) {
+    const parts = url.split('/'); // URL을 '/'로 분할
+    const idIndex = parts.indexOf('event'); // 'event' 부분의 인덱스
+    if (idIndex !== -1 && idIndex < parts.length - 1) {
+        return parts[idIndex + 1]; // :id 값을 추출
+    }
+    return null; // :id 값을 찾지 못한 경우
+}
+
+module.exports = { getIdFromUrl, uploadDetail };

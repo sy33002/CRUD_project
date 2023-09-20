@@ -1,11 +1,11 @@
 const { DataTypes } = require('sequelize');
+const moment = require('moment');
 
 const ConferenceReview = (Sequelize, sequelize) => {
     const model = Sequelize.define(
         'con_review',
         {
             re_id: {
-                // id INT NOT NULL PRIMARY KEY auto_increment,
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 primaryKey: true,
@@ -16,21 +16,22 @@ const ConferenceReview = (Sequelize, sequelize) => {
                 allowNull: false,
             },
             re_title: {
-                // varchar(100) not null,
                 type: DataTypes.STRING(100),
                 allowNull: false,
             },
             re_content: {
-                // medium not null,
                 type: DataTypes.TEXT('medium'),
                 allowNull: false,
             },
             re_date: {
                 type: DataTypes.DATE,
                 allowNull: false,
+                get() {
+                    const date = this.getDataValue('re_date');
+                    return moment(date).format('YYYY.MM.DD HH:mm');
+                },
             },
             re_count: {
-                // int
                 type: DataTypes.INTEGER,
                 allowNull: true,
                 defaultValue: 0,
@@ -40,8 +41,11 @@ const ConferenceReview = (Sequelize, sequelize) => {
                 allowNull: true,
             },
             content_Text: {
-                // medium not null,
                 type: DataTypes.TEXT('medium'),
+                allowNull: false,
+            },
+            con_title: {
+                type: DataTypes.STRING(100),
                 allowNull: false,
             },
         },

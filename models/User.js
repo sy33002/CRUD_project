@@ -34,9 +34,9 @@ const User = (Sequelize, sequelize) => {
                 allowNull: true,
             },
             user_isManager: {
-                type: Boolean,
+                type: DataTypes.BOOLEAN,
                 allowNull: false,
-            }
+            },
         },
         {
             tableName: 'user',

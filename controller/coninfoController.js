@@ -1,112 +1,59 @@
-const { Conference, Sequelize } = require('../models');
+const { Conference, Sequelize, ConferenceReview } = require('../models');
+const { ConFavorite } = require('../models');
 const { Op } = require('sequelize');
-
-// ../models/index.js
-const cookieParser = require('cookie-parser');
-//ip를 가져오는 함수
-function getUserIP(req) {
-    const addr = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    return addr;
-}
-
-// async function searchConferenceList(req, res) {
-//     const { isOnoff, conLocation, conCategory, conIsfree } = req.body;
-//     console.log('isOnoff>>>>>>>>>>>>>>', isOnoff);
-//     if (
-//         isOnoff === undefined ||
-//         conLocation === undefined ||
-//         conCategory === undefined ||
-//         conIsfree === undefined
-//     ) {
-//         console.log('없음');
-//     }
-//     if (isOnoff === 2 && conIsfree === 2) {
-//         //오프라인 온라인에서 전체를 선택하면
-//         console.log('전체');
-//         const conferenceRes = await Conference.findAll({
-//             where: {
-//                 [Op.and]: [
-//                     { con_location: conLocation },
-//                     { con_category: conCategory },
-//                 ],
-//             },
-//         });
-//         return conferenceRes;
-//     } else if (isOnoff === 2) {
-//         console.log('isOnoff === 2');
-//         const conferenceRes = await Conference.findAll({
-//             where: {
-//                 [Op.and]: [
-//                     { con_location: conLocation },
-//                     { con_category: conCategory },
-//                     { con_isfree: conIsfree },
-//                 ],
-//             },
-//         });
-//         return conferenceRes;
-//     } else if (conIsfree === 2) {
-//         console.log('conIsfree === 2');
-//         const conferenceRes = await Conference.findAll({
-//             where: {
-//                 [Op.and]: [
-//                     { is_onoff: isOnoff },
-//                     { con_location: conLocation },
-//                     { con_category: conCategory },
-//                 ],
-//             },
-//         });
-//         return conferenceRes;
-//     } else {
-//         console.log('else');
-//         const conferenceRes = await Conference.findAll({
-//             where: {
-//                 [Op.and]: [
-//                     { is_onoff: isOnoff },
-//                     { con_location: conLocation },
-//                     { con_category: conCategory },
-//                     { con_isfree: conIsfree },
-//                 ],
-//             },
-//         });
-//         return conferenceRes;
-//     }
-// }
-
-// exports.getConferenceList = async (req, res) => {
-//     try {
-//         let conference;
-//         console.log('req.body22222====', req.body);
-//         if (!Object.keys(req.body).length) {
-//             //req.query가 빈 객체면
-
-//             conference = await Conference.findAll();
-//             return res.render('event/list');
-//         } else {
-//             console.log('ddddddd');
-//             conference = await searchConferenceList(req);
-//             console.log('>>>>>>>', conference);
-//             return res.send({ conference });
-//         }
-//     } catch (err) {
-//         console.log(err);
-//         res.send('server error');
-//     }
-// };
-
-// 순수 렌더 역할만
-exports.getConferenceList = async (req, res) => {
-    try {
-        return res.render('event/list');
-    } catch (err) {
-        console.log(err);
-        res.send('server error');
-    }
+const { User } = require('../models');
+// 순수 리스트 렌더역할
+exports.getConferenceList = (req, res) => {
+    return res.render('event/list');
+};
+//캘린더 페이지로드
+exports.getConferenceCalendar = (req, res) => {
+    return res.render('event/calendar');
 };
 
 // event/list에 모든 행사 리스트 넘겨주는 함수
 exports.getConferenceInfo = async (req, res) => {
-    const eventList = await Conference.findAll();
-    res.send({ eventList });
+    let whereClause = {
+        is_agreed: true,
+    };
+
+    if (req.query.date) {
+        // 쿼리문 있을 때만 필터
+        const date = req.query.date;
+        const startDate = new Date(date);
+        const endDate = new Date(startDate);
+        endDate.setMonth(startDate.getMonth() + 1);
+
+        whereClause[Op.or] = [];
+
+        whereClause[Op.or] = [
+            {
+                // 행사 기간이 해당 년, 월에 해당하는 거만 추출
+                [Op.and]: [
+                    { con_start_date: { [Op.gte]: startDate } },
+                    { con_start_date: { [Op.lt]: endDate } },
+                ],
+            },
+            {
+                [Op.and]: [
+                    { con_end_date: { [Op.gte]: startDate } },
+                    { con_end_date: { [Op.lt]: endDate } },
+                ],
+            },
+        ];
+    }
+
+    try {
+        const eventList = await Conference.findAll({
+            where: whereClause,
+            order: [['con_end_date', 'ASC']],
+        });
+
+        res.send({ eventList });
+    } catch (err) {
+        console.log(err);
+        res.send('server error');
+    }
 };
 
 // 필터링 역할
@@ -139,18 +86,33 @@ exports.getConferenceWrite = (req, res) => {
     res.render('event/write');
 };
 
+//행사 상세페이지
 exports.getConferenceDetail = async (req, res) => {
     const { id } = req.params;
 
     console.log(id);
-    const result = await Conference.findOne({
+
+    const result1 = await Conference.findOne({
+        where: { con_id: id },
+    }); //컨퍼런스 전체 정보
+
+    const reviews = await ConferenceReview.findAll({
         where: { con_id: id },
     });
-    console.log(result);
-    if (result) {
-        await result.increment('con_count', { by: 1 });
+    if (result1) {
+        await result1.increment('con_count', { by: 1 });
     }
-    res.render(`event/detail`, { conference: result });
+
+    const result2 = await ConFavorite.findAll({
+        where: { con_id: id },
+    });
+    console.log('유저 세션 아이디값', res.locals.Id);
+    res.render(`event/detail`, {
+        conference: result1,
+        confavorite: result2.length,
+        user_id: res.locals.Id,
+        reviews: reviews,
+    });
 };
 
 //게시글 등록(DB에 저장까지만~)
@@ -172,6 +134,7 @@ exports.postConference = async (req, res) => {
         conCount,
         conImagePath,
         conDetail,
+        conDetailAddr,
     } = req.body;
 
     try {
@@ -192,34 +155,15 @@ exports.postConference = async (req, res) => {
             con_count: conCount,
             con_detail: conDetail,
             con_image: conImagePath,
+            user_id: req.session.userInfo.id,
+            con_detail_location: conDetailAddr,
         });
         res.send({ result: true });
     } catch (err) {
         console.error(err);
         res.send({ result: false });
     }
-
-    //관리자 페이지 안만들면 /event경로로 갑니다..
-    // res.redirect('/');
-    //관리자 페이지가 있을 경우
-    //res.render('관리자페이지',{result})
 };
-// exports.updateConferenceCnt = async (req, res) => {
-//     if (req.cookies[conId] == undefined) {
-//         // key, value, 옵션을 설정해준다.
-//         res.cookie(conCount, getUserIP(req), {
-//             // 유효시간 : 일주일
-//             maxAge: 60 * 60 * 24 * 7,
-//         });
-//         // 조회수 증가 쿼리
-//         await Conference.updateOne(
-//             { con_id: conId },
-//             { $inc: { con_count: 1 } }
-//         );
-//     }
-//     res.render({ conCount: Conference.con_count });
-//     //ejs에서 conCount라는 변수를 써서 조회수를 보이게 하면 될 것 같습니다..
-// };
 
 exports.postConferenceEdit = async (req, res) => {
     const {
@@ -270,11 +214,34 @@ exports.postConferenceEdit = async (req, res) => {
         console.error(err);
     }
 };
+exports.saveConference = async (req, res) => {
+    const isLiked = await ConFavorite.findOne({
+        where: {
+            user_id: res.locals.Id,
+            con_id: req.body.con_id,
+        },
+    });
+    const id = await User.findOne({
+        where: {
+            id: res.locals.Id,
+        },
+    });
+    if (res.locals.Id === 0) {
+        res.send({ result: 1 }); //로그인 후 이용
+    } else if (isLiked) {
+        res.send({ result: 2, id }); //이미 찜 눌렀음
+    } else {
+        await ConFavorite.create({
+            user_id: res.locals.Id,
+            con_id: req.body.con_id,
+        });
+        res.send({ result: 3 }); //찜 성공
+    }
+};
 
 exports.postDisagreeConferenceList = async (req, res) => {
     const eventList = await Conference.findAll({
         where: { is_agreed: false },
     });
-    console.log(eventList);
     res.send({ eventList });
 };

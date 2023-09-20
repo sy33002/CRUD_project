@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <%- include('../../common/head.ejs', {title: '나의 리뷰보기' }) %>
+        <!-- 제윤: 여기 왜 있는 script랑 css 이지...? -->
+        <!-- <link rel="stylesheet" href="/static/css/review.css" /> -->
+        <!-- <script defer src="/static/js/review.js"></script> -->
+        <link
+            rel="stylesheet"
+            href="/static/css/pages/myPage/managerAside.css"
+        />
+        <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
+    </head>
+    <style>
+        .cardCenter {
+            padding: 30px 0px;
+        }
+        .marginRemove {
+            margin: 0 auto;
+        }
+    </style>
+    <body>
+        <%- include('../../common/header.ejs') %>
+        <main>
+            <%- include('./profileAside', { id: data.id }) %>
+
+            <div class="cardCenter">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10 marginRemove">
+                            <div class="card">
+                                <div class="card-body">
+                                    <table class="table text-center">
+                                        <thead>
+                                            <tr class="border-bottom">
+                                                <th>제목</th>
+                                                <th>등록일</th>
+                                                <th>조회수</th>
+                                                <th>관련 행사 제목</th>
+                                                <th>관련 행사 링크</th>
+                                                <th>댓글 바로가기</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="myreviewList"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <%- include('../../common/footer.ejs') %>
+
+        <script>
+            // 내가 쓴 리뷰 보기
+            function myreviewList(userId) {
+                axios({
+                    method: 'GET',
+                    url: '/myPage/myreviewList',
+                    params: {
+                        userId: userId,
+                    },
+                }).then((res) => {
+                    if (res.status === 200) {
+                        const reviewList = res.data.results;
+                        const myreviewListContainer =
+                            document.getElementById('myreviewList');
+                        myreviewListContainer.innerHTML = '';
+
+                        if (
+                            Array.isArray(reviewList) &&
+                            reviewList.length > 0
+                        ) {
+                            reviewList.forEach((result) => {
+                                const reviewElement =
+                                    document.createElement('tr');
+                                reviewElement.innerHTML = `
+                                    <td>${result.review.re_title}</td>
+                                    <td>${result.review.re_date}</td>
+                                    <td> ${result.review.re_count}</td>
+                                    <td>${result.relatedConference.con_title}</td>
+                                    <td><a href="http://localhost:8000/event/${result.relatedConference.con_id}">바로가기</a></td>
+                                    <td><a href="http://localhost:8000/review/${result.review.re_id}">바로가기</a></td>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="deleteMyReview(${result.review.re_id})">리뷰 삭제</button>
+                                `;
+
+                                myreviewListContainer.appendChild(
+                                    reviewElement
+                                );
+                            });
+                        } else {
+                            myreviewListContainer.innerHTML =
+                                '등록한 리뷰가 없습니다.';
+                        }
+                    }
+                });
+            }
+
+            window.onload = function () {
+                const userId = '<%= data.user_id %>';
+                myreviewList(userId); // 페이지 로딩 시 내가 쓴 리뷰 보기
+            };
+
+            // 내가 쓴 리뷰 삭제
+            function deleteMyReview(reId) {
+                axios({
+                    method: 'delete',
+                    url: '/manager/deleteMyReview',
+                    data: {
+                        re_id: reId,
+                    },
+                }).then((res) => {
+                    if (res.data === true) {
+                        alert('리뷰 삭제 성공');
+                        window.location.reload();
+                    } else {
+                        alert('리뷰 삭제 실패');
+                        window.location.reload();
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

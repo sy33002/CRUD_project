@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <%- include('../../common/head.ejs', {title: '내가 찜한 행사' }) %>
+        <link
+            rel="stylesheet"
+            href="/static/css/pages/myPage/managerAside.css"
+        />
+        <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
+
+        <style>
+            .myContent {
+                position: relative;
+            }
+            .favCard {
+                width: 300px;
+                margin: 0 auto;
+            }
+            /* .cardSize {
+                width: 200px;
+            } */
+            img {
+                width: 180px;
+                height: 180px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <%- include('../../common/header.ejs') %>
+
+        <main>
+            <%- include('./profileAside', { id: data.id }) %>
+
+            <div class="container myContent">
+                <div class="row" id="myFavoriteList"></div>
+            </div>
+        </main>
+
+        <%- include('../../common/footer.ejs') %>
+        <script>
+            // 내가 찜한 행사 보기
+            function myFavoriteList(userId) {
+                axios({
+                    method: 'GET',
+                    url: '/myPage/myFavoriteList',
+                    params: {
+                        userId: userId,
+                    },
+                }).then((res) => {
+                    if (res.status === 200) {
+                        const myFavoriteList = res.data.getFavorites;
+                        const favoritesLength = res.data.favoriteLengths;
+                        if (
+                            Array.isArray(myFavoriteList) &&
+                            myFavoriteList.length > 0
+                        ) {
+                            const currentDate = new Date();
+                            const myFavoriteListContainer =
+                                document.getElementById('myFavoriteList');
+                            myFavoriteListContainer.innerHTML = '';
+
+                            for (let i = 0; i < myFavoriteList.length; i++) {
+
+                                const favoriteElement =
+                                    document.createElement('div');
+                                favoriteElement.classList.add('col-4');
+                                favoriteElement.classList.add('cardSize');
+
+                                index = 0;
+
+
+                                // 행사 종료 날짜 가져오기
+                                const endDate = new Date(
+                                    myFavoriteList[i].con_end_date
+                                );
+
+                                if (currentDate > endDate) {
+                                    // 행사가 이미 종료된 경우에만 버튼을 보이도록 설정
+                                    favoriteElement.innerHTML = `
+
+
+
+                                    <div class="col-md-6 mb-3  favCard">
+                                        <a href="http://localhost:8000/event/${myFavoriteList[i].con_id}">
+                                        <div class="card">
+                                            <img src="${myFavoriteList[i].con_image}" class="card-img-top" alt="행사 사진" />
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    ${myFavoriteList[i].con_title}
+                                                </h5>
+                                                <p class="card-text">
+                                                    ${favoritesLength[i]}명이 관심을 가졌던 행사가
+                                                    ${myFavoriteList[i].con_end_date}에 종료되었습니다.
+                                                </p>
+                                            </div>
+                                            <button type="button" class="btn btn-outline-secondary" onclick="deletefavorite(${myFavoriteList[i].con_id})">찜 삭제</button>
+                                            <button type="button" class="btn btn-outline-secondary" id="reviewButton">
+                                            <a href="/review/write">지난 행사에 대한 리뷰 남기기</a>
+                                        </button>
+                                        </div>                          
+                                        </a> 
+                                    </div>
+                                        
+
+                                    `;
+                                } else {
+                                    // 행사가 종료되지 않은 경우에는 찜 삭제 버튼만 추가
+                                    favoriteElement.innerHTML = `
+
+                                    <div class="col-md-6 mb-3 favCard">
+                                        <a href="http://localhost:8000/event/${
+                                            myFavoriteList[i].con_id
+                                        }">
+                                        <div class="card">
+                                            <img src="${
+                                                myFavoriteList[i].con_image
+                                            }" class="card-img-top" alt="행사 사진" />
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    ${
+                                                        myFavoriteList[i]
+                                                            .con_title
+                                                    }
+                                                </h5>
+                                                <p class="card-text">
+                                                    ${
+                                                        favoritesLength[i]
+                                                    }명이 관심을 가진 행사가
+                                                    ${
+                                                        myFavoriteList[i]
+                                                            .con_start_date
+                                                    }에 시작됩니다.
+                                                </p>
+                                                <p class="card-text">
+                                                    ${
+                                                        myFavoriteList[i]
+                                                            .con_isfree == true
+                                                            ? '무료'
+                                                            : ''
+                                                    }
+                                                    ${
+                                                        myFavoriteList[i]
+                                                            .con_price == 0
+                                                            ? ''
+                                                            : '원'
+                                                    }
+
+                                                </p>
+
+                                                
+                                            </div>
+                                            <button type="button" class="btn btn-outline-secondary" onclick="deletefavorite(${
+                                                myFavoriteList[i].con_id
+                                            })">찜 삭제</button>
+                                        </div>
+                                        </a>
+                                        
+                                    </div>
+                                        
+                                    `;
+                                }
+
+                                myFavoriteListContainer.appendChild(
+                                    favoriteElement
+                                );
+                            }
+                        } else {
+                            const myFavoriteListContainer =
+                                document.getElementById('myFavoriteList');
+                            myFavoriteListContainer.innerHTML =
+                                '찜한 행사가 없습니다.';
+                        }
+                    } else {
+                        console.log('error');
+                    }
+                });
+            }
+
+            window.onload = function () {
+                const userId = `<%= data.id %>`;
+                myFavoriteList(userId); // 페이지 로딩 시 내가 찜한 행사 보기
+            };
+
+            // 찜한 행사 삭제
+            function deletefavorite(conId) {
+                axios({
+                    method: 'delete',
+                    url: '/manager/deleteMyFavorite',
+                    data: {
+                        con_id: conId,
+                    },
+                }).then((res) => {
+                    if (res.data === true) {
+                        alert('찜 리스트에서 삭제되었습니다.');
+                        window.location.reload();
+                    } else {
+                        alert('이미 삭제하였거나 삭제할 수 없습니다.');
+                        window.location.reload();
+                    }
+                });
+            }
+            function writeReview(conId){
+                axios({
+                    method: 'GET',
+                    url: '/myPage/writeReview',
+                    params: {
+                        conId: conId,
+                    },
+                }).then((res) => {
+                    if (res.status === 200) {
+                        document.documentElement.innerHTML = res.data;
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
