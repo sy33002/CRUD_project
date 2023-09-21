@@ -391,6 +391,28 @@ exports.myFavoriteConListRender = async (req, res) => {
 };
 
 //마이페이지: 내가 등록 신청한 행사 보기
+// exports.myRegisterConRender = async (req, res) => {
+//     const userId = req.query.userId;
+//     const data = req.session.userInfo;
+//     if (data) {
+//         if (data.id == userId) {
+//             const userData = await Conference.findAll({
+//                 where: { user_id: userId },
+//             });
+//             if (userData.length > 0) {
+//                 const user_id_num = userData[0].dataValues.user_id;
+//                 res.render('myPage/myRegisterCon', { data: userData, id: user_id_num });
+//             }
+//             else {
+//                 res.render('myPage/myRegisterCon', { data: false , id : -1 });
+//             }
+//         } else {
+//             res.render('404');
+//         }
+//     } else {
+//         res.render('login');
+//     }
+// };
 exports.myRegisterConRender = async (req, res) => {
     const userId = req.query.userId;
     const data = req.session.userInfo;
@@ -399,8 +421,14 @@ exports.myRegisterConRender = async (req, res) => {
             const userData = await Conference.findAll({
                 where: { user_id: userId },
             });
-            const user_id_num = userData[0].dataValues.user_id;
-            res.render('myPage/myRegisterCon', { data: userData, id: user_id_num });
+            if (userData.length > 0) {
+                const user_id_num = userData[0].dataValues.user_id;
+                res.render('myPage/myRegisterCon', { data: userData, id: user_id_num });
+            }
+            else {
+                // 데이터가 없을 때 예외 처리 메시지를 보내기
+                res.render('myPage/myRegisterCon', { data: '', id: data.id });
+            }
         } else {
             res.render('404');
         }
@@ -408,7 +436,6 @@ exports.myRegisterConRender = async (req, res) => {
         res.render('login');
     }
 };
-
 
 // 회원정보 update
 exports.updateProfile = async (req, res) => {

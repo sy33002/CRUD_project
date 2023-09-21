@@ -8,9 +8,21 @@ main h1 {
     color: var(--color-green);
     text-align: center;
 }
+
+main .section span {
+    font-weight: 600;
+    font-size: 65px;
+    color: var(--color-green);
+
+    text-align: center;
+}
+
 @media all and (max-width: 1000px) {
     main h1 {
         font-size: 62px;
+    }
+    main .section span {
+        font-size: 55px;
     }
 }
 
@@ -18,11 +30,16 @@ main h1 {
     main h1 {
         font-size: 40px;
     }
+    main .section span {
+        font-size: 35px;
+    }
 }
+
 /* Conference&Developer for U! Developer */
-.typing-demo .highlight {
-    color: rgb(214, 245, 137); 
-    font-weight: bold;
+
+.typing {
+    white-space: nowrap;
+
 }
 
 .wrapper {
@@ -36,11 +53,11 @@ main h1 {
     justify-content: center;
 }
 
-.typing-demo {
+.typing {
     text-align: center;
-    animation: typing 4s steps(22), blink 0.5s step-end infinite alternate;
+    /* animation: typing 4s steps(22), blink 0.5s step-end infinite alternate; */
     white-space: nowrap;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 @keyframes typing {
@@ -140,7 +157,16 @@ main h1 {
     font-size: 37px;
     font-weight: 600;
     color: var(--color-green);
-    text-align: center;
+    /* 메인페이지 9월 행사 위치 변경 */
+    text-align: left;
+}
+
+.section2 .text {
+    /* 메인페이지 문구 추가 */
+    font-size: 16px;
+    padding-bottom: 20px;
+    color: var(--color-green);
+    text-align: left;
 }
 
 .section2 .con_top .more {

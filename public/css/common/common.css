@@ -37,6 +37,8 @@ main {
 footer {
     background-color: rgb(17, 17, 17);
     padding: 60px 0 30px;
+    position: relative;
+    z-index: 100;
 }
 
 footer .wrap {
@@ -66,6 +68,10 @@ footer .wrap .depth2_list span {
     flex-direction: column;
     gap: 10px;
     color: #35c130;
+}
+
+footer a {
+    color: #999;
 }
 
 span {
