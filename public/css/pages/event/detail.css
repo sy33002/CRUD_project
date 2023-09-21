@@ -55,6 +55,22 @@ main .wrap {
 }
 
 .aside .btn_group .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.aside .btn_group .btn:hover svg {
+    fill: #fff;
+}
+
+.aside .btn_group .icon svg {
+    fill: #0d6efd;
+    transition: all 0.15s ease-in-out;
+}
+
+.aside .btn_group .btn {
     width: 100%;
 }
 
