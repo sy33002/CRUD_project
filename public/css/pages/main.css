@@ -39,7 +39,6 @@ main .section span {
 
 .typing {
     white-space: nowrap;
-
 }
 
 .wrapper {
@@ -150,7 +149,7 @@ main .section span {
 
 .section2 .con_top {
     position: relative;
-    margin-bottom: 80px;
+    margin-bottom: 20px;
 }
 
 .section2 .con_top .title {
