@@ -277,7 +277,7 @@
         <%- include('../common/footer.ejs') %>
         <script>
             let typewriter = new Typewriter('#typing', {
-                loop: true, // 반복 여부
+                loop: false, // 반복 여부
                 delay: 75,
                 cursor: '',
             });
@@ -289,8 +289,6 @@
                 .deleteChars(4)
                 .typeString('U! Developers')
                 .pauseFor(1000)
-                .deleteChars(50)
-                .pauseFor(10000)
                 .start();
 
             AOS.init();
