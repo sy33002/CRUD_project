@@ -414,22 +414,22 @@ function validateInput() {
 
     if (conTitle.trim() === '') {
         alert('행사 이름을 입력해주세요.');
-        return conTitle.focus();
+        return document.querySelector('#conTitle').focus();
     }
 
     if (conDetail.trim() === '') {
         alert('행사 상세 내용을 입력해주세요.');
-        return conDetail.focus();
+        return document.querySelector('#conDetail').focus();
     }
 
     if (conCategory === '') {
         alert('카테고리를 선택해주세요.');
-        return conCategory.focus();
+        return document.querySelector('#conCategory').focus();
     }
 
     if (conPeople === '') {
         alert('규모를 입력해 주세요.');
-        return conCategory.focus();
+        return document.querySelector('#conPeople').focus();
     }
 
     if (subEndDate >= conStartDate)
@@ -438,22 +438,22 @@ function validateInput() {
     if (isConOnoff) {
         if (conDetailAddr.postCode === '') {
             alert('우편번호를 입력해 주세요.');
-            return postcode.focus();
+            return document.querySelector('#postcode').focus();
         }
         if (conDetailAddr.addr === '') {
             alert('주소를 입력해 주세요.');
-            return address.focus();
+            return document.querySelector('#address').focus();
         }
         if (conDetailAddr.detailAddr === '') {
             alert('상세 주소를 입력해 주세요.');
-            return detailAddress.focus();
+            return document.querySelector('#detailAddress').focus();
         }
     }
 
     if (isFree) {
         if (conPrice === '') {
             alert('가격을 입력해 주세요.');
-            return conPrice.focus();
+            return document.querySelector('#conPrice').focus();
         }
     }
 
