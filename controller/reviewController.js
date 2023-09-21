@@ -56,7 +56,11 @@ exports.postReview = async (req, res) => {
 };
 
 exports.getReviewWrite = async (req, res) => {
-    const idValue = getIdFromUrl(req.get('Referer')); // 이전 페이지 URL에서 :id 값을 추출
+    // const idValue = getIdFromUrl(req.get('Referer')); // 이전 페이지 URL에서 :id 값을 추출
+    let conId = null;
+    if (req.query.id) {
+        conId = req.query.id;
+    }
     const eventName = await Conference.findAll({
         where: {
             con_start_date: {
@@ -70,7 +74,7 @@ exports.getReviewWrite = async (req, res) => {
 
     res.render('review/write', {
         eventName: eventName,
-        prevPage: idValue,
+        conId,
     });
 };
 

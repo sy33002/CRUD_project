@@ -61,6 +61,12 @@ async function saveConference() {
     }
 }
 
+// 리뷰 쓰기
+function reviewWrite() {
+    const conId = $('#conId').attr('data-id');
+    window.location.href = `/review/write?id=${conId}`;
+}
+
 // 쿠키 기능
 function getCookie(name) {
     var value = '; ' + document.cookie;
