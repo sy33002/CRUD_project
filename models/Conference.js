@@ -141,6 +141,10 @@ const Conference = (Sequelize, sequelize) => {
                 type: DataTypes.TEXT('medium'),
                 allowNull: false,
             },
+            approveManager: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+            },
         },
         {
             tableName: 'conference_info',

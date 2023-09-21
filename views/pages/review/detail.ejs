@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="ko">
-    <head>
-        <%- include('../../common/head.ejs', {title: '리뷰 상세' }) %>
-        <link rel="stylesheet" href="/static/css/pages/review/detail.css" />
-    </head>
 
-    <body>
-        <%- include('../../common/header.ejs') %>
+<head>
+    <%- include('../../common/head.ejs', {title: '리뷰 상세' }) %>
+        <link rel="stylesheet" href="/static/css/pages/review/detail.css" />
+</head>
+
+<body>
+    <%- include('../../common/header.ejs') %>
         <main>
             <div class="wrap">
                 <section class="section">
                     <div class="my-editor">
                         <div class="event">
                             <p>리뷰 관련 행사</p>
-                            <a href="/event/<%-review.con_id%>"><p><%- review.con_title %></p></a>
+                            <a href="/event/<%-review.con_id%>">
+                                <p><%- review.con_title %></p>
+                            </a>
                         </div>
                         <div class="title">
                             <p>리뷰 제목</p>
@@ -24,7 +27,7 @@
                             <p><%- review.user_id %></p>
                         </div>
                         <div class="content">
-                            <p>리뷰 내용</p><br/>
+                            <p style="font-weight: bold">리뷰 내용</p><br />
                             <p><%- review.re_content %></p>
                         </div>
                     </div>
@@ -32,5 +35,6 @@
             </div>
         </main>
         <%- include('../../common/footer.ejs') %>
-    </body>
+</body>
+
 </html>
