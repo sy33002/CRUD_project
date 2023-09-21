@@ -49,7 +49,7 @@
                                                 <th class="un un-con">모집 시작일</th>
                                                 <th class="un un-con">모집 종료일</th>
                                                 <th class="un-mobile">주최 정보</th>
-                                                <th>조회수</th>
+                                                <th class="un">조회수</th>
                                                 <th>승인 여부</th>
                                                 <th></th>
                                                 <th></th>
@@ -66,7 +66,7 @@
                                                 <td class="un"><%= con.sub_end_date %></td>
                     
                                                 <td class="un-mobile"><%= con.con_company %></td>
-                                                <td><%= con.con_count %></td>
+                                                <td class="un"><%= con.con_count %></td>
                                                 <td>
                                                     <%= con.is_agreed === true? '거절':'승인' %>
                                                 </td>
