@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="ko">
-
-<head>
-    <%- include('../../common/head.ejs', {title: conference.con_title }) %>
+    <head>
+        <%- include('../../common/head.ejs', {title: conference.con_title }) %>
         <!-- Font Awesome 라이브러리 추가 -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+            rel="stylesheet"
+        />
         <!-- 카카오맵 api 및 마커라이브러리 -->
-        <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6f19fc94da41af704131c0bd9ae48f87&libraries=services"></script>
-
+        <script
+            type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6f19fc94da41af704131c0bd9ae48f87&libraries=services"
+        ></script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        <link defer rel="stylesheet" href="/static/css/pages/event/detail.css" />
+        <link
+            defer
+            rel="stylesheet"
+            href="/static/css/pages/event/detail.css"
+        />
         <script defer src="/static/js/eventDetail.js"></script>
-</head>
+    </head>
 
-<body>
-    <%- include('../../common/header.ejs') %>
+    <body>
+        <%- include('../../common/header.ejs') %>
 
         <main>
             <div class="wrap">
@@ -25,7 +32,11 @@
                     <section class="section">
                         <div class="top">
                             <div class="img-wrapper">
-                                <img class="h-100 w-100" src="<%= conference.con_image %>" alt="행사 이미지" />
+                                <img
+                                    class="h-100 w-100"
+                                    src="<%= conference.con_image %>"
+                                    alt="행사 이미지"
+                                />
                             </div>
                             <div class="aside">
                                 <div class="aside-wrap">
@@ -33,18 +44,28 @@
                                         <%= conference.con_title %>
                                     </span>
                                     <div class="hash-tag">
-                                        <ul class="d-flex gap-3 align-items-center">
-                                            <li style="
+                                        <ul
+                                            class="d-flex gap-3 align-items-center"
+                                        >
+                                            <li
+                                                style="
                                                     color: rgb(240, 151, 123);
-                                                ">
-                                                #<%= conference.is_onoff ? '오프라인' : '온라인' %>
+                                                "
+                                            >
+                                                #<%= conference.is_onoff ?
+                                                '오프라인' : '온라인' %>
                                             </li>
-                                            <li style="
+                                            <li
+                                                style="
                                                     color: rgb(109, 198, 112);
-                                                ">
-                                                #<%= conference.con_isfree ? '무료' : '유료' %>
+                                                "
+                                            >
+                                                #<%= conference.con_isfree ?
+                                                '무료' : '유료' %>
                                             </li>
-                                            <li style="color: rgb(93, 147, 228)">
+                                            <li
+                                                style="color: rgb(93, 147, 228)"
+                                            >
                                                 #<%= conference.con_category %>
                                             </li>
                                         </ul>
@@ -53,107 +74,183 @@
                                         <div class="sub-date item">
                                             <span class="text">모집 :</span>
                                             <% const gap=' ' ; %>
-                                                <span class="date">
-                                                    <%= conference.sub_start_date.split(gap)[0] %> ~ <%=
-                                                            conference.sub_end_date.split(gap)[0] %>
-                                                </span>
+                                            <span class="date">
+                                                <%=
+                                                conference.sub_start_date.split(gap)[0]
+                                                %> ~ <%=
+                                                conference.sub_end_date.split(gap)[0]
+                                                %>
+                                            </span>
                                         </div>
                                         <div class="con-date item">
                                             <span class="text">행사 :</span>
                                             <span class="date">
-                                                <%= conference.con_start_date.split(gap)[0] %> ~ <%=
-                                                        conference.con_end_date.split(gap)[0] %>
+                                                <%=
+                                                conference.con_start_date.split(gap)[0]
+                                                %> ~ <%=
+                                                conference.con_end_date.split(gap)[0]
+                                                %>
                                             </span>
                                         </div>
                                         <div class="con-personnel item">
-                                            <span class="text">모집 인원 :</span>
+                                            <span class="text"
+                                                >모집 인원 :</span
+                                            >
                                             <span class="personnel">
                                                 <%= conference.con_people %>
                                             </span>
                                         </div>
-                                        <% if(conference.con_isfree===false ){ %>
-                                            <div class="con-price item">
-                                                <span class="text">가격 :</span>
-                                                <span class="price">
-                                                    <%= conference.con_price.toLocaleString() %> 원
-                                                </span>
-                                            </div>
-                                            <% } %>
+                                        <% if(conference.con_isfree===false ){
+                                        %>
+                                        <div class="con-price item">
+                                            <span class="text">가격 :</span>
+                                            <span class="price">
+                                                <%=
+                                                conference.con_price.toLocaleString()
+                                                %> 원
+                                            </span>
+                                        </div>
+                                        <% } %>
                                     </div>
                                     <div class="btn_group">
-                                        <button type="button" class="btn btn-outline-primary" onclick="copy()">공유
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-primary"
+                                            onclick="copy()"
+                                        >
+                                            공유
                                             <span class="icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="16"
+                                                    height="16"
+                                                    fill="currentColor"
+                                                    class="bi bi-share"
+                                                    viewBox="0 0 16 16"
+                                                >
                                                     <path
-                                                        d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
+                                                        d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"
+                                                    />
                                                 </svg>
                                             </span>
                                         </button>
-                                        <button type="button" class="btn btn-outline-primary"
-                                            onclick="saveConference()">찜하기
-
+                                        <button
+                                            type="button"
+                                            class="btn btn-outline-primary"
+                                            onclick="saveConference()"
+                                        >
+                                            찜하기
                                             <span class="icon">
                                                 <% if(confavoriteValue){ %>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" height="1em"
-                                                        viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                        <path
-                                                            d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
-                                                    </svg>
-                                                    <% }else{ %>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" height="1em"
-                                                            viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                            <path
-                                                                d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8v-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5v3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20c0 0-.1-.1-.1-.1c0 0 0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5v3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2v-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z" />
-                                                        </svg>
-
-                                                        <% } %>
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    height="1em"
+                                                    viewBox="0 0 512 512"
+                                                >
+                                                    <path
+                                                        d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"
+                                                    />
+                                                </svg>
+                                                <% }else{ %>
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    height="1em"
+                                                    viewBox="0 0 512 512"
+                                                >
+                                                    <path
+                                                        d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8v-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5v3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20c0 0-.1-.1-.1-.1c0 0 0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5v3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2v-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"
+                                                    />
+                                                </svg>
+                                                <% } %>
                                             </span>
                                         </button>
                                     </div>
+                                    <% const today = new Date(); const conStart
+                                    = new
+                                    Date(conference.con_start_date.split(gap)[0].replaceAll('.',
+                                    '-')); %> <% if(conStart < today){ %>
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-primary mt-3 w-100"
+                                        id="conId"
+                                        data-id="<%= conference.con_id %>"
+                                        onclick="reviewWrite()"
+                                    >
+                                        리뷰 쓰기
+                                    </button>
+                                    <% } %>
                                 </div>
                             </div>
-                            <div>
-
-                            </div>
+                            <div></div>
                             <div class="contents-wrap">
                                 <div class="menu-wrap border-bottom">
                                     <div class="btn-group w-100" role="group">
-                                        <a href="#introduction" id="btnradio1" class="menu-btn">
+                                        <a
+                                            href="#introduction"
+                                            id="btnradio1"
+                                            class="menu-btn"
+                                        >
                                             행사 소개
                                         </a>
-                                        <a href="#location" id="btnradio2" class="menu-btn">
+                                        <a
+                                            href="#location"
+                                            id="btnradio2"
+                                            class="menu-btn"
+                                        >
                                             행사 장소
                                         </a>
-                                        <a href="#review" id="btnradio3" class="menu-btn">
+                                        <a
+                                            href="#review"
+                                            id="btnradio3"
+                                            class="menu-btn"
+                                        >
                                             행사 리뷰
                                         </a>
-                                        <a href="#inquiries" id="btnradio4" class="menu-btn">
+                                        <a
+                                            href="#inquiries"
+                                            id="btnradio4"
+                                            class="menu-btn"
+                                        >
                                             문의 하기
                                         </a>
                                     </div>
                                 </div>
                                 <div class="contents">
-                                    <div id="introduction" class="introduction page-section my-editor mt-5">
+                                    <div
+                                        id="introduction"
+                                        class="introduction page-section my-editor mt-5"
+                                    >
                                         <span class="fs-4 mb-4">행사 소개</span>
                                         <div><%- conference.con_detail %></div>
                                     </div>
 
-
-                                    <div id="location" class="location page-section mt-5">
+                                    <div
+                                        id="location"
+                                        class="location page-section mt-5"
+                                    >
                                         <span class="fs-4 mb-4">행사 장소</span>
                                         <% if(conference.is_onoff){ %>
-                                            <span>
-                                                <%= conference.con_detail_location.addr %>, <%=
-                                                        conference.con_detail_location.detailAddr %>
-                                            </span>
-                                            <div id="map" class="border mt-4" style="width: 100%; height: 400px;"></div>
-                                            <% }else{ %>
-                                                <span>온라인</span>
+                                        <span>
+                                            <%=
+                                            conference.con_detail_location.addr
+                                            %>, <%=
+                                            conference.con_detail_location.detailAddr
+                                            %>
+                                        </span>
+                                        <div
+                                            id="map"
+                                            class="border mt-4"
+                                            style="width: 100%; height: 400px"
+                                        ></div>
+                                        <% }else{ %>
+                                        <span>온라인</span>
 
-                                                <% } %>
+                                        <% } %>
                                     </div>
-                                    <div id="review" class="review page-section mt-5 mb-5">
+                                    <div
+                                        id="review"
+                                        class="review page-section mt-5 mb-5"
+                                    >
                                         <span class="fs-4 mb-4">행사 리뷰</span>
                                         <div class="table_scroll">
                                             <table class="table table-hover">
@@ -166,44 +263,78 @@
                                                 <thead>
                                                     <tr class="border-bottom">
                                                         <th scope="col"></th>
-                                                        <th scope="col" class="text-center">제목</th>
-                                                        <th scope="col" class="text-center">작성일</th>
-                                                        <th scope="col" class="text-center">조회</th>
+                                                        <th
+                                                            scope="col"
+                                                            class="text-center"
+                                                        >
+                                                            제목
+                                                        </th>
+                                                        <th
+                                                            scope="col"
+                                                            class="text-center"
+                                                        >
+                                                            작성일
+                                                        </th>
+                                                        <th
+                                                            scope="col"
+                                                            class="text-center"
+                                                        >
+                                                            조회
+                                                        </th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <% if(reviews.length){ %>
-                                                        <% reviews.forEach((val)=> { %>
-                                                            <% const gap=' ' ; %>
-                                                                <tr class="border-bottom">
-                                                                    <th scope="row" class="text-center">
-                                                                        <%= val.re_id %>
-                                                                    </th>
-                                                                    <td>
-                                                                        <a class="link"
-                                                                            href="/review/<%= Number(val.re_id) %>">
-                                                                            <span class="con_title">
-                                                                                [ <%= val.con_title %> ]
-                                                                            </span>
-                                                                            <span class="link_url">
-                                                                                <%= val.re_title %>
-                                                                            </span>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td class="text-center">
-                                                                        <%= val.re_date.split(gap)[0] %>
-                                                                    </td>
-                                                                    <td class="text-center">
-                                                                        <%= val.re_count %>
-                                                                    </td>
-                                                                </tr>
-                                                                <% }) %>
-                                                                    <% }else{ %>
-                                                                        <tr>
-                                                                            <td colspan="4" class="text-center">현재 등록된
-                                                                                리뷰가 없습니다.</td>
-                                                                        </tr>
-                                                                        <% } %>
+                                                    <% if(reviews.length){ %> <%
+                                                    reviews.forEach((val)=> { %>
+                                                    <% const gap=' ' ; %>
+                                                    <tr class="border-bottom">
+                                                        <th
+                                                            scope="row"
+                                                            class="text-center"
+                                                        >
+                                                            <%= val.re_id %>
+                                                        </th>
+                                                        <td>
+                                                            <a
+                                                                class="link"
+                                                                href="/review/<%= Number(val.re_id) %>"
+                                                            >
+                                                                <span
+                                                                    class="con_title"
+                                                                >
+                                                                    [ <%=
+                                                                    val.con_title
+                                                                    %> ]
+                                                                </span>
+                                                                <span
+                                                                    class="link_url"
+                                                                >
+                                                                    <%=
+                                                                    val.re_title
+                                                                    %>
+                                                                </span>
+                                                            </a>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <%=
+                                                            val.re_date.split(gap)[0]
+                                                            %>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <%= val.re_count %>
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %> <% }else{ %>
+                                                    <tr>
+                                                        <td
+                                                            colspan="4"
+                                                            class="text-center"
+                                                        >
+                                                            현재 등록된 리뷰가
+                                                            없습니다.
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -212,22 +343,49 @@
                                         <span class="fs-4 mb-4">문의 하기</span>
                                         <div class="row g-3">
                                             <div class="col-md-6">
-                                                <label for="name" class="form-label">이름</label>
-                                                <input type="text" class="form-control" id="name">
+                                                <label
+                                                    for="name"
+                                                    class="form-label"
+                                                    >이름</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="name"
+                                                />
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="email" class="form-label">이메일</label>
-                                                <input type="email" class="form-control" id="inputPassword4">
+                                                <label
+                                                    for="email"
+                                                    class="form-label"
+                                                    >이메일</label
+                                                >
+                                                <input
+                                                    type="email"
+                                                    class="form-control"
+                                                    id="inputPassword4"
+                                                />
                                             </div>
                                             <div class="mb-3">
-                                                <label for="exampleFormControlTextarea1" class="form-label">문의
-                                                    내용</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1"
-                                                    rows="3"></textarea>
+                                                <label
+                                                    for="exampleFormControlTextarea1"
+                                                    class="form-label"
+                                                    >문의 내용</label
+                                                >
+                                                <textarea
+                                                    class="form-control"
+                                                    id="exampleFormControlTextarea1"
+                                                    rows="3"
+                                                ></textarea>
                                             </div>
 
                                             <div class="col-12">
-                                                <button type="submit" class="btn btn-primary">전송</button>
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-primary"
+                                                >
+                                                    전송
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -239,22 +397,28 @@
             </div>
         </main>
         <%- include('../../common/footer.ejs') %>
-            <script>
-                // 카카오 지도 API
-                window.onload = (function () {
-                    if ("<%= conference.is_onoff %>" === "true") {
-                        // Kakao 지도 API 초기화
-                        kakao.maps.load(function () {
-                            var container = document.getElementById('map'); // 지도를 담을 영역의 DOM 레퍼런스
-                            var postCode = '<%- conference.con_detail_location.addr %>'; // 페이지에서 받아온 우편번호 사용
+        <script>
+            // 카카오 지도 API
+            window.onload = (function () {
+                if ('<%= conference.is_onoff %>' === 'true') {
+                    // Kakao 지도 API 초기화
+                    kakao.maps.load(function () {
+                        var container = document.getElementById('map'); // 지도를 담을 영역의 DOM 레퍼런스
+                        var postCode =
+                            '<%- conference.con_detail_location.addr %>'; // 페이지에서 받아온 우편번호 사용
 
-                            // Geocoder 초기화
-                            var geocoder = new kakao.maps.services.Geocoder();
+                        // Geocoder 초기화
+                        var geocoder = new kakao.maps.services.Geocoder();
 
-                            // 주소 검색
-                            geocoder.addressSearch(postCode, function (result, status) {
+                        // 주소 검색
+                        geocoder.addressSearch(
+                            postCode,
+                            function (result, status) {
                                 if (status === kakao.maps.services.Status.OK) {
-                                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                                    var coords = new kakao.maps.LatLng(
+                                        result[0].y,
+                                        result[0].x
+                                    );
 
                                     // 지도 생성 및 마커 추가
                                     var map = new kakao.maps.Map(container, {
@@ -267,13 +431,11 @@
                                         map: map,
                                     });
                                 }
-                            });
-                        });
-                    }
-
-                })();
-
-            </script>
-</body>
-
+                            }
+                        );
+                    });
+                }
+            })();
+        </script>
+    </body>
 </html>
