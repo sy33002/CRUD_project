@@ -93,6 +93,7 @@
 .menu-wrap {
     position: sticky;
     top: 50px;
+    z-index: 100;
     background-color: #fff;
 }
 
