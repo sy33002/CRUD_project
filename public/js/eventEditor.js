@@ -181,8 +181,6 @@ const conTitle = document.querySelector('#conTitle');
 const conCompany = document.querySelector('#conCompany');
 const conLocation = document.querySelector('#conLocation');
 const conCategory = document.querySelector('#conCategory');
-const isOnoff = document.querySelector('input[name="isOnoff"]:checked');
-const conIsfree = document.querySelector('input[name="conIsfree"]:checked');
 const conPrice = document.querySelector('#conPrice');
 const conPeople = document.querySelector('#conPeople');
 const conCompanyUrl = document.querySelector('#conCompanyUrl');
@@ -197,10 +195,8 @@ const conDate = document.querySelector('#conDate');
 function resetInputValue() {
     conTitle.value = '';
     conCompany.value = '';
-    isOnoff.value = '';
     conLocation.value = '';
     conCategory.value = '';
-    conIsfree.value = '';
     conPrice.value = '';
     conPeople.value = '';
     conCompanyUrl.value = '';
@@ -386,10 +382,8 @@ function getInputValue() {
         subEndDate,
         conStartDate,
         conEndDate,
-        isOnoff: isOnoff.value,
         conLocation: conLocation.value,
         conCategory: conCategory.value,
-        conIsfree: conIsfree.value,
         conPrice: conPrice.value === '' ? 0 : conPrice.value, // 빈값 일 때는 0 보내기 (이렇게 안하면 db 충돌남)
         conPeople: conPeople.value,
         conCompanyUrl: conCompanyUrl.value,
@@ -470,6 +464,12 @@ if (eventWriteBtn) {
 
 async function registerConference() {
     const isFormValid = validateInput();
+    const isOnoff = document.querySelector(
+        'input[name="isOnoff"]:checked'
+    ).value;
+    const conIsfree = document.querySelector(
+        'input[name="conIsfree"]:checked'
+    ).value;
 
     const file = document.querySelector('#dynamic-file');
     formData.append('conferenceFile', file.files[0]);
@@ -492,8 +492,6 @@ async function registerConference() {
 
     const inputValue = getInputValue();
 
-    console.log(inputValue, 'inputValue');
-
     const imagePath = imageUploadData.file;
 
     const conferenceRes = await axios({
@@ -501,6 +499,8 @@ async function registerConference() {
         url: '/event/write',
         data: {
             ...inputValue,
+            isOnoff,
+            conIsfree,
             conImagePath: imagePath,
         },
     });
