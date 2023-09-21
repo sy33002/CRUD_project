@@ -8,15 +8,9 @@
             href="/static/css/pages/myPage/managerAside.css"
         />
         <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
+        <link rel="stylesheet" href="/static/css/pages/myPage/myRevList.css" />
     </head>
-    <style>
-        .cardCenter {
-            padding: 30px 0px;
-        }
-        .marginRemove {
-            margin: 0 auto;
-        }
-    </style>
+
     <body>
         <%- include('../../common/header.ejs') %>
         <main>
@@ -32,10 +26,14 @@
                                         <thead>
                                             <tr class="border-bottom">
                                                 <th>제목</th>
-                                                <th>등록일</th>
+                                                <th class="un">등록일</th>
                                                 <th>조회수</th>
-                                                <th>관련 행사 제목</th>
-                                                <th>관련 행사 링크</th>
+                                                <th class="un">
+                                                    관련 행사 제목
+                                                </th>
+                                                <th class="un">
+                                                    관련 행사 링크
+                                                </th>
                                                 <th>댓글 바로가기</th>
                                                 <th></th>
                                             </tr>
@@ -76,12 +74,12 @@
                                     document.createElement('tr');
                                 reviewElement.innerHTML = `
                                     <td>${result.review.re_title}</td>
-                                    <td>${result.review.re_date}</td>
+                                    <td class="un">${result.review.re_date}</td>
                                     <td> ${result.review.re_count}</td>
-                                    <td>${result.relatedConference.con_title}</td>
-                                    <td><a href="http://localhost:8000/event/${result.relatedConference.con_id}">바로가기</a></td>
+                                    <td class="un">${result.relatedConference.con_title}</td>
+                                    <td class="un"><a href="http://localhost:8000/event/${result.relatedConference.con_id}">바로가기</a></td>
                                     <td><a href="http://localhost:8000/review/${result.review.re_id}">바로가기</a></td>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="deleteMyReview(${result.review.re_id})">리뷰 삭제</button>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="deleteMyReview(${result.review.re_id})">삭제</button>
                                 `;
 
                                 myreviewListContainer.appendChild(
@@ -89,8 +87,10 @@
                                 );
                             });
                         } else {
-                            myreviewListContainer.innerHTML =
-                                '등록한 리뷰가 없습니다.';
+                            const reviewElement = document.createElement('tr');
+                            reviewElement.innerHTML =
+                                '<td colspan="6">등록한 리뷰가 없습니다.</td>';
+                            myreviewListContainer.appendChild(reviewElement);
                         }
                     }
                 });
