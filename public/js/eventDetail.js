@@ -1,18 +1,18 @@
 // 찜하기 기능
-async function saveConference() {
+async function saveConference(con_id) {
     try {
         var currentPageURL = window.location.href;
-
         // URL에서 숫자 추출
         var match = currentPageURL.match(/\/(\d+)$/);
         if (match) {
             var number1 = match[1];
-
+            console.log(number1);
             // axios를 사용하여 POST 요청 보내기
             const response = await axios.post(`/event/${number1}`, {
                 con_id: number1,
             });
 
+            console.log(response.data.result);
             if (response.data.result === 1) {
                 if (
                     confirm(
@@ -20,10 +20,14 @@ async function saveConference() {
                     )
                 ) {
                     // 로그인 페이지로 이동하기 전에 현재 페이지 URL을 쿠키에 저장
-                    document.cookie = 'returnTo=' + currentPageURL;
-
+                    document.cookie = `redirectURL=${encodeURIComponent(
+                        currentPageURL
+                    )}; path=/`;
+                    const res = await axios.get('/login', document.cookie);
                     // 로그인 페이지로 이동
                     window.location.href = '/login';
+                } else {
+                    window.location.reload();
                 }
             } else if (response.data.result === 2) {
                 if (
@@ -31,7 +35,11 @@ async function saveConference() {
                         '이미 찜한 행사입니다! 찜한 행사는 마이페이지에서 확인할 수 있습니다.'
                     )
                 ) {
+                    //confirm에서 확인 누르면
                     window.location.href = `/myPage/myFavoriteConListRender?userId=${response.data.id.id}`;
+                } else {
+                    //confirm에서 취소 누르면
+                    window.location.reload();
                 }
             } else {
                 if (
@@ -39,16 +47,10 @@ async function saveConference() {
                         '찜성공! 찜한 행사는 마이페이지에서 확인할 수 있습니다.'
                     )
                 ) {
+                    //confirm에서 확인 누르면
                     window.location.href = `/myPage/myFavoriteConListRender?userId=${response.data.id.id}`;
-                }
-                // 쿠키에서 이전 페이지 URL을 가져옴
-                var previousPage = getCookie('previousPage');
-
-                if (previousPage) {
-                    // 이전 페이지 URL이 존재하면 해당 페이지로 이동
-                    window.location.href = previousPage;
                 } else {
-                    // 이전 페이지 URL이 없으면 페이지 새로고침
+                    //confirm에서 취소 누르면
                     window.location.reload();
                 }
             }
