@@ -26,8 +26,8 @@ main {
 }
 
 div > h2 {
-    font-size: large;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .padding {
