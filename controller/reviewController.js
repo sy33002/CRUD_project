@@ -1,5 +1,6 @@
 const Filter = require('badwords-ko'); // npm install badwords-ko --save
 const filter = new Filter();
+const moment = require('moment');
 
 const { getIdFromUrl } = require('../utils/utils');
 const { ConferenceReview, Sequelize, Conference } = require('../models'); // ../models/index.js
@@ -62,6 +63,12 @@ exports.getReviewWrite = async (req, res) => {
     console.log('idVal : ==== ', idValue);
 
     const eventName = await Conference.findAll({
+        where: {
+            con_start_date: {
+                [Op.lt]: moment(), // 현재 날짜보다 작은(이전인) 데이터만 선택합니다.
+            },
+        },
+
         attributes: ['con_title', 'con_id'],
     });
 
