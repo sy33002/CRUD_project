@@ -17,14 +17,14 @@
 
 .sidebar a {
     display: block;
-    color: rgb(11, 244, 10);
+    color: var(--color-green);
     padding: 16px;
     text-decoration: none;
 }
 
 .sidebar a:hover:not(.active) {
     background-color: #555;
-    color: rgb(11, 244, 10);
+    color: var(--color-green);
 }
 
 div.content {

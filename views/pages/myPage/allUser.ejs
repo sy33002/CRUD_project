@@ -126,8 +126,10 @@
                     if (res.data === true) {
                         alert('유저 삭제 성공!');
                         obj.parentElement.parentElement.remove();
+                        window.location.reload();
                     } else {
                         alert('유저 삭제 실패');
+                        window.location.reload();
                     }
                 });
             }
@@ -143,8 +145,10 @@
                     console.log(res);
                     if (res.data === true) {
                         alert('매니저 권한 부여 성공!');
+                        window.location.reload();
                     } else {
                         alert('매니저 권한 부여 실패');
+                        window.location.reload();
                     }
                 });
             }
@@ -160,8 +164,10 @@
                     console.log(res);
                     if (res.data === true) {
                         alert('매니저 권한 회수 성공!');
+                        window.location.reload();
                     } else {
                         alert('매니저 권한 회수 실패');
+                        window.location.reload();
                     }
                 });
             }

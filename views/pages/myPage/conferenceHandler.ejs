@@ -7,6 +7,8 @@
             href="/static/css/pages/myPage/managerAside.css"
         />
         <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
+        <link rel="stylesheet" href="/static/css/pages/myPage/myRevList.css" />
+
         <style>
             h2 {
                 font-size: 2rem;
@@ -19,7 +21,92 @@
         <main>
             <%- include('./managerAside') %>
 
-            <div class="content">
+            <div class="cardCenter content">
+                <div class="container">
+                    <div class="row">
+                        <div class="marginRemove">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <div class="card-title">
+                                        <h2>행사 등록 대기 목록</h2>
+                                    </div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="border-bottom">
+                                                <th></th>
+                                                <th>행사 제목</th>
+                                                <th>신청 시간</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="conferenceList"></tbody>
+                                    </table>
+                                </div>
+                                <div class="card-body text-center">
+
+
+                                    <div class="accordion my-5" id="accordionPanelsStayOpenExample">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button
+                                                    class="accordion-button"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#panelsStayOpen-collapseOne"
+                                                    aria-expanded="true"
+                                                    aria-controls="panelsStayOpen-collapseOne"
+                                                >
+                                                    행사 등록 완료 목록
+                                                </button>
+                                            </h2>
+                                            <div
+                                                id="panelsStayOpen-collapseOne"
+                                                class="accordion-collapse collapse show"
+                                            >
+                                                <div class="accordion-body">
+                                                    <ul id="successConferenceList"></ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header">
+                                                <button
+                                                    class="accordion-button collapsed"
+                                                    type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#panelsStayOpen-collapseTwo"
+                                                    aria-expanded="false"
+                                                    aria-controls="panelsStayOpen-collapseTwo"
+                                                >
+                                                    행사 등록 거절 목록
+                                                </button>
+                                            </h2>
+                                            <div
+                                                id="panelsStayOpen-collapseTwo"
+                                                class="accordion-collapse collapse"
+                                            >
+                                                <div class="accordion-body">
+                                                    <ul id="rejectedConferenceList"></ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="content">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-10">
@@ -44,8 +131,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="container padding">
+                </div> -->
+
+
+
+                <!-- <div class="container padding">
                     <div class="row conIsAgreed">
                         <div class="col-lg-6">
                             <div class="card">
@@ -72,7 +162,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </main>
         <%- include('../../common/footer.ejs') %>
@@ -95,7 +185,7 @@
                     ) {
                         const conferenceListContainer =
                             document.getElementById('conferenceList');
-                        conferenceListContainer.innerHTML = ''; // Clear previous content
+                        conferenceListContainer.innerHTML = '';
 
                         conferenceList.forEach((conference) => {
                             const conferenceElement =
@@ -120,8 +210,11 @@
                     } else {
                         const conferenceListContainer =
                             document.getElementById('conferenceList');
+                        const conferenceElement = document.createElement('tr');
                         conferenceListContainer.innerHTML =
-                            '신청한 새로운 행사가 없습니다.';
+                            '<td colspan="6">신청한 새로운 행사가 없습니다.</td>';
+
+                        conferenceListContainer.appendChild(conferenceElement);
                     }
                 }
             });
@@ -188,7 +281,7 @@
                             const successElement = document.createElement('li');
 
                             successElement.innerHTML = `
-                                                    <li> ${conference.con_title}</li>
+                                                  <span>${conference.con_title}</span>
                                                 `;
 
                             successConferenceListContainer.appendChild(
