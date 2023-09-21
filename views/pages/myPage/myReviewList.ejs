@@ -50,7 +50,6 @@
         <%- include('../../common/footer.ejs') %>
 
         <script>
-            // 내가 쓴 리뷰 보기
             function myreviewList(userId) {
                 axios({
                     method: 'GET',
@@ -98,10 +97,9 @@
 
             window.onload = function () {
                 const userId = '<%= data.user_id %>';
-                myreviewList(userId); // 페이지 로딩 시 내가 쓴 리뷰 보기
+                myreviewList(userId);
             };
 
-            // 내가 쓴 리뷰 삭제
             function deleteMyReview(reId) {
                 axios({
                     method: 'delete',
