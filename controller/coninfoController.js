@@ -89,6 +89,7 @@ exports.getConferenceWrite = (req, res) => {
 //행사 상세페이지
 exports.getConferenceDetail = async (req, res) => {
     const { id } = req.params;
+    const userId = res.locals.Id;
 
     console.log(id);
 
@@ -106,12 +107,25 @@ exports.getConferenceDetail = async (req, res) => {
     const result2 = await ConFavorite.findAll({
         where: { con_id: id },
     });
-    console.log('유저 세션 아이디값', res.locals.Id);
+
+    const result3 = await ConFavorite.findOne({
+        where: {
+            [Op.and]: [
+                { con_id: id },
+                { user_id: userId }
+            ]
+        }
+    });
+    let confavoriteValue = 0;
+    if (result3) {
+        confavoriteValue = 1;
+    }
     res.render(`event/detail`, {
         conference: result1,
         confavorite: result2.length,
         user_id: res.locals.Id,
         reviews: reviews,
+        confavoriteValue: confavoriteValue,
     });
 };
 
@@ -241,7 +255,7 @@ exports.saveConference = async (req, res) => {
             user_id: res.locals.Id,
             con_id: req.body.con_id,
         });
-        res.send({ result: 3 }); //찜 성공
+        res.send({ result: 3, id }); //찜 성공
     }
 };
 
