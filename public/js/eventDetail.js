@@ -68,33 +68,12 @@ function getCookie(name) {
     if (parts.length == 2) return parts.pop().split(';').shift();
 }
 
-// 카카오 지도 API
+// copy 기능
+const copy = () => {
+    const url = window.location.href;
 
-window.onload = function () {
-    // Kakao 지도 API 초기화
-    kakao.maps.load(function () {
-        var container = document.getElementById('map'); // 지도를 담을 영역의 DOM 레퍼런스
-        var postCode = '<%- conference.con_detail_location.addr %>'; // 페이지에서 받아온 우편번호 사용
-
-        // Geocoder 초기화
-        var geocoder = new kakao.maps.services.Geocoder();
-
-        // 주소 검색
-        geocoder.addressSearch(postCode, function (result, status) {
-            if (status === kakao.maps.services.Status.OK) {
-                var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-                // 지도 생성 및 마커 추가
-                var map = new kakao.maps.Map(container, {
-                    center: coords,
-                    level: 3,
-                });
-
-                var marker = new kakao.maps.Marker({
-                    position: coords,
-                    map: map,
-                });
-            }
-        });
+    // 클립보드에 복사
+    window.navigator.clipboard.writeText(url).then(() => {
+        alert('복사 완료 !');
     });
 };

@@ -10,6 +10,8 @@
             src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6f19fc94da41af704131c0bd9ae48f87&libraries=services"></script>
 
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
         <link defer rel="stylesheet" href="/static/css/pages/event/detail.css" />
         <script defer src="/static/js/eventDetail.js"></script>
 </head>
@@ -35,12 +37,12 @@
                                             <li style="
                                                     color: rgb(240, 151, 123);
                                                 ">
-                                                #<%= conference.is_onoff ? '온라인' : '오프라인' %>
+                                                #<%= conference.is_onoff ? '오프라인' : '온라인' %>
                                             </li>
                                             <li style="
                                                     color: rgb(109, 198, 112);
                                                 ">
-                                                #<%= conference.is_free ? '유료' : '무료' %>
+                                                #<%= conference.con_isfree ? '무료' : '유료' %>
                                             </li>
                                             <li style="color: rgb(93, 147, 228)">
                                                 #<%= conference.con_category %>
@@ -69,9 +71,17 @@
                                                 <%= conference.con_people %>
                                             </span>
                                         </div>
+                                        <% if(conference.con_isfree===false ){ %>
+                                            <div class="con-price item">
+                                                <span class="text">가격 :</span>
+                                                <span class="price">
+                                                    <%= conference.con_price.toLocaleString() %> 원
+                                                </span>
+                                            </div>
+                                            <% } %>
                                     </div>
                                     <div class="btn_group">
-                                        <button type="button" class="btn btn-outline-primary">공유
+                                        <button type="button" class="btn btn-outline-primary" onclick="copy()">공유
                                             <span class="icon">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-share" viewBox="0 0 16 16">
@@ -104,29 +114,122 @@
                                 </div>
                             </div>
                             <div>
-                                <%= conference.confavoriteValue %>
 
                             </div>
                             <div class="contents-wrap">
                                 <div class="menu-wrap border-bottom">
                                     <div class="btn-group w-100" role="group">
-                                        <a href="#introduction" class="menu-btn">
+                                        <a href="#introduction" id="btnradio1" class="menu-btn">
                                             행사 소개
                                         </a>
-                                        <a href="#location" class="menu-btn">
+                                        <a href="#location" id="btnradio2" class="menu-btn">
                                             행사 장소
                                         </a>
-                                        <a href="#review" class="menu-btn">
+                                        <a href="#review" id="btnradio3" class="menu-btn">
                                             행사 리뷰
                                         </a>
-                                        <a href="#inquiries" class="menu-btn">
+                                        <a href="#inquiries" id="btnradio4" class="menu-btn">
                                             문의 하기
                                         </a>
                                     </div>
                                 </div>
                                 <div class="contents">
-                                    <div id="#introduction" class="introduction my-editor mt-5">
-                                        <%- conference.con_detail %>
+                                    <div id="introduction" class="introduction page-section my-editor mt-5">
+                                        <span class="fs-4 mb-4">행사 소개</span>
+                                        <div><%- conference.con_detail %></div>
+                                    </div>
+
+
+                                    <div id="location" class="location page-section mt-5">
+                                        <span class="fs-4 mb-4">행사 장소</span>
+                                        <% if(conference.is_onoff){ %>
+                                            <span>
+                                                <%= conference.con_detail_location.addr %>, <%=
+                                                        conference.con_detail_location.detailAddr %>
+                                            </span>
+                                            <div id="map" class="border mt-4" style="width: 100%; height: 400px;"></div>
+                                            <% }else{ %>
+                                                <span>온라인</span>
+
+                                                <% } %>
+                                    </div>
+                                    <div id="review" class="review page-section mt-5 mb-5">
+                                        <span class="fs-4 mb-4">행사 리뷰</span>
+                                        <div class="table_scroll">
+                                            <table class="table table-hover">
+                                                <colgroup>
+                                                    <col width="60px" />
+                                                    <col />
+                                                    <col width="80px" />
+                                                    <col width="60px" />
+                                                </colgroup>
+                                                <thead>
+                                                    <tr class="border-bottom">
+                                                        <th scope="col"></th>
+                                                        <th scope="col" class="text-center">제목</th>
+                                                        <th scope="col" class="text-center">작성일</th>
+                                                        <th scope="col" class="text-center">조회</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% if(reviews.length){ %>
+                                                        <% reviews.forEach((val)=> { %>
+                                                            <% const gap=' ' ; %>
+                                                                <tr class="border-bottom">
+                                                                    <th scope="row" class="text-center">
+                                                                        <%= val.re_id %>
+                                                                    </th>
+                                                                    <td>
+                                                                        <a class="link"
+                                                                            href="/review/<%= Number(val.re_id) %>">
+                                                                            <span class="con_title">
+                                                                                [ <%= val.con_title %> ]
+                                                                            </span>
+                                                                            <span class="link_url">
+                                                                                <%= val.re_title %>
+                                                                            </span>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <%= val.re_date.split(gap)[0] %>
+                                                                    </td>
+                                                                    <td class="text-center">
+                                                                        <%= val.re_count %>
+                                                                    </td>
+                                                                </tr>
+                                                                <% }) %>
+                                                                    <% }else{ %>
+                                                                        <tr>
+                                                                            <td colspan="4" class="text-center">현재 등록된
+                                                                                리뷰가 없습니다.</td>
+                                                                        </tr>
+                                                                        <% } %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div id="inquiries" class="inquiries mb-5">
+                                        <span class="fs-4 mb-4">문의 하기</span>
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label for="name" class="form-label">이름</label>
+                                                <input type="text" class="form-control" id="name">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="email" class="form-label">이메일</label>
+                                                <input type="email" class="form-control" id="inputPassword4">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exampleFormControlTextarea1" class="form-label">문의
+                                                    내용</label>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1"
+                                                    rows="3"></textarea>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <button type="submit" class="btn btn-primary">전송</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -136,6 +239,41 @@
             </div>
         </main>
         <%- include('../../common/footer.ejs') %>
+            <script>
+                // 카카오 지도 API
+                window.onload = (function () {
+                    if ("<%= conference.is_onoff %>" === "true") {
+                        // Kakao 지도 API 초기화
+                        kakao.maps.load(function () {
+                            var container = document.getElementById('map'); // 지도를 담을 영역의 DOM 레퍼런스
+                            var postCode = '<%- conference.con_detail_location.addr %>'; // 페이지에서 받아온 우편번호 사용
+
+                            // Geocoder 초기화
+                            var geocoder = new kakao.maps.services.Geocoder();
+
+                            // 주소 검색
+                            geocoder.addressSearch(postCode, function (result, status) {
+                                if (status === kakao.maps.services.Status.OK) {
+                                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                                    // 지도 생성 및 마커 추가
+                                    var map = new kakao.maps.Map(container, {
+                                        center: coords,
+                                        level: 3,
+                                    });
+
+                                    var marker = new kakao.maps.Marker({
+                                        position: coords,
+                                        map: map,
+                                    });
+                                }
+                            });
+                        });
+                    }
+
+                })();
+
+            </script>
 </body>
 
 </html>
