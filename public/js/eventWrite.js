@@ -325,6 +325,6 @@ async function registerConference() {
         return (document.location.href = '/event');
     } else {
         alert('등록에 실패하였습니다.');
-        return false;
+        return (document.location.href = '/event/write');
     }
 }
