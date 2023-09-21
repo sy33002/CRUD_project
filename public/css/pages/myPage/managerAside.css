@@ -13,6 +13,7 @@
     overflow: auto;
     font-size: 14px;
     text-align: center;
+    z-index: 33;
 }
 
 /* Sidebar links */
@@ -49,6 +50,9 @@ div.content {
     }
     div.content {
         margin-left: 0;
+    }
+    .un {
+        display: none;
     }
 }
 
