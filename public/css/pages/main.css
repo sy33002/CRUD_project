@@ -8,9 +8,21 @@ main h1 {
     color: var(--color-green);
     text-align: center;
 }
+
+main .section span {
+    font-weight: 600;
+    font-size: 65px;
+    color: var(--color-green);
+
+    text-align: center;
+}
+
 @media all and (max-width: 1000px) {
     main h1 {
         font-size: 62px;
+    }
+    main .section span {
+        font-size: 55px;
     }
 }
 
@@ -18,11 +30,14 @@ main h1 {
     main h1 {
         font-size: 40px;
     }
+    main .section span {
+        font-size: 35px;
+    }
 }
+
 /* Conference&Developer for U! Developer */
-.typing-demo .highlight {
-    color: rgb(214, 245, 137); 
-    font-weight: bold;
+.typing {
+    white-space: nowrap;
 }
 
 .wrapper {
@@ -36,11 +51,11 @@ main h1 {
     justify-content: center;
 }
 
-.typing-demo {
+.typing {
     text-align: center;
-    animation: typing 4s steps(22), blink 0.5s step-end infinite alternate;
+    /* animation: typing 4s steps(22), blink 0.5s step-end infinite alternate; */
     white-space: nowrap;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 @keyframes typing {
