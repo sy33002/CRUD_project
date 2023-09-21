@@ -20,7 +20,6 @@
 
         <!-- typewriter cdn -->
         <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
-
     </head>
 
     <body>
@@ -277,22 +276,22 @@
         </main>
         <%- include('../common/footer.ejs') %>
         <script>
-
             let typewriter = new Typewriter('#typing', {
-                loop: false, // 반복 여부
-                delay: 150,
+                loop: true, // 반복 여부
+                delay: 75,
                 cursor: '',
             });
 
             typewriter
-                .pauseFor(2500)
+                .pauseFor(400)
                 .typeString('Conferences & Reviews for you!')
                 .pauseFor(400)
                 .deleteChars(4)
                 .typeString('U! Developers')
-                .pauseFor(2500)
+                .pauseFor(1000)
+                .deleteChars(50)
+                .pauseFor(10000)
                 .start();
-
 
             AOS.init();
             const swiper = new Swiper('.swiper', {
