@@ -7,7 +7,6 @@ const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 // login 페이지 렌더
 exports.getLogin = (req, res) => {
-    console.log(req.cookies);
     res.render('login');
 };
 
@@ -102,6 +101,7 @@ exports.getAllConference = async (req, res) => {
         res.render('404');
     }
 };
+
 // 관리자 페이지: 컨퍼런스 삭제하기
 exports.deleteConference = async (req, res) => {
     const result = await Conference.destroy({
@@ -562,7 +562,6 @@ exports.getmyFavoriteList = async (req, res) => {
 // 마이페이지: 찜한 항목 삭제
 exports.deleteMyFavorite = async (req, res) => {
     const conId = req.body.con_id;
-    console.log('conId >>>>', conId);
     const result = await ConFavorite.destroy({
         where: { con_id: conId },
     });
