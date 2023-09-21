@@ -1,13 +1,18 @@
-/* ******************************** */
-main .wrap {
+@import url('../../common/editor.css');
+.wrap {
     width: 1250px;
     position: relative;
     margin-top: 40px;
 }
 
 @media all and (max-width: 1250px) {
-    main .wrap {
+    .wrap {
         width: 1000px;
+    }
+}
+@media all and (max-width: 1080px) {
+    .wrap {
+        width: 100%;
     }
 }
 .article {
@@ -18,17 +23,77 @@ main .wrap {
     position: absolute;
     top: 0;
     right: 0;
-    width: 380px;
+    width: 360px;
     height: 100%;
 }
 
-.aside .con-wrap {
+.aside .aside-wrap {
     padding: 20px;
+    position: sticky;
+    top: 56px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.aside .title {
+    margin-bottom: 15px;
+}
+
+.aside .hash-tag {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.aside .date-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.aside .date-list .item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.aside .btn_group {
+    display: flex;
+    gap: 15px;
+}
+
+.aside .btn_group .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.aside .btn_group .btn:hover svg {
+    fill: #fff;
+}
+
+.aside .btn_group .icon svg {
+    fill: #0d6efd;
+    transition: all 0.15s ease-in-out;
+}
+
+.aside .btn_group .btn {
+    width: 100%;
+}
+
+.table_scroll {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.table_scroll table {
+    min-width: 600px;
 }
 
 .menu-wrap {
     position: sticky;
     top: 50px;
+    z-index: 100;
     background-color: #fff;
 }
 
@@ -53,10 +118,72 @@ main .wrap {
     bottom: -1px;
     left: 0;
     height: 3px;
-    background-color: rgb(154, 154, 255);
+    background-color: #0d6efd;
     transition: all 0.2s ease-in-out;
 }
 
 .menu-wrap .menu-btn:hover::before {
     width: 100%;
+}
+
+.introduction {
+    padding-top: 70px;
+}
+
+.table_scroll table td,
+.table_scroll table th {
+    vertical-align: middle;
+}
+
+.table_scroll table td .con_title {
+    color: #6b6a6a;
+    margin-bottom: 5px;
+    display: block;
+    line-height: 20px;
+}
+
+@media all and (max-width: 1250px) {
+    .aside {
+        width: 320px;
+    }
+
+    .article {
+        margin-right: 340px;
+    }
+
+    .menu-wrap .menu-btn {
+        margin: 0 20px;
+    }
+}
+
+@media all and (max-width: 1080px) {
+    .aside {
+        right: 40px;
+    }
+}
+
+@media all and (max-width: 1000px) {
+    .aside {
+        position: static;
+        width: 100%;
+        height: auto;
+    }
+    .article {
+        margin-right: 0;
+    }
+
+    .aside .aside-wrap {
+        position: relative;
+        padding: 20px 0;
+        top: 0;
+        box-shadow: none;
+        right: 0;
+    }
+}
+
+@media all and (max-width: 640px) {
+    .menu-wrap .menu-btn {
+        margin: 0;
+        font-size: 14px;
+    }
 }

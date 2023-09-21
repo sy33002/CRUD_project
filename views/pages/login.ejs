@@ -13,7 +13,6 @@
                     <div class="row full-height justify-content-center">
                         <div class="col-12 text-center align-self-center py-5">
                             <div class="section pb-5 pt-5 pt-sm-2 text-center">
-                                <!-- <h4 class="mb-0 pb-3">Flip it!</h4> -->
                                 <input
                                     class="checkbox"
                                     type="checkbox"
@@ -95,13 +94,11 @@
                                                                 name="managerId"
                                                                 class="form-style"
                                                                 placeholder="Manager Id"
-
                                                                 required
                                                             />
                                                         </div>
                                                         <div class="form-group">
                                                             <label
-
                                                                 for="managerPw"
                                                             ></label>
                                                             <input
@@ -110,16 +107,13 @@
                                                                 name="managerPw"
                                                                 class="form-style"
                                                                 placeholder="Manager Password"
-
                                                                 required
                                                             />
                                                         </div>
                                                         <button
                                                             type="button"
                                                             class="btn mt-4"
-
                                                             onclick="managerLogin()"
-
                                                         >
                                                             LOGIN
                                                         </button>
@@ -166,14 +160,13 @@
                         } else if (res.data.idCheck === false) {
                             alert('존재하는 사용자가 아닙니다.');
                         }
-                    } else  {
+                    } else {
                         alert('로그인 성공!');
 
                         if (res.data.redirectURL) {
                             document.location.href = res.data.redirectURL;
-                            
                         } else {
-                            document.location.href ='/'
+                            document.location.href = '/';
                         }
                     }
                 });
@@ -209,29 +202,10 @@
                     } else {
                         alert('로그인 성공!');
 
-                        // document.location.href = '/';
+                        document.location.href = '/';
                     }
                 });
             }
         </script>
     </body>
 </html>
-
-<!-- 지형: 유저가 입력한 정보는 userId, userPw 변수로 넘겨주시면 됩니다! -->
-
-<!-- 유저가 로그인에 성공한다면, {result: true, data: 로그인 세션} 전달 -->
-<!-- 로그인 세션 전달 변수 참고
-        data = {
-        id,
-        userName,
-        userId,
-        userPw,
-        userAddr,
-        userEmail,
-        userCategory,
-      }
- -->
-
-<!-- 유저가 아이디는 맞고, 비밀번호가 틀렸다면 {result:false, idCheck: true, pwCheck: false, message: '비밀번호가 틀렸습니다.'} 전달 -->
-<!-- 유저가 아이디가 틀렸다면 {result:false, idCheck: false,  pwCheck: false, message: '존재하는 사용자가 없습니다.'} 전달 -->
-<!-- 만약 DB문제로 전혀 동작하지 못했다면 { result: false, message: '서버 오류가 발생했습니다.' } 전달 -->

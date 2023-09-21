@@ -181,8 +181,6 @@ const conTitle = document.querySelector('#conTitle');
 const conCompany = document.querySelector('#conCompany');
 const conLocation = document.querySelector('#conLocation');
 const conCategory = document.querySelector('#conCategory');
-const isOnoff = document.querySelector('input[name="isOnoff"]:checked');
-const conIsfree = document.querySelector('input[name="conIsfree"]:checked');
 const conPrice = document.querySelector('#conPrice');
 const conPeople = document.querySelector('#conPeople');
 const conCompanyUrl = document.querySelector('#conCompanyUrl');
@@ -197,10 +195,8 @@ const conDate = document.querySelector('#conDate');
 function resetInputValue() {
     conTitle.value = '';
     conCompany.value = '';
-    isOnoff.value = '';
     conLocation.value = '';
     conCategory.value = '';
-    conIsfree.value = '';
     conPrice.value = '';
     conPeople.value = '';
     conCompanyUrl.value = '';
@@ -386,10 +382,8 @@ function getInputValue() {
         subEndDate,
         conStartDate,
         conEndDate,
-        isOnoff: isOnoff.value,
         conLocation: conLocation.value,
         conCategory: conCategory.value,
-        conIsfree: conIsfree.value,
         conPrice: conPrice.value === '' ? 0 : conPrice.value, // 빈값 일 때는 0 보내기 (이렇게 안하면 db 충돌남)
         conPeople: conPeople.value,
         conCompanyUrl: conCompanyUrl.value,
@@ -414,22 +408,22 @@ function validateInput() {
 
     if (conTitle.trim() === '') {
         alert('행사 이름을 입력해주세요.');
-        return conTitle.focus();
+        return document.querySelector('#conTitle').focus();
     }
 
     if (conDetail.trim() === '') {
         alert('행사 상세 내용을 입력해주세요.');
-        return conDetail.focus();
+        return document.querySelector('#conDetail').focus();
     }
 
     if (conCategory === '') {
         alert('카테고리를 선택해주세요.');
-        return conCategory.focus();
+        return document.querySelector('#conCategory').focus();
     }
 
     if (conPeople === '') {
         alert('규모를 입력해 주세요.');
-        return conCategory.focus();
+        return document.querySelector('#conPeople').focus();
     }
 
     if (subEndDate >= conStartDate)
@@ -438,22 +432,22 @@ function validateInput() {
     if (isConOnoff) {
         if (conDetailAddr.postCode === '') {
             alert('우편번호를 입력해 주세요.');
-            return postcode.focus();
+            return document.querySelector('#postcode').focus();
         }
         if (conDetailAddr.addr === '') {
             alert('주소를 입력해 주세요.');
-            return address.focus();
+            return document.querySelector('#address').focus();
         }
         if (conDetailAddr.detailAddr === '') {
             alert('상세 주소를 입력해 주세요.');
-            return detailAddress.focus();
+            return document.querySelector('#detailAddress').focus();
         }
     }
 
     if (isFree) {
         if (conPrice === '') {
             alert('가격을 입력해 주세요.');
-            return conPrice.focus();
+            return document.querySelector('#conPrice').focus();
         }
     }
 
@@ -470,6 +464,12 @@ if (eventWriteBtn) {
 
 async function registerConference() {
     const isFormValid = validateInput();
+    const isOnoff = document.querySelector(
+        'input[name="isOnoff"]:checked'
+    ).value;
+    const conIsfree = document.querySelector(
+        'input[name="conIsfree"]:checked'
+    ).value;
 
     const file = document.querySelector('#dynamic-file');
     formData.append('conferenceFile', file.files[0]);
@@ -492,8 +492,6 @@ async function registerConference() {
 
     const inputValue = getInputValue();
 
-    console.log(inputValue, 'inputValue');
-
     const imagePath = imageUploadData.file;
 
     const conferenceRes = await axios({
@@ -501,6 +499,8 @@ async function registerConference() {
         url: '/event/write',
         data: {
             ...inputValue,
+            isOnoff,
+            conIsfree,
             conImagePath: imagePath,
         },
     });

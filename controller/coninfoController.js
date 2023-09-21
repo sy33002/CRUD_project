@@ -2,6 +2,7 @@ const { Conference, Sequelize, ConferenceReview } = require('../models');
 const { ConFavorite } = require('../models');
 const { Op } = require('sequelize');
 const { User } = require('../models');
+
 // 순수 리스트 렌더역할
 exports.getConferenceList = (req, res) => {
     return res.render('event/list');
@@ -71,7 +72,6 @@ exports.postConferenceList = async (req, res) => {
                 // 다른 OR 조건을 추가할 수도 있습니다.
             ];
         }
-        console.log(whereConditions, 'filter 결과 값');
         const eventList = await Conference.findAll({
             where: whereConditions,
         });
@@ -89,8 +89,7 @@ exports.getConferenceWrite = (req, res) => {
 //행사 상세페이지
 exports.getConferenceDetail = async (req, res) => {
     const { id } = req.params;
-
-    console.log(id);
+    const userId = res.locals.Id;
 
     const result1 = await Conference.findOne({
         where: { con_id: id },
@@ -106,12 +105,25 @@ exports.getConferenceDetail = async (req, res) => {
     const result2 = await ConFavorite.findAll({
         where: { con_id: id },
     });
-    console.log('유저 세션 아이디값', res.locals.Id);
+
+    const result3 = await ConFavorite.findOne({
+        where: {
+            [Op.and]: [
+                { con_id: id },
+                { user_id: userId }
+            ]
+        }
+    });
+    let confavoriteValue = 0;
+    if (result3) {
+        confavoriteValue = 1;
+    }
     res.render(`event/detail`, {
         conference: result1,
         confavorite: result2.length,
         user_id: res.locals.Id,
         reviews: reviews,
+        confavoriteValue: confavoriteValue,
     });
 };
 
@@ -160,8 +172,6 @@ exports.postConference = async (req, res) => {
             con_detail_location: conDetailAddr,
             detail_Text: detailText,
         });
-        console.log(result, 'result');
-
         res.send({ result: true });
     } catch (err) {
         console.error(err);
@@ -241,7 +251,7 @@ exports.saveConference = async (req, res) => {
             user_id: res.locals.Id,
             con_id: req.body.con_id,
         });
-        res.send({ result: 3 }); //찜 성공
+        res.send({ result: 3, id }); //찜 성공
     }
 };
 

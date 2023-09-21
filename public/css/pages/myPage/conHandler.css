@@ -33,3 +33,20 @@ div > h2 {
 .padding {
     padding-bottom: 30px;
 }
+
+#successConferenceList li {
+    padding: 4px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+#successConferenceList li:hover {
+    /* background-color: #fbfde8; */
+    background-color: var(--color-green);
+    color: var(--color-white);
+}
+
+.accordion {
+    --bs-accordion-active-bg: var(--color-white);
+    box-shadow: none;
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0;
+}

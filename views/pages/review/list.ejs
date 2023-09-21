@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
-    <head>
-        <%- include('../../common/head.ejs', {title: '리뷰 리스트' }) %>
-        <link rel="stylesheet" href="/static/css/pages/review/list.css" />
-    </head>
 
-    <body>
-        <%- include('../../common/header.ejs') %>
+<head>
+    <%- include('../../common/head.ejs', {title: '리뷰 리스트' }) %>
+        <link rel="stylesheet" href="/static/css/pages/review/list.css" />
+</head>
+
+<body>
+    <%- include('../../common/header.ejs') %>
         <main>
             <div class="wrap py-5">
                 <div class="table_scroll">
@@ -28,26 +29,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% if(result){ %> <% result.forEach((val, i)=> { %>
-                            <tr class="border-bottom">
-                                <th scope="row" class="text-center">
-                                    <%= val.re_id %>
-                                </th>
-                                <td>
-                                    <a
-                                        class="link"
-                                        href="/review/<%= Number(val.re_id) %>"
-                                    >
-                                        <span class="con_title">
-                                            [ <%= val.con_title %> ]
-                                        </span>
-                                        <span class="link_url">
-                                            <%= val.re_title %>
-                                        </span>
-                                    </a>
-                                </td>
-                                <td class="text-center">
-                                    <%= val.re_date.split(' ')[0] %>
+                            <% if(result){ %>
+                                <% result.forEach((val, i)=> { %>
+                                    <tr class="border-bottom">
+                                        <th scope="row" class="text-center">
+                                            <%= val.re_id %>
+                                        </th>
+                                        <td>
+                                            <a class="link" href="/review/<%= Number(val.re_id) %>">
+                                                <span class="con_title">
+                                                    [ <%= val.con_title %> ]
+                                                </span>
+                                                <span class="link_url">
+                                                    <%= val.re_title %>
+                                                </span>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <%= val.re_date.split(' ')[0] %>
                                 </td>
                                 <td class="text-center"><%= val.re_count %></td>
                                 <td class="text-center"><%= val.user_id %></td>
@@ -91,36 +90,32 @@
                             %>
                             <li
                                 class="page-item <%= i === Number(currentPage) ? ' active' : '' %>"
-                            >
-                                <a class="page-link" href="?page=<%= i %>">
-                                    <%= i %>
-                                </a>
-                            </li>
-                            <% } %> <% if (endPage < totalPages) { %>
-                            <li class="page-item">
-                                <a
-                                    class="page-link"
-                                    href="?page=<%= endPage + 1 %>"
-                                    aria-label="Next"
-                                >
-                                    <span aria-hidden="true">&rsaquo;</span>
-                                </a>
-                            </li>
-                            <% } %>
-                            <li class="page-item">
-                                <a
-                                    class="page-link"
-                                    href="?page=<%= totalPages %>"
-                                    aria-label="Next"
-                                >
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
+                                                >
+                                                <a class="page-link" href="?page=<%= i %>">
+                                                    <%= i %>
+                                                </a>
+                                                </li>
+                                                <% } %>
+                                                    <% if (endPage < totalPages) { %>
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="?page=<%= endPage + 1 %>"
+                                                                aria-label="Next">
+                                                                <span aria-hidden="true">&rsaquo;</span>
+                                                            </a>
+                                                        </li>
+                                                        <% } %>
+                                                            <li class="page-item">
+                                                                <a class="page-link" href="?page=<%= totalPages %>"
+                                                                    aria-label="Next">
+                                                                    <span aria-hidden="true">&raquo;</span>
+                                                                </a>
+                                                            </li>
+                                                            </ul>
+                                                            </nav>
                 </div>
             </div>
         </main>
         <%- include('../../common/footer.ejs') %>
-    </body>
+</body>
+
 </html>

@@ -2,7 +2,6 @@
     flex: 1;
 }
 
-/* The side navigation menu */
 .sidebar {
     margin: 0;
     padding: 0;
@@ -13,30 +12,26 @@
     overflow: auto;
     font-size: 14px;
     text-align: center;
+    z-index: 33;
 }
 
-/* Sidebar links */
 .sidebar a {
     display: block;
-    color: rgb(11, 244, 10);
+    color: var(--color-green);
     padding: 16px;
     text-decoration: none;
 }
 
-/* Links on mouse-over */
 .sidebar a:hover:not(.active) {
     background-color: #555;
-    color: rgb(11, 244, 10);
+    color: var(--color-green);
 }
 
-/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
 div.content {
     margin-left: 200px;
     padding: 1px 16px;
-    height: 1000px;
 }
 
-/* On screens that are less than 700px wide, make the sidebar into a topbar */
 @media screen and (max-width: 810px) {
     .sidebar {
         width: 100%;
@@ -50,12 +45,26 @@ div.content {
     div.content {
         margin-left: 0;
     }
+    .un {
+        display: none;
+    }
 }
 
-/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
-/* @media screen and (max-width: 400px) {
-    .sidebar a {
-        text-align: center;
-        float: none;
+@media screen and (max-width: 950px) {
+    .un {
+        display: none;
     }
-} */
+
+    .row {
+        padding: 15px 0px;
+    }
+}
+@media screen and (max-width: 500px) {
+    .un-mobile {
+        display: none;
+    }
+
+    .row {
+        padding: 50px 0px;
+    }
+}

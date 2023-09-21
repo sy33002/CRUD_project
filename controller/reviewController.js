@@ -1,5 +1,6 @@
 const Filter = require('badwords-ko'); // npm install badwords-ko --save
 const filter = new Filter();
+const moment = require('moment');
 
 const { getIdFromUrl } = require('../utils/utils');
 const { ConferenceReview, Sequelize, Conference } = require('../models'); // ../models/index.js
@@ -32,7 +33,6 @@ exports.getReview = async (req, res) => {
             totalPages: totalPages,
             endPage: endPage,
         });
-        console.log(count);
     } catch (err) {
         console.log(err);
         res.send('Server Error');
@@ -40,7 +40,6 @@ exports.getReview = async (req, res) => {
 };
 
 exports.postReview = async (req, res) => {
-    console.log('req.body: ', req.body);
     const result = await ConferenceReview.create({
         con_id: req.body.con_Id,
         re_title: req.body.subject,
@@ -58,10 +57,14 @@ exports.postReview = async (req, res) => {
 
 exports.getReviewWrite = async (req, res) => {
     const idValue = getIdFromUrl(req.get('Referer')); // 이전 페이지 URL에서 :id 값을 추출
-
-    console.log('idVal : ==== ', idValue);
-
     const eventName = await Conference.findAll({
+        where: {
+            con_start_date: {
+                [Op.lt]: moment(), // 현재 날짜보다 작은(이전인) 데이터만 선택합니다.
+            },
+            is_agreed: 1,
+        },
+
         attributes: ['con_title', 'con_id'],
     });
 
@@ -72,7 +75,6 @@ exports.getReviewWrite = async (req, res) => {
 };
 
 exports.getReviewDetail = async (req, res) => {
-    console.log(req.params);
     const result = await ConferenceReview.findOne({
         where: { re_id: req.params.id },
     });
@@ -82,5 +84,4 @@ exports.getReviewDetail = async (req, res) => {
     res.render('review/detail', {
         review: result,
     });
-    console.log(result);
 };

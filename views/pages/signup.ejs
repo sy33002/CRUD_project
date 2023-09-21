@@ -23,9 +23,7 @@
                                                     <h6 class="pb-3">
                                                         <span>회원 가입</span>
                                                     </h6>
-                                                    <!-- form 시작 -->
                                                     <form name="form_register">
-                                                        <!-- name -->
                                                         <div class="form-group">
                                                             <label
                                                                 for="userName"
@@ -39,7 +37,6 @@
                                                                 required
                                                             />
                                                         </div>
-                                                        <!-- email -->
                                                         <div class="form-group">
                                                             <label
                                                                 for="userEmail"
@@ -52,7 +49,6 @@
                                                                 placeholder="email@example.com"
                                                             />
                                                         </div>
-                                                        <!-- id -->
                                                         <div
                                                             class="form-group userId-flex"
                                                         >
@@ -82,7 +78,6 @@
                                                                 </button>
                                                             </div>
                                                         </div>
-                                                        <!-- password -->
                                                         <div class="form-group">
                                                             <label
                                                                 for="userPw"
@@ -114,7 +109,6 @@
                                                             ></div>
                                                         </div>
 
-                                                        <!-- address -->
                                                         <div
                                                             class="form-group block-select"
                                                         >
@@ -136,7 +130,6 @@
                                                             </select>
                                                         </div>
 
-                                                        <!-- category -->
                                                         <div
                                                             class="form-group block-select"
                                                         >
@@ -154,19 +147,35 @@
                                                                     선택해주세요.
                                                                 </option>
                                                                 <option
-                                                                    value="ai"
+                                                                    value="Web/App"
                                                                 >
-                                                                    AI
+                                                                Web/App
                                                                 </option>
                                                                 <option
-                                                                    value="web"
+                                                                    value="AI"
                                                                 >
-                                                                    웹 개발
+                                                                AI
                                                                 </option>
                                                                 <option
-                                                                    value="git"
+                                                                    value="Git/Data/Cloud"
                                                                 >
-                                                                    git
+                                                                Git/Data/Cloud
+                                                                </option>
+                                                                <option
+                                                                    value="language/OS"
+                                                                >
+                                                                language/OS
+                                                                </option>
+                                                                </option>
+                                                                <option
+                                                                    value="Game/IoT"
+                                                                >
+                                                                Game/IoT
+                                                                </option>
+                                                                <option
+                                                                value="기타"
+                                                                >
+                                                                기타
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -266,7 +275,6 @@
             $(document).ready(function(){
                 $(".btn-register").on('click',doSomething);
             });
-            // 아이디 중복 체크 버튼
             function idCheck() {
                 const form = document.forms['form_register'];
 
@@ -297,7 +305,6 @@
                 }
             }
 
-            // 비밀번호 일치 동적 폼
             const passwordInput = document.getElementById('userPw');
             const passwordCheckInput = document.getElementById('userPwCheck');
             const passwordMatchMessage = document.getElementById(

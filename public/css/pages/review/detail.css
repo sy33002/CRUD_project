@@ -3,3 +3,97 @@
 .section {
     padding: 100px 0;
 }
+
+/* 전체 페이지 스타일 */
+main {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* 페이지 내용을 감싸는 요소 스타일 */
+main.wrap {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 섹션 스타일 */
+.section {
+    margin-bottom: 20px;
+}
+
+/* 리뷰 내용 스타일 */
+.my-editor {
+    padding: 15px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 리뷰 항목 스타일 */
+.my-editor p {
+    margin: 0;
+}
+
+/* 제목 스타일 */
+.my-editor h2 {
+    font-size: 24px;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+/* 작성자 스타일 */
+.my-editor .author {
+    font-weight: bold;
+    color: #555;
+}
+
+/* 각 요소에 대한 스타일 */
+.my-editor {
+    padding: 15px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 분리된 칸 스타일 */
+.my-editor div {
+    margin-bottom: 10px;
+    padding: 10px; /* 각 div 요소의 패딩을 추가하여 내용을 감싸도록 함 */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* 행사, 제목, 작성자 칸 스타일 */
+.my-editor .event,
+.my-editor .title,
+.my-editor .author {
+    background-color: #f5f5f5; /* 배경색 추가 */
+    padding: 10px; /* 여백 추가 */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* 행사, 제목, 작성자 칸 레이블 스타일 */
+.my-editor .event p:first-child,
+.my-editor .title p:first-child,
+.my-editor .author p:first-child {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0;
+}
+
+/* 리뷰 내용 스타일 */
+.my-editor .content {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #777;
+}
