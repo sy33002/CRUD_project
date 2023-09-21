@@ -201,8 +201,12 @@
                         }
                     } else {
                         alert('로그인 성공!');
-
-                        document.location.href = '/';
+                        if (res.data.redirectURL) {
+                            document.location.href = res.data.redirectURL;
+                            console.log(res.data.redirectURL)
+                        } else {
+                            document.location.href ='/'
+                        }
                     }
                 });
             }

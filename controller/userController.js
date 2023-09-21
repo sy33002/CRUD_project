@@ -167,7 +167,8 @@ exports.approveConference = async (req, res) => {
             },
             {
                 where: { con_id: req.body.conferenceId },
-            });
+            }
+        );
         res.send({ conferences });
     } catch (error) {
         console.error(error);
@@ -201,15 +202,12 @@ exports.rejectConference = async (req, res) => {
     }
 };
 
-
 // 관리자 페이지: 승인된 컨퍼런스 보기
 exports.getSuccessRegister = async (req, res) => {
     const userId = req.session.userInfo.id;
     try {
         const conferences = await Conference.findAll({
-            where: { is_agreed: 1, 
-                    approveManager: userId,
-            },
+            where: { is_agreed: 1, approveManager: userId },
         });
         res.send({ conferences });
     } catch (error) {
@@ -222,8 +220,7 @@ exports.getSuccessRegister = async (req, res) => {
 exports.rejectConferenceList = async (req, res) => {
     try {
         const conferences = await Conference.findAll({
-            where: { is_agreed: -1,
-                approveManager: userId },
+            where: { is_agreed: -1, approveManager: userId },
         });
         res.send({ conferences });
     } catch (error) {
