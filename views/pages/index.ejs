@@ -17,6 +17,10 @@
             href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
         />
         <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
+        <!-- typewriter cdn -->
+        <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
+
     </head>
 
     <body>
@@ -26,12 +30,7 @@
                 <div class="wrap">
                     <h1 data-aos="fade-up">C.R.U.D</h1>
                     <div class="wrapper">
-                        <div class="typing-demo">
-                            <span class="highlight">C</span>onference &
-                            <span class="highlight">R</span>eview for
-                            <span class="highlight">U</span>!
-                            <span class="highlight">D</span>eveloper.
-                        </div>
+                        <div id="typing"></div>
                     </div>
                     <div class="swiper-container">
                         <div class="swiper">
@@ -278,6 +277,23 @@
         </main>
         <%- include('../common/footer.ejs') %>
         <script>
+
+            let typewriter = new Typewriter('#typing', {
+                loop: false, // 반복 여부
+                delay: 150,
+                cursor: '',
+            });
+
+            typewriter
+                .pauseFor(2500)
+                .typeString('Conferences & Reviews for you!')
+                .pauseFor(400)
+                .deleteChars(4)
+                .typeString('U! Developers')
+                .pauseFor(2500)
+                .start();
+
+
             AOS.init();
             const swiper = new Swiper('.swiper', {
                 effect: 'coverflow',
