@@ -36,8 +36,10 @@ main .section span {
 }
 
 /* Conference&Developer for U! Developer */
+
 .typing {
     white-space: nowrap;
+
 }
 
 .wrapper {
@@ -155,7 +157,16 @@ main .section span {
     font-size: 37px;
     font-weight: 600;
     color: var(--color-green);
-    text-align: center;
+    /* 메인페이지 9월 행사 위치 변경 */
+    text-align: left;
+}
+
+.section2 .text {
+    /* 메인페이지 문구 추가 */
+    font-size: 16px;
+    padding-bottom: 20px;
+    color: var(--color-green);
+    text-align: left;
 }
 
 .section2 .con_top .more {

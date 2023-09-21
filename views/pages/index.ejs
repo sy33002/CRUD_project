@@ -17,8 +17,10 @@
             href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
         />
         <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
         <!-- typewriter cdn -->
         <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
+
     </head>
 
     <body>
@@ -79,6 +81,11 @@
                                     </svg>
                                 </span>
                             </a>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="text">
+                            앞으로 다가올 행사 중 관심이 많은 행사를 만나보세요!
                         </span>
                     </div>
                     <ul class="con_list">
@@ -270,6 +277,7 @@
         </main>
         <%- include('../common/footer.ejs') %>
         <script>
+
             let typewriter = new Typewriter('#typing', {
                 loop: false, // 반복 여부
                 delay: 150,
@@ -284,6 +292,7 @@
                 .typeString('U! Developers')
                 .pauseFor(2500)
                 .start();
+
 
             AOS.init();
             const swiper = new Swiper('.swiper', {
