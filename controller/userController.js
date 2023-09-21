@@ -361,7 +361,7 @@ exports.myreviewListRender = async (req, res) => {
             const userData = await User.findOne({
                 where: { id: userId },
             });
-            res.render('myPage/myreviewList', { data: userData.dataValues });
+            res.render('myPage/myReviewList', { data: userData.dataValues });
         } else {
             res.render('404');
         }
@@ -421,9 +421,11 @@ exports.myRegisterConRender = async (req, res) => {
             });
             if (userData.length > 0) {
                 const user_id_num = userData[0].dataValues.user_id;
-                res.render('myPage/myRegisterCon', { data: userData, id: user_id_num });
-            }
-            else {
+                res.render('myPage/myRegisterCon', {
+                    data: userData,
+                    id: user_id_num,
+                });
+            } else {
                 // 데이터가 없을 때 예외 처리 메시지를 보내기
                 res.render('myPage/myRegisterCon', { data: '', id: data.id });
             }
