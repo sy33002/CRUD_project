@@ -68,11 +68,11 @@
 }
 
 .custom-checkbox input#Game + label .con-color {
-    background-color: #e6e44b;
+    background-color: #a7a511;
 }
 
 .custom-checkbox input#etc + label .con-color {
-    background-color: #4a4a4a;
+    background-color: #848383;
 }
 
 .custom-checkbox input:checked + label {

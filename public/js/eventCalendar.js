@@ -59,9 +59,13 @@ async function getFilterCon() {
 // 이벤트 객체 변환 작업 수행
 function transformEventList(eventList) {
     const color = {
-        web: '#00b1f2',
+        "Web/App": '#00b1f2',
         AI: '#20c997',
-        git: '#775dd0',
+        "Git/Data/Cloud": '#775dd0',
+        "language/OS": '#da5ec9',
+        "Game/IoT": '#a7a511',
+        "etc": '#848383',
+
     };
 
     return eventList.map((event) => {
