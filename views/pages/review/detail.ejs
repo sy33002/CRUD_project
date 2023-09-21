@@ -11,10 +11,22 @@
             <div class="wrap">
                 <section class="section">
                     <div class="my-editor">
-                        행사 : <%- review.con_title%> <br />
-                        제목 : <%- review.re_title%> <br />
-                        리뷰내용: <%- review.re_content %> <br />
-                        작성자: <%- review.user_id%>
+                        <div class="event">
+                            <p>리뷰 관련 행사</p>
+                            <a href="/event/<%-review.con_id%>"><p><%- review.con_title %></p></a>
+                        </div>
+                        <div class="title">
+                            <p>리뷰 제목</p>
+                            <p><%- review.re_title %></p>
+                        </div>
+                        <div class="author">
+                            <p>리뷰 작성자</p>
+                            <p><%- review.user_id %></p>
+                        </div>
+                        <div class="content">
+                            <p>리뷰 내용</p><br/>
+                            <p><%- review.re_content %></p>
+                        </div>
                     </div>
                 </section>
             </div>

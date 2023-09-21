@@ -257,8 +257,6 @@ exports.postLogin = async (req, res) => {
                     userIsManager: result.dataValues.user_isManager,
                 };
                 const data = req.session.userInfo;
-                console.log('>>>>>', req.cookies.redirectURL);
-
                 if (req.cookies.redirectURL === undefined) {
                     return res.send({ result: true, data });
                 } else {
