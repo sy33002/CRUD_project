@@ -1,4 +1,4 @@
-/* ******************************** */
+@import url('../../common/editor.css');
 main .wrap {
     width: 1250px;
     position: relative;
@@ -39,14 +39,16 @@ main .wrap {
     margin-bottom: 20px;
 }
 
+.aside .date-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
 .aside .date-list .item {
     display: flex;
     align-items: center;
     gap: 5px;
-}
-
-.aside .date-list .sub-date {
-    margin-bottom: 5px;
 }
 
 .aside .btn_group {
