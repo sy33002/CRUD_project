@@ -67,6 +67,7 @@ exports.getReviewWrite = async (req, res) => {
             con_start_date: {
                 [Op.lt]: moment(), // 현재 날짜보다 작은(이전인) 데이터만 선택합니다.
             },
+            is_agreed: 1,
         },
 
         attributes: ['con_title', 'con_id'],
