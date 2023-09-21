@@ -204,7 +204,10 @@
             const checkAddr = /^[가-힣]{4,}$/;
             const checkEmail =
                 /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
-
+            var doSomething=function(){
+                $(".btn-register").off('click')
+            }
+                
             // 회원가입 등록 버튼
             function register() {
                 const form = document.forms['form_register'];
@@ -252,6 +255,7 @@
                             console.log(res);
                             if (res) {
                                 alert(`${res.data.message}`);
+                                $(".btn-register").on('click',doSomething);
                             }
                         })
                         .then(() => {
@@ -259,6 +263,9 @@
                         });
                 }
             }
+            $(document).ready(function(){
+                $(".btn-register").on('click',doSomething);
+            });
             // 아이디 중복 체크 버튼
             function idCheck() {
                 const form = document.forms['form_register'];
