@@ -76,8 +76,8 @@
                                     <td class="un">${result.review.re_date}</td>
                                     <td> ${result.review.re_count}</td>
                                     <td class="un">${result.relatedConference.con_title}</td>
-                                    <td class="un"><a href="http://localhost:8000/event/${result.relatedConference.con_id}">바로가기</a></td>
-                                    <td><a href="http://localhost:8000/review/${result.review.re_id}">바로가기</a></td>
+                                    <td class="un"><a href="/event/${result.relatedConference.con_id}">바로가기</a></td>
+                                    <td><a href="/review/${result.review.re_id}">바로가기</a></td>
                                     <button type="button" class="btn btn-outline-secondary" onclick="deleteMyReview(${result.review.re_id})">삭제</button>
                                 `;
 

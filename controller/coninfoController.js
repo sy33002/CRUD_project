@@ -2,6 +2,7 @@ const { Conference, Sequelize, ConferenceReview } = require('../models');
 const { ConFavorite } = require('../models');
 const { Op } = require('sequelize');
 const { User } = require('../models');
+
 // 순수 리스트 렌더역할
 exports.getConferenceList = (req, res) => {
     return res.render('event/list');
