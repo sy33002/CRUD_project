@@ -143,7 +143,7 @@ const Conference = (Sequelize, sequelize) => {
             },
             approveManager: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
+                allowNull: true,
             },
         },
         {
