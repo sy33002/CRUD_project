@@ -218,6 +218,7 @@ exports.getSuccessRegister = async (req, res) => {
 
 // 관리자 페이지: 거절된 컨퍼런스 보기
 exports.rejectConferenceList = async (req, res) => {
+    const userId = req.session.userInfo.id;
     try {
         const conferences = await Conference.findAll({
             where: { is_agreed: -1, approveManager: userId },
