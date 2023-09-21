@@ -7,6 +7,12 @@
             href="/static/css/pages/myPage/managerAside.css"
         />
         <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
+        <style>
+            h2 {
+                font-size: 2rem;
+                font-weight: 400;
+            }
+        </style>
     </head>
     <body>
         <%- include('../../common/header.ejs') %>
@@ -74,7 +80,7 @@
     <script>
         // 등록 신청한 행사 보기
         window.onload = function () {
-            getConferenceRegister(); // 페이지 로딩 시 행사 등록 대기 목록을 표시
+            getConferenceRegister();
         };
         function getConferenceRegister() {
             axios({
@@ -106,7 +112,7 @@
                                                  
                                                     
                                                 `;
-                            // conference.{DB변수명}으로 접근할 수 있습니다. 등록 신청한 행사가 예쁘게 보여졌으면 좋을 것같아요!
+
                             conferenceListContainer.appendChild(
                                 conferenceElement
                             );
@@ -176,15 +182,15 @@
                     ) {
                         const successConferenceListContainer =
                             document.getElementById('successConferenceList');
-                        successConferenceListContainer.innerHTML = ''; // Clear previous content
+                        successConferenceListContainer.innerHTML = '';
 
                         successConferenceList.forEach((conference) => {
                             const successElement = document.createElement('li');
-                            // 행사를 직접적으로 보이게 하는 부분
+
                             successElement.innerHTML = `
                                                     <li> ${conference.con_title}</li>
                                                 `;
-                            // conference.{DB변수명}으로 접근할 수 있습니다. 등록 신청한 행사가 예쁘게 보여졌으면 좋을 것같아요!
+
                             successConferenceListContainer.appendChild(
                                 successElement
                             );
@@ -213,16 +219,16 @@
                     ) {
                         const rejectedConferenceListContainer =
                             document.getElementById('rejectedConferenceList');
-                        rejectedConferenceListContainer.innerHTML = ''; // Clear previous content
+                        rejectedConferenceListContainer.innerHTML = '';
 
                         rejectedConferenceList.forEach((conference) => {
                             const rejectedElement =
                                 document.createElement('li');
-                            // 행사를 직접적으로 보이게 하는 부분
+
                             rejectedElement.innerHTML = `
                                                     <li> ${conference.con_title}</li>
                                                 `;
-                            // conference.{DB변수명}으로 접근할 수 있습니다. 등록 신청한 행사가 예쁘게 보여졌으면 좋을 것같아요!
+
                             rejectedConferenceListContainer.appendChild(
                                 rejectedElement
                             );
@@ -238,11 +244,11 @@
         }
 
         window.onload = function () {
-            getConferenceRegister(); // 페이지 로딩 시 행사 등록 대기 목록을 표시
+            getConferenceRegister();
 
-            getSuccessRegister(); // 페이지 로딩 시 행사 등록 대기 목록을 표시
+            getSuccessRegister();
 
-            getrejectedConference(); // 페이지 로딩 시 행사 등록 대기 목록을 표시
+            getrejectedConference();
         };
     </script>
 </html>
