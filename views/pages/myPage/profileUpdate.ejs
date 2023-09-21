@@ -7,6 +7,7 @@
             href="/static/css/pages/myPage/managerAside.css"
         />
         <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
+        <link rel="stylesheet" href="/static/css/pages/myPage/myRevList.css" />
     </head>
     <style>
         .padding {
@@ -17,7 +18,7 @@
         }
         .btnControl {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
         }
     </style>
     <body>
@@ -25,94 +26,118 @@
 
         <main>
             <%- include('./profileAside',{ id: data.id }) %>
-            <div class="padding content">
-                <div class="card-body">
-                    <div class="card-title text-center">
-                        <%= data.user_id%>님 환영합니다!
+            <div class="cardCenter content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-10 marginRemove">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title text-center">
+                                        <%= data.user_id%>님 환영합니다!
+                                    </div>
+
+                                    <hr />
+                                    <label
+                                        for="userId"
+                                        class="col-form-label"
+                                    ></label>
+
+                                    <input
+                                        id="userId"
+                                        type="hidden"
+                                        name="userId"
+                                        value="<%= data.user_id %>"
+                                    />
+                                    <p class="text-center">
+                                        비밀번호를 변경하려면 새로운 비밀번호를
+                                        입력하여 주시기 바랍니다.
+                                    </p>
+
+                                    <form name="form_userUpdate">
+                                        <label
+                                            for="userPw"
+                                            class="col-form-label"
+                                        ></label>
+                                        <input
+                                            id="userPw"
+                                            type="password"
+                                            name="userPw"
+                                            class="form-control"
+                                            placeholder="새로운 비밀번호"
+                                        />
+
+                                        <label
+                                            for="userName"
+                                            class="col-form-label"
+                                        ></label>
+                                        <input
+                                            id="userName"
+                                            type="text"
+                                            name="userName"
+                                            class="form-control"
+                                            value="<%= data.user_name%>"
+                                        />
+                                        <br />
+
+                                        <select
+                                            class="form-select"
+                                            aria-label="Default select example"
+                                            name="userAddr"
+                                        >
+                                            <%-
+                                            include('../../common/components/conLocationSelect'
+                                            ) %>
+                                        </select>
+
+                                        <div class="mb-3">
+                                            <label
+                                                for="userEmail"
+                                                class="form-label"
+                                            ></label>
+                                            <input
+                                                type="email"
+                                                class="form-control"
+                                                id="userEmail"
+                                                name="user_email"
+                                                value="<%= data.user_email%>"
+                                            />
+                                        </div>
+
+                                        <select
+                                            class="form-select"
+                                            aria-label="Default select example"
+                                            name="userCategory"
+                                        >
+                                            <option value="Web/App">Web/App</option>
+                                            <option value="AI">AI</option>
+                                            <option value="Git/Data/Cloud">Git/Data/Cloud</option>
+                                            <option value="language/OS">language/OS</option>
+                                            <option value="Game/IoT">Game/IoT</option>
+                                            <option value="etc">etc</option>
+                                        </select>
+                                        <br /><br />
+                                        <div class="btnControl">
+                                            <button
+                                                type="button"
+                                                class="btn btn-outline-secondary"
+                                                onclick="userUpdate()"
+                                            >
+                                                회원정보 수정
+                                            </button>
+                                            <button
+                                                type="button"
+                                                class="btn btn-outline-secondary"
+                                                onclick="deleteUserself(this, '<%= data.user_id%>')"
+                                            >
+                                                회원탈퇴하기
+                                            </button>
+                                        </div>
+                                        <br />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <hr />
-                    <label for="userId" class="col-form-label"></label>
-
-                    <input
-                        id="userId"
-                        type="hidden"
-                        name="userId"
-                        value="<%= data.user_id %>"
-                    />
-                    <p class="text-center">
-                        비밀번호를 변경하려면 새로운 비밀번호를 입력하여 주시기
-                        바랍니다.
-                    </p>
-
-                    <form name="form_userUpdate">
-                        <label for="userPw" class="col-form-label"></label>
-                        <input
-                            id="userPw"
-                            type="password"
-                            name="userPw"
-                            class="form-control"
-                            placeholder="새로운 비밀번호"
-                        />
-
-                        <label for="userName" class="col-form-label"></label>
-                        <input
-                            id="userName"
-                            type="text"
-                            name="userName"
-                            class="form-control"
-                            value="<%= data.user_name%>"
-                        />
-                        <br />
-
-                        <select
-                            class="form-select"
-                            aria-label="Default select example"
-                            name="userAddr"
-                        >
-                            <%-
-                            include('../../common/components/conLocationSelect'
-                            ) %>
-                        </select>
-
-                        <div class="mb-3">
-                            <label for="userEmail" class="form-label"></label>
-                            <input
-                                type="email"
-                                class="form-control"
-                                id="userEmail"
-                                name="user_email"
-                                value="<%= data.user_email%>"
-                            />
-                        </div>
-
-                        <select
-                            class="form-select"
-                            aria-label="Default select example"
-                            name="userCategory"
-                        >
-                            <option value="ai">AI</option>
-                            <option value="web">웹 개발</option>
-                            <option value="git">git</option>
-                        </select>
-                        <br />
-                        <div class="btnControl">
-                            <button
-                                type="button"
-                                class="btn btn-outline-secondary"
-                                onclick="userUpdate()"
-                            >
-                                회원정보 수정
-                            </button>
-                            <button
-                                type="button"
-                                class="btn btn-outline-secondary"
-                                onclick="deleteUserself(this, '<%= data.user_id%>')"
-                            >
-                                회원탈퇴하기
-                            </button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </main>

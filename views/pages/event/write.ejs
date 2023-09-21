@@ -55,7 +55,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row mb-3">
                             <label for="conCategory" class="col-form-label col-md-2">
                                 행사 카테고리
                             </label>
@@ -64,10 +64,19 @@
                                     <option selected value="">
                                         카테고리를 선택해주세요.
                                     </option>
+                                    <option value="Web/App">Web/App</option>
                                     <option value="AI">AI</option>
-                                    <option value="web">웹 개발</option>
-                                    <option value="git">git</option>
+                                    <option value="Git/Data/Cloud">Git/Data/Cloud</option>
+                                    <option value="language/OS">language/OS</option>
+                                    <option value="Game/IoT">Game/IoT</option>
+                                    <option value="etc">etc</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label for="conPeople" class="col-sm-2 col-form-label">참가 예상 인원</label>
+                            <div class="col-sm-6 d-flex align-items-center gap-2">
+                                <input type="number" class="form-control" id="conPeople" name="conPeople" />명
                             </div>
                         </div>
                     </section>
@@ -136,15 +145,9 @@
 
                     </section>
                     <section class="py-5 border-bottom">
-                        <h2 class="fw-bold fs-5 mb-5">행사 가격 및 규모</h2>
+                        <h2 class="fw-bold fs-5 mb-5">행사 가격</h2>
                         <div class="mb-4">
                             <%- include('../../common/components/conIsFreeRadio', {checked: true}) %>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="conPeople" class="col-sm-2 col-form-label">규모</label>
-                            <div class="col-sm-6">
-                                <input type="number" class="form-control" id="conPeople" name="conPeople" />
-                            </div>
                         </div>
                         <div class="paid-option" style="display: none;">
                             <div class="row mb-3">

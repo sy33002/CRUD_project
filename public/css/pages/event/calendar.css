@@ -51,7 +51,7 @@
     border-radius: 50%;
 }
 
-.custom-checkbox input#web + label .con-color {
+.custom-checkbox input#Web + label .con-color {
     background-color: #00b1f2;
 }
 
@@ -59,8 +59,20 @@
     background-color: #20c997;
 }
 
-.custom-checkbox input#git + label .con-color {
+.custom-checkbox input#Git + label .con-color {
     background-color: #775dd0;
+}
+
+.custom-checkbox input#language + label .con-color {
+    background-color: #da5ec9;
+}
+
+.custom-checkbox input#Game + label .con-color {
+    background-color: #e6e44b;
+}
+
+.custom-checkbox input#etc + label .con-color {
+    background-color: #4a4a4a;
 }
 
 .custom-checkbox input:checked + label {
