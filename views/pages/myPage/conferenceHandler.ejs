@@ -35,7 +35,7 @@
                                             <tr class="border-bottom">
                                                 <th></th>
                                                 <th>행사 제목</th>
-                                                <th>신청 시간</th>
+                                                <th class="un-mobile">신청 시간</th>
                                                 <th></th>
                                                 <th></th>
                                             </tr>
@@ -138,8 +138,8 @@
                             conferenceElement.innerHTML = `
                                                     <td></td>
                                                     <td>${conference.con_title}</td>
-                                                    <td>${conference.createdAt}</td>
-                                                    <td><button class="btn btn-outline-secondary" onclick="approveConference(${conference.con_id})">승인</button></td>
+                                                    <td class="un-mobile">${conference.createdAt}</td>
+                                                    <td><button class="btn btn-outline-primary" onclick="approveConference(${conference.con_id})">승인</button></td>
                                                     <td><button class="btn btn-outline-secondary" onclick="rejectConference(${conference.con_id})">거절</button></td>
     
 

@@ -40,7 +40,15 @@ div > h2 {
 }
 
 #successConferenceList li:hover {
-    /* background-color: #fbfde8; */
+    background-color: var(--color-green);
+    color: var(--color-white);
+}
+#rejectedConferenceList li {
+    padding: 4px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+#rejectedConferenceList li:hover {
     background-color: var(--color-green);
     color: var(--color-white);
 }
@@ -49,4 +57,8 @@ div > h2 {
     --bs-accordion-active-bg: var(--color-white);
     box-shadow: none;
     --bs-accordion-btn-focus-box-shadow: 0 0 0 0;
+}
+
+td {
+    vertical-align: middle;
 }
