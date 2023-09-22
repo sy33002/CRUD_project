@@ -35,9 +35,6 @@ const editor = new Editor({
     ],
     content: '',
     onUpdate({ editor }) {
-        // content.innerHTML = JSON.stringify(editor.getJSON());
-        // console.log(editor.getHTML());
-
         buttons.heading2.classList.toggle(
             'active',
             editor.isActive('heading', { level: 2 })
