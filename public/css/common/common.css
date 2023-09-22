@@ -26,6 +26,10 @@ header a {
     color: var(--color-green) !important;
 }
 
+header .navbar-brand {
+    font-weight: 600;
+}
+
 header .navbar-expand-lg .navbar-collapse {
     justify-content: space-between;
 }
