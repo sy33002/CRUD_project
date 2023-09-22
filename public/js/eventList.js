@@ -58,7 +58,6 @@ async function fetchEventList(date) {
 function formatDate(date) {
     date = date.split(' ');
 
-    console.log(date[0]);
     const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
     const originalDate = new Date(date[0].replaceAll('.', '-'));
 

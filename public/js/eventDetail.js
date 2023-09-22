@@ -6,13 +6,11 @@ async function saveConference(con_id) {
         var match = currentPageURL.match(/\/(\d+)$/);
         if (match) {
             var number1 = match[1];
-            console.log(number1);
             // axios를 사용하여 POST 요청 보내기
             const response = await axios.post(`/event/${number1}`, {
                 con_id: number1,
             });
 
-            console.log(response.data.result);
             if (response.data.result === 1) {
                 if (
                     confirm(

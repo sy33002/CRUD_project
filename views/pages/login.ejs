@@ -203,9 +203,8 @@
                         alert('로그인 성공!');
                         if (res.data.redirectURL) {
                             document.location.href = res.data.redirectURL;
-                            console.log(res.data.redirectURL)
                         } else {
-                            document.location.href ='/'
+                            document.location.href = '/';
                         }
                     }
                 });

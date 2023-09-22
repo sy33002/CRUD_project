@@ -183,7 +183,6 @@ function getPostcode() {
 }
 
 function getInputValue() {
-    console.log(subDate.value);
     const subDate = subDate.value.split(' ~ ');
     const conDate = conDate.value.split(' ~ ');
 
@@ -315,7 +314,6 @@ async function registerConference() {
         },
     });
 
-    console.log(conferenceRes);
     const conferenceData = await conferenceRes.data;
 
     if (conferenceData.result) {

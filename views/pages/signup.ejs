@@ -261,7 +261,6 @@
                         },
                     })
                         .then((res) => {
-                            console.log(res);
                             if (res) {
                                 alert(`${res.data.message}`);
                                 $(".btn-register").on('click',doSomething);
@@ -292,7 +291,6 @@
                         url: `/exists/${form.userId.value}`,
                         data: { userId: form.userId.value },
                     }).then((res) => {
-                        console.log(res);
                         if (res.data.result === true) {
                             alert('이미 존재하는 아이디입니다.');
                             form.userId.value = '';
