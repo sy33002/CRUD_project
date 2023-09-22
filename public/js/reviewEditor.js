@@ -35,9 +35,6 @@ const editor = new Editor({
     ],
     content: '',
     onUpdate({ editor }) {
-        // content.innerHTML = JSON.stringify(editor.getJSON());
-        // console.log(editor.getHTML());
-
         buttons.heading2.classList.toggle(
             'active',
             editor.isActive('heading', { level: 2 })
@@ -67,7 +64,6 @@ const editor = new Editor({
         );
     },
     onSelectionUpdate({ editor }) {
-        // console.log('selection update');
         buttons.heading2.classList.toggle(
             'active',
             editor.isActive('heading', { level: 2 })
@@ -96,10 +92,6 @@ const editor = new Editor({
             editor.isActive({ textAlign: 'right' })
         );
     },
-    // onCreate({ editor }) {
-    //     console.log(editor.getHTML());
-    // content.innerHTML = JSON.stringify(editor.getJSON());
-    // },
 }); // add your configuration, extensions, content, etc.
 
 buttons.heading2.addEventListener('click', () => {
@@ -169,7 +161,6 @@ myDropzone.on('complete', function (file) {
 });
 buttons.image.addEventListener('click', () => {
     file.click();
-    // editor.commands.insertContent('<h1>Example Text</h1>');
 });
 
 const reviewSubmitBtn = document.querySelector('#reviewWrite');
