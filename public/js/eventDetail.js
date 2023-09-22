@@ -85,3 +85,8 @@ const copy = () => {
         alert('복사 완료 !');
     });
 };
+//문의하기
+function submitEmail() {
+    alert('관리자에게 문의 내용이 이메일로 전달되었습니다.');
+    window.location.reload();
+}
