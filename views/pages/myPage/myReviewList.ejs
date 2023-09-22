@@ -39,7 +39,7 @@
                                                 <th></th>
                                             </tr>
                                         </thead>
-                                        <tbody id="myreviewList"></tbody>
+                                        <tbody id="myReviewList"></tbody>
                                     </table>
                                 </div>
                             </div>
@@ -51,19 +51,19 @@
         <%- include('../../common/footer.ejs') %>
 
         <script>
-            function myreviewList(userId) {
+            function myReviewList(userId) {
                 axios({
                     method: 'GET',
-                    url: '/myPage/myreviewList',
+                    url: '/myPage/myReviewList',
                     params: {
                         userId: userId,
                     },
                 }).then((res) => {
                     if (res.status === 200) {
                         const reviewList = res.data.results;
-                        const myreviewListContainer =
-                            document.getElementById('myreviewList');
-                        myreviewListContainer.innerHTML = '';
+                        const myReviewListContainer =
+                            document.getElementById('myReviewList');
+                        myReviewListContainer.innerHTML = '';
 
                         if (
                             Array.isArray(reviewList) &&
@@ -81,7 +81,7 @@
                                     <td><button type="button" class="btn btn-outline-danger" onclick="deleteMyReview(${result.review.re_id})">삭제</button></td>
                                 `;
 
-                                myreviewListContainer.appendChild(
+                                myReviewListContainer.appendChild(
                                     reviewElement
                                 );
                             });
@@ -89,7 +89,7 @@
                             const reviewElement = document.createElement('tr');
                             reviewElement.innerHTML =
                                 '<td colspan="6">등록한 리뷰가 없습니다.</td>';
-                            myreviewListContainer.appendChild(reviewElement);
+                            myReviewListContainer.appendChild(reviewElement);
                         }
                     }
                 });
@@ -97,7 +97,7 @@
 
             window.onload = function () {
                 const userId = '<%= data.user_id %>';
-                myreviewList(userId);
+                myReviewList(userId);
             };
 
             function deleteMyReview(reId) {
