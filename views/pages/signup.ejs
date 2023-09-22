@@ -23,9 +23,7 @@
                                                     <h6 class="pb-3">
                                                         <span>회원 가입</span>
                                                     </h6>
-                                                    <!-- form 시작 -->
                                                     <form name="form_register">
-                                                        <!-- name -->
                                                         <div class="form-group">
                                                             <label
                                                                 for="userName"
@@ -39,7 +37,6 @@
                                                                 required
                                                             />
                                                         </div>
-                                                        <!-- email -->
                                                         <div class="form-group">
                                                             <label
                                                                 for="userEmail"
@@ -52,7 +49,6 @@
                                                                 placeholder="email@example.com"
                                                             />
                                                         </div>
-                                                        <!-- id -->
                                                         <div
                                                             class="form-group userId-flex"
                                                         >
@@ -82,7 +78,6 @@
                                                                 </button>
                                                             </div>
                                                         </div>
-                                                        <!-- password -->
                                                         <div class="form-group">
                                                             <label
                                                                 for="userPw"
@@ -114,7 +109,6 @@
                                                             ></div>
                                                         </div>
 
-                                                        <!-- address -->
                                                         <div
                                                             class="form-group block-select"
                                                         >
@@ -136,7 +130,6 @@
                                                             </select>
                                                         </div>
 
-                                                        <!-- category -->
                                                         <div
                                                             class="form-group block-select"
                                                         >
@@ -268,7 +261,6 @@
                         },
                     })
                         .then((res) => {
-                            console.log(res);
                             if (res) {
                                 alert(`${res.data.message}`);
                                 $(".btn-register").on('click',doSomething);
@@ -282,7 +274,6 @@
             $(document).ready(function(){
                 $(".btn-register").on('click',doSomething);
             });
-            // 아이디 중복 체크 버튼
             function idCheck() {
                 const form = document.forms['form_register'];
 
@@ -300,7 +291,6 @@
                         url: `/exists/${form.userId.value}`,
                         data: { userId: form.userId.value },
                     }).then((res) => {
-                        console.log(res);
                         if (res.data.result === true) {
                             alert('이미 존재하는 아이디입니다.');
                             form.userId.value = '';
@@ -313,7 +303,6 @@
                 }
             }
 
-            // 비밀번호 일치 동적 폼
             const passwordInput = document.getElementById('userPw');
             const passwordCheckInput = document.getElementById('userPwCheck');
             const passwordMatchMessage = document.getElementById(

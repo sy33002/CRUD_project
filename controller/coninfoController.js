@@ -2,6 +2,7 @@ const { Conference, Sequelize, ConferenceReview } = require('../models');
 const { ConFavorite } = require('../models');
 const { Op } = require('sequelize');
 const { User } = require('../models');
+
 // 순수 리스트 렌더역할
 exports.getConferenceList = (req, res) => {
     return res.render('event/list');
@@ -71,7 +72,6 @@ exports.postConferenceList = async (req, res) => {
                 // 다른 OR 조건을 추가할 수도 있습니다.
             ];
         }
-        console.log(whereConditions, 'filter 결과 값');
         const eventList = await Conference.findAll({
             where: whereConditions,
         });
@@ -90,8 +90,6 @@ exports.getConferenceWrite = (req, res) => {
 exports.getConferenceDetail = async (req, res) => {
     const { id } = req.params;
     const userId = res.locals.Id;
-
-    console.log(id);
 
     const result1 = await Conference.findOne({
         where: { con_id: id },
@@ -174,8 +172,6 @@ exports.postConference = async (req, res) => {
             con_detail_location: conDetailAddr,
             detail_Text: detailText,
         });
-        console.log(result, 'result');
-
         res.send({ result: true });
     } catch (err) {
         console.error(err);

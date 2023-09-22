@@ -33,7 +33,6 @@ exports.getReview = async (req, res) => {
             totalPages: totalPages,
             endPage: endPage,
         });
-        console.log(count);
     } catch (err) {
         console.log(err);
         res.send('Server Error');
@@ -41,7 +40,6 @@ exports.getReview = async (req, res) => {
 };
 
 exports.postReview = async (req, res) => {
-    console.log('req.body: ', req.body);
     const result = await ConferenceReview.create({
         con_id: req.body.con_Id,
         re_title: req.body.subject,
@@ -58,10 +56,11 @@ exports.postReview = async (req, res) => {
 };
 
 exports.getReviewWrite = async (req, res) => {
-    const idValue = getIdFromUrl(req.get('Referer')); // 이전 페이지 URL에서 :id 값을 추출
-
-    console.log('idVal : ==== ', idValue);
-
+    // const idValue = getIdFromUrl(req.get('Referer')); // 이전 페이지 URL에서 :id 값을 추출
+    let conId = null;
+    if (req.query.id) {
+        conId = req.query.id;
+    }
     const eventName = await Conference.findAll({
         where: {
             con_start_date: {
@@ -75,12 +74,11 @@ exports.getReviewWrite = async (req, res) => {
 
     res.render('review/write', {
         eventName: eventName,
-        prevPage: idValue,
+        conId,
     });
 };
 
 exports.getReviewDetail = async (req, res) => {
-    console.log(req.params);
     const result = await ConferenceReview.findOne({
         where: { re_id: req.params.id },
     });
@@ -90,5 +88,4 @@ exports.getReviewDetail = async (req, res) => {
     res.render('review/detail', {
         review: result,
     });
-    console.log(result);
 };

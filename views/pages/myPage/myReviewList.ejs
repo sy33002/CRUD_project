@@ -9,6 +9,11 @@
         />
         <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
         <link rel="stylesheet" href="/static/css/pages/myPage/myRevList.css" />
+        <style>
+            td {
+                vertical-align: middle;
+            }
+        </style>
     </head>
 
     <body>
@@ -28,13 +33,9 @@
                                                 <th>제목</th>
                                                 <th class="un">등록일</th>
                                                 <th>조회수</th>
-                                                <th class="un">
-                                                    관련 행사 제목
-                                                </th>
-                                                <th class="un">
-                                                    관련 행사 링크
-                                                </th>
-                                                <th>댓글 바로가기</th>
+                                                <th class="un">관련 행사</th>
+
+                                                <th>리뷰 보기</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -50,7 +51,6 @@
         <%- include('../../common/footer.ejs') %>
 
         <script>
-            // 내가 쓴 리뷰 보기
             function myreviewList(userId) {
                 axios({
                     method: 'GET',
@@ -76,10 +76,9 @@
                                     <td>${result.review.re_title}</td>
                                     <td class="un">${result.review.re_date}</td>
                                     <td> ${result.review.re_count}</td>
-                                    <td class="un">${result.relatedConference.con_title}</td>
-                                    <td class="un"><a href="http://localhost:8000/event/${result.relatedConference.con_id}">바로가기</a></td>
-                                    <td><a href="http://localhost:8000/review/${result.review.re_id}">바로가기</a></td>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="deleteMyReview(${result.review.re_id})">삭제</button>
+                                    <td class="un"><a href="/event/${result.relatedConference.con_id}">${result.relatedConference.con_title}</a></td>                         
+                                    <td><a href="/review/${result.review.re_id}">바로가기</a></td>
+                                    <td><button type="button" class="btn btn-outline-danger" onclick="deleteMyReview(${result.review.re_id})">삭제</button></td>
                                 `;
 
                                 myreviewListContainer.appendChild(
@@ -98,10 +97,9 @@
 
             window.onload = function () {
                 const userId = '<%= data.user_id %>';
-                myreviewList(userId); // 페이지 로딩 시 내가 쓴 리뷰 보기
+                myreviewList(userId);
             };
 
-            // 내가 쓴 리뷰 삭제
             function deleteMyReview(reId) {
                 axios({
                     method: 'delete',

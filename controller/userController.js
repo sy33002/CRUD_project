@@ -158,10 +158,12 @@ exports.conferenceHandler = async (req, res) => {
 
 // 관리자 페이지: conference 승인하기
 exports.approveConference = async (req, res) => {
+    const userId = req.session.userInfo.id;
     try {
         const conferences = await Conference.update(
             {
                 is_agreed: 1,
+                approveManager: userId,
             },
             {
                 where: { con_id: req.body.conferenceId },
@@ -179,10 +181,12 @@ exports.approveConference = async (req, res) => {
 
 // 관리자 페이지: conference 거절하기
 exports.rejectConference = async (req, res) => {
+    const userId = req.session.userInfo.id;
     try {
         const conferences = await Conference.update(
             {
                 is_agreed: -1,
+                approveManager: userId,
             },
             {
                 where: { con_id: req.body.conferenceId },
@@ -200,22 +204,10 @@ exports.rejectConference = async (req, res) => {
 
 // 관리자 페이지: 승인된 컨퍼런스 보기
 exports.getSuccessRegister = async (req, res) => {
+    const userId = req.session.userInfo.id;
     try {
         const conferences = await Conference.findAll({
-            where: { is_agreed: 1 },
-        });
-        res.send({ conferences });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Manager Conference Agree Error');
-    }
-};
-
-// 관리자 페이지: 승인된 컨퍼런스 보기
-exports.getSuccessRegister = async (req, res) => {
-    try {
-        const conferences = await Conference.findAll({
-            where: { is_agreed: 1 },
+            where: { is_agreed: 1, approveManager: userId },
         });
         res.send({ conferences });
     } catch (error) {
@@ -226,9 +218,10 @@ exports.getSuccessRegister = async (req, res) => {
 
 // 관리자 페이지: 거절된 컨퍼런스 보기
 exports.rejectConferenceList = async (req, res) => {
+    const userId = req.session.userInfo.id;
     try {
         const conferences = await Conference.findAll({
-            where: { is_agreed: -1 },
+            where: { is_agreed: -1, approveManager: userId },
         });
         res.send({ conferences });
     } catch (error) {
@@ -257,8 +250,6 @@ exports.postLogin = async (req, res) => {
                     userIsManager: result.dataValues.user_isManager,
                 };
                 const data = req.session.userInfo;
-                console.log('>>>>>', req.cookies.redirectURL);
-
                 if (req.cookies.redirectURL === undefined) {
                     return res.send({ result: true, data });
                 } else {
@@ -363,7 +354,7 @@ exports.myreviewListRender = async (req, res) => {
             const userData = await User.findOne({
                 where: { id: userId },
             });
-            res.render('myPage/myreviewList', { data: userData.dataValues });
+            res.render('myPage/myReviewList', { data: userData.dataValues });
         } else {
             res.render('404');
         }
@@ -391,28 +382,6 @@ exports.myFavoriteConListRender = async (req, res) => {
 };
 
 //마이페이지: 내가 등록 신청한 행사 보기
-// exports.myRegisterConRender = async (req, res) => {
-//     const userId = req.query.userId;
-//     const data = req.session.userInfo;
-//     if (data) {
-//         if (data.id == userId) {
-//             const userData = await Conference.findAll({
-//                 where: { user_id: userId },
-//             });
-//             if (userData.length > 0) {
-//                 const user_id_num = userData[0].dataValues.user_id;
-//                 res.render('myPage/myRegisterCon', { data: userData, id: user_id_num });
-//             }
-//             else {
-//                 res.render('myPage/myRegisterCon', { data: false , id : -1 });
-//             }
-//         } else {
-//             res.render('404');
-//         }
-//     } else {
-//         res.render('login');
-//     }
-// };
 exports.myRegisterConRender = async (req, res) => {
     const userId = req.query.userId;
     const data = req.session.userInfo;
@@ -423,9 +392,11 @@ exports.myRegisterConRender = async (req, res) => {
             });
             if (userData.length > 0) {
                 const user_id_num = userData[0].dataValues.user_id;
-                res.render('myPage/myRegisterCon', { data: userData, id: user_id_num });
-            }
-            else {
+                res.render('myPage/myRegisterCon', {
+                    data: userData,
+                    id: user_id_num,
+                });
+            } else {
                 // 데이터가 없을 때 예외 처리 메시지를 보내기
                 res.render('myPage/myRegisterCon', { data: '', id: data.id });
             }

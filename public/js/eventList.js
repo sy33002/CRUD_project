@@ -57,8 +57,9 @@ async function fetchEventList(date) {
 
 function formatDate(date) {
     date = date.split(' ');
+
     const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
-    const originalDate = new Date(date[0]);
+    const originalDate = new Date(date[0].replaceAll('.', '-'));
 
     const dayOfWeek = daysOfWeek[originalDate.getDay()];
     return `${date[0]} (${dayOfWeek})`;
@@ -162,7 +163,7 @@ function renderEventItem(event) {
                             <ul>
                                 <li>
                                     <span>#
-                                    ${event.is_onoff ? '온라인' : '오프라인'}
+                                    ${event.is_onoff ? '오프라인' : '온라인'}
                                     </span>
                                 </li>
                                 <li>

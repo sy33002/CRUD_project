@@ -26,10 +26,39 @@ main {
 }
 
 div > h2 {
-    font-size: large;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .padding {
     padding-bottom: 30px;
+}
+
+#successConferenceList li {
+    padding: 4px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+#successConferenceList li:hover {
+    background-color: var(--color-green);
+    color: var(--color-white);
+}
+#rejectedConferenceList li {
+    padding: 4px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+#rejectedConferenceList li:hover {
+    background-color: var(--color-green);
+    color: var(--color-white);
+}
+
+.accordion {
+    --bs-accordion-active-bg: var(--color-white);
+    box-shadow: none;
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0;
+}
+
+td {
+    vertical-align: middle;
 }

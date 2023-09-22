@@ -13,7 +13,6 @@ router.post(
     (req, res) => {
         const tempFilePath = req.file.path; // 임시 파일 경로
 
-        console.log(req.file.filename);
         // 조절된 이미지를 저장할 경로
         const outputPath = `public/images/upload/${req.params.path}`;
 

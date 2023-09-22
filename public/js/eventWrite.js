@@ -1,183 +1,14 @@
-import { Editor } from 'https://esm.sh/@tiptap/core';
-import StarterKit from 'https://esm.sh/@tiptap/starter-kit';
-import Image from 'https://esm.sh/@tiptap/extension-image';
-import TextAlign from 'https://esm.sh/@tiptap/extension-text-align';
-
-const buttons = {
-    bold: document.querySelector('[data-tiptap-button="bold"]'),
-    italic: document.querySelector('[data-tiptap-button="italic"]'),
-    image: document.querySelector('[data-tiptap-button="image"]'),
-    heading2: document.querySelector('[data-tiptap-button="heading2"]'),
-    heading3: document.querySelector('[data-tiptap-button="heading3"]'),
-    paragraph: document.querySelector('[data-tiptap-button="paragraph"]'),
-    strike: document.querySelector('[data-tiptap-button="strike"]'),
-    left: document.querySelector('[data-tiptap-button="left"]'),
-    center: document.querySelector('[data-tiptap-button="center"]'),
-    right: document.querySelector('[data-tiptap-button="right"]'),
-};
-
-// 초기 icon active
-buttons.paragraph.classList.add('active');
-buttons.left.classList.add('active');
-
-// editor 세팅
-const editor = new Editor({
-    element: document.querySelector('[data-tiptap-editor]'),
-    extensions: [
-        StarterKit,
-        TextAlign.configure({
-            types: ['heading', 'paragraph'],
-        }),
-        // Image,
-        Image.configure({
-            inline: true,
-        }),
-    ],
-    content: '',
-    onUpdate({ editor }) {
-        buttons.heading2.classList.toggle(
-            'active',
-            editor.isActive('heading', { level: 2 })
-        );
-        buttons.heading3.classList.toggle(
-            'active',
-            editor.isActive('heading', { level: 3 })
-        );
-        buttons.paragraph.classList.toggle(
-            'active',
-            editor.isActive('paragraph')
-        );
-        buttons.bold.classList.toggle('active', editor.isActive('bold'));
-        buttons.italic.classList.toggle('active', editor.isActive('italic'));
-        buttons.strike.classList.toggle('active', editor.isActive('strike'));
-        buttons.left.classList.toggle(
-            'active',
-            editor.isActive({ textAlign: 'left' })
-        );
-        buttons.center.classList.toggle(
-            'active',
-            editor.isActive({ textAlign: 'center' })
-        );
-        buttons.right.classList.toggle(
-            'active',
-            editor.isActive({ textAlign: 'right' })
-        );
-    },
-    onSelectionUpdate({ editor }) {
-        // console.log('selection update');
-        buttons.heading2.classList.toggle(
-            'active',
-            editor.isActive('heading', { level: 2 })
-        );
-        buttons.heading3.classList.toggle(
-            'active',
-            editor.isActive('heading', { level: 3 })
-        );
-        buttons.paragraph.classList.toggle(
-            'active',
-            editor.isActive('paragraph')
-        );
-        buttons.bold.classList.toggle('active', editor.isActive('bold'));
-        buttons.italic.classList.toggle('active', editor.isActive('italic'));
-        buttons.strike.classList.toggle('active', editor.isActive('strike'));
-        buttons.left.classList.toggle(
-            'active',
-            editor.isActive({ textAlign: 'left' })
-        );
-        buttons.center.classList.toggle(
-            'active',
-            editor.isActive({ textAlign: 'center' })
-        );
-        buttons.right.classList.toggle(
-            'active',
-            editor.isActive({ textAlign: 'right' })
-        );
-    },
-    // onCreate({ editor }) {
-    //     console.log(editor.getHTML());
-    // content.innerHTML = JSON.stringify(editor.getJSON());
-    // },
-}); // add your configuration, extensions, content, etc.
-
-buttons.heading2.addEventListener('click', () => {
-    editor.chain().focus().toggleHeading({ level: 2 }).run();
-});
-
-buttons.heading3.addEventListener('click', () => {
-    editor.chain().focus().toggleHeading({ level: 3 }).run();
-});
-
-buttons.paragraph.addEventListener('click', () => {
-    editor.chain().focus().setParagraph().run();
-});
-
-buttons.bold.addEventListener('click', () => {
-    buttons.bold.classList.toggle('active');
-    editor.chain().focus().toggleBold().run();
-});
-
-buttons.italic.addEventListener('click', () => {
-    buttons.italic.classList.toggle('active');
-    editor.chain().focus().toggleItalic().run();
-});
-
-buttons.strike.addEventListener('click', () => {
-    buttons.strike.classList.toggle('active');
-    editor.chain().focus().toggleStrike().run();
-});
-
-buttons.left.addEventListener('click', () => {
-    editor.chain().focus().setTextAlign('left').run();
-});
-
-buttons.center.addEventListener('click', () => {
-    editor.chain().focus().setTextAlign('center').run();
-});
-
-buttons.right.addEventListener('click', () => {
-    editor.chain().focus().setTextAlign('right').run();
-});
-
-const file = document.querySelector('#fileUploadForm');
-
-Dropzone.autoDiscover = false; // deprecated 된 옵션. false로 해놓는걸 공식문서에서 명시
-
-// 이미지 등록
-const myDropzone = new Dropzone('#fileUploadForm', {
-    paramName: 'conferenceFile', // 서버에서 사용할 파일 필드 이름
-    maxFilesize: 5, // 최대 파일 크기 (MB)
-    acceptedFiles: '.jpg, .jpeg, .png, .gif', // 허용하는 파일 확장자
-    addRemoveLinks: true, // 업로드된 파일 삭제 링크 표시
-    maxFiles: 1, // 최대 파일 수를 1로 설정
-    success: function (file, response) {
-        const imagePath = response.file;
-
-        if (imagePath) {
-            editor.chain().focus().setImage({ src: imagePath }).run();
-        }
-    },
-    error: function (file, errorMessage) {
-        alert('파일 업로드 실패: ' + errorMessage);
-    },
-});
-// 파일 업로드 제한 해제 (추가 파일 업로드 가능하도록)
-myDropzone.on('complete', function (file) {
-    this.removeFile(file);
-});
-buttons.image.addEventListener('click', () => {
-    file.click();
-    // editor.commands.insertContent('<h1>Example Text</h1>');
-});
-
-// 행사 쓰기
+const form = document.forms['register-conference'];
 const formData = new FormData();
 let isConOnoff = false;
 let isFree = false;
 
 const conTitle = document.querySelector('#conTitle');
 const conCompany = document.querySelector('#conCompany');
+const isOnoff = document.querySelector('#isOnoff');
 const conLocation = document.querySelector('#conLocation');
 const conCategory = document.querySelector('#conCategory');
+const conIsfree = document.querySelector('#conIsfree');
 const conPrice = document.querySelector('#conPrice');
 const conPeople = document.querySelector('#conPeople');
 const conCompanyUrl = document.querySelector('#conCompanyUrl');
@@ -192,8 +23,10 @@ const conDate = document.querySelector('#conDate');
 function resetInputValue() {
     conTitle.value = '';
     conCompany.value = '';
+    isOnoff.value = '';
     conLocation.value = '';
     conCategory.value = '';
+    conIsfree.value = '';
     conPrice.value = '';
     conPeople.value = '';
     conCompanyUrl.value = '';
@@ -349,21 +182,14 @@ function getPostcode() {
     }).open();
 }
 
-const postCodeBtn = document.querySelector('#postCodeBtn');
-if (postCodeBtn) {
-    postCodeBtn.addEventListener('click', getPostcode);
-}
-
 function getInputValue() {
-    const subDateFormat = subDate.value.split(' ~ ');
-    const conDateFormat = conDate.value.split(' ~ ');
-    const contents = editor.getHTML();
-    const textContents = editor.getText();
+    const subDate = subDate.value.split(' ~ ');
+    const conDate = conDate.value.split(' ~ ');
 
-    const subStartDate = subDateFormat[0];
-    const subEndDate = subDateFormat[1];
-    const conStartDate = conDateFormat[0];
-    const conEndDate = conDateFormat[1];
+    const subStartDate = subDate[0];
+    const subEndDate = subDate[1];
+    const conStartDate = conDate[0];
+    const conEndDate = conDate[1];
 
     const conDetailAddr = {
         postCode: postcode.value,
@@ -379,13 +205,14 @@ function getInputValue() {
         subEndDate,
         conStartDate,
         conEndDate,
+        isOnoff: isOnoff.value,
         conLocation: conLocation.value,
         conCategory: conCategory.value,
+        conIsfree: conIsfree.value,
         conPrice: conPrice.value === '' ? 0 : conPrice.value, // 빈값 일 때는 0 보내기 (이렇게 안하면 db 충돌남)
         conPeople: conPeople.value,
         conCompanyUrl: conCompanyUrl.value,
-        conDetail: contents,
-        detailText: textContents,
+        conDetail: conDetail.value,
         conDetailAddr,
     };
 }
@@ -405,22 +232,22 @@ function validateInput() {
 
     if (conTitle.trim() === '') {
         alert('행사 이름을 입력해주세요.');
-        return document.querySelector('#conTitle').focus();
+        return conTitle.focus();
     }
 
     if (conDetail.trim() === '') {
         alert('행사 상세 내용을 입력해주세요.');
-        return document.querySelector('#conDetail').focus();
+        return conDetail.focus();
     }
 
     if (conCategory === '') {
         alert('카테고리를 선택해주세요.');
-        return document.querySelector('#conCategory').focus();
+        return conCategory.focus();
     }
 
     if (conPeople === '') {
         alert('규모를 입력해 주세요.');
-        return document.querySelector('#conPeople').focus();
+        return conCategory.focus();
     }
 
     if (subEndDate >= conStartDate)
@@ -429,22 +256,22 @@ function validateInput() {
     if (isConOnoff) {
         if (conDetailAddr.postCode === '') {
             alert('우편번호를 입력해 주세요.');
-            return document.querySelector('#postcode').focus();
+            return postcode.focus();
         }
         if (conDetailAddr.addr === '') {
             alert('주소를 입력해 주세요.');
-            return document.querySelector('#address').focus();
+            return address.focus();
         }
         if (conDetailAddr.detailAddr === '') {
             alert('상세 주소를 입력해 주세요.');
-            return document.querySelector('#detailAddress').focus();
+            return detailAddress.focus();
         }
     }
 
     if (isFree) {
         if (conPrice === '') {
             alert('가격을 입력해 주세요.');
-            return document.querySelector('#conPrice').focus();
+            return conPrice.focus();
         }
     }
 
@@ -452,21 +279,8 @@ function validateInput() {
 }
 
 // 전송 폼
-
-const eventWriteBtn = document.querySelector('#event-write');
-
-if (eventWriteBtn) {
-    eventWriteBtn.addEventListener('click', registerConference);
-}
-
 async function registerConference() {
     const isFormValid = validateInput();
-    const isOnoff = document.querySelector(
-        'input[name="isOnoff"]:checked'
-    ).value;
-    const conIsfree = document.querySelector(
-        'input[name="conIsfree"]:checked'
-    ).value;
 
     const file = document.querySelector('#dynamic-file');
     formData.append('conferenceFile', file.files[0]);
@@ -496,8 +310,6 @@ async function registerConference() {
         url: '/event/write',
         data: {
             ...inputValue,
-            isOnoff,
-            conIsfree,
             conImagePath: imagePath,
         },
     });
@@ -511,6 +323,6 @@ async function registerConference() {
         return (document.location.href = '/event');
     } else {
         alert('등록에 실패하였습니다.');
-        return false;
+        return (document.location.href = '/event/write');
     }
 }

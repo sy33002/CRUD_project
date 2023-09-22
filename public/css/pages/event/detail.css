@@ -1,19 +1,28 @@
 @import url('../../common/editor.css');
-main .wrap {
+.wrap {
     width: 1250px;
     position: relative;
     margin-top: 40px;
 }
 
 @media all and (max-width: 1250px) {
-    main .wrap {
+    .wrap {
         width: 1000px;
+    }
+}
+@media all and (max-width: 1080px) {
+    .wrap {
+        width: 100%;
     }
 }
 .article {
     margin-right: 400px;
 }
 
+.count {
+    text-align: right;
+    margin: 10px 0;
+}
 .aside {
     position: absolute;
     top: 0;
@@ -76,9 +85,19 @@ main .wrap {
     width: 100%;
 }
 
+.table_scroll {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.table_scroll table {
+    min-width: 600px;
+}
+
 .menu-wrap {
     position: sticky;
     top: 50px;
+    z-index: 100;
     background-color: #fff;
 }
 
@@ -103,10 +122,72 @@ main .wrap {
     bottom: -1px;
     left: 0;
     height: 3px;
-    background-color: rgb(154, 154, 255);
+    background-color: #0d6efd;
     transition: all 0.2s ease-in-out;
 }
 
 .menu-wrap .menu-btn:hover::before {
     width: 100%;
+}
+
+.introduction {
+    padding-top: 70px;
+}
+
+.table_scroll table td,
+.table_scroll table th {
+    vertical-align: middle;
+}
+
+.table_scroll table td .con_title {
+    color: #6b6a6a;
+    margin-bottom: 5px;
+    display: block;
+    line-height: 20px;
+}
+
+@media all and (max-width: 1250px) {
+    .aside {
+        width: 320px;
+    }
+
+    .article {
+        margin-right: 340px;
+    }
+
+    .menu-wrap .menu-btn {
+        margin: 0 20px;
+    }
+}
+
+@media all and (max-width: 1080px) {
+    .aside {
+        right: 40px;
+    }
+}
+
+@media all and (max-width: 1000px) {
+    .aside {
+        position: static;
+        width: 100%;
+        height: auto;
+    }
+    .article {
+        margin-right: 0;
+    }
+
+    .aside .aside-wrap {
+        position: relative;
+        padding: 20px 0;
+        top: 0;
+        box-shadow: none;
+        right: 0;
+    }
+}
+
+@media all and (max-width: 640px) {
+    .menu-wrap .menu-btn {
+        margin: 0;
+        font-size: 14px;
+    }
 }
