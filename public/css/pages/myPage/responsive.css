@@ -1,0 +1,114 @@
+.row {
+    padding: 50px 0px;
+}
+
+.cardCenter {
+    padding: 30px 0px;
+}
+.marginRemove {
+    margin: 0 auto;
+}
+
+main {
+    flex-direction: initial;
+}
+
+.conIsAgreed {
+    display: flex;
+}
+
+.container {
+    padding: 0px 30px;
+    padding-top: 30px;
+    padding-bottom: 0px;
+}
+
+.card {
+    min-width: 300px;
+}
+
+.col-lg-10 {
+    width: 740px;
+}
+
+.margin {
+    margin: 0 auto;
+}
+
+div > h2 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+div.content {
+    margin-left: 200px;
+    padding: 1px 16px;
+}
+.padding {
+    padding-bottom: 30px;
+}
+
+#successConferenceList li {
+    padding: 4px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+#successConferenceList li:hover {
+    background-color: var(--color-green);
+    color: var(--color-white);
+}
+#rejectedConferenceList li {
+    padding: 4px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+#rejectedConferenceList li:hover {
+    background-color: var(--color-green);
+    color: var(--color-white);
+}
+
+.accordion {
+    --bs-accordion-active-bg: var(--color-white);
+    box-shadow: none;
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0;
+}
+
+td {
+    vertical-align: middle;
+}
+
+@media screen and (max-width: 810px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: space-around;
+    }
+    .sidebar a {
+        float: left;
+    }
+    div.content {
+        margin-left: 0;
+    }
+    .un {
+        display: none;
+    }
+}
+@media screen and (max-width: 950px) {
+    .un {
+        display: none;
+    }
+
+    .row {
+        padding: 15px 0px;
+    }
+}
+@media screen and (max-width: 500px) {
+    .un-mobile {
+        display: none;
+    }
+
+    .row {
+        padding: 50px 0px;
+    }
+}
