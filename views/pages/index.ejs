@@ -37,15 +37,22 @@
                                 <% if(events.length) { %> <% if(events.length>
                                 5){ %> <% for(let i=0; i < 6; i++){ %>
                                 <li class="swiper-slide">
-                                    <img
-                                        src="<%= events[i].con_image %>"
-                                        alt=""
-                                    />
+                                    <a href="event/<%= events[i].con_id %>">
+                                        <img
+                                            src="<%= events[i].con_image %>"
+                                            alt=""
+                                        />
+                                    </a>
                                 </li>
                                 <% } %> <% }else{ %> <% events.forEach((con)=> {
                                 %>
                                 <li class="swiper-slide">
-                                    <img src="<%= con.con_image %>" alt="" />
+                                    <a href="event/<%= con.con_id %>">
+                                        <img
+                                            src="<%= con.con_image %>"
+                                            alt=""
+                                        />
+                                    </a>
                                 </li>
                                 <% }) %> <% } %> <% } %>
                             </ul>
