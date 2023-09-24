@@ -73,7 +73,7 @@ exports.postConferenceList = async (req, res) => {
             ];
         }
         const eventList = await Conference.findAll({
-            where: whereConditions,
+            where: { whereConditions, is_agreed: true },
         });
         res.send({ eventList });
     } catch (err) {
@@ -108,11 +108,8 @@ exports.getConferenceDetail = async (req, res) => {
 
     const result3 = await ConFavorite.findOne({
         where: {
-            [Op.and]: [
-                { con_id: id },
-                { user_id: userId }
-            ]
-        }
+            [Op.and]: [{ con_id: id }, { user_id: userId }],
+        },
     });
     let confavoriteValue = 0;
     if (result3) {
@@ -126,9 +123,10 @@ exports.getConferenceDetail = async (req, res) => {
         confavoriteValue: confavoriteValue,
     });
 };
-
-//게시글 등록(DB에 저장까지만~)
+//행사 등록
 exports.postConference = async (req, res) => {
+    const userId = res.locals.Id;
+    // console.log('유저아이디 세션값 넘어옴??', userId);
     const {
         conTitle,
         conStartDate,
@@ -151,31 +149,39 @@ exports.postConference = async (req, res) => {
     } = req.body;
 
     try {
-        const result = await Conference.create({
-            con_title: conTitle,
-            con_start_date: conStartDate,
-            con_end_date: conEndDate,
-            sub_start_date: subStartDate,
-            sub_end_date: subEndDate,
-            is_onoff: isOnoff,
-            con_location: conLocation,
-            con_category: conCategory,
-            con_company: conCompany,
-            con_isfree: conIsfree,
-            con_price: conPrice,
-            con_people: conPeople,
-            con_company_url: conCompanyUrl,
-            con_count: conCount,
-            con_detail: conDetail,
-            con_image: conImagePath,
-            user_id: req.session.userInfo.id,
-            con_detail_location: conDetailAddr,
-            detail_Text: detailText,
-        });
-        res.send({ result: true });
+        console.log('유저아이디 세션값 넘어옴??', res.locals[0]); //세션값 없으면 0, 있으면 자연수
+        console.log(!(userId === 0));
+        if (res.locals[0] === undefined) {
+            //로그인 하지 않고 행사 등록하는 경우
+            return res.send({ result: 2 });
+        } else {
+            //세션값이 0이 아닌게 참===로그인 한 경우
+            const result = await Conference.create({
+                con_title: conTitle,
+                con_start_date: conStartDate,
+                con_end_date: conEndDate,
+                sub_start_date: subStartDate,
+                sub_end_date: subEndDate,
+                is_onoff: isOnoff,
+                con_location: conLocation,
+                con_category: conCategory,
+                con_company: conCompany,
+                con_isfree: conIsfree,
+                con_price: conPrice,
+                con_people: conPeople,
+                con_company_url: conCompanyUrl,
+                con_count: conCount,
+                con_detail: conDetail,
+                con_image: conImagePath,
+                user_id: req.session.userInfo.id,
+                con_detail_location: conDetailAddr,
+                detail_Text: detailText,
+            });
+            return res.send({ result: 1 }); //로그인 후 행사 등록 성공한경우
+        }
     } catch (err) {
         console.error(err);
-        res.send({ result: false });
+        return res.send({ result: 3 }); //알수없는 에러로 등록 되지 않는 경우
     }
 };
 

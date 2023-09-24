@@ -317,14 +317,24 @@ async function registerConference() {
 
     console.log(conferenceRes);
     const conferenceData = await conferenceRes.data;
-
-    if (conferenceData.result) {
+    console.log('conferenceData.result:', conferenceData.result);
+    if (conferenceData.result === 1) {
         alert(
             '관리자에게 등록요청이 완료되었습니다. 등록 요청한 행사의 승인여부는 마이페이지에서 보실 수 있습니다.'
         );
         return (document.location.href = '/event');
+    } else if (conferenceData.result === 2) {
+        if (
+            confirm(
+                '행사 등록은 로그인 후 이용가능한 서비스 입니다. 로그인을 하러 가시겠습니까?(취소버튼을 누르면 메인페이지로 돌아갑니다)'
+            )
+        ) {
+            return (document.location.href = '/login');
+        } else {
+            return (document.location.href = '/');
+        }
     } else {
-        alert('등록에 실패하였습니다.');
-        return (document.location.href = '/event/write');
+        alert('행사 등록에 실패하였습니다. 메인페이지로 돌아갑니다.');
+        return (document.location.href = '/');
     }
 }
