@@ -1,13 +1,14 @@
 // 찜하기 기능
 async function saveConference(con_id) {
-    const conId = $('#conId').attr('data-id');
-    const currentPageURL = window.location.href;
     try {
+        var currentPageURL = window.location.href;
         // URL에서 숫자 추출
-        if (conId) {
+        var match = currentPageURL.match(/\/(\d+)(?:#.*)?$/);
+        if (match) {
+            var number1 = match[1];
             // axios를 사용하여 POST 요청 보내기
-            const response = await axios.post(`/event/${conId}`, {
-                con_id: conId,
+            const response = await axios.post(`/event/${number1}`, {
+                con_id: number1,
             });
 
             if (response.data.result === 1) {
