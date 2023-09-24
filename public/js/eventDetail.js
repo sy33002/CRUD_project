@@ -1,11 +1,11 @@
 // 찜하기 기능
+var currentPageURL = window.location.href;
+// URL에서 숫자 추출
+var match = currentPageURL.match(/\/(\d+)(?:#.*)?$/);
+var number1 = match[1];
 async function saveConference(con_id) {
     try {
-        var currentPageURL = window.location.href;
-        // URL에서 숫자 추출
-        var match = currentPageURL.match(/\/(\d+)(?:#.*)?$/);
         if (match) {
-            var number1 = match[1];
             // axios를 사용하여 POST 요청 보내기
             const response = await axios.post(`/event/${number1}`, {
                 con_id: number1,
@@ -83,8 +83,41 @@ const copy = () => {
         alert('복사 완료 !');
     });
 };
-//문의하기
-function submitEmail() {
-    alert('관리자에게 문의 내용이 이메일로 전달되었습니다.');
-    window.location.reload();
-}
+// 문의하기
+
+document.addEventListener('DOMContentLoaded', function () {
+    const emailForm = document.getElementById('emailForm');
+
+    emailForm.addEventListener('submit', async function (e) {
+        e.preventDefault(); // 폼 기본 동작 방지
+
+        const name = document.getElementById('name').value;
+        const emailAddr = document.getElementById('email').value;
+        const emailContent =
+            document.getElementsByName('emailContent')[0].value;
+
+        // 이제 name, emailAddr, emailContent를 사용할 수 있습니다.
+        console.log('이름:', name);
+        console.log('이메일 주소:', emailAddr);
+        console.log('이메일 내용:', emailContent);
+
+        try {
+            // axios를 사용하여 서버로 데이터를 전송하면 됩니다.
+            const response = await axios.post(`/event/${number1}/mail`, {
+                name,
+                emailAddr,
+                emailContent,
+            });
+            console.log(response.data);
+            if (response.data.result === true) {
+                alert('관리자에게 문의 내용이 이메일로 전달되었습니다.');
+                window.location.reload();
+            } else {
+                alert('이메일 전송에 실패하였습니다.');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('오류가 발생하여 이메일을 전송할 수 없습니다.');
+        }
+    });
+});
