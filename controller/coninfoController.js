@@ -2,6 +2,7 @@ const { Conference, Sequelize, ConferenceReview } = require('../models');
 const { ConFavorite } = require('../models');
 const { Op } = require('sequelize');
 const { User } = require('../models');
+const nodemailer = require('nodemailer');
 
 // 순수 리스트 렌더역할
 exports.getConferenceList = (req, res) => {
@@ -185,57 +186,6 @@ exports.postConference = async (req, res) => {
     }
 };
 
-exports.postConferenceEdit = async (req, res) => {
-    const {
-        conTitle,
-        conStartDate,
-        conEndDate,
-        subStartDate,
-        subEndDate,
-        isOnoff,
-        conLocation,
-        conCategory,
-        conCompany,
-        conIsfree,
-        conPrice,
-        conPeople,
-        conCompanyUrl,
-        conCount,
-        conImagePath,
-        conDetail,
-        detailText,
-    } = req.body;
-
-    try {
-        const result = await Conference.update(
-            {
-                con_title: conTitle,
-                con_start_date: conStartDate,
-                con_end_date: conEndDate,
-                sub_start_date: subStartDate,
-                sub_end_date: subEndDate,
-                is_onoff: isOnoff,
-                con_location: conLocation,
-                con_category: conCategory,
-                con_company: conCompany,
-                con_isfree: conIsfree,
-                con_price: conPrice,
-                con_people: conPeople,
-                con_company_url: conCompanyUrl,
-                con_count: conCount,
-                con_detail: conDetail,
-                detail_Text: detailText,
-                con_image: conImagePath,
-            },
-            {
-                where: { con_id: req.body.conId },
-            }
-        );
-        res.send({ result });
-    } catch (err) {
-        console.error(err);
-    }
-};
 exports.saveConference = async (req, res) => {
     const isLiked = await ConFavorite.findOne({
         where: {
@@ -266,4 +216,34 @@ exports.postDisagreeConferenceList = async (req, res) => {
         where: { is_agreed: false },
     });
     res.send({ eventList });
+};
+
+exports.sentEmail = async (req, res) => {
+    // const event = await Conference.findOne({
+    //     where: { con_id: req.params.id },
+    // });
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'addr@gmail.com', // 발신자 이메일 주소
+            pass: 'password', // 발신자 이메일 비밀번호 또는 앱 비밀번호
+        },
+    });
+    const { name, emailAddr, emailContent } = req.body;
+    const mailOptions = {
+        from: 'cocobell33@gmail.com', // 발신자 이메일 주소
+        to: emailAddr, // 수신자 이메일 주소
+        subject: '문의 이메일',
+        text: `이름: ${name}\n이메일: ${emailAddr}\n문의 내용: ${emailContent}`,
+    };
+
+    // 이메일 전송
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            res.send({ result: false });
+        } else {
+            console.log('이메일 전송 성공:', info.response);
+            res.status(200).send({ result: true });
+        }
+    });
 };

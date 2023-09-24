@@ -231,26 +231,25 @@
                                     <div id="inquiries" class="inquiries mb-5">
                                         <span class="fs-4 mb-4">문의 하기</span>
                                         <div class="row g-3">
+                                          <form id="emailForm">
                                             <div class="col-md-6">
-                                                <label for="name" class="form-label">이름</label>
-                                                <input type="text" class="form-control" id="name" />
+                                              <label for="name" class="form-label">이름</label>
+                                              <input type="text" class="form-control" id="name" name="name"/>
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="email" class="form-label">이메일</label>
-                                                <input type="email" class="form-control" id="inputPassword4" />
+                                              <label for="email" class="form-label">이메일</label>
+                                              <input type="email" class="form-control" id="email" name="emailAddr"/>
                                             </div>
                                             <div class="mb-3">
-                                                <label for="exampleFormControlTextarea1" class="form-label">문의
-                                                    내용</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1"
-                                                    rows="3"></textarea>
+                                              <label for="exampleFormControlTextarea1" class="form-label">문의 내용</label>
+                                              <textarea name="emailContent" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                             </div>
-
                                             <div class="col-12">
-                                                <button type="submit" class="btn btn-primary">
-                                                    전송
-                                                </button>
+                                              <button type="submit" class="btn btn-primary">
+                                                전송
+                                              </button>
                                             </div>
+                                          </form>
                                         </div>
                                     </div>
                                 </div>

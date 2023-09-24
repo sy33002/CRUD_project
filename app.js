@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const nodemailer = require('nodemailer');
 const config = require('./config/config.json');
 
 const path = require('path');
@@ -15,7 +16,6 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/static', express.static(__dirname + '/public'));
-
 
 const MySessionSecretKey = config.sessionSecretKey;
 
