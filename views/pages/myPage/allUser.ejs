@@ -6,7 +6,6 @@
             rel="stylesheet"
             href="/static/css/pages/myPage/managerAside.css"
         />
-        <link rel="stylesheet" href="/static/css/pages/myPage/allUser.css" />
         <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
         <link rel="stylesheet" href="/static/css/pages/myPage/myRevList.css" />
         <style>
@@ -122,7 +121,6 @@
                         user_id: userId,
                     },
                 }).then((res) => {
-                    console.log(res);
                     if (res.data === true) {
                         alert('유저 삭제 성공!');
                         obj.parentElement.parentElement.remove();
@@ -142,7 +140,6 @@
                         user_id: userId,
                     },
                 }).then((res) => {
-                    console.log(res);
                     if (res.data === true) {
                         alert('매니저 권한 부여 성공!');
                         window.location.reload();
@@ -161,7 +158,6 @@
                         user_id: userId,
                     },
                 }).then((res) => {
-                    console.log(res);
                     if (res.data === true) {
                         alert('매니저 권한 회수 성공!');
                         window.location.reload();

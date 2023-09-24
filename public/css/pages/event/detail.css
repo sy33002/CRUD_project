@@ -19,6 +19,10 @@
     margin-right: 400px;
 }
 
+.count {
+    text-align: right;
+    margin: 10px 0;
+}
 .aside {
     position: absolute;
     top: 0;

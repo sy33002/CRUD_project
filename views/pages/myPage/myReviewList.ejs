@@ -9,6 +9,11 @@
         />
         <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
         <link rel="stylesheet" href="/static/css/pages/myPage/myRevList.css" />
+        <style>
+            td {
+                vertical-align: middle;
+            }
+        </style>
     </head>
 
     <body>
@@ -28,17 +33,13 @@
                                                 <th>제목</th>
                                                 <th class="un">등록일</th>
                                                 <th>조회수</th>
-                                                <th class="un">
-                                                    관련 행사 제목
-                                                </th>
-                                                <th class="un">
-                                                    관련 행사 링크
-                                                </th>
-                                                <th>댓글 바로가기</th>
+                                                <th class="un">관련 행사</th>
+
+                                                <th>리뷰 보기</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
-                                        <tbody id="myreviewList"></tbody>
+                                        <tbody id="myReviewList"></tbody>
                                     </table>
                                 </div>
                             </div>
@@ -50,19 +51,19 @@
         <%- include('../../common/footer.ejs') %>
 
         <script>
-            function myreviewList(userId) {
+            function myReviewList(userId) {
                 axios({
                     method: 'GET',
-                    url: '/myPage/myreviewList',
+                    url: '/myPage/myReviewList',
                     params: {
                         userId: userId,
                     },
                 }).then((res) => {
                     if (res.status === 200) {
                         const reviewList = res.data.results;
-                        const myreviewListContainer =
-                            document.getElementById('myreviewList');
-                        myreviewListContainer.innerHTML = '';
+                        const myReviewListContainer =
+                            document.getElementById('myReviewList');
+                        myReviewListContainer.innerHTML = '';
 
                         if (
                             Array.isArray(reviewList) &&
@@ -75,13 +76,12 @@
                                     <td>${result.review.re_title}</td>
                                     <td class="un">${result.review.re_date}</td>
                                     <td> ${result.review.re_count}</td>
-                                    <td class="un">${result.relatedConference.con_title}</td>
-                                    <td class="un"><a href="/event/${result.relatedConference.con_id}">바로가기</a></td>
+                                    <td class="un"><a href="/event/${result.relatedConference.con_id}">${result.relatedConference.con_title}</a></td>                         
                                     <td><a href="/review/${result.review.re_id}">바로가기</a></td>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="deleteMyReview(${result.review.re_id})">삭제</button>
+                                    <td><button type="button" class="btn btn-outline-danger" onclick="deleteMyReview(${result.review.re_id})">삭제</button></td>
                                 `;
 
-                                myreviewListContainer.appendChild(
+                                myReviewListContainer.appendChild(
                                     reviewElement
                                 );
                             });
@@ -89,7 +89,7 @@
                             const reviewElement = document.createElement('tr');
                             reviewElement.innerHTML =
                                 '<td colspan="6">등록한 리뷰가 없습니다.</td>';
-                            myreviewListContainer.appendChild(reviewElement);
+                            myReviewListContainer.appendChild(reviewElement);
                         }
                     }
                 });
@@ -97,7 +97,7 @@
 
             window.onload = function () {
                 const userId = '<%= data.user_id %>';
-                myreviewList(userId);
+                myReviewList(userId);
             };
 
             function deleteMyReview(reId) {

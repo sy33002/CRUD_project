@@ -2,9 +2,8 @@ const { User, Sequelize } = require('../models');
 const { Conference } = require('../models');
 const { ConFavorite } = require('../models');
 const { ConferenceReview } = require('../models');
-const { Op } = require('sequelize');
 const bcrypt = require('bcrypt');
-const cookieParser = require('cookie-parser');
+
 // login 페이지 렌더
 exports.getLogin = (req, res) => {
     res.render('login');
@@ -115,22 +114,8 @@ exports.deleteConference = async (req, res) => {
     }
 };
 
-// 관리자 페이지: 행사 관리 페이지 render
-exports.getconferenceHandler = async (req, res) => {
-    if (req.session.userInfo) {
-        const data = req.session.userInfo;
-        if (data.userIsManager === true) {
-            res.render('myPage/conferenceHandler');
-        } else {
-            res.render('404');
-        }
-    } else {
-        res.render('404');
-    }
-};
-
 // 관리자 페이지: 승인해야할 conference 보기
-exports.getConforenceRegister = async (req, res) => {
+exports.getConferenceRegister = async (req, res) => {
     try {
         const conferences = await Conference.findAll({
             where: { is_agreed: false },
@@ -346,7 +331,7 @@ exports.myProfileRender = async (req, res) => {
 };
 
 // 마이페이지 -> 마이 리뷰 페이지
-exports.myreviewListRender = async (req, res) => {
+exports.myReviewListRender = async (req, res) => {
     const userId = req.query.userId;
     const data = req.session.userInfo;
     if (data) {
@@ -451,7 +436,7 @@ exports.updateProfile = async (req, res) => {
 };
 
 // 회원 탈퇴
-exports.deleteUserself = async (req, res) => {
+exports.deleteUserSelf = async (req, res) => {
     const result = await User.destroy({
         where: { user_id: req.body.user_id },
     });
@@ -464,7 +449,7 @@ exports.deleteUserself = async (req, res) => {
 };
 
 // 마이페이지: 내가 쓴 리뷰 목록 불러오기
-exports.getmyreviewList = async (req, res) => {
+exports.getMyReviewList = async (req, res) => {
     try {
         const reviews = await ConferenceReview.findAll({
             where: { user_id: req.query.userId },
@@ -484,7 +469,7 @@ exports.getmyreviewList = async (req, res) => {
         res.send({ results });
     } catch (error) {
         console.error(error);
-        res.status(500).send('get myreviewList Error');
+        res.status(500).send('get myReviewList Error');
     }
 };
 
@@ -502,7 +487,7 @@ exports.deleteMyReview = async (req, res) => {
 };
 
 // 마이페이지: 내가 찜한 행사 목록 불러오기
-exports.getmyFavoriteList = async (req, res) => {
+exports.getMyFavoriteList = async (req, res) => {
     try {
         const favorites = await ConFavorite.findAll({
             where: { user_id: req.query.userId },
@@ -545,7 +530,7 @@ exports.deleteMyFavorite = async (req, res) => {
 };
 
 // 마이페이지: 찜한 행사 중 리뷰 남기기
-exports.getwriteReview = async (req, res) => {
+exports.getWriteReview = async (req, res) => {
     const conId = req.query.conId;
     const conData1 = await Conference.findOne({
         where: { con_id: conId },

@@ -1,14 +1,14 @@
-const form = document.forms['register-conference'];
+import editor from './editor.js';
+
+// 행사 쓰기
 const formData = new FormData();
 let isConOnoff = false;
 let isFree = false;
 
 const conTitle = document.querySelector('#conTitle');
 const conCompany = document.querySelector('#conCompany');
-const isOnoff = document.querySelector('#isOnoff');
 const conLocation = document.querySelector('#conLocation');
 const conCategory = document.querySelector('#conCategory');
-const conIsfree = document.querySelector('#conIsfree');
 const conPrice = document.querySelector('#conPrice');
 const conPeople = document.querySelector('#conPeople');
 const conCompanyUrl = document.querySelector('#conCompanyUrl');
@@ -23,10 +23,8 @@ const conDate = document.querySelector('#conDate');
 function resetInputValue() {
     conTitle.value = '';
     conCompany.value = '';
-    isOnoff.value = '';
     conLocation.value = '';
     conCategory.value = '';
-    conIsfree.value = '';
     conPrice.value = '';
     conPeople.value = '';
     conCompanyUrl.value = '';
@@ -97,8 +95,6 @@ $('input.daterange').daterangepicker({
     timePicker: true,
     opens: 'center',
     showDropdowns: true,
-    // startDate: moment().startOf('day'),
-    // endDate: moment().startOf('day').add(32, 'hour'),
     locale: {
         cancelLabel: '취소', // Cancel 버튼 텍스트 변경
         applyLabel: '적용', // Apply 버튼 텍스트 변경
@@ -182,15 +178,21 @@ function getPostcode() {
     }).open();
 }
 
-function getInputValue() {
-    console.log(subDate.value);
-    const subDate = subDate.value.split(' ~ ');
-    const conDate = conDate.value.split(' ~ ');
+const postCodeBtn = document.querySelector('#postCodeBtn');
+if (postCodeBtn) {
+    postCodeBtn.addEventListener('click', getPostcode);
+}
 
-    const subStartDate = subDate[0];
-    const subEndDate = subDate[1];
-    const conStartDate = conDate[0];
-    const conEndDate = conDate[1];
+function getInputValue() {
+    const subDateFormat = subDate.value.split(' ~ ');
+    const conDateFormat = conDate.value.split(' ~ ');
+    const contents = editor.getHTML();
+    const textContents = editor.getText();
+
+    const subStartDate = subDateFormat[0];
+    const subEndDate = subDateFormat[1];
+    const conStartDate = conDateFormat[0];
+    const conEndDate = conDateFormat[1];
 
     const conDetailAddr = {
         postCode: postcode.value,
@@ -206,14 +208,13 @@ function getInputValue() {
         subEndDate,
         conStartDate,
         conEndDate,
-        isOnoff: isOnoff.value,
         conLocation: conLocation.value,
         conCategory: conCategory.value,
-        conIsfree: conIsfree.value,
         conPrice: conPrice.value === '' ? 0 : conPrice.value, // 빈값 일 때는 0 보내기 (이렇게 안하면 db 충돌남)
         conPeople: conPeople.value,
         conCompanyUrl: conCompanyUrl.value,
-        conDetail: conDetail.value,
+        conDetail: contents,
+        detailText: textContents,
         conDetailAddr,
     };
 }
@@ -233,22 +234,22 @@ function validateInput() {
 
     if (conTitle.trim() === '') {
         alert('행사 이름을 입력해주세요.');
-        return conTitle.focus();
+        return document.querySelector('#conTitle').focus();
     }
 
     if (conDetail.trim() === '') {
         alert('행사 상세 내용을 입력해주세요.');
-        return conDetail.focus();
+        return document.querySelector('#conDetail').focus();
     }
 
     if (conCategory === '') {
         alert('카테고리를 선택해주세요.');
-        return conCategory.focus();
+        return document.querySelector('#conCategory').focus();
     }
 
     if (conPeople === '') {
         alert('규모를 입력해 주세요.');
-        return conCategory.focus();
+        return document.querySelector('#conPeople').focus();
     }
 
     if (subEndDate >= conStartDate)
@@ -257,22 +258,22 @@ function validateInput() {
     if (isConOnoff) {
         if (conDetailAddr.postCode === '') {
             alert('우편번호를 입력해 주세요.');
-            return postcode.focus();
+            return document.querySelector('#postcode').focus();
         }
         if (conDetailAddr.addr === '') {
             alert('주소를 입력해 주세요.');
-            return address.focus();
+            return document.querySelector('#address').focus();
         }
         if (conDetailAddr.detailAddr === '') {
             alert('상세 주소를 입력해 주세요.');
-            return detailAddress.focus();
+            return document.querySelector('#detailAddress').focus();
         }
     }
 
     if (isFree) {
         if (conPrice === '') {
             alert('가격을 입력해 주세요.');
-            return conPrice.focus();
+            return document.querySelector('#conPrice').focus();
         }
     }
 
@@ -280,8 +281,21 @@ function validateInput() {
 }
 
 // 전송 폼
+
+const eventWriteBtn = document.querySelector('#event-write');
+
+if (eventWriteBtn) {
+    eventWriteBtn.addEventListener('click', registerConference);
+}
+
 async function registerConference() {
     const isFormValid = validateInput();
+    const isOnoff = document.querySelector(
+        'input[name="isOnoff"]:checked'
+    ).value;
+    const conIsfree = document.querySelector(
+        'input[name="conIsfree"]:checked'
+    ).value;
 
     const file = document.querySelector('#dynamic-file');
     formData.append('conferenceFile', file.files[0]);
@@ -311,11 +325,12 @@ async function registerConference() {
         url: '/event/write',
         data: {
             ...inputValue,
+            isOnoff,
+            conIsfree,
             conImagePath: imagePath,
         },
     });
 
-    console.log(conferenceRes);
     const conferenceData = await conferenceRes.data;
     console.log('conferenceData.result:', conferenceData.result);
     if (conferenceData.result === 1) {
@@ -336,5 +351,5 @@ async function registerConference() {
     } else {
         alert('행사 등록에 실패하였습니다. 메인페이지로 돌아갑니다.');
         return (document.location.href = '/');
-    }
+
 }

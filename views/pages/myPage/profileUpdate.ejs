@@ -6,8 +6,10 @@
             rel="stylesheet"
             href="/static/css/pages/myPage/managerAside.css"
         />
+
         <link rel="stylesheet" href="/static/css/pages/myPage/conHandler.css" />
         <link rel="stylesheet" href="/static/css/pages/myPage/myRevList.css" />
+        <!-- <link rel="stylesheet" href="/static/css/pages/myPage/responsive.css" /> -->
     </head>
     <style>
         .padding {
@@ -19,6 +21,10 @@
         .btnControl {
             display: flex;
             justify-content: space-around;
+        }
+
+        select option[value=''] {
+            display: none;
         }
     </style>
     <body>
@@ -49,7 +55,7 @@
                                         value="<%= data.user_id %>"
                                     />
                                     <p class="text-center">
-                                        비밀번호를 변경하려면 새로운 비밀번호를
+                                        회원 정보를 변경하려면 비밀번호와 함께
                                         입력하여 주시기 바랍니다.
                                     </p>
 
@@ -84,6 +90,9 @@
                                             aria-label="Default select example"
                                             name="userAddr"
                                         >
+                                            <option value="" selected>
+                                                <%=data.user_addr%>
+                                            </option>
                                             <%-
                                             include('../../common/components/conLocationSelect'
                                             ) %>
@@ -108,11 +117,24 @@
                                             aria-label="Default select example"
                                             name="userCategory"
                                         >
-                                            <option value="Web/App">Web/App</option>
+
+                                            <option value="" selected>
+                                                <%= data.user_category%>
+                                            </option>
+
+                                            <option value="Web/App">
+                                                Web/App
+                                            </option>
                                             <option value="AI">AI</option>
-                                            <option value="Git/Data/Cloud">Git/Data/Cloud</option>
-                                            <option value="language/OS">language/OS</option>
-                                            <option value="Game/IoT">Game/IoT</option>
+                                            <option value="Git/Data/Cloud">
+                                                Git/Data/Cloud
+                                            </option>
+                                            <option value="language/OS">
+                                                language/OS
+                                            </option>
+                                            <option value="Game/IoT">
+                                                Game/IoT
+                                            </option>
                                             <option value="etc">etc</option>
                                         </select>
                                         <br /><br />
@@ -127,7 +149,7 @@
                                             <button
                                                 type="button"
                                                 class="btn btn-outline-secondary"
-                                                onclick="deleteUserself(this, '<%= data.user_id%>')"
+                                                onclick="deleteUserSelf(this, '<%= data.user_id%>')"
                                             >
                                                 회원탈퇴하기
                                             </button>
@@ -192,8 +214,10 @@
                     }).then((res) => {
                         if (res.data.result === true) {
                             alert('회원정보 수정 성공!');
+                            window.location.reload();
                         } else {
                             alert('회원정보 변경 없음');
+                            window.location.reload();
                         }
                     });
                 }
@@ -239,13 +263,13 @@
                 });
             }
             // 유저 탈퇴
-            function deleteUserself(obj, userId) {
+            function deleteUserSelf(obj, userId) {
                 if (!confirm('정말로 탈퇴하나요?')) {
                     return;
                 }
                 axios({
                     method: 'delete',
-                    url: '/myPage/deleteUserself',
+                    url: '/myPage/deleteUserSelf',
                     data: {
                         user_id: userId,
                     },
@@ -255,6 +279,7 @@
                         document.location.href = '/';
                     } else {
                         alert('회원 탈퇴 실패');
+                        window.location.reload();
                     }
                 });
             }
