@@ -7,5 +7,21 @@
     </head>
     <body>
         <h1>크롤링 테스트</h1>
+        <% if (data && data.length > 0) { %>
+            <ul>
+                <% data.forEach(function(event) { %>
+                    <li>
+                        <h2><%= event.title %></h2>
+                        <p>Company: <%= event.company %></p>
+                        <p>Start Date: <%= event.con_start_date %></p>
+                        <p>End Date: <%= event.con_end_date %></p>
+                        <p>HashTags: <%= event.hashTag.join(', ') %></p>
+                    </li>
+                <% }); %>
+            </ul>
+            <% } else { %>
+                <p>No events found</p>
+            <% } %>
+
     </body>
 </html>
