@@ -50,7 +50,8 @@ exports.getCrawling = async (req, res) => {
 
             // 배열에 저장된 객체를 출력합니다.
             console.log(eventList);
-            res.send(eventList);
+            // res.send(eventList);
+            res.render('crawling/crawling', { data: eventList });
         } catch (error) {
             console.error(error);
         }
@@ -58,5 +59,5 @@ exports.getCrawling = async (req, res) => {
 
     getHtml();
 
-    // res.render('crawling/crawling');
+    // res.render('crawling/crawling', { data: eventList });
 };
