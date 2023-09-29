@@ -351,5 +351,5 @@ async function registerConference() {
     } else {
         alert('행사 등록에 실패하였습니다. 메인페이지로 돌아갑니다.');
         return (document.location.href = '/');
-
+    }
 }
