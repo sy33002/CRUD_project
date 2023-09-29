@@ -150,9 +150,9 @@ exports.postConference = async (req, res) => {
     } = req.body;
 
     try {
-        console.log('유저아이디 세션값 넘어옴??', res.locals[0]); //세션값 없으면 0, 있으면 자연수
+        console.log('유저아이디 세션값 넘어옴??', res.locals?.userId); //세션값 없으면 0, 있으면 자연수
         console.log(!(userId === 0));
-        if (res.locals[0] === undefined) {
+        if (res.locals?.userId === null) {
             //로그인 하지 않고 행사 등록하는 경우
             return res.send({ result: 2 });
         } else {
