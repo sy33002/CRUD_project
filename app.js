@@ -48,6 +48,8 @@ app.use((req, res, next) => {
     }
     next();
 });
+const crawlingRouter = require('./routes/crawling');
+app.use('/', crawlingRouter);
 
 const mainRouter = require('./routes/main');
 app.use('/', mainRouter);
