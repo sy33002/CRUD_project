@@ -92,13 +92,12 @@ $("input:text[name='conPeople']").on('keyup', function () {
 // 달력 API 세팅
 $('input.daterange').daterangepicker({
     autoUpdateInput: false,
-    timePicker: true,
     opens: 'center',
     showDropdowns: true,
     locale: {
         cancelLabel: '취소', // Cancel 버튼 텍스트 변경
         applyLabel: '적용', // Apply 버튼 텍스트 변경
-        format: 'YYYY-MM-DD HH:mm',
+        format: 'YYYY-MM-DD',
         daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
         monthNames: [
             '1',
@@ -119,9 +118,9 @@ $('input.daterange').daterangepicker({
 
 $('input.daterange').on('apply.daterangepicker', function (ev, picker) {
     $(this).val(
-        picker.startDate.format('YYYY-MM-DD HH:mm') +
+        picker.startDate.format('YYYY-MM-DD') +
             ' ~ ' +
-            picker.endDate.format('YYYY-MM-DD HH:mm')
+            picker.endDate.format('YYYY-MM-DD')
     );
 });
 
