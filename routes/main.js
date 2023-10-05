@@ -9,11 +9,10 @@ router.get('/', controller.index);
 
 router.post(
     '/upload/:path',
-    uploadDetail.single('conferenceFile'),
+    uploadDetail.single('conferenceFile'), // 수정
     (req, res) => {
+        // 업로드 미들웨어 이후의 코드는 이전과 동일
         const tempFilePath = req.file.path; // 임시 파일 경로
-
-        // 조절된 이미지를 저장할 경로
         const outputPath = `public/images/upload/${req.params.path}`;
 
         let newImagePath = '';
