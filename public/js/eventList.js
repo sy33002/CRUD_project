@@ -1,17 +1,33 @@
 const select = document.querySelector('select');
 const title = document.querySelector('h2');
+// 파라미터로 데이터 가져옴 데이터가 있을 때는 현재 select된 값으로 변경
+const paramsData = window.location.search.substring(1);
+if (paramsData) {
+    const [year, month] = paramsData.split('-');
+    const formattedDate = `${year}년 ${parseInt(month, 10)}월`;
+    title.innerText = formattedDate + ' 행사';
+}
 
 select.addEventListener('change', (e) => {
     const date = e.target.value;
     var selectedOption = select.options[select.selectedIndex];
     var selectedOptionText = selectedOption.text;
     title.innerText = selectedOptionText + ' 행사';
+
+    history.pushState(null, null, `?${date}`);
+
     displayMonthEvents(date);
+    location.reload();
 });
 
 // 달력 select를 그려주는 함수
 function populateMonthSelect() {
     const currentDate = new Date();
+    const currentFormattedDate = `${currentDate.getFullYear()}-${(
+        currentDate.getMonth() + 1
+    )
+        .toString()
+        .padStart(2, '0')}`;
 
     for (let i = -3; i <= 3; i++) {
         // 현재 기준으로 3달 이전 ~ 3달 이후 를 나타냄
@@ -27,12 +43,16 @@ function populateMonthSelect() {
             .padStart(2, '0')}월`;
 
         // Check if this option corresponds to the current month
-        if (i === 0) {
+
+        const selected = paramsData || currentFormattedDate;
+        if (selected === formattedDate) {
             option.selected = true;
         }
+
         select.appendChild(option);
     }
 }
+console.log('실행');
 populateMonthSelect();
 
 // 서버에서 모든 행사 리스트를 가져옴
@@ -220,4 +240,5 @@ async function displayMonthEvents(date) {
         console.error('Error displaying month events:', error);
     }
 }
-displayMonthEvents();
+
+displayMonthEvents(paramsData);
