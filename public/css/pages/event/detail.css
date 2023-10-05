@@ -60,6 +60,10 @@
     gap: 5px;
 }
 
+.aside .confavorite span {
+    display: inline-block;
+}
+
 .aside .btn_group {
     display: flex;
     gap: 15px;

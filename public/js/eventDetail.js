@@ -121,3 +121,47 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+// 해시 태그
+const is_onoff = document.querySelector('#is_onoff').textContent.trim();
+const con_isfree = document.querySelector('#con_isfree').textContent.trim();
+const con_category = document.querySelector('#con_category').textContent.trim();
+
+// 이미지
+const con_img_src = document.querySelector('#con_img').src;
+
+// 관심 수
+const confavorite = document.querySelector('#confavorite').textContent;
+
+const reviewsLength = document.querySelectorAll('.reviews').length;
+
+const con_title = document.querySelector('#con_title').textContent.trim();
+
+// 공유 버튼
+Kakao.Share.createDefaultButton({
+    container: '#kakaotalk-sharing-btn',
+    objectType: 'feed',
+    content: {
+        title: con_title,
+        description: `#개발 컨퍼런스 ${is_onoff} ${con_isfree} ${con_category}`,
+        imageUrl: con_img_src,
+        link: {
+            // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+            mobileWebUrl: window.location.host,
+            webUrl: window.location.host,
+        },
+    },
+    social: {
+        likeCount: Number(confavorite),
+        commentCount: Number(reviewsLength),
+    },
+    buttons: [
+        {
+            title: '웹으로 보기',
+            link: {
+                mobileWebUrl: window.location.href,
+                webUrl: window.location.href,
+            },
+        },
+    ],
+});
