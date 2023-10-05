@@ -54,14 +54,26 @@
                                                     %> <% } %>
                                                 </td>
                                                 <td>
+                                                 
+
+
+
+
                                                     <%=
                                                     conference.dataValues.con_company
                                                     %>
                                                 </td>
                                                 <td class="un">
+
+                                                    <%
+                                                    let resultYear = (conference.dataValues.createdAt).slice(8,13);
+                                                    let resultMonth = (conference.dataValues.createdAt).getMonth;
+                                                    let resultDate = (conference.dataValues.createdAt).getDate;
+                                                    %>
                                                     <%=
                                                     conference.dataValues.createdAt
                                                     %>
+                                                    <%#= resultYear %>
                                                 </td>
                                                 <td>
                                                     <% if
@@ -117,6 +129,13 @@
             </div>
         </main>
         <%- include('../../common/footer.ejs') %>
-        <script></script>
+        <script>
+            console.log('콘솔도 안 되는 건가');
+       
+            
+            
+            
+            
+        </script>
     </body>
 </html>

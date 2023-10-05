@@ -62,6 +62,7 @@
         </main>
 
         <%- include('../../common/footer.ejs') %>
+
         <script>
             // 내가 찜한 행사 보기
             function myFavoriteList(userId) {
@@ -96,6 +97,27 @@
                                 );
 
                                 if (currentDate > endDate) {
+                                    // console.log('날짜를 고쳐봅시다');
+
+                                    let Beforedateformat = `${myFavoriteList[i].con_end_date}`;
+                                    let resultYear = Beforedateformat.slice(
+                                            0,
+                                            4
+                                        ),
+                                        resultMonth = Beforedateformat.slice(
+                                            5,
+                                            7
+                                        ),
+                                        resultDate = Beforedateformat.slice(
+                                            8,
+                                            10
+                                        );
+
+                                    // console.log(
+                                    //     resultYear,
+                                    //     resultMonth,
+                                    //     resultDate
+                                    // );
                                     favoriteElement.innerHTML = `
 
                                         <td><a href="/event/${myFavoriteList[i].con_id}">
@@ -106,15 +128,33 @@
                                         <td class="un">
                                                 <p class="card-text">
                                                     ${favoritesLength[i]}명이 관심을 가졌던 행사가
-                                                    ${myFavoriteList[i].con_end_date}에 종료되었습니다.
+                                                    ${resultYear}년 ${resultMonth}월 ${resultDate}일에 종료되었습니다.
                                                 </p>
                                         </td>
                                         <td><button type="button" class="btn btn-outline-danger" onclick="deletefavorite(${myFavoriteList[i].con_id})">찜 삭제</button></td>
                                         <td><button type="button" class="btn btn-outline-primary" id="reviewButton"><a href="/review/write">리뷰 쓰기</a></button></td>
-                                  
+
 
                                     `;
                                 } else {
+                                    let Beforedateformat = `${myFavoriteList[i].con_start_date}`;
+                                    let resultYear = Beforedateformat.slice(
+                                            0,
+                                            4
+                                        ),
+                                        resultMonth = Beforedateformat.slice(
+                                            5,
+                                            7
+                                        ),
+                                        resultDate = Beforedateformat.slice(
+                                            8,
+                                            10
+                                        );
+                                    console.log(
+                                        resultYear,
+                                        resultMonth,
+                                        resultDate
+                                    );
                                     favoriteElement.innerHTML = `
                                     <td><a href="/event/${myFavoriteList[i].con_id}">
                                                 <img src="${myFavoriteList[i].con_image}" class="card-img-top un-mobile" alt="행사 사진" />
@@ -124,14 +164,14 @@
                                         <td class="un">
                                             <p class="card-text">
                                                     ${favoritesLength[i]}명이 관심을 가진 행사가
-                                                    ${myFavoriteList[i].con_start_date}에 시작됩니다.
+                                                    ${resultYear}년 ${resultMonth}월 ${resultDate}일에 시작됩니다.
                                             </p>
-                                        </td>   
-                                       
-                                        <td colspan="2"> <button type="button" class="btn btn-outline-danger" onclick="deletefavorite(${myFavoriteList[i].con_id})">찜 삭제</button></td>          
-                                        <td></td>       
+                                        </td>
 
-                                        
+                                        <td colspan="2"> <button type="button" class="btn btn-outline-danger" onclick="deletefavorite(${myFavoriteList[i].con_id})">찜 삭제</button></td>
+                                        <td></td>
+
+
                                     `;
                                 }
 
