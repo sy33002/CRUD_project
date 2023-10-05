@@ -234,46 +234,56 @@ function validateInput() {
 
     if (conTitle.trim() === '') {
         alert('행사 이름을 입력해주세요.');
-        return document.querySelector('#conTitle').focus();
+        document.querySelector('#conTitle').focus();
+        return false;
     }
 
     if (conDetail.trim() === '') {
         alert('행사 상세 내용을 입력해주세요.');
-        return document.querySelector('#conDetail').focus();
+        document.querySelector('#conDetail').focus();
+        return false;
     }
 
     if (conCategory === '') {
         alert('카테고리를 선택해주세요.');
-        return document.querySelector('#conCategory').focus();
+        document.querySelector('#conCategory').focus();
+        return false;
     }
 
     if (conPeople === '') {
         alert('규모를 입력해 주세요.');
-        return document.querySelector('#conPeople').focus();
+        document.querySelector('#conPeople').focus();
+        return false;
     }
 
-    if (subEndDate >= conStartDate)
-        return alert('행사 기간과 모집 기간을 확인해 주세요.');
+    if (subEndDate >= conStartDate) {
+        alert('행사 기간과 모집 기간을 확인해 주세요.');
+        return false;
+    }
 
     if (isConOnoff) {
         if (conDetailAddr.postCode === '') {
             alert('우편번호를 입력해 주세요.');
-            return document.querySelector('#postcode').focus();
+            document.querySelector('#postcode').focus();
+            return false;
         }
         if (conDetailAddr.addr === '') {
             alert('주소를 입력해 주세요.');
-            return document.querySelector('#address').focus();
+            document.querySelector('#address').focus();
+            return false;
         }
         if (conDetailAddr.detailAddr === '') {
             alert('상세 주소를 입력해 주세요.');
-            return document.querySelector('#detailAddress').focus();
+            document.querySelector('#detailAddress').focus();
+            return false;
         }
     }
 
     if (isFree) {
         if (conPrice === '') {
             alert('가격을 입력해 주세요.');
-            return document.querySelector('#conPrice').focus();
+            document.querySelector('#conPrice').focus();
+            return false;
         }
     }
 
@@ -290,6 +300,9 @@ if (eventWriteBtn) {
 
 async function registerConference() {
     const isFormValid = validateInput();
+
+    if (isFormValid !== true) return;
+
     const isOnoff = document.querySelector(
         'input[name="isOnoff"]:checked'
     ).value;
@@ -299,8 +312,6 @@ async function registerConference() {
 
     const file = document.querySelector('#dynamic-file');
     formData.append('conferenceFile', file.files[0]);
-
-    if (isFormValid !== true) return;
 
     if (!file.files[0]) return alert('대표 이미지는 필수 입니다.');
 
