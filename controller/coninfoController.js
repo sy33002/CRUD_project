@@ -74,8 +74,9 @@ exports.postConferenceList = async (req, res) => {
             ];
         }
         const eventList = await Conference.findAll({
-            where: { whereConditions, is_agreed: true },
+            where: { ...whereConditions, is_agreed: 1 },
         });
+
         res.send({ eventList });
     } catch (err) {
         console.log(err);
