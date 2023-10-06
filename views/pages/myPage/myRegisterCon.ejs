@@ -41,49 +41,39 @@
                                                 <td><%= index + 1 %></td>
                                                 <td>
                                                     <% if
-                                                    (conference.dataValues.is_agreed
+                                                    (conference.is_agreed
                                                     === 1) { %>
                                                     <a
-                                                        href="/event/<%= conference.dataValues.con_id %>"
+                                                        href="/event/<%= conference.con_id %>"
                                                         ><%=
-                                                        conference.dataValues.con_title
+                                                        conference.con_title
                                                         %></a
                                                     >
                                                     <% } else { %> <%=
-                                                    conference.dataValues.con_title
+                                                    conference.con_title
                                                     %> <% } %>
                                                 </td>
                                                 <td>
-                                                 
-
-
-
-
                                                     <%=
-                                                    conference.dataValues.con_company
+                                                    conference.con_company
                                                     %>
                                                 </td>
                                                 <td class="un">
 
-                                                    <%
-                                                    let resultYear = (conference.dataValues.createdAt).slice(8,13);
-                                                    let resultMonth = (conference.dataValues.createdAt).getMonth;
-                                                    let resultDate = (conference.dataValues.createdAt).getDate;
-                                                    %>
                                                     <%=
-                                                    conference.dataValues.createdAt
+                                                    conference.createdAt
                                                     %>
                                                     <%#= resultYear %>
                                                 </td>
                                                 <td>
                                                     <% if
-                                                    (conference.dataValues.is_agreed
+                                                    (conference.is_agreed
                                                     === 1) { %> 승인 완료 <% }
                                                     else if
-                                                    (conference.dataValues.is_agreed
+                                                    (conference.is_agreed
                                                     === 0) { %> 승인 대기중 <% }
                                                     else if
-                                                    (conference.dataValues.is_agreed
+                                                    (conference.is_agreed
                                                     === -1) { %> 거절 <% } else
                                                     { %> 알 수 없음 <% } %>
                                                 </td>
@@ -129,13 +119,6 @@
             </div>
         </main>
         <%- include('../../common/footer.ejs') %>
-        <script>
-            console.log('콘솔도 안 되는 건가');
-       
-            
-            
-            
-            
-        </script>
+
     </body>
 </html>
