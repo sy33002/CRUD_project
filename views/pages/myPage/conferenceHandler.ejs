@@ -34,6 +34,8 @@
                                         <thead>
                                             <tr class="border-bottom">
                                                 <th></th>
+                                                <th>행사 사진</th>
+                                                
                                                 <th>행사 제목</th>
                                                 <th class="un-mobile">신청 시간</th>
                                                 <th></th>
@@ -137,6 +139,8 @@
                    
                             conferenceElement.innerHTML = `
                                                     <td></td>
+                                                    <td><img src="${conference.con_image}"></td>
+                                                    
                                                     <td>${conference.con_title}</td>
                                                     <td class="un-mobile">${conference.createdAt}</td>
                                                     <td><button class="btn btn-outline-primary" onclick="approveConference(${conference.con_id})">승인</button></td>
@@ -154,7 +158,7 @@
                             document.getElementById('conferenceList');
                         const conferenceElement = document.createElement('tr');
                         conferenceListContainer.innerHTML =
-                            '<td colspan="6">신청한 새로운 행사가 없습니다.</td>';
+                            '<td colspan="7">신청한 새로운 행사가 없습니다.</td>';
 
                         conferenceListContainer.appendChild(conferenceElement);
                     }
