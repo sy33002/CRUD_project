@@ -222,7 +222,7 @@
                             const successElement = document.createElement('li');
 
                             successElement.innerHTML = `
-                                                  <span>${conference.con_title}</span>
+                                                  <a href="/event/${conference.con_id}"><span>${conference.con_title}</span></a>
                                                 `;
 
                             successConferenceListContainer.appendChild(
