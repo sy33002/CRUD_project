@@ -227,6 +227,7 @@ function validateInput() {
         conPrice,
         conCategory,
         conStartDate,
+        subStartDate,
         subEndDate,
         conDetailAddr,
     } = getInputValue();
@@ -254,7 +255,16 @@ function validateInput() {
         document.querySelector('#conPeople').focus();
         return false;
     }
-
+    if (subStartDate === '') {
+        alert('행사 모집 기간을 확인해주세요.');
+        document.querySelector('#subDate').focus();
+        return false;
+    }
+    if (conStartDate === '') {
+        alert('행사 기간을 확인해주세요.');
+        document.querySelector('#conDate').focus();
+        return false;
+    }
     if (subEndDate >= conStartDate) {
         alert('행사 기간과 모집 기간을 확인해 주세요.');
         return false;
@@ -311,6 +321,7 @@ async function registerConference() {
 
     const file = document.querySelector('#dynamic-file');
     formData.append('conferenceFile', file.files[0]);
+    const conDate = document.querySelector('#conDate');
 
     if (!file.files[0]) return alert('대표 이미지는 필수 입니다.');
 
