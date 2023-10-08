@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 emailAddr,
                 emailContent,
             });
-            console.log(response.data);
+            console.log(response.data.data);
             if (response.data.result === true) {
                 alert('관리자에게 문의 내용이 이메일로 전달되었습니다.');
                 window.location.reload();
