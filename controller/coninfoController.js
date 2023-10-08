@@ -226,8 +226,8 @@ exports.sentEmail = async (req, res) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'addr@gmail.com', // 발신자 이메일 주소
-            pass: 'password', // 발신자 이메일 비밀번호 또는 앱 비밀번호
+            user: 'cocobell33@gmail.com', // 발신자 이메일 주소
+            pass: 'itzp vzlg mnmw tspi', // 발신자 이메일 비밀번호 또는 앱 비밀번호
         },
     });
     const { name, emailAddr, emailContent } = req.body;
@@ -235,13 +235,13 @@ exports.sentEmail = async (req, res) => {
         from: 'cocobell33@gmail.com', // 발신자 이메일 주소
         to: emailAddr, // 수신자 이메일 주소
         subject: '문의 이메일',
-        text: `이름: ${name}\n이메일: ${emailAddr}\n문의 내용: ${emailContent}`,
+        text: `이름: ${name}\n이메일: ${emailAddr}\n문의 내용: ${emailContent}\n관리자에게 이메일이 성공적으로 보내졌습니다!`,
     };
 
     // 이메일 전송
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-            res.send({ result: false });
+            res.send({ result: false, data: mailOptions });
         } else {
             console.log('이메일 전송 성공:', info.response);
             res.status(200).send({ result: true });
