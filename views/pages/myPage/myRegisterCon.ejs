@@ -49,9 +49,9 @@
                                                         conference.con_title
                                                         %></a
                                                     >
-                                                    <% } else { %> <%=
-                                                    conference.con_title
-                                                    %> <% } %>
+                                                    <% } else { %> 
+                                                    <a  onclick="rejectConAlert();"><%=conference.con_title %></a>
+                                                     <% } %>
                                                 </td>
                                                 <td>
                                                     <%=
@@ -119,6 +119,11 @@
             </div>
         </main>
         <%- include('../../common/footer.ejs') %>
-
+<script>
+    function rejectConAlert() {
+        alert('해당 행사는 거절되었습니다. 관련사항은 관리자에게 문의 바랍니다.');
+    }
+    
+    </script>
     </body>
 </html>
