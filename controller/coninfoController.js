@@ -235,7 +235,7 @@ exports.sentEmail = async (req, res) => {
         from: 'cocobell33@gmail.com', // 발신자 이메일 주소
         to: emailAddr, // 수신자 이메일 주소
         subject: '문의 이메일',
-        text: `이름: ${name}\n이메일: ${emailAddr}\n문의 내용: ${emailContent}`,
+        text: `이름: ${name}\n이메일: ${emailAddr}\n문의 내용: ${emailContent}\n관리자에게 이메일이 성공적으로 보내졌습니다!`,
     };
 
     // 이메일 전송
