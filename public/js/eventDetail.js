@@ -95,11 +95,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const emailAddr = document.getElementById('email').value;
         const emailContent =
             document.getElementsByName('emailContent')[0].value;
+        const loadingSpinner = document.getElementById('loadingSpinner');
 
         // 이제 name, emailAddr, emailContent를 사용할 수 있습니다.
         console.log('이름:', name);
         console.log('이메일 주소:', emailAddr);
         console.log('이메일 내용:', emailContent);
+        loadingSpinner.style.display = 'block';
+        sendButton.disabled = true;
 
         try {
             // axios를 사용하여 서버로 데이터를 전송하면 됩니다.
@@ -118,6 +121,10 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (error) {
             console.error(error);
             alert('오류가 발생하여 이메일을 전송할 수 없습니다.');
+        } finally {
+            // UI 업데이트: 로딩 스피너 숨기고 보내기 버튼 활성화
+            loadingSpinner.style.display = 'none';
+            sendButton.disabled = false;
         }
     });
 });
