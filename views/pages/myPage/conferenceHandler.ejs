@@ -14,13 +14,51 @@
                 font-size: 2rem;
                 font-weight: 300;
             }
+
+            img {
+                width: 100px;
+                height: 100px;
+                border-radius: 5%;
+            }
         </style>
     </head>
     <body>
         <%- include('../../common/header.ejs') %>
         <main>
             <%- include('./managerAside') %>
-
+            <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+            >
+                Launch demo modal
+            </button>
+            <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+            >
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1
+                                class="modal-title fs-5"
+                                id="exampleModalLabel"
+                            ></h1>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body"></div>
+                    </div>
+                </div>
+            </div>
             <div class="cardCenter content">
                 <div class="container">
                     <div class="row">
@@ -30,14 +68,20 @@
                                     <div class="card-title">
                                         <h2>행사 등록 대기 목록</h2>
                                     </div>
+
                                     <table class="table">
                                         <thead>
                                             <tr class="border-bottom">
                                                 <th></th>
-                                                <th>행사 사진</th>
-                                                
+                                                <th class="un-mobile">
+                                                    행사 사진
+                                                </th>
+
                                                 <th>행사 제목</th>
-                                                <th class="un-mobile">신청 시간</th>
+
+                                                <th class="un-mobile">
+                                                    신청 시간
+                                                </th>
                                                 <th></th>
                                                 <th></th>
                                             </tr>
@@ -46,9 +90,10 @@
                                     </table>
                                 </div>
                                 <div class="card-body text-center">
-
-
-                                    <div class="accordion my-5" id="accordionPanelsStayOpenExample">
+                                    <div
+                                        class="accordion my-5"
+                                        id="accordionPanelsStayOpenExample"
+                                    >
                                         <div class="accordion-item">
                                             <h2 class="accordion-header">
                                                 <button
@@ -67,7 +112,9 @@
                                                 class="accordion-collapse collapse show"
                                             >
                                                 <div class="accordion-body">
-                                                    <ul id="successConferenceList"></ul>
+                                                    <ul
+                                                        id="successConferenceList"
+                                                    ></ul>
                                                 </div>
                                             </div>
                                         </div>
@@ -89,26 +136,18 @@
                                                 class="accordion-collapse collapse"
                                             >
                                                 <div class="accordion-body">
-                                                    <ul id="rejectedConferenceList"></ul>
+                                                    <ul
+                                                        id="rejectedConferenceList"
+                                                    ></ul>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-
-
-
-
-
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
             </div>
         </main>
         <%- include('../../common/footer.ejs') %>
@@ -118,6 +157,17 @@
         window.onload = function () {
             getConferenceRegister();
         };
+
+        const myModal = document.getElementById('myModal');
+        const myInput = document.getElementById('myInput');
+        // let modalBtn;
+
+        // if (modalBtn) {
+        //     modalBtn.addEventListener('click', () => {
+        //         console.log('asdf');
+        //     });
+        // }
+
         function getConferenceRegister() {
             axios({
                 method: 'GET',
@@ -136,16 +186,16 @@
                         conferenceList.forEach((conference) => {
                             const conferenceElement =
                                 document.createElement('tr');
-                   
+
                             conferenceElement.innerHTML = `
                                                     <td></td>
-                                                    <td><img src="${conference.con_image}"></td>
-                                                    
-                                                    <td>${conference.con_title}</td>
+                                                    <td class="un-mobile"><img src="${conference.con_image}"></td>
+
+                                                    <td class="title-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id=${conference.con_id}>${conference.con_title}</td>
                                                     <td class="un-mobile">${conference.createdAt}</td>
                                                     <td><button class="btn btn-outline-primary" onclick="approveConference(${conference.con_id})">승인</button></td>
                                                     <td><button class="btn btn-outline-secondary" onclick="rejectConference(${conference.con_id})">거절</button></td>
-    
+
 
                                                 `;
 
@@ -153,6 +203,29 @@
                                 conferenceElement
                             );
                         });
+
+                        // const modalBtn = document.querySelectorAll('.title-btn');
+                        $('.title-btn').click(function () {
+                            const index = Number($(this).attr('data-id'));
+                            const modalTitle =
+                                document.querySelector('.modal-title');
+                            const modalBody =
+                                document.querySelector('.modal-body');
+
+                            modalTitle.textContent = $(this).text();
+
+                            const body = conferenceList.find(
+                                (con) => index === con.con_id
+                            );
+
+                            modalBody.innerHTML = body.con_detail;
+                        });
+                        // modalBtn.addEventListener('click', () => {
+                        //     console.log(modalBtn);
+                        // });
+                        // modalBtn.addEventListener('click', () => {
+                        //     console.log('asdf');
+                        // });
                     } else {
                         const conferenceListContainer =
                             document.getElementById('conferenceList');
@@ -209,7 +282,7 @@
             }).then((res) => {
                 if (res.status === 200) {
                     const successConferenceList = res.data.conferences;
-                
+
                     if (
                         Array.isArray(successConferenceList) &&
                         successConferenceList.length > 0
