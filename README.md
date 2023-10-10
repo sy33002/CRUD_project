@@ -33,11 +33,16 @@
 
 ## 팀 소개 :point_down:
 * **backend**
+  
   > 김지형 (https://github.com/sy33002) : 마이페이지 & 관리자 페이지 기능 구현
+  >
   > 김세은 (https://github.com/seeun0210) : 행사 달력 & 행사 상세페이지 기능 구현
+  >
   > 이재민 (https://github.com/flashrifle) : 웹 배포 & DB 관리 & 리뷰 페이지 기능 구현
 * **frontend**
-  > 문성민 (https://github.com/msm0748): 행사 달력 & 행사 상세페이지 & 리뷰페이지 구현
+  
+  > 문석민 (https://github.com/msm0748): 행사 달력 & 행사 상세페이지 & 리뷰페이지 구현
+  >
   > 최제윤 (https://github.com/lemon4974): 마이페이지 & 관리자페이지& 메인페이지 구현
     
 ---
