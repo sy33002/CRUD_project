@@ -8,8 +8,8 @@
 
 
 ## About Project :point_down:
-> [프로젝트 배포 주소](http://101.101.208.109:8000)
->
+> [프로젝트 배포 주소](http://43.201.244.219:8001/)
+
 * 프로젝트 기간: 2023.09.06 ~ 2023.09.22
   
 * 프로젝트 주제: CRUD
@@ -39,6 +39,7 @@
   > 김세은 (https://github.com/seeun0210) : 행사 달력 & 행사 상세페이지 기능 구현
   >
   > 이재민 (https://github.com/flashrifle) : 웹 배포 & DB 관리 & 리뷰 페이지 기능 구현
+
 * **frontend**
   
   > 문석민 (https://github.com/msm0748): 행사 달력 & 행사 상세페이지 & 리뷰페이지 구현
@@ -65,30 +66,46 @@
 ## 팀 노션 :point_down:
 -  https://www.notion.so/1-Project-f37b8f752d3d42e68d4c22b9ea44b9cf
 
+
 ---
 
- ## How To Start?
- - **config/config.json**
-   ```
-   {
-      "development": {
-          "username": "user",
-          "password": "q1w2e3r41234!",
-          "database": "project1",
-          "host": "101.101.208.109",
-          "dialect": "mysql"
-      },
-      "sessionSecretKey": "my1secret2key3@"
-    }
+## 사용 라이브러리
 
-- **module install**
-  ```
-  npm install
-- **start**
-  ```
-  node app.js
-- **localhost: 8000 사용**
-   
+- axios: ^1.5.0
+
+- badwords-ko: ^1.0.3
+
+- bcrypt: ^5.1.1
+
+- cheerio: ^1.0.0-rc.12
+
+- cookie-parser: ^1.4.6
+
+- cross-env: ^7.0.3
+
+- dotenv: ^16.3.1
+
+- ejs: ^3.1.9
+
+- express: ^4.18.2
+
+- express-session: ^1.17.3
+
+- moment: ^2.29.4
+
+- multer: ^1.4.5-lts.1
+
+- mysql2: ^3.6.0
+
+- nodemailer: ^6.9.5
+
+- request-ip: ^3.3.0
+
+- sequelize: ^6.32.1
+
+- sequelize-cli: ^6.6.1
+
+- sharp: ^0.32.6
 
 ---
 
@@ -97,31 +114,31 @@
 
 ---
 ## 화면 구성
-|메인페이지|메인페이지| 
+<div align="center">
+  
+|메인페이지|
+|:---:| 
+|<img src="https://github.com/sy33002/sy33002/assets/113359008/f66c9e30-0098-4a43-a3c7-da755b2af716" width="700" height="400">
+
+|행사캘린더|행사목록|
 |:---:|:---:| 
-|<img src="https://github.com/sesac-ydp5-pullAmen/Dev_Conference_Info_Service/assets/113359008/07adf958-a965-4684-bd04-d39287e15268" width="6000" height="500">|<img src="https://github.com/sesac-ydp5-pullAmen/Dev_Conference_Info_Service/assets/113359008/1fd801c8-eadc-4dee-a509-fda1a9489f87" width="6000" height="500">| 
+|<img src="https://github.com/sy33002/CRUD_project/assets/113359008/f53896d5-acf3-4c79-a0eb-03af85050b74" width="400" height="300">|<img src="https://github.com/sy33002/CRUD_project/assets/113359008/79952c89-e541-4768-ac0e-b433a0b91ba3" width="400" height="300">| 
+
+
+|행사상세 페이지|행사등록 페이지| 
+|:---:|:---:| 
+|<img src="https://github.com/sy33002/CRUD_project/assets/113359008/0f7b9afa-2e6e-4808-b2e5-4aba25008c24" width="400" height="300">|<img src="https://github.com/sy33002/CRUD_project/assets/113359008/515d1d13-511a-4f36-914e-1925250d9023" width="400" height="300">| 
+
+|리뷰목록 및 상세 페이지|리뷰 등록 페이지|
+|:---:|:---:| 
+|<img src="https://github.com/sy33002/CRUD_project/assets/113359008/0b7c41d4-a515-4538-b0a4-96ea60d04556" width="400" height="300">|<img src="https://github.com/sy33002/CRUD_project/assets/113359008/4fad0112-98a5-4940-a433-2a29ca1a3dc0" width="400" height="300">| 
 
 |로그인|회원가입| 
 |:---:|:---:| 
-|<img src="https://github.com/sesac-ydp5-pullAmen/Dev_Conference_Info_Service/assets/113359008/a885f1e0-72e6-4bd5-bf3e-1c9998e0fa4f" width="6000" height="500">|<img src="https://github.com/sesac-ydp5-pullAmen/Dev_Conference_Info_Service/assets/113359008/22928f44-7fc1-401c-a891-c6d732a7c2a4" width="6000" height="500">| 
-
-|행사캘린더|행사목록| 
-|:---:|:---:| 
-|<img src="https://github.com/sesac-ydp5-pullAmen/Dev_Conference_Info_Service/assets/113359008/0ac40644-02e9-4067-83b7-d99ee30ae9e9" width="6000" height="500">|<img src="https://github.com/sesac-ydp5-pullAmen/Dev_Conference_Info_Service/assets/113359008/2f7f2fed-805d-4513-97cb-ecbf2a8e7aa5" width="6000" height="500">| 
-
-|행사상세 페이지|행사상세 페이지| 
-|:---:|:---:| 
-|<img src="https://github.com/sesac-ydp5-pullAmen/Dev_Conference_Info_Service/assets/113359008/f1519446-cc7c-43c4-94d0-c5884481210e" width="6000" height="500">|<img src="https://github.com/sesac-ydp5-pullAmen/Dev_Conference_Info_Service/assets/113359008/0f8f6564-710e-4b30-8c95-3e88ab91e1e6" width="6000" height="500">| 
-
-|행사등록 페이지|행사등록 페이지| 
-|:---:|:---:| 
-|<img src="https://github.com/sesac-ydp5-pullAmen/Dev_Conference_Info_Service/assets/113359008/427030e5-5c9c-4100-a4d6-bbacba12d7e3" width="6000" height="500">|<img src="https://github.com/sesac-ydp5-pullAmen/Dev_Conference_Info_Service/assets/113359008/5e1b60b3-4b4e-4f4e-88cb-9b948e9ead70" width="6000" height="500">| 
-
-|리뷰목록|리뷰상세| 
-|:---:|:---:| 
-|<img src="https://github.com/sesac-ydp5-pullAmen/Dev_Conference_Info_Service/assets/113359008/8ebf39fc-a461-4bad-83c7-f1333ca431b3" width="6000" height="500">|<img src="https://github.com/sesac-ydp5-pullAmen/Dev_Conference_Info_Service/assets/113359008/7587fdaa-67a0-4c9c-b2b0-cc624000f2ee" width="6000" height="500">| 
+|<img src="https://github.com/sy33002/CRUD_project/assets/113359008/e48ec303-b722-482d-a195-45898e2ff597" width="400" height="300">|<img src="https://github.com/sy33002/CRUD_project/assets/113359008/eee58ce2-c315-4607-a396-a0944b9d5044" width="400" height="300">| 
 
 |마이페이지|관리자페이지| 
 |:---:|:---:| 
-|<img src="https://github.com/sesac-ydp5-pullAmen/Dev_Conference_Info_Service/assets/113359008/2776e79a-5b87-4e6b-a57a-cf3bde8a9a83" width="6000" height="500">|<img src="https://github.com/sesac-ydp5-pullAmen/Dev_Conference_Info_Service/assets/113359008/b1dfa0cf-58a3-4f6e-a128-dff7a96a0bfa" width="6000" height="500">| 
+|<img src="https://github.com/sy33002/CRUD_project/assets/113359008/a4eb00b3-886a-42e3-9e52-7a3453b64281" width="400" height="300">|<img src="https://github.com/sy33002/CRUD_project/assets/113359008/b341b329-c577-46a7-b450-e3ea666ab855" width="400" height="300">| 
+</div>
 
